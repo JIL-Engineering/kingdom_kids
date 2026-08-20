@@ -1,0 +1,30 @@
+services:
+  # Development services
+  postgres:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "8090:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: kingdom_kids
+      POSTGRES_PASSWORD: "Xtm8uEAmhx8GO3mBj958Ysfl5XicnRwk"
+    volumes:
+      - kingdom_kids_data:/var/lib/postgresql/data
+
+
+  # Test services
+  postgres_test:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "9090:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: kingdom_kids_test
+      POSTGRES_PASSWORD: "bzVmH68bnJLVnSn9oB2-kMAfrdB67GU6"
+    volumes:
+      - kingdom_kids_test_data:/var/lib/postgresql/data
+
+
+volumes:
+  kingdom_kids_data:
+  kingdom_kids_test_data:
