@@ -1,0 +1,10 @@
+class: DownloadRecord
+table: download_record
+fields:
+  child_id: int, relation(parent=child_profiles, onDelete=Cascade)
+  book_id: int, relation(parent=book)
+  device_id: String
+  downloaded_at: DateTime
+indexes:
+  idx_downloads_child_book:
+    fields: child_id, book_id

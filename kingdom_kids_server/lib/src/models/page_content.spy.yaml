@@ -1,0 +1,11 @@
+class: PageContent
+table: page_content
+fields:
+  page_id: int, relation(parent=page, onDelete=Cascade)
+  language: String
+  text: String
+  audio_asset: String
+indexes:
+  idx_page_contents_page_lang:
+    fields: page_id, language
+    unique: true

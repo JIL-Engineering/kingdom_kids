@@ -1,0 +1,9 @@
+class: Devotional
+table: devotional
+fields:
+  date: DateTime, unique
+  category: String?
+indexes:
+  devotionals_date_idx:
+    fields: date
+    unique: true

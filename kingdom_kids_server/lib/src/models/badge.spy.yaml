@@ -1,0 +1,12 @@
+class: Badge
+table: badge
+fields:
+  code: String, unique
+  name: String
+  description: String
+  icon_asset: String
+  trigger_rule: Map<String, dynamic>
+indexes:
+  badges_code_idx:
+    fields: code
+    unique: true

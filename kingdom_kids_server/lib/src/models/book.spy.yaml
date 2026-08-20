@@ -1,0 +1,16 @@
+class: Book
+table: book
+fields:
+  slug: String, unique
+  age_bracket_min: String
+  age_bracket_max: String
+  category: String
+  cover_image_asset: String?
+  is_published: bool
+  content_version: int
+  updated_at: DateTime
+  created_at: DateTime
+indexes:
+  books_slug_idx:
+    fields: slug
+    unique: true

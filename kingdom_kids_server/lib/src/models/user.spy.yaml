@@ -1,0 +1,14 @@
+class: User
+table: user
+fields:
+  email: String, unique
+  password_hash: String
+  country: String?
+  timezone: String
+  preferred_language: String
+  consent_given_at: DateTime?
+  created_at: DateTime
+indexes:
+  users_email_idx:
+    fields: email
+    unique: true
