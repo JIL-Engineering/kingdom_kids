@@ -1,0 +1,43 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  server:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+      - name: Check Serverpod codegen is up to date
+        working-directory: kingdom_kids_server
+        run: |
+          dart pub get
+          dart pub global activate serverpod_cli
+          serverpod generate
+          git diff --exit-code || (echo "Generated code is stale — run 'serverpod generate' and commit the result" && exit 1)
+      - name: Run server tests
+        working-directory: kingdom_kids_server
+        run: dart test
+
+  flutter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+      - working-directory: kingdom_kids_flutter
+        run: |
+          flutter pub get
+          flutter analyze
+          flutter test
