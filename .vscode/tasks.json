@@ -9,6 +9,7 @@
       "options": {
         "cwd": "${workspaceFolder}/kingdom_kids_server",
         "env": {
+          "PATH": "${env:HOME}/.pub-cache/bin:${env:PATH}",
           "SERVERPOD_PASSWORD_database": "Xtm8uEAmhx8GO3mBj958Ysfl5XicnRwk"
         }
       },
@@ -38,6 +39,19 @@
           "endsPattern": "."
         }
       }
+    },
+    {
+      "label": "serverpod_generate",
+      "type": "shell",
+      "command": "serverpod",
+      "args": ["generate"],
+      "options": {
+        "cwd": "${workspaceFolder}/kingdom_kids_server",
+        "env": {
+          "PATH": "${env:HOME}/.pub-cache/bin:${env:PATH}"
+        }
+      },
+      "problemMatcher": []
     }
   ]
 }
