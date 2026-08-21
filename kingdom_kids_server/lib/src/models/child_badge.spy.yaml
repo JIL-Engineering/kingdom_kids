@@ -1,0 +1,6 @@
+class: ChildBadge
+table: child_badges
+fields:
+  childId: int
+  badgeId: int
+  earnedAt: DateTime

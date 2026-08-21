@@ -1,0 +1,10 @@
+class: AppUser
+table: users
+fields:
+  email: String
+  passwordHash: String
+  country: String?
+  timezone: String
+  preferredLanguage: String
+  consentGivenAt: DateTime?
+  createdAt: DateTime

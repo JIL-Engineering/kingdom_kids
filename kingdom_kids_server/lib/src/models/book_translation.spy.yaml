@@ -1,0 +1,6 @@
+class: BookTranslation
+table: book_translations
+fields:
+  bookId: int
+  language: String
+  title: String

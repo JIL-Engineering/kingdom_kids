@@ -1,0 +1,7 @@
+class: Page
+table: pages
+fields:
+  bookId: int
+  pageNumber: int
+  illustrationAsset: String
+  layoutType: String

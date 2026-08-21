@@ -1,0 +1,543 @@
+/* AUTOMATICALLY GENERATED CODE DO NOT MODIFY */
+/*   To generate run: "serverpod generate"    */
+
+// ignore_for_file: implementation_imports
+// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: public_member_api_docs
+// ignore_for_file: type_literal_in_constant_pattern
+// ignore_for_file: use_super_parameters
+// ignore_for_file: invalid_use_of_internal_member
+
+// ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:serverpod/serverpod.dart' as _i1;
+
+abstract class PageContent
+    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+  PageContent._({
+    this.id,
+    required this.pageId,
+    required this.language,
+    required this.text,
+    required this.audioAsset,
+  });
+
+  factory PageContent({
+    int? id,
+    required int pageId,
+    required String language,
+    required String text,
+    required String audioAsset,
+  }) = _PageContentImpl;
+
+  factory PageContent.fromJson(Map<String, dynamic> jsonSerialization) {
+    return PageContent(
+      id: jsonSerialization['id'] as int?,
+      pageId: jsonSerialization['pageId'] as int,
+      language: jsonSerialization['language'] as String,
+      text: jsonSerialization['text'] as String,
+      audioAsset: jsonSerialization['audioAsset'] as String,
+    );
+  }
+
+  static final t = PageContentTable();
+
+  static const db = PageContentRepository._();
+
+  @override
+  int? id;
+
+  int pageId;
+
+  String language;
+
+  String text;
+
+  String audioAsset;
+
+  @override
+  _i1.Table<int?> get table => t;
+
+  /// Returns a shallow copy of this [PageContent]
+  /// with some or all fields replaced by the given arguments.
+  @_i1.useResult
+  PageContent copyWith({
+    int? id,
+    int? pageId,
+    String? language,
+    String? text,
+    String? audioAsset,
+  });
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'PageContent',
+      if (id != null) 'id': id,
+      'pageId': pageId,
+      'language': language,
+      'text': text,
+      'audioAsset': audioAsset,
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'PageContent',
+      if (id != null) 'id': id,
+      'pageId': pageId,
+      'language': language,
+      'text': text,
+      'audioAsset': audioAsset,
+    };
+  }
+
+  static PageContentInclude include() {
+    return PageContentInclude._();
+  }
+
+  static PageContentIncludeList includeList({
+    _i1.WhereExpressionBuilder<PageContentTable>? where,
+    int? limit,
+    int? offset,
+    _i1.OrderByBuilder<PageContentTable>? orderBy,
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<PageContentTable>? orderByList,
+    PageContentInclude? include,
+  }) {
+    return PageContentIncludeList._(
+      where: where,
+      limit: limit,
+      offset: offset,
+      orderBy: orderBy?.call(PageContent.t),
+      orderDescending: orderDescending,
+      orderByList: orderByList?.call(PageContent.t),
+      include: include,
+    );
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
+  }
+}
+
+class _Undefined {}
+
+class _PageContentImpl extends PageContent {
+  _PageContentImpl({
+    int? id,
+    required int pageId,
+    required String language,
+    required String text,
+    required String audioAsset,
+  }) : super._(
+         id: id,
+         pageId: pageId,
+         language: language,
+         text: text,
+         audioAsset: audioAsset,
+       );
+
+  /// Returns a shallow copy of this [PageContent]
+  /// with some or all fields replaced by the given arguments.
+  @_i1.useResult
+  @override
+  PageContent copyWith({
+    Object? id = _Undefined,
+    int? pageId,
+    String? language,
+    String? text,
+    String? audioAsset,
+  }) {
+    return PageContent(
+      id: id is int? ? id : this.id,
+      pageId: pageId ?? this.pageId,
+      language: language ?? this.language,
+      text: text ?? this.text,
+      audioAsset: audioAsset ?? this.audioAsset,
+    );
+  }
+}
+
+class PageContentUpdateTable extends _i1.UpdateTable<PageContentTable> {
+  PageContentUpdateTable(super.table);
+
+  _i1.ColumnValue<int, int> pageId(int value) => _i1.ColumnValue(
+    table.pageId,
+    value,
+  );
+
+  _i1.ColumnValue<String, String> language(String value) => _i1.ColumnValue(
+    table.language,
+    value,
+  );
+
+  _i1.ColumnValue<String, String> text(String value) => _i1.ColumnValue(
+    table.text,
+    value,
+  );
+
+  _i1.ColumnValue<String, String> audioAsset(String value) => _i1.ColumnValue(
+    table.audioAsset,
+    value,
+  );
+}
+
+class PageContentTable extends _i1.Table<int?> {
+  PageContentTable({super.tableRelation}) : super(tableName: 'page_contents') {
+    updateTable = PageContentUpdateTable(this);
+    pageId = _i1.ColumnInt(
+      'pageId',
+      this,
+    );
+    language = _i1.ColumnString(
+      'language',
+      this,
+    );
+    text = _i1.ColumnString(
+      'text',
+      this,
+    );
+    audioAsset = _i1.ColumnString(
+      'audioAsset',
+      this,
+    );
+  }
+
+  late final PageContentUpdateTable updateTable;
+
+  late final _i1.ColumnInt pageId;
+
+  late final _i1.ColumnString language;
+
+  late final _i1.ColumnString text;
+
+  late final _i1.ColumnString audioAsset;
+
+  @override
+  List<_i1.Column> get columns => [
+    id,
+    pageId,
+    language,
+    text,
+    audioAsset,
+  ];
+}
+
+class PageContentInclude extends _i1.IncludeObject {
+  PageContentInclude._();
+
+  @override
+  Map<String, _i1.Include?> get includes => {};
+
+  @override
+  _i1.Table<int?> get table => PageContent.t;
+}
+
+class PageContentIncludeList extends _i1.IncludeList {
+  PageContentIncludeList._({
+    _i1.WhereExpressionBuilder<PageContentTable>? where,
+    super.limit,
+    super.offset,
+    super.orderBy,
+    super.orderDescending,
+    super.orderByList,
+    super.include,
+  }) {
+    super.where = where?.call(PageContent.t);
+  }
+
+  @override
+  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+
+  @override
+  _i1.Table<int?> get table => PageContent.t;
+}
+
+class PageContentRepository {
+  const PageContentRepository._();
+
+  /// Returns a list of [PageContent]s matching the given query parameters.
+  ///
+  /// Use [where] to specify which items to include in the return value.
+  /// If none is specified, all items will be returned.
+  ///
+  /// To specify the order of the items use [orderBy] or [orderByList]
+  /// when sorting by multiple columns.
+  ///
+  /// The maximum number of items can be set by [limit]. If no limit is set,
+  /// all items matching the query will be returned.
+  ///
+  /// [offset] defines how many items to skip, after which [limit] (or all)
+  /// items are read from the database.
+  ///
+  /// ```dart
+  /// var persons = await Persons.db.find(
+  ///   session,
+  ///   where: (t) => t.lastName.equals('Jones'),
+  ///   orderBy: (t) => t.firstName,
+  ///   limit: 100,
+  /// );
+  /// ```
+  Future<List<PageContent>> find(
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<PageContentTable>? where,
+    int? limit,
+    int? offset,
+    _i1.OrderByBuilder<PageContentTable>? orderBy,
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<PageContentTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
+  }) async {
+    return session.db.find<PageContent>(
+      where: where?.call(PageContent.t),
+      orderBy: orderBy?.call(PageContent.t),
+      orderByList: orderByList?.call(PageContent.t),
+      orderDescending: orderDescending,
+      limit: limit,
+      offset: offset,
+      transaction: transaction,
+      lockMode: lockMode,
+      lockBehavior: lockBehavior,
+    );
+  }
+
+  /// Returns the first matching [PageContent] matching the given query parameters.
+  ///
+  /// Use [where] to specify which items to include in the return value.
+  /// If none is specified, all items will be returned.
+  ///
+  /// To specify the order use [orderBy] or [orderByList]
+  /// when sorting by multiple columns.
+  ///
+  /// [offset] defines how many items to skip, after which the next one will be picked.
+  ///
+  /// ```dart
+  /// var youngestPerson = await Persons.db.findFirstRow(
+  ///   session,
+  ///   where: (t) => t.lastName.equals('Jones'),
+  ///   orderBy: (t) => t.age,
+  /// );
+  /// ```
+  Future<PageContent?> findFirstRow(
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<PageContentTable>? where,
+    int? offset,
+    _i1.OrderByBuilder<PageContentTable>? orderBy,
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<PageContentTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
+  }) async {
+    return session.db.findFirstRow<PageContent>(
+      where: where?.call(PageContent.t),
+      orderBy: orderBy?.call(PageContent.t),
+      orderByList: orderByList?.call(PageContent.t),
+      orderDescending: orderDescending,
+      offset: offset,
+      transaction: transaction,
+      lockMode: lockMode,
+      lockBehavior: lockBehavior,
+    );
+  }
+
+  /// Finds a single [PageContent] by its [id] or null if no such row exists.
+  Future<PageContent?> findById(
+    _i1.DatabaseSession session,
+    int id, {
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
+  }) async {
+    return session.db.findById<PageContent>(
+      id,
+      transaction: transaction,
+      lockMode: lockMode,
+      lockBehavior: lockBehavior,
+    );
+  }
+
+  /// Inserts all [PageContent]s in the list and returns the inserted rows.
+  ///
+  /// The returned [PageContent]s will have their `id` fields set.
+  ///
+  /// This is an atomic operation, meaning that if one of the rows fails to
+  /// insert, none of the rows will be inserted.
+  ///
+  /// If [ignoreConflicts] is set to `true`, rows that conflict with existing
+  /// rows are silently skipped, and only the successfully inserted rows are
+  /// returned.
+  Future<List<PageContent>> insert(
+    _i1.DatabaseSession session,
+    List<PageContent> rows, {
+    _i1.Transaction? transaction,
+    bool ignoreConflicts = false,
+  }) async {
+    return session.db.insert<PageContent>(
+      rows,
+      transaction: transaction,
+      ignoreConflicts: ignoreConflicts,
+    );
+  }
+
+  /// Inserts a single [PageContent] and returns the inserted row.
+  ///
+  /// The returned [PageContent] will have its `id` field set.
+  Future<PageContent> insertRow(
+    _i1.DatabaseSession session,
+    PageContent row, {
+    _i1.Transaction? transaction,
+  }) async {
+    return session.db.insertRow<PageContent>(
+      row,
+      transaction: transaction,
+    );
+  }
+
+  /// Updates all [PageContent]s in the list and returns the updated rows. If
+  /// [columns] is provided, only those columns will be updated. Defaults to
+  /// all columns.
+  /// This is an atomic operation, meaning that if one of the rows fails to
+  /// update, none of the rows will be updated.
+  Future<List<PageContent>> update(
+    _i1.DatabaseSession session,
+    List<PageContent> rows, {
+    _i1.ColumnSelections<PageContentTable>? columns,
+    _i1.Transaction? transaction,
+  }) async {
+    return session.db.update<PageContent>(
+      rows,
+      columns: columns?.call(PageContent.t),
+      transaction: transaction,
+    );
+  }
+
+  /// Updates a single [PageContent]. The row needs to have its id set.
+  /// Optionally, a list of [columns] can be provided to only update those
+  /// columns. Defaults to all columns.
+  Future<PageContent> updateRow(
+    _i1.DatabaseSession session,
+    PageContent row, {
+    _i1.ColumnSelections<PageContentTable>? columns,
+    _i1.Transaction? transaction,
+  }) async {
+    return session.db.updateRow<PageContent>(
+      row,
+      columns: columns?.call(PageContent.t),
+      transaction: transaction,
+    );
+  }
+
+  /// Updates a single [PageContent] by its [id] with the specified [columnValues].
+  /// Returns the updated row or null if no row with the given id exists.
+  Future<PageContent?> updateById(
+    _i1.DatabaseSession session,
+    int id, {
+    required _i1.ColumnValueListBuilder<PageContentUpdateTable> columnValues,
+    _i1.Transaction? transaction,
+  }) async {
+    return session.db.updateById<PageContent>(
+      id,
+      columnValues: columnValues(PageContent.t.updateTable),
+      transaction: transaction,
+    );
+  }
+
+  /// Updates all [PageContent]s matching the [where] expression with the specified [columnValues].
+  /// Returns the list of updated rows.
+  Future<List<PageContent>> updateWhere(
+    _i1.DatabaseSession session, {
+    required _i1.ColumnValueListBuilder<PageContentUpdateTable> columnValues,
+    required _i1.WhereExpressionBuilder<PageContentTable> where,
+    int? limit,
+    int? offset,
+    _i1.OrderByBuilder<PageContentTable>? orderBy,
+    _i1.OrderByListBuilder<PageContentTable>? orderByList,
+    bool orderDescending = false,
+    _i1.Transaction? transaction,
+  }) async {
+    return session.db.updateWhere<PageContent>(
+      columnValues: columnValues(PageContent.t.updateTable),
+      where: where(PageContent.t),
+      limit: limit,
+      offset: offset,
+      orderBy: orderBy?.call(PageContent.t),
+      orderByList: orderByList?.call(PageContent.t),
+      orderDescending: orderDescending,
+      transaction: transaction,
+    );
+  }
+
+  /// Deletes all [PageContent]s in the list and returns the deleted rows.
+  /// This is an atomic operation, meaning that if one of the rows fail to
+  /// be deleted, none of the rows will be deleted.
+  Future<List<PageContent>> delete(
+    _i1.DatabaseSession session,
+    List<PageContent> rows, {
+    _i1.Transaction? transaction,
+  }) async {
+    return session.db.delete<PageContent>(
+      rows,
+      transaction: transaction,
+    );
+  }
+
+  /// Deletes a single [PageContent].
+  Future<PageContent> deleteRow(
+    _i1.DatabaseSession session,
+    PageContent row, {
+    _i1.Transaction? transaction,
+  }) async {
+    return session.db.deleteRow<PageContent>(
+      row,
+      transaction: transaction,
+    );
+  }
+
+  /// Deletes all rows matching the [where] expression.
+  Future<List<PageContent>> deleteWhere(
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<PageContentTable> where,
+    _i1.Transaction? transaction,
+  }) async {
+    return session.db.deleteWhere<PageContent>(
+      where: where(PageContent.t),
+      transaction: transaction,
+    );
+  }
+
+  /// Counts the number of rows matching the [where] expression. If omitted,
+  /// will return the count of all rows in the table.
+  Future<int> count(
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<PageContentTable>? where,
+    int? limit,
+    _i1.Transaction? transaction,
+  }) async {
+    return session.db.count<PageContent>(
+      where: where?.call(PageContent.t),
+      limit: limit,
+      transaction: transaction,
+    );
+  }
+
+  /// Acquires row-level locks on [PageContent] rows matching the [where] expression.
+  Future<void> lockRows(
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<PageContentTable> where,
+    required _i1.LockMode lockMode,
+    required _i1.Transaction transaction,
+    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+  }) async {
+    return session.db.lockRows<PageContent>(
+      where: where(PageContent.t),
+      lockMode: lockMode,
+      lockBehavior: lockBehavior,
+      transaction: transaction,
+    );
+  }
+}

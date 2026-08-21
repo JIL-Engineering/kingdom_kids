@@ -1,0 +1,12 @@
+class: Book
+table: books
+fields:
+  slug: String
+  ageBracketMin: String
+  ageBracketMax: String
+  category: String
+  coverImageAsset: String?
+  isPublished: bool
+  contentVersion: int
+  updatedAt: DateTime
+  createdAt: DateTime

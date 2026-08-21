@@ -1,0 +1,11 @@
+class: ChildProfile
+table: child_profiles
+fields:
+  parentId: int
+  displayName: String
+  birthYear: int
+  ageBracket: String
+  preferredLanguage: String
+  avatarId: String
+  pinProtected: bool
+  createdAt: DateTime

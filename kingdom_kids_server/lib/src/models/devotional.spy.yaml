@@ -1,0 +1,5 @@
+class: Devotional
+table: devotionals
+fields:
+  date: DateTime
+  category: String?

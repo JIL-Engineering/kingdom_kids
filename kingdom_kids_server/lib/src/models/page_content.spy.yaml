@@ -1,0 +1,7 @@
+class: PageContent
+table: page_contents
+fields:
+  pageId: int
+  language: String
+  text: String
+  audioAsset: String

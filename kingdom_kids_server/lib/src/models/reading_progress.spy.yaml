@@ -1,0 +1,11 @@
+class: ReadingProgress
+table: reading_progress
+fields:
+  childId: int
+  bookId: int
+  currentPage: int
+  completed: bool
+  startedAt: DateTime
+  completedAt: DateTime?
+  totalTimeSeconds: int
+  syncedAt: DateTime

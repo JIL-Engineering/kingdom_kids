@@ -1,0 +1,8 @@
+class: Badge
+table: badges
+fields:
+  code: String
+  name: String
+  description: String
+  iconAsset: String
+  triggerRule: String

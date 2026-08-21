@@ -1,0 +1,9 @@
+class: DevotionalTranslation
+table: devotional_translations
+fields:
+  devotionalId: int
+  language: String
+  verseReference: String
+  verseText: String
+  thoughtText: String
+  prayerPrompt: String
