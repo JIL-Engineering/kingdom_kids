@@ -146,6 +146,20 @@ class TestEndpoints {
 
   late final _JwtRefreshEndpoint jwtRefresh;
 
+  late final _AuthEndpoint auth;
+
+  late final _BadgeEndpoint badge;
+
+  late final _ChildEndpoint child;
+
+  late final _DashboardEndpoint dashboard;
+
+  late final _DevotionalEndpoint devotional;
+
+  late final _LibraryEndpoint library;
+
+  late final _ProgressEndpoint progress;
+
   late final _GreetingEndpoint greeting;
 }
 
@@ -161,6 +175,34 @@ class _InternalTestEndpoints extends TestEndpoints
       serializationManager,
     );
     jwtRefresh = _JwtRefreshEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    auth = _AuthEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    badge = _BadgeEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    child = _ChildEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    dashboard = _DashboardEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    devotional = _DevotionalEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    library = _LibraryEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    progress = _ProgressEndpoint(
       endpoints,
       serializationManager,
     );
@@ -487,6 +529,55 @@ class _JwtRefreshEndpoint {
       }
     });
   }
+}
+
+class _AuthEndpoint {
+  _AuthEndpoint(
+    _endpointDispatch,
+    _serializationManager,
+  );
+}
+
+class _BadgeEndpoint {
+  _BadgeEndpoint(
+    _endpointDispatch,
+    _serializationManager,
+  );
+}
+
+class _ChildEndpoint {
+  _ChildEndpoint(
+    _endpointDispatch,
+    _serializationManager,
+  );
+}
+
+class _DashboardEndpoint {
+  _DashboardEndpoint(
+    _endpointDispatch,
+    _serializationManager,
+  );
+}
+
+class _DevotionalEndpoint {
+  _DevotionalEndpoint(
+    _endpointDispatch,
+    _serializationManager,
+  );
+}
+
+class _LibraryEndpoint {
+  _LibraryEndpoint(
+    _endpointDispatch,
+    _serializationManager,
+  );
+}
+
+class _ProgressEndpoint {
+  _ProgressEndpoint(
+    _endpointDispatch,
+    _serializationManager,
+  );
 }
 
 class _GreetingEndpoint {

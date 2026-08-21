@@ -1,14 +1,14 @@
 class: ChildProfile
 table: child_profiles
 fields:
-  parent_id: int, relation(parent=user, onDelete=Cascade)
-  display_name: String
-  birth_year: int
-  age_bracket: String
-  preferred_language: String
-  avatar_id: String
-  pin_protected: bool
-  created_at: DateTime
+  parentId: int, relation(parent=user, onDelete=Cascade)
+  displayName: String
+  birthYear: int
+  ageBracket: String
+  preferredLanguage: String
+  avatarId: String
+  pinProtected: bool
+  createdAt: DateTime
 indexes:
   idx_child_profiles_parent:
-    fields: parent_id
+    fields: parentId

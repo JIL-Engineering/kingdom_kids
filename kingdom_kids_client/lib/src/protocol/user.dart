@@ -16,40 +16,40 @@ abstract class User implements _i1.SerializableModel {
   User._({
     this.id,
     required this.email,
-    required this.password_hash,
+    required this.passwordHash,
     this.country,
     required this.timezone,
-    required this.preferred_language,
-    this.consent_given_at,
-    required this.created_at,
+    required this.preferredLanguage,
+    this.consentGivenAt,
+    required this.createdAt,
   });
 
   factory User({
     int? id,
     required String email,
-    required String password_hash,
+    required String passwordHash,
     String? country,
     required String timezone,
-    required String preferred_language,
-    DateTime? consent_given_at,
-    required DateTime created_at,
+    required String preferredLanguage,
+    DateTime? consentGivenAt,
+    required DateTime createdAt,
   }) = _UserImpl;
 
   factory User.fromJson(Map<String, dynamic> jsonSerialization) {
     return User(
       id: jsonSerialization['id'] as int?,
       email: jsonSerialization['email'] as String,
-      password_hash: jsonSerialization['password_hash'] as String,
+      passwordHash: jsonSerialization['passwordHash'] as String,
       country: jsonSerialization['country'] as String?,
       timezone: jsonSerialization['timezone'] as String,
-      preferred_language: jsonSerialization['preferred_language'] as String,
-      consent_given_at: jsonSerialization['consent_given_at'] == null
+      preferredLanguage: jsonSerialization['preferredLanguage'] as String,
+      consentGivenAt: jsonSerialization['consentGivenAt'] == null
           ? null
           : _i1.DateTimeJsonExtension.fromJson(
-              jsonSerialization['consent_given_at'],
+              jsonSerialization['consentGivenAt'],
             ),
-      created_at: _i1.DateTimeJsonExtension.fromJson(
-        jsonSerialization['created_at'],
+      createdAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['createdAt'],
       ),
     );
   }
@@ -61,17 +61,17 @@ abstract class User implements _i1.SerializableModel {
 
   String email;
 
-  String password_hash;
+  String passwordHash;
 
   String? country;
 
   String timezone;
 
-  String preferred_language;
+  String preferredLanguage;
 
-  DateTime? consent_given_at;
+  DateTime? consentGivenAt;
 
-  DateTime created_at;
+  DateTime createdAt;
 
   /// Returns a shallow copy of this [User]
   /// with some or all fields replaced by the given arguments.
@@ -79,12 +79,12 @@ abstract class User implements _i1.SerializableModel {
   User copyWith({
     int? id,
     String? email,
-    String? password_hash,
+    String? passwordHash,
     String? country,
     String? timezone,
-    String? preferred_language,
-    DateTime? consent_given_at,
-    DateTime? created_at,
+    String? preferredLanguage,
+    DateTime? consentGivenAt,
+    DateTime? createdAt,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -92,13 +92,12 @@ abstract class User implements _i1.SerializableModel {
       '__className__': 'User',
       if (id != null) 'id': id,
       'email': email,
-      'password_hash': password_hash,
+      'passwordHash': passwordHash,
       if (country != null) 'country': country,
       'timezone': timezone,
-      'preferred_language': preferred_language,
-      if (consent_given_at != null)
-        'consent_given_at': consent_given_at?.toJson(),
-      'created_at': created_at.toJson(),
+      'preferredLanguage': preferredLanguage,
+      if (consentGivenAt != null) 'consentGivenAt': consentGivenAt?.toJson(),
+      'createdAt': createdAt.toJson(),
     };
   }
 
@@ -114,21 +113,21 @@ class _UserImpl extends User {
   _UserImpl({
     int? id,
     required String email,
-    required String password_hash,
+    required String passwordHash,
     String? country,
     required String timezone,
-    required String preferred_language,
-    DateTime? consent_given_at,
-    required DateTime created_at,
+    required String preferredLanguage,
+    DateTime? consentGivenAt,
+    required DateTime createdAt,
   }) : super._(
          id: id,
          email: email,
-         password_hash: password_hash,
+         passwordHash: passwordHash,
          country: country,
          timezone: timezone,
-         preferred_language: preferred_language,
-         consent_given_at: consent_given_at,
-         created_at: created_at,
+         preferredLanguage: preferredLanguage,
+         consentGivenAt: consentGivenAt,
+         createdAt: createdAt,
        );
 
   /// Returns a shallow copy of this [User]
@@ -138,24 +137,24 @@ class _UserImpl extends User {
   User copyWith({
     Object? id = _Undefined,
     String? email,
-    String? password_hash,
+    String? passwordHash,
     Object? country = _Undefined,
     String? timezone,
-    String? preferred_language,
-    Object? consent_given_at = _Undefined,
-    DateTime? created_at,
+    String? preferredLanguage,
+    Object? consentGivenAt = _Undefined,
+    DateTime? createdAt,
   }) {
     return User(
       id: id is int? ? id : this.id,
       email: email ?? this.email,
-      password_hash: password_hash ?? this.password_hash,
+      passwordHash: passwordHash ?? this.passwordHash,
       country: country is String? ? country : this.country,
       timezone: timezone ?? this.timezone,
-      preferred_language: preferred_language ?? this.preferred_language,
-      consent_given_at: consent_given_at is DateTime?
-          ? consent_given_at
-          : this.consent_given_at,
-      created_at: created_at ?? this.created_at,
+      preferredLanguage: preferredLanguage ?? this.preferredLanguage,
+      consentGivenAt: consentGivenAt is DateTime?
+          ? consentGivenAt
+          : this.consentGivenAt,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 }

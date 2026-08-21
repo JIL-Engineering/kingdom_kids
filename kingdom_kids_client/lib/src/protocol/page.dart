@@ -15,27 +15,27 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 abstract class Page implements _i1.SerializableModel {
   Page._({
     this.id,
-    required this.book_id,
-    required this.page_number,
-    required this.illustration_asset,
-    required this.layout_type,
+    required this.bookId,
+    required this.pageNumber,
+    required this.illustrationAsset,
+    required this.layoutType,
   });
 
   factory Page({
     int? id,
-    required int book_id,
-    required int page_number,
-    required String illustration_asset,
-    required String layout_type,
+    required int bookId,
+    required int pageNumber,
+    required String illustrationAsset,
+    required String layoutType,
   }) = _PageImpl;
 
   factory Page.fromJson(Map<String, dynamic> jsonSerialization) {
     return Page(
       id: jsonSerialization['id'] as int?,
-      book_id: jsonSerialization['book_id'] as int,
-      page_number: jsonSerialization['page_number'] as int,
-      illustration_asset: jsonSerialization['illustration_asset'] as String,
-      layout_type: jsonSerialization['layout_type'] as String,
+      bookId: jsonSerialization['bookId'] as int,
+      pageNumber: jsonSerialization['pageNumber'] as int,
+      illustrationAsset: jsonSerialization['illustrationAsset'] as String,
+      layoutType: jsonSerialization['layoutType'] as String,
     );
   }
 
@@ -44,33 +44,33 @@ abstract class Page implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  int book_id;
+  int bookId;
 
-  int page_number;
+  int pageNumber;
 
-  String illustration_asset;
+  String illustrationAsset;
 
-  String layout_type;
+  String layoutType;
 
   /// Returns a shallow copy of this [Page]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   Page copyWith({
     int? id,
-    int? book_id,
-    int? page_number,
-    String? illustration_asset,
-    String? layout_type,
+    int? bookId,
+    int? pageNumber,
+    String? illustrationAsset,
+    String? layoutType,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'Page',
       if (id != null) 'id': id,
-      'book_id': book_id,
-      'page_number': page_number,
-      'illustration_asset': illustration_asset,
-      'layout_type': layout_type,
+      'bookId': bookId,
+      'pageNumber': pageNumber,
+      'illustrationAsset': illustrationAsset,
+      'layoutType': layoutType,
     };
   }
 
@@ -85,16 +85,16 @@ class _Undefined {}
 class _PageImpl extends Page {
   _PageImpl({
     int? id,
-    required int book_id,
-    required int page_number,
-    required String illustration_asset,
-    required String layout_type,
+    required int bookId,
+    required int pageNumber,
+    required String illustrationAsset,
+    required String layoutType,
   }) : super._(
          id: id,
-         book_id: book_id,
-         page_number: page_number,
-         illustration_asset: illustration_asset,
-         layout_type: layout_type,
+         bookId: bookId,
+         pageNumber: pageNumber,
+         illustrationAsset: illustrationAsset,
+         layoutType: layoutType,
        );
 
   /// Returns a shallow copy of this [Page]
@@ -103,17 +103,17 @@ class _PageImpl extends Page {
   @override
   Page copyWith({
     Object? id = _Undefined,
-    int? book_id,
-    int? page_number,
-    String? illustration_asset,
-    String? layout_type,
+    int? bookId,
+    int? pageNumber,
+    String? illustrationAsset,
+    String? layoutType,
   }) {
     return Page(
       id: id is int? ? id : this.id,
-      book_id: book_id ?? this.book_id,
-      page_number: page_number ?? this.page_number,
-      illustration_asset: illustration_asset ?? this.illustration_asset,
-      layout_type: layout_type ?? this.layout_type,
+      bookId: bookId ?? this.bookId,
+      pageNumber: pageNumber ?? this.pageNumber,
+      illustrationAsset: illustrationAsset ?? this.illustrationAsset,
+      layoutType: layoutType ?? this.layoutType,
     );
   }
 }

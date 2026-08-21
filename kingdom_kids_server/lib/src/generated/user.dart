@@ -16,40 +16,40 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   User._({
     this.id,
     required this.email,
-    required this.password_hash,
+    required this.passwordHash,
     this.country,
     required this.timezone,
-    required this.preferred_language,
-    this.consent_given_at,
-    required this.created_at,
+    required this.preferredLanguage,
+    this.consentGivenAt,
+    required this.createdAt,
   });
 
   factory User({
     int? id,
     required String email,
-    required String password_hash,
+    required String passwordHash,
     String? country,
     required String timezone,
-    required String preferred_language,
-    DateTime? consent_given_at,
-    required DateTime created_at,
+    required String preferredLanguage,
+    DateTime? consentGivenAt,
+    required DateTime createdAt,
   }) = _UserImpl;
 
   factory User.fromJson(Map<String, dynamic> jsonSerialization) {
     return User(
       id: jsonSerialization['id'] as int?,
       email: jsonSerialization['email'] as String,
-      password_hash: jsonSerialization['password_hash'] as String,
+      passwordHash: jsonSerialization['passwordHash'] as String,
       country: jsonSerialization['country'] as String?,
       timezone: jsonSerialization['timezone'] as String,
-      preferred_language: jsonSerialization['preferred_language'] as String,
-      consent_given_at: jsonSerialization['consent_given_at'] == null
+      preferredLanguage: jsonSerialization['preferredLanguage'] as String,
+      consentGivenAt: jsonSerialization['consentGivenAt'] == null
           ? null
           : _i1.DateTimeJsonExtension.fromJson(
-              jsonSerialization['consent_given_at'],
+              jsonSerialization['consentGivenAt'],
             ),
-      created_at: _i1.DateTimeJsonExtension.fromJson(
-        jsonSerialization['created_at'],
+      createdAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['createdAt'],
       ),
     );
   }
@@ -63,17 +63,17 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
 
   String email;
 
-  String password_hash;
+  String passwordHash;
 
   String? country;
 
   String timezone;
 
-  String preferred_language;
+  String preferredLanguage;
 
-  DateTime? consent_given_at;
+  DateTime? consentGivenAt;
 
-  DateTime created_at;
+  DateTime createdAt;
 
   @override
   _i1.Table<int?> get table => t;
@@ -84,12 +84,12 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   User copyWith({
     int? id,
     String? email,
-    String? password_hash,
+    String? passwordHash,
     String? country,
     String? timezone,
-    String? preferred_language,
-    DateTime? consent_given_at,
-    DateTime? created_at,
+    String? preferredLanguage,
+    DateTime? consentGivenAt,
+    DateTime? createdAt,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -97,13 +97,12 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       '__className__': 'User',
       if (id != null) 'id': id,
       'email': email,
-      'password_hash': password_hash,
+      'passwordHash': passwordHash,
       if (country != null) 'country': country,
       'timezone': timezone,
-      'preferred_language': preferred_language,
-      if (consent_given_at != null)
-        'consent_given_at': consent_given_at?.toJson(),
-      'created_at': created_at.toJson(),
+      'preferredLanguage': preferredLanguage,
+      if (consentGivenAt != null) 'consentGivenAt': consentGivenAt?.toJson(),
+      'createdAt': createdAt.toJson(),
     };
   }
 
@@ -113,13 +112,12 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       '__className__': 'User',
       if (id != null) 'id': id,
       'email': email,
-      'password_hash': password_hash,
+      'passwordHash': passwordHash,
       if (country != null) 'country': country,
       'timezone': timezone,
-      'preferred_language': preferred_language,
-      if (consent_given_at != null)
-        'consent_given_at': consent_given_at?.toJson(),
-      'created_at': created_at.toJson(),
+      'preferredLanguage': preferredLanguage,
+      if (consentGivenAt != null) 'consentGivenAt': consentGivenAt?.toJson(),
+      'createdAt': createdAt.toJson(),
     };
   }
 
@@ -161,21 +159,21 @@ class _UserImpl extends User {
   _UserImpl({
     int? id,
     required String email,
-    required String password_hash,
+    required String passwordHash,
     String? country,
     required String timezone,
-    required String preferred_language,
-    DateTime? consent_given_at,
-    required DateTime created_at,
+    required String preferredLanguage,
+    DateTime? consentGivenAt,
+    required DateTime createdAt,
   }) : super._(
          id: id,
          email: email,
-         password_hash: password_hash,
+         passwordHash: passwordHash,
          country: country,
          timezone: timezone,
-         preferred_language: preferred_language,
-         consent_given_at: consent_given_at,
-         created_at: created_at,
+         preferredLanguage: preferredLanguage,
+         consentGivenAt: consentGivenAt,
+         createdAt: createdAt,
        );
 
   /// Returns a shallow copy of this [User]
@@ -185,24 +183,24 @@ class _UserImpl extends User {
   User copyWith({
     Object? id = _Undefined,
     String? email,
-    String? password_hash,
+    String? passwordHash,
     Object? country = _Undefined,
     String? timezone,
-    String? preferred_language,
-    Object? consent_given_at = _Undefined,
-    DateTime? created_at,
+    String? preferredLanguage,
+    Object? consentGivenAt = _Undefined,
+    DateTime? createdAt,
   }) {
     return User(
       id: id is int? ? id : this.id,
       email: email ?? this.email,
-      password_hash: password_hash ?? this.password_hash,
+      passwordHash: passwordHash ?? this.passwordHash,
       country: country is String? ? country : this.country,
       timezone: timezone ?? this.timezone,
-      preferred_language: preferred_language ?? this.preferred_language,
-      consent_given_at: consent_given_at is DateTime?
-          ? consent_given_at
-          : this.consent_given_at,
-      created_at: created_at ?? this.created_at,
+      preferredLanguage: preferredLanguage ?? this.preferredLanguage,
+      consentGivenAt: consentGivenAt is DateTime?
+          ? consentGivenAt
+          : this.consentGivenAt,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 }
@@ -215,11 +213,10 @@ class UserUpdateTable extends _i1.UpdateTable<UserTable> {
     value,
   );
 
-  _i1.ColumnValue<String, String> password_hash(String value) =>
-      _i1.ColumnValue(
-        table.password_hash,
-        value,
-      );
+  _i1.ColumnValue<String, String> passwordHash(String value) => _i1.ColumnValue(
+    table.passwordHash,
+    value,
+  );
 
   _i1.ColumnValue<String, String> country(String? value) => _i1.ColumnValue(
     table.country,
@@ -231,21 +228,21 @@ class UserUpdateTable extends _i1.UpdateTable<UserTable> {
     value,
   );
 
-  _i1.ColumnValue<String, String> preferred_language(String value) =>
+  _i1.ColumnValue<String, String> preferredLanguage(String value) =>
       _i1.ColumnValue(
-        table.preferred_language,
+        table.preferredLanguage,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> consent_given_at(DateTime? value) =>
+  _i1.ColumnValue<DateTime, DateTime> consentGivenAt(DateTime? value) =>
       _i1.ColumnValue(
-        table.consent_given_at,
+        table.consentGivenAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> created_at(DateTime value) =>
+  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
       _i1.ColumnValue(
-        table.created_at,
+        table.createdAt,
         value,
       );
 }
@@ -257,8 +254,8 @@ class UserTable extends _i1.Table<int?> {
       'email',
       this,
     );
-    password_hash = _i1.ColumnString(
-      'password_hash',
+    passwordHash = _i1.ColumnString(
+      'passwordHash',
       this,
     );
     country = _i1.ColumnString(
@@ -269,16 +266,16 @@ class UserTable extends _i1.Table<int?> {
       'timezone',
       this,
     );
-    preferred_language = _i1.ColumnString(
-      'preferred_language',
+    preferredLanguage = _i1.ColumnString(
+      'preferredLanguage',
       this,
     );
-    consent_given_at = _i1.ColumnDateTime(
-      'consent_given_at',
+    consentGivenAt = _i1.ColumnDateTime(
+      'consentGivenAt',
       this,
     );
-    created_at = _i1.ColumnDateTime(
-      'created_at',
+    createdAt = _i1.ColumnDateTime(
+      'createdAt',
       this,
     );
   }
@@ -287,28 +284,28 @@ class UserTable extends _i1.Table<int?> {
 
   late final _i1.ColumnString email;
 
-  late final _i1.ColumnString password_hash;
+  late final _i1.ColumnString passwordHash;
 
   late final _i1.ColumnString country;
 
   late final _i1.ColumnString timezone;
 
-  late final _i1.ColumnString preferred_language;
+  late final _i1.ColumnString preferredLanguage;
 
-  late final _i1.ColumnDateTime consent_given_at;
+  late final _i1.ColumnDateTime consentGivenAt;
 
-  late final _i1.ColumnDateTime created_at;
+  late final _i1.ColumnDateTime createdAt;
 
   @override
   List<_i1.Column> get columns => [
     id,
     email,
-    password_hash,
+    passwordHash,
     country,
     timezone,
-    preferred_language,
-    consent_given_at,
-    created_at,
+    preferredLanguage,
+    consentGivenAt,
+    createdAt,
   ];
 }
 

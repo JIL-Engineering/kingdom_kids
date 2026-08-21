@@ -16,46 +16,46 @@ abstract class ReadingProgress
     implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   ReadingProgress._({
     this.id,
-    required this.child_id,
-    required this.book_id,
-    required this.current_page,
+    required this.childId,
+    required this.bookId,
+    required this.currentPage,
     required this.completed,
-    required this.started_at,
-    this.completed_at,
-    required this.total_time_seconds,
-    required this.synced_at,
+    required this.startedAt,
+    this.completedAt,
+    required this.totalTimeSeconds,
+    required this.syncedAt,
   });
 
   factory ReadingProgress({
     int? id,
-    required int child_id,
-    required int book_id,
-    required int current_page,
+    required int childId,
+    required int bookId,
+    required int currentPage,
     required bool completed,
-    required DateTime started_at,
-    DateTime? completed_at,
-    required int total_time_seconds,
-    required DateTime synced_at,
+    required DateTime startedAt,
+    DateTime? completedAt,
+    required int totalTimeSeconds,
+    required DateTime syncedAt,
   }) = _ReadingProgressImpl;
 
   factory ReadingProgress.fromJson(Map<String, dynamic> jsonSerialization) {
     return ReadingProgress(
       id: jsonSerialization['id'] as int?,
-      child_id: jsonSerialization['child_id'] as int,
-      book_id: jsonSerialization['book_id'] as int,
-      current_page: jsonSerialization['current_page'] as int,
+      childId: jsonSerialization['childId'] as int,
+      bookId: jsonSerialization['bookId'] as int,
+      currentPage: jsonSerialization['currentPage'] as int,
       completed: _i1.BoolJsonExtension.fromJson(jsonSerialization['completed']),
-      started_at: _i1.DateTimeJsonExtension.fromJson(
-        jsonSerialization['started_at'],
+      startedAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['startedAt'],
       ),
-      completed_at: jsonSerialization['completed_at'] == null
+      completedAt: jsonSerialization['completedAt'] == null
           ? null
           : _i1.DateTimeJsonExtension.fromJson(
-              jsonSerialization['completed_at'],
+              jsonSerialization['completedAt'],
             ),
-      total_time_seconds: jsonSerialization['total_time_seconds'] as int,
-      synced_at: _i1.DateTimeJsonExtension.fromJson(
-        jsonSerialization['synced_at'],
+      totalTimeSeconds: jsonSerialization['totalTimeSeconds'] as int,
+      syncedAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['syncedAt'],
       ),
     );
   }
@@ -67,21 +67,21 @@ abstract class ReadingProgress
   @override
   int? id;
 
-  int child_id;
+  int childId;
 
-  int book_id;
+  int bookId;
 
-  int current_page;
+  int currentPage;
 
   bool completed;
 
-  DateTime started_at;
+  DateTime startedAt;
 
-  DateTime? completed_at;
+  DateTime? completedAt;
 
-  int total_time_seconds;
+  int totalTimeSeconds;
 
-  DateTime synced_at;
+  DateTime syncedAt;
 
   @override
   _i1.Table<int?> get table => t;
@@ -91,28 +91,28 @@ abstract class ReadingProgress
   @_i1.useResult
   ReadingProgress copyWith({
     int? id,
-    int? child_id,
-    int? book_id,
-    int? current_page,
+    int? childId,
+    int? bookId,
+    int? currentPage,
     bool? completed,
-    DateTime? started_at,
-    DateTime? completed_at,
-    int? total_time_seconds,
-    DateTime? synced_at,
+    DateTime? startedAt,
+    DateTime? completedAt,
+    int? totalTimeSeconds,
+    DateTime? syncedAt,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'ReadingProgress',
       if (id != null) 'id': id,
-      'child_id': child_id,
-      'book_id': book_id,
-      'current_page': current_page,
+      'childId': childId,
+      'bookId': bookId,
+      'currentPage': currentPage,
       'completed': completed,
-      'started_at': started_at.toJson(),
-      if (completed_at != null) 'completed_at': completed_at?.toJson(),
-      'total_time_seconds': total_time_seconds,
-      'synced_at': synced_at.toJson(),
+      'startedAt': startedAt.toJson(),
+      if (completedAt != null) 'completedAt': completedAt?.toJson(),
+      'totalTimeSeconds': totalTimeSeconds,
+      'syncedAt': syncedAt.toJson(),
     };
   }
 
@@ -121,14 +121,14 @@ abstract class ReadingProgress
     return {
       '__className__': 'ReadingProgress',
       if (id != null) 'id': id,
-      'child_id': child_id,
-      'book_id': book_id,
-      'current_page': current_page,
+      'childId': childId,
+      'bookId': bookId,
+      'currentPage': currentPage,
       'completed': completed,
-      'started_at': started_at.toJson(),
-      if (completed_at != null) 'completed_at': completed_at?.toJson(),
-      'total_time_seconds': total_time_seconds,
-      'synced_at': synced_at.toJson(),
+      'startedAt': startedAt.toJson(),
+      if (completedAt != null) 'completedAt': completedAt?.toJson(),
+      'totalTimeSeconds': totalTimeSeconds,
+      'syncedAt': syncedAt.toJson(),
     };
   }
 
@@ -169,24 +169,24 @@ class _Undefined {}
 class _ReadingProgressImpl extends ReadingProgress {
   _ReadingProgressImpl({
     int? id,
-    required int child_id,
-    required int book_id,
-    required int current_page,
+    required int childId,
+    required int bookId,
+    required int currentPage,
     required bool completed,
-    required DateTime started_at,
-    DateTime? completed_at,
-    required int total_time_seconds,
-    required DateTime synced_at,
+    required DateTime startedAt,
+    DateTime? completedAt,
+    required int totalTimeSeconds,
+    required DateTime syncedAt,
   }) : super._(
          id: id,
-         child_id: child_id,
-         book_id: book_id,
-         current_page: current_page,
+         childId: childId,
+         bookId: bookId,
+         currentPage: currentPage,
          completed: completed,
-         started_at: started_at,
-         completed_at: completed_at,
-         total_time_seconds: total_time_seconds,
-         synced_at: synced_at,
+         startedAt: startedAt,
+         completedAt: completedAt,
+         totalTimeSeconds: totalTimeSeconds,
+         syncedAt: syncedAt,
        );
 
   /// Returns a shallow copy of this [ReadingProgress]
@@ -195,27 +195,25 @@ class _ReadingProgressImpl extends ReadingProgress {
   @override
   ReadingProgress copyWith({
     Object? id = _Undefined,
-    int? child_id,
-    int? book_id,
-    int? current_page,
+    int? childId,
+    int? bookId,
+    int? currentPage,
     bool? completed,
-    DateTime? started_at,
-    Object? completed_at = _Undefined,
-    int? total_time_seconds,
-    DateTime? synced_at,
+    DateTime? startedAt,
+    Object? completedAt = _Undefined,
+    int? totalTimeSeconds,
+    DateTime? syncedAt,
   }) {
     return ReadingProgress(
       id: id is int? ? id : this.id,
-      child_id: child_id ?? this.child_id,
-      book_id: book_id ?? this.book_id,
-      current_page: current_page ?? this.current_page,
+      childId: childId ?? this.childId,
+      bookId: bookId ?? this.bookId,
+      currentPage: currentPage ?? this.currentPage,
       completed: completed ?? this.completed,
-      started_at: started_at ?? this.started_at,
-      completed_at: completed_at is DateTime?
-          ? completed_at
-          : this.completed_at,
-      total_time_seconds: total_time_seconds ?? this.total_time_seconds,
-      synced_at: synced_at ?? this.synced_at,
+      startedAt: startedAt ?? this.startedAt,
+      completedAt: completedAt is DateTime? ? completedAt : this.completedAt,
+      totalTimeSeconds: totalTimeSeconds ?? this.totalTimeSeconds,
+      syncedAt: syncedAt ?? this.syncedAt,
     );
   }
 }
@@ -223,18 +221,18 @@ class _ReadingProgressImpl extends ReadingProgress {
 class ReadingProgressUpdateTable extends _i1.UpdateTable<ReadingProgressTable> {
   ReadingProgressUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> child_id(int value) => _i1.ColumnValue(
-    table.child_id,
+  _i1.ColumnValue<int, int> childId(int value) => _i1.ColumnValue(
+    table.childId,
     value,
   );
 
-  _i1.ColumnValue<int, int> book_id(int value) => _i1.ColumnValue(
-    table.book_id,
+  _i1.ColumnValue<int, int> bookId(int value) => _i1.ColumnValue(
+    table.bookId,
     value,
   );
 
-  _i1.ColumnValue<int, int> current_page(int value) => _i1.ColumnValue(
-    table.current_page,
+  _i1.ColumnValue<int, int> currentPage(int value) => _i1.ColumnValue(
+    table.currentPage,
     value,
   );
 
@@ -243,26 +241,26 @@ class ReadingProgressUpdateTable extends _i1.UpdateTable<ReadingProgressTable> {
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> started_at(DateTime value) =>
+  _i1.ColumnValue<DateTime, DateTime> startedAt(DateTime value) =>
       _i1.ColumnValue(
-        table.started_at,
+        table.startedAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> completed_at(DateTime? value) =>
+  _i1.ColumnValue<DateTime, DateTime> completedAt(DateTime? value) =>
       _i1.ColumnValue(
-        table.completed_at,
+        table.completedAt,
         value,
       );
 
-  _i1.ColumnValue<int, int> total_time_seconds(int value) => _i1.ColumnValue(
-    table.total_time_seconds,
+  _i1.ColumnValue<int, int> totalTimeSeconds(int value) => _i1.ColumnValue(
+    table.totalTimeSeconds,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> synced_at(DateTime value) =>
+  _i1.ColumnValue<DateTime, DateTime> syncedAt(DateTime value) =>
       _i1.ColumnValue(
-        table.synced_at,
+        table.syncedAt,
         value,
       );
 }
@@ -271,69 +269,69 @@ class ReadingProgressTable extends _i1.Table<int?> {
   ReadingProgressTable({super.tableRelation})
     : super(tableName: 'reading_progress') {
     updateTable = ReadingProgressUpdateTable(this);
-    child_id = _i1.ColumnInt(
-      'child_id',
+    childId = _i1.ColumnInt(
+      'childId',
       this,
     );
-    book_id = _i1.ColumnInt(
-      'book_id',
+    bookId = _i1.ColumnInt(
+      'bookId',
       this,
     );
-    current_page = _i1.ColumnInt(
-      'current_page',
+    currentPage = _i1.ColumnInt(
+      'currentPage',
       this,
     );
     completed = _i1.ColumnBool(
       'completed',
       this,
     );
-    started_at = _i1.ColumnDateTime(
-      'started_at',
+    startedAt = _i1.ColumnDateTime(
+      'startedAt',
       this,
     );
-    completed_at = _i1.ColumnDateTime(
-      'completed_at',
+    completedAt = _i1.ColumnDateTime(
+      'completedAt',
       this,
     );
-    total_time_seconds = _i1.ColumnInt(
-      'total_time_seconds',
+    totalTimeSeconds = _i1.ColumnInt(
+      'totalTimeSeconds',
       this,
     );
-    synced_at = _i1.ColumnDateTime(
-      'synced_at',
+    syncedAt = _i1.ColumnDateTime(
+      'syncedAt',
       this,
     );
   }
 
   late final ReadingProgressUpdateTable updateTable;
 
-  late final _i1.ColumnInt child_id;
+  late final _i1.ColumnInt childId;
 
-  late final _i1.ColumnInt book_id;
+  late final _i1.ColumnInt bookId;
 
-  late final _i1.ColumnInt current_page;
+  late final _i1.ColumnInt currentPage;
 
   late final _i1.ColumnBool completed;
 
-  late final _i1.ColumnDateTime started_at;
+  late final _i1.ColumnDateTime startedAt;
 
-  late final _i1.ColumnDateTime completed_at;
+  late final _i1.ColumnDateTime completedAt;
 
-  late final _i1.ColumnInt total_time_seconds;
+  late final _i1.ColumnInt totalTimeSeconds;
 
-  late final _i1.ColumnDateTime synced_at;
+  late final _i1.ColumnDateTime syncedAt;
 
   @override
   List<_i1.Column> get columns => [
     id,
-    child_id,
-    book_id,
-    current_page,
+    childId,
+    bookId,
+    currentPage,
     completed,
-    started_at,
-    completed_at,
-    total_time_seconds,
-    synced_at,
+    startedAt,
+    completedAt,
+    totalTimeSeconds,
+    syncedAt,
   ];
 }
 

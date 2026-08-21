@@ -19,8 +19,8 @@ abstract class Badge implements _i1.SerializableModel {
     required this.code,
     required this.name,
     required this.description,
-    required this.icon_asset,
-    required this.trigger_rule,
+    required this.iconAsset,
+    required this.triggerRule,
   });
 
   factory Badge({
@@ -28,8 +28,8 @@ abstract class Badge implements _i1.SerializableModel {
     required String code,
     required String name,
     required String description,
-    required String icon_asset,
-    required Map<String, dynamic> trigger_rule,
+    required String iconAsset,
+    required Map<String, dynamic> triggerRule,
   }) = _BadgeImpl;
 
   factory Badge.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -38,9 +38,9 @@ abstract class Badge implements _i1.SerializableModel {
       code: jsonSerialization['code'] as String,
       name: jsonSerialization['name'] as String,
       description: jsonSerialization['description'] as String,
-      icon_asset: jsonSerialization['icon_asset'] as String,
-      trigger_rule: _i2.Protocol().deserialize<Map<String, dynamic>>(
-        jsonSerialization['trigger_rule'],
+      iconAsset: jsonSerialization['iconAsset'] as String,
+      triggerRule: _i2.Protocol().deserialize<Map<String, dynamic>>(
+        jsonSerialization['triggerRule'],
       ),
     );
   }
@@ -56,9 +56,9 @@ abstract class Badge implements _i1.SerializableModel {
 
   String description;
 
-  String icon_asset;
+  String iconAsset;
 
-  Map<String, dynamic> trigger_rule;
+  Map<String, dynamic> triggerRule;
 
   /// Returns a shallow copy of this [Badge]
   /// with some or all fields replaced by the given arguments.
@@ -68,8 +68,8 @@ abstract class Badge implements _i1.SerializableModel {
     String? code,
     String? name,
     String? description,
-    String? icon_asset,
-    Map<String, dynamic>? trigger_rule,
+    String? iconAsset,
+    Map<String, dynamic>? triggerRule,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -79,8 +79,8 @@ abstract class Badge implements _i1.SerializableModel {
       'code': code,
       'name': name,
       'description': description,
-      'icon_asset': icon_asset,
-      'trigger_rule': trigger_rule.toJson(
+      'iconAsset': iconAsset,
+      'triggerRule': triggerRule.toJson(
         valueToJson: (v) => _i2.Protocol().dynamicFieldToJson(v),
       ),
     };
@@ -100,15 +100,15 @@ class _BadgeImpl extends Badge {
     required String code,
     required String name,
     required String description,
-    required String icon_asset,
-    required Map<String, dynamic> trigger_rule,
+    required String iconAsset,
+    required Map<String, dynamic> triggerRule,
   }) : super._(
          id: id,
          code: code,
          name: name,
          description: description,
-         icon_asset: icon_asset,
-         trigger_rule: trigger_rule,
+         iconAsset: iconAsset,
+         triggerRule: triggerRule,
        );
 
   /// Returns a shallow copy of this [Badge]
@@ -120,18 +120,18 @@ class _BadgeImpl extends Badge {
     String? code,
     String? name,
     String? description,
-    String? icon_asset,
-    Map<String, dynamic>? trigger_rule,
+    String? iconAsset,
+    Map<String, dynamic>? triggerRule,
   }) {
     return Badge(
       id: id is int? ? id : this.id,
       code: code ?? this.code,
       name: name ?? this.name,
       description: description ?? this.description,
-      icon_asset: icon_asset ?? this.icon_asset,
-      trigger_rule:
-          trigger_rule ??
-          this.trigger_rule.map(
+      iconAsset: iconAsset ?? this.iconAsset,
+      triggerRule:
+          triggerRule ??
+          this.triggerRule.map(
             (
               key0,
               value0,

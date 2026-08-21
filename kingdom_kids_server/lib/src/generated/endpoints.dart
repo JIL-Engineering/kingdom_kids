@@ -13,11 +13,18 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../auth/email_idp_endpoint.dart' as _i2;
 import '../auth/jwt_refresh_endpoint.dart' as _i3;
-import '../greetings/greeting_endpoint.dart' as _i4;
+import '../endpoints/auth_endpoint.dart' as _i4;
+import '../endpoints/badge_endpoint.dart' as _i5;
+import '../endpoints/child_endpoint.dart' as _i6;
+import '../endpoints/dashboard_endpoint.dart' as _i7;
+import '../endpoints/devotional_endpoint.dart' as _i8;
+import '../endpoints/library_endpoint.dart' as _i9;
+import '../endpoints/progress_endpoint.dart' as _i10;
+import '../greetings/greeting_endpoint.dart' as _i11;
 import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
-    as _i5;
+    as _i12;
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
-    as _i6;
+    as _i13;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -35,7 +42,49 @@ class Endpoints extends _i1.EndpointDispatch {
           'jwtRefresh',
           null,
         ),
-      'greeting': _i4.GreetingEndpoint()
+      'auth': _i4.AuthEndpoint()
+        ..initialize(
+          server,
+          'auth',
+          null,
+        ),
+      'badge': _i5.BadgeEndpoint()
+        ..initialize(
+          server,
+          'badge',
+          null,
+        ),
+      'child': _i6.ChildEndpoint()
+        ..initialize(
+          server,
+          'child',
+          null,
+        ),
+      'dashboard': _i7.DashboardEndpoint()
+        ..initialize(
+          server,
+          'dashboard',
+          null,
+        ),
+      'devotional': _i8.DevotionalEndpoint()
+        ..initialize(
+          server,
+          'devotional',
+          null,
+        ),
+      'library': _i9.LibraryEndpoint()
+        ..initialize(
+          server,
+          'library',
+          null,
+        ),
+      'progress': _i10.ProgressEndpoint()
+        ..initialize(
+          server,
+          'progress',
+          null,
+        ),
+      'greeting': _i11.GreetingEndpoint()
         ..initialize(
           server,
           'greeting',
@@ -246,6 +295,41 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
+    connectors['auth'] = _i1.EndpointConnector(
+      name: 'auth',
+      endpoint: endpoints['auth']!,
+      methodConnectors: {},
+    );
+    connectors['badge'] = _i1.EndpointConnector(
+      name: 'badge',
+      endpoint: endpoints['badge']!,
+      methodConnectors: {},
+    );
+    connectors['child'] = _i1.EndpointConnector(
+      name: 'child',
+      endpoint: endpoints['child']!,
+      methodConnectors: {},
+    );
+    connectors['dashboard'] = _i1.EndpointConnector(
+      name: 'dashboard',
+      endpoint: endpoints['dashboard']!,
+      methodConnectors: {},
+    );
+    connectors['devotional'] = _i1.EndpointConnector(
+      name: 'devotional',
+      endpoint: endpoints['devotional']!,
+      methodConnectors: {},
+    );
+    connectors['library'] = _i1.EndpointConnector(
+      name: 'library',
+      endpoint: endpoints['library']!,
+      methodConnectors: {},
+    );
+    connectors['progress'] = _i1.EndpointConnector(
+      name: 'progress',
+      endpoint: endpoints['progress']!,
+      methodConnectors: {},
+    );
     connectors['greeting'] = _i1.EndpointConnector(
       name: 'greeting',
       endpoint: endpoints['greeting']!,
@@ -263,16 +347,16 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['greeting'] as _i4.GreetingEndpoint).hello(
+              ) async => (endpoints['greeting'] as _i11.GreetingEndpoint).hello(
                 session,
                 params['name'],
               ),
         ),
       },
     );
-    modules['serverpod_auth_idp'] = _i5.Endpoints()
+    modules['serverpod_auth_idp'] = _i12.Endpoints()
       ..initializeEndpoints(server);
-    modules['serverpod_auth_core'] = _i6.Endpoints()
+    modules['serverpod_auth_core'] = _i13.Endpoints()
       ..initializeEndpoints(server);
   }
 }

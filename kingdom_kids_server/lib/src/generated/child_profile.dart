@@ -16,42 +16,42 @@ abstract class ChildProfile
     implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   ChildProfile._({
     this.id,
-    required this.parent_id,
-    required this.display_name,
-    required this.birth_year,
-    required this.age_bracket,
-    required this.preferred_language,
-    required this.avatar_id,
-    required this.pin_protected,
-    required this.created_at,
+    required this.parentId,
+    required this.displayName,
+    required this.birthYear,
+    required this.ageBracket,
+    required this.preferredLanguage,
+    required this.avatarId,
+    required this.pinProtected,
+    required this.createdAt,
   });
 
   factory ChildProfile({
     int? id,
-    required int parent_id,
-    required String display_name,
-    required int birth_year,
-    required String age_bracket,
-    required String preferred_language,
-    required String avatar_id,
-    required bool pin_protected,
-    required DateTime created_at,
+    required int parentId,
+    required String displayName,
+    required int birthYear,
+    required String ageBracket,
+    required String preferredLanguage,
+    required String avatarId,
+    required bool pinProtected,
+    required DateTime createdAt,
   }) = _ChildProfileImpl;
 
   factory ChildProfile.fromJson(Map<String, dynamic> jsonSerialization) {
     return ChildProfile(
       id: jsonSerialization['id'] as int?,
-      parent_id: jsonSerialization['parent_id'] as int,
-      display_name: jsonSerialization['display_name'] as String,
-      birth_year: jsonSerialization['birth_year'] as int,
-      age_bracket: jsonSerialization['age_bracket'] as String,
-      preferred_language: jsonSerialization['preferred_language'] as String,
-      avatar_id: jsonSerialization['avatar_id'] as String,
-      pin_protected: _i1.BoolJsonExtension.fromJson(
-        jsonSerialization['pin_protected'],
+      parentId: jsonSerialization['parentId'] as int,
+      displayName: jsonSerialization['displayName'] as String,
+      birthYear: jsonSerialization['birthYear'] as int,
+      ageBracket: jsonSerialization['ageBracket'] as String,
+      preferredLanguage: jsonSerialization['preferredLanguage'] as String,
+      avatarId: jsonSerialization['avatarId'] as String,
+      pinProtected: _i1.BoolJsonExtension.fromJson(
+        jsonSerialization['pinProtected'],
       ),
-      created_at: _i1.DateTimeJsonExtension.fromJson(
-        jsonSerialization['created_at'],
+      createdAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['createdAt'],
       ),
     );
   }
@@ -63,21 +63,21 @@ abstract class ChildProfile
   @override
   int? id;
 
-  int parent_id;
+  int parentId;
 
-  String display_name;
+  String displayName;
 
-  int birth_year;
+  int birthYear;
 
-  String age_bracket;
+  String ageBracket;
 
-  String preferred_language;
+  String preferredLanguage;
 
-  String avatar_id;
+  String avatarId;
 
-  bool pin_protected;
+  bool pinProtected;
 
-  DateTime created_at;
+  DateTime createdAt;
 
   @override
   _i1.Table<int?> get table => t;
@@ -87,28 +87,28 @@ abstract class ChildProfile
   @_i1.useResult
   ChildProfile copyWith({
     int? id,
-    int? parent_id,
-    String? display_name,
-    int? birth_year,
-    String? age_bracket,
-    String? preferred_language,
-    String? avatar_id,
-    bool? pin_protected,
-    DateTime? created_at,
+    int? parentId,
+    String? displayName,
+    int? birthYear,
+    String? ageBracket,
+    String? preferredLanguage,
+    String? avatarId,
+    bool? pinProtected,
+    DateTime? createdAt,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'ChildProfile',
       if (id != null) 'id': id,
-      'parent_id': parent_id,
-      'display_name': display_name,
-      'birth_year': birth_year,
-      'age_bracket': age_bracket,
-      'preferred_language': preferred_language,
-      'avatar_id': avatar_id,
-      'pin_protected': pin_protected,
-      'created_at': created_at.toJson(),
+      'parentId': parentId,
+      'displayName': displayName,
+      'birthYear': birthYear,
+      'ageBracket': ageBracket,
+      'preferredLanguage': preferredLanguage,
+      'avatarId': avatarId,
+      'pinProtected': pinProtected,
+      'createdAt': createdAt.toJson(),
     };
   }
 
@@ -117,14 +117,14 @@ abstract class ChildProfile
     return {
       '__className__': 'ChildProfile',
       if (id != null) 'id': id,
-      'parent_id': parent_id,
-      'display_name': display_name,
-      'birth_year': birth_year,
-      'age_bracket': age_bracket,
-      'preferred_language': preferred_language,
-      'avatar_id': avatar_id,
-      'pin_protected': pin_protected,
-      'created_at': created_at.toJson(),
+      'parentId': parentId,
+      'displayName': displayName,
+      'birthYear': birthYear,
+      'ageBracket': ageBracket,
+      'preferredLanguage': preferredLanguage,
+      'avatarId': avatarId,
+      'pinProtected': pinProtected,
+      'createdAt': createdAt.toJson(),
     };
   }
 
@@ -165,24 +165,24 @@ class _Undefined {}
 class _ChildProfileImpl extends ChildProfile {
   _ChildProfileImpl({
     int? id,
-    required int parent_id,
-    required String display_name,
-    required int birth_year,
-    required String age_bracket,
-    required String preferred_language,
-    required String avatar_id,
-    required bool pin_protected,
-    required DateTime created_at,
+    required int parentId,
+    required String displayName,
+    required int birthYear,
+    required String ageBracket,
+    required String preferredLanguage,
+    required String avatarId,
+    required bool pinProtected,
+    required DateTime createdAt,
   }) : super._(
          id: id,
-         parent_id: parent_id,
-         display_name: display_name,
-         birth_year: birth_year,
-         age_bracket: age_bracket,
-         preferred_language: preferred_language,
-         avatar_id: avatar_id,
-         pin_protected: pin_protected,
-         created_at: created_at,
+         parentId: parentId,
+         displayName: displayName,
+         birthYear: birthYear,
+         ageBracket: ageBracket,
+         preferredLanguage: preferredLanguage,
+         avatarId: avatarId,
+         pinProtected: pinProtected,
+         createdAt: createdAt,
        );
 
   /// Returns a shallow copy of this [ChildProfile]
@@ -191,25 +191,25 @@ class _ChildProfileImpl extends ChildProfile {
   @override
   ChildProfile copyWith({
     Object? id = _Undefined,
-    int? parent_id,
-    String? display_name,
-    int? birth_year,
-    String? age_bracket,
-    String? preferred_language,
-    String? avatar_id,
-    bool? pin_protected,
-    DateTime? created_at,
+    int? parentId,
+    String? displayName,
+    int? birthYear,
+    String? ageBracket,
+    String? preferredLanguage,
+    String? avatarId,
+    bool? pinProtected,
+    DateTime? createdAt,
   }) {
     return ChildProfile(
       id: id is int? ? id : this.id,
-      parent_id: parent_id ?? this.parent_id,
-      display_name: display_name ?? this.display_name,
-      birth_year: birth_year ?? this.birth_year,
-      age_bracket: age_bracket ?? this.age_bracket,
-      preferred_language: preferred_language ?? this.preferred_language,
-      avatar_id: avatar_id ?? this.avatar_id,
-      pin_protected: pin_protected ?? this.pin_protected,
-      created_at: created_at ?? this.created_at,
+      parentId: parentId ?? this.parentId,
+      displayName: displayName ?? this.displayName,
+      birthYear: birthYear ?? this.birthYear,
+      ageBracket: ageBracket ?? this.ageBracket,
+      preferredLanguage: preferredLanguage ?? this.preferredLanguage,
+      avatarId: avatarId ?? this.avatarId,
+      pinProtected: pinProtected ?? this.pinProtected,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 }
@@ -217,45 +217,45 @@ class _ChildProfileImpl extends ChildProfile {
 class ChildProfileUpdateTable extends _i1.UpdateTable<ChildProfileTable> {
   ChildProfileUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> parent_id(int value) => _i1.ColumnValue(
-    table.parent_id,
+  _i1.ColumnValue<int, int> parentId(int value) => _i1.ColumnValue(
+    table.parentId,
     value,
   );
 
-  _i1.ColumnValue<String, String> display_name(String value) => _i1.ColumnValue(
-    table.display_name,
+  _i1.ColumnValue<String, String> displayName(String value) => _i1.ColumnValue(
+    table.displayName,
     value,
   );
 
-  _i1.ColumnValue<int, int> birth_year(int value) => _i1.ColumnValue(
-    table.birth_year,
+  _i1.ColumnValue<int, int> birthYear(int value) => _i1.ColumnValue(
+    table.birthYear,
     value,
   );
 
-  _i1.ColumnValue<String, String> age_bracket(String value) => _i1.ColumnValue(
-    table.age_bracket,
+  _i1.ColumnValue<String, String> ageBracket(String value) => _i1.ColumnValue(
+    table.ageBracket,
     value,
   );
 
-  _i1.ColumnValue<String, String> preferred_language(String value) =>
+  _i1.ColumnValue<String, String> preferredLanguage(String value) =>
       _i1.ColumnValue(
-        table.preferred_language,
+        table.preferredLanguage,
         value,
       );
 
-  _i1.ColumnValue<String, String> avatar_id(String value) => _i1.ColumnValue(
-    table.avatar_id,
+  _i1.ColumnValue<String, String> avatarId(String value) => _i1.ColumnValue(
+    table.avatarId,
     value,
   );
 
-  _i1.ColumnValue<bool, bool> pin_protected(bool value) => _i1.ColumnValue(
-    table.pin_protected,
+  _i1.ColumnValue<bool, bool> pinProtected(bool value) => _i1.ColumnValue(
+    table.pinProtected,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> created_at(DateTime value) =>
+  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
       _i1.ColumnValue(
-        table.created_at,
+        table.createdAt,
         value,
       );
 }
@@ -264,69 +264,69 @@ class ChildProfileTable extends _i1.Table<int?> {
   ChildProfileTable({super.tableRelation})
     : super(tableName: 'child_profiles') {
     updateTable = ChildProfileUpdateTable(this);
-    parent_id = _i1.ColumnInt(
-      'parent_id',
+    parentId = _i1.ColumnInt(
+      'parentId',
       this,
     );
-    display_name = _i1.ColumnString(
-      'display_name',
+    displayName = _i1.ColumnString(
+      'displayName',
       this,
     );
-    birth_year = _i1.ColumnInt(
-      'birth_year',
+    birthYear = _i1.ColumnInt(
+      'birthYear',
       this,
     );
-    age_bracket = _i1.ColumnString(
-      'age_bracket',
+    ageBracket = _i1.ColumnString(
+      'ageBracket',
       this,
     );
-    preferred_language = _i1.ColumnString(
-      'preferred_language',
+    preferredLanguage = _i1.ColumnString(
+      'preferredLanguage',
       this,
     );
-    avatar_id = _i1.ColumnString(
-      'avatar_id',
+    avatarId = _i1.ColumnString(
+      'avatarId',
       this,
     );
-    pin_protected = _i1.ColumnBool(
-      'pin_protected',
+    pinProtected = _i1.ColumnBool(
+      'pinProtected',
       this,
     );
-    created_at = _i1.ColumnDateTime(
-      'created_at',
+    createdAt = _i1.ColumnDateTime(
+      'createdAt',
       this,
     );
   }
 
   late final ChildProfileUpdateTable updateTable;
 
-  late final _i1.ColumnInt parent_id;
+  late final _i1.ColumnInt parentId;
 
-  late final _i1.ColumnString display_name;
+  late final _i1.ColumnString displayName;
 
-  late final _i1.ColumnInt birth_year;
+  late final _i1.ColumnInt birthYear;
 
-  late final _i1.ColumnString age_bracket;
+  late final _i1.ColumnString ageBracket;
 
-  late final _i1.ColumnString preferred_language;
+  late final _i1.ColumnString preferredLanguage;
 
-  late final _i1.ColumnString avatar_id;
+  late final _i1.ColumnString avatarId;
 
-  late final _i1.ColumnBool pin_protected;
+  late final _i1.ColumnBool pinProtected;
 
-  late final _i1.ColumnDateTime created_at;
+  late final _i1.ColumnDateTime createdAt;
 
   @override
   List<_i1.Column> get columns => [
     id,
-    parent_id,
-    display_name,
-    birth_year,
-    age_bracket,
-    preferred_language,
-    avatar_id,
-    pin_protected,
-    created_at,
+    parentId,
+    displayName,
+    birthYear,
+    ageBracket,
+    preferredLanguage,
+    avatarId,
+    pinProtected,
+    createdAt,
   ];
 }
 

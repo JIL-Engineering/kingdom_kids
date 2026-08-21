@@ -9,5 +9,12 @@ emailIdp:
   - hasAccount:
 jwtRefresh:
   - refreshAccessToken:
+auth:
+badge:
+child:
+dashboard:
+devotional:
+library:
+progress:
 greeting:
   - hello:

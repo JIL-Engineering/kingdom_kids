@@ -15,27 +15,27 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 abstract class PageContent implements _i1.SerializableModel {
   PageContent._({
     this.id,
-    required this.page_id,
+    required this.pageId,
     required this.language,
     required this.text,
-    required this.audio_asset,
+    required this.audioAsset,
   });
 
   factory PageContent({
     int? id,
-    required int page_id,
+    required int pageId,
     required String language,
     required String text,
-    required String audio_asset,
+    required String audioAsset,
   }) = _PageContentImpl;
 
   factory PageContent.fromJson(Map<String, dynamic> jsonSerialization) {
     return PageContent(
       id: jsonSerialization['id'] as int?,
-      page_id: jsonSerialization['page_id'] as int,
+      pageId: jsonSerialization['pageId'] as int,
       language: jsonSerialization['language'] as String,
       text: jsonSerialization['text'] as String,
-      audio_asset: jsonSerialization['audio_asset'] as String,
+      audioAsset: jsonSerialization['audioAsset'] as String,
     );
   }
 
@@ -44,33 +44,33 @@ abstract class PageContent implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  int page_id;
+  int pageId;
 
   String language;
 
   String text;
 
-  String audio_asset;
+  String audioAsset;
 
   /// Returns a shallow copy of this [PageContent]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   PageContent copyWith({
     int? id,
-    int? page_id,
+    int? pageId,
     String? language,
     String? text,
-    String? audio_asset,
+    String? audioAsset,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'PageContent',
       if (id != null) 'id': id,
-      'page_id': page_id,
+      'pageId': pageId,
       'language': language,
       'text': text,
-      'audio_asset': audio_asset,
+      'audioAsset': audioAsset,
     };
   }
 
@@ -85,16 +85,16 @@ class _Undefined {}
 class _PageContentImpl extends PageContent {
   _PageContentImpl({
     int? id,
-    required int page_id,
+    required int pageId,
     required String language,
     required String text,
-    required String audio_asset,
+    required String audioAsset,
   }) : super._(
          id: id,
-         page_id: page_id,
+         pageId: pageId,
          language: language,
          text: text,
-         audio_asset: audio_asset,
+         audioAsset: audioAsset,
        );
 
   /// Returns a shallow copy of this [PageContent]
@@ -103,17 +103,17 @@ class _PageContentImpl extends PageContent {
   @override
   PageContent copyWith({
     Object? id = _Undefined,
-    int? page_id,
+    int? pageId,
     String? language,
     String? text,
-    String? audio_asset,
+    String? audioAsset,
   }) {
     return PageContent(
       id: id is int? ? id : this.id,
-      page_id: page_id ?? this.page_id,
+      pageId: pageId ?? this.pageId,
       language: language ?? this.language,
       text: text ?? this.text,
-      audio_asset: audio_asset ?? this.audio_asset,
+      audioAsset: audioAsset ?? this.audioAsset,
     );
   }
 }

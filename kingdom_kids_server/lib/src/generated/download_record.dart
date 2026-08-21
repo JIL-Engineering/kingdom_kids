@@ -16,28 +16,28 @@ abstract class DownloadRecord
     implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   DownloadRecord._({
     this.id,
-    required this.child_id,
-    required this.book_id,
-    required this.device_id,
-    required this.downloaded_at,
+    required this.childId,
+    required this.bookId,
+    required this.deviceId,
+    required this.downloadedAt,
   });
 
   factory DownloadRecord({
     int? id,
-    required int child_id,
-    required int book_id,
-    required String device_id,
-    required DateTime downloaded_at,
+    required int childId,
+    required int bookId,
+    required String deviceId,
+    required DateTime downloadedAt,
   }) = _DownloadRecordImpl;
 
   factory DownloadRecord.fromJson(Map<String, dynamic> jsonSerialization) {
     return DownloadRecord(
       id: jsonSerialization['id'] as int?,
-      child_id: jsonSerialization['child_id'] as int,
-      book_id: jsonSerialization['book_id'] as int,
-      device_id: jsonSerialization['device_id'] as String,
-      downloaded_at: _i1.DateTimeJsonExtension.fromJson(
-        jsonSerialization['downloaded_at'],
+      childId: jsonSerialization['childId'] as int,
+      bookId: jsonSerialization['bookId'] as int,
+      deviceId: jsonSerialization['deviceId'] as String,
+      downloadedAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['downloadedAt'],
       ),
     );
   }
@@ -49,13 +49,13 @@ abstract class DownloadRecord
   @override
   int? id;
 
-  int child_id;
+  int childId;
 
-  int book_id;
+  int bookId;
 
-  String device_id;
+  String deviceId;
 
-  DateTime downloaded_at;
+  DateTime downloadedAt;
 
   @override
   _i1.Table<int?> get table => t;
@@ -65,20 +65,20 @@ abstract class DownloadRecord
   @_i1.useResult
   DownloadRecord copyWith({
     int? id,
-    int? child_id,
-    int? book_id,
-    String? device_id,
-    DateTime? downloaded_at,
+    int? childId,
+    int? bookId,
+    String? deviceId,
+    DateTime? downloadedAt,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'DownloadRecord',
       if (id != null) 'id': id,
-      'child_id': child_id,
-      'book_id': book_id,
-      'device_id': device_id,
-      'downloaded_at': downloaded_at.toJson(),
+      'childId': childId,
+      'bookId': bookId,
+      'deviceId': deviceId,
+      'downloadedAt': downloadedAt.toJson(),
     };
   }
 
@@ -87,10 +87,10 @@ abstract class DownloadRecord
     return {
       '__className__': 'DownloadRecord',
       if (id != null) 'id': id,
-      'child_id': child_id,
-      'book_id': book_id,
-      'device_id': device_id,
-      'downloaded_at': downloaded_at.toJson(),
+      'childId': childId,
+      'bookId': bookId,
+      'deviceId': deviceId,
+      'downloadedAt': downloadedAt.toJson(),
     };
   }
 
@@ -131,16 +131,16 @@ class _Undefined {}
 class _DownloadRecordImpl extends DownloadRecord {
   _DownloadRecordImpl({
     int? id,
-    required int child_id,
-    required int book_id,
-    required String device_id,
-    required DateTime downloaded_at,
+    required int childId,
+    required int bookId,
+    required String deviceId,
+    required DateTime downloadedAt,
   }) : super._(
          id: id,
-         child_id: child_id,
-         book_id: book_id,
-         device_id: device_id,
-         downloaded_at: downloaded_at,
+         childId: childId,
+         bookId: bookId,
+         deviceId: deviceId,
+         downloadedAt: downloadedAt,
        );
 
   /// Returns a shallow copy of this [DownloadRecord]
@@ -149,17 +149,17 @@ class _DownloadRecordImpl extends DownloadRecord {
   @override
   DownloadRecord copyWith({
     Object? id = _Undefined,
-    int? child_id,
-    int? book_id,
-    String? device_id,
-    DateTime? downloaded_at,
+    int? childId,
+    int? bookId,
+    String? deviceId,
+    DateTime? downloadedAt,
   }) {
     return DownloadRecord(
       id: id is int? ? id : this.id,
-      child_id: child_id ?? this.child_id,
-      book_id: book_id ?? this.book_id,
-      device_id: device_id ?? this.device_id,
-      downloaded_at: downloaded_at ?? this.downloaded_at,
+      childId: childId ?? this.childId,
+      bookId: bookId ?? this.bookId,
+      deviceId: deviceId ?? this.deviceId,
+      downloadedAt: downloadedAt ?? this.downloadedAt,
     );
   }
 }
@@ -167,24 +167,24 @@ class _DownloadRecordImpl extends DownloadRecord {
 class DownloadRecordUpdateTable extends _i1.UpdateTable<DownloadRecordTable> {
   DownloadRecordUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> child_id(int value) => _i1.ColumnValue(
-    table.child_id,
+  _i1.ColumnValue<int, int> childId(int value) => _i1.ColumnValue(
+    table.childId,
     value,
   );
 
-  _i1.ColumnValue<int, int> book_id(int value) => _i1.ColumnValue(
-    table.book_id,
+  _i1.ColumnValue<int, int> bookId(int value) => _i1.ColumnValue(
+    table.bookId,
     value,
   );
 
-  _i1.ColumnValue<String, String> device_id(String value) => _i1.ColumnValue(
-    table.device_id,
+  _i1.ColumnValue<String, String> deviceId(String value) => _i1.ColumnValue(
+    table.deviceId,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> downloaded_at(DateTime value) =>
+  _i1.ColumnValue<DateTime, DateTime> downloadedAt(DateTime value) =>
       _i1.ColumnValue(
-        table.downloaded_at,
+        table.downloadedAt,
         value,
       );
 }
@@ -193,41 +193,41 @@ class DownloadRecordTable extends _i1.Table<int?> {
   DownloadRecordTable({super.tableRelation})
     : super(tableName: 'download_record') {
     updateTable = DownloadRecordUpdateTable(this);
-    child_id = _i1.ColumnInt(
-      'child_id',
+    childId = _i1.ColumnInt(
+      'childId',
       this,
     );
-    book_id = _i1.ColumnInt(
-      'book_id',
+    bookId = _i1.ColumnInt(
+      'bookId',
       this,
     );
-    device_id = _i1.ColumnString(
-      'device_id',
+    deviceId = _i1.ColumnString(
+      'deviceId',
       this,
     );
-    downloaded_at = _i1.ColumnDateTime(
-      'downloaded_at',
+    downloadedAt = _i1.ColumnDateTime(
+      'downloadedAt',
       this,
     );
   }
 
   late final DownloadRecordUpdateTable updateTable;
 
-  late final _i1.ColumnInt child_id;
+  late final _i1.ColumnInt childId;
 
-  late final _i1.ColumnInt book_id;
+  late final _i1.ColumnInt bookId;
 
-  late final _i1.ColumnString device_id;
+  late final _i1.ColumnString deviceId;
 
-  late final _i1.ColumnDateTime downloaded_at;
+  late final _i1.ColumnDateTime downloadedAt;
 
   @override
   List<_i1.Column> get columns => [
     id,
-    child_id,
-    book_id,
-    device_id,
-    downloaded_at,
+    childId,
+    bookId,
+    deviceId,
+    downloadedAt,
   ];
 }
 

@@ -16,27 +16,27 @@ abstract class PageContent
     implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   PageContent._({
     this.id,
-    required this.page_id,
+    required this.pageId,
     required this.language,
     required this.text,
-    required this.audio_asset,
+    required this.audioAsset,
   });
 
   factory PageContent({
     int? id,
-    required int page_id,
+    required int pageId,
     required String language,
     required String text,
-    required String audio_asset,
+    required String audioAsset,
   }) = _PageContentImpl;
 
   factory PageContent.fromJson(Map<String, dynamic> jsonSerialization) {
     return PageContent(
       id: jsonSerialization['id'] as int?,
-      page_id: jsonSerialization['page_id'] as int,
+      pageId: jsonSerialization['pageId'] as int,
       language: jsonSerialization['language'] as String,
       text: jsonSerialization['text'] as String,
-      audio_asset: jsonSerialization['audio_asset'] as String,
+      audioAsset: jsonSerialization['audioAsset'] as String,
     );
   }
 
@@ -47,13 +47,13 @@ abstract class PageContent
   @override
   int? id;
 
-  int page_id;
+  int pageId;
 
   String language;
 
   String text;
 
-  String audio_asset;
+  String audioAsset;
 
   @override
   _i1.Table<int?> get table => t;
@@ -63,20 +63,20 @@ abstract class PageContent
   @_i1.useResult
   PageContent copyWith({
     int? id,
-    int? page_id,
+    int? pageId,
     String? language,
     String? text,
-    String? audio_asset,
+    String? audioAsset,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'PageContent',
       if (id != null) 'id': id,
-      'page_id': page_id,
+      'pageId': pageId,
       'language': language,
       'text': text,
-      'audio_asset': audio_asset,
+      'audioAsset': audioAsset,
     };
   }
 
@@ -85,10 +85,10 @@ abstract class PageContent
     return {
       '__className__': 'PageContent',
       if (id != null) 'id': id,
-      'page_id': page_id,
+      'pageId': pageId,
       'language': language,
       'text': text,
-      'audio_asset': audio_asset,
+      'audioAsset': audioAsset,
     };
   }
 
@@ -129,16 +129,16 @@ class _Undefined {}
 class _PageContentImpl extends PageContent {
   _PageContentImpl({
     int? id,
-    required int page_id,
+    required int pageId,
     required String language,
     required String text,
-    required String audio_asset,
+    required String audioAsset,
   }) : super._(
          id: id,
-         page_id: page_id,
+         pageId: pageId,
          language: language,
          text: text,
-         audio_asset: audio_asset,
+         audioAsset: audioAsset,
        );
 
   /// Returns a shallow copy of this [PageContent]
@@ -147,17 +147,17 @@ class _PageContentImpl extends PageContent {
   @override
   PageContent copyWith({
     Object? id = _Undefined,
-    int? page_id,
+    int? pageId,
     String? language,
     String? text,
-    String? audio_asset,
+    String? audioAsset,
   }) {
     return PageContent(
       id: id is int? ? id : this.id,
-      page_id: page_id ?? this.page_id,
+      pageId: pageId ?? this.pageId,
       language: language ?? this.language,
       text: text ?? this.text,
-      audio_asset: audio_asset ?? this.audio_asset,
+      audioAsset: audioAsset ?? this.audioAsset,
     );
   }
 }
@@ -165,8 +165,8 @@ class _PageContentImpl extends PageContent {
 class PageContentUpdateTable extends _i1.UpdateTable<PageContentTable> {
   PageContentUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> page_id(int value) => _i1.ColumnValue(
-    table.page_id,
+  _i1.ColumnValue<int, int> pageId(int value) => _i1.ColumnValue(
+    table.pageId,
     value,
   );
 
@@ -180,8 +180,8 @@ class PageContentUpdateTable extends _i1.UpdateTable<PageContentTable> {
     value,
   );
 
-  _i1.ColumnValue<String, String> audio_asset(String value) => _i1.ColumnValue(
-    table.audio_asset,
+  _i1.ColumnValue<String, String> audioAsset(String value) => _i1.ColumnValue(
+    table.audioAsset,
     value,
   );
 }
@@ -189,8 +189,8 @@ class PageContentUpdateTable extends _i1.UpdateTable<PageContentTable> {
 class PageContentTable extends _i1.Table<int?> {
   PageContentTable({super.tableRelation}) : super(tableName: 'page_content') {
     updateTable = PageContentUpdateTable(this);
-    page_id = _i1.ColumnInt(
-      'page_id',
+    pageId = _i1.ColumnInt(
+      'pageId',
       this,
     );
     language = _i1.ColumnString(
@@ -201,29 +201,29 @@ class PageContentTable extends _i1.Table<int?> {
       'text',
       this,
     );
-    audio_asset = _i1.ColumnString(
-      'audio_asset',
+    audioAsset = _i1.ColumnString(
+      'audioAsset',
       this,
     );
   }
 
   late final PageContentUpdateTable updateTable;
 
-  late final _i1.ColumnInt page_id;
+  late final _i1.ColumnInt pageId;
 
   late final _i1.ColumnString language;
 
   late final _i1.ColumnString text;
 
-  late final _i1.ColumnString audio_asset;
+  late final _i1.ColumnString audioAsset;
 
   @override
   List<_i1.Column> get columns => [
     id,
-    page_id,
+    pageId,
     language,
     text,
-    audio_asset,
+    audioAsset,
   ];
 }
 

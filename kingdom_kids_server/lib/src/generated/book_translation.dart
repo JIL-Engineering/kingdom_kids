@@ -16,14 +16,14 @@ abstract class BookTranslation
     implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   BookTranslation._({
     this.id,
-    required this.book_id,
+    required this.bookId,
     required this.language,
     required this.title,
   });
 
   factory BookTranslation({
     int? id,
-    required int book_id,
+    required int bookId,
     required String language,
     required String title,
   }) = _BookTranslationImpl;
@@ -31,7 +31,7 @@ abstract class BookTranslation
   factory BookTranslation.fromJson(Map<String, dynamic> jsonSerialization) {
     return BookTranslation(
       id: jsonSerialization['id'] as int?,
-      book_id: jsonSerialization['book_id'] as int,
+      bookId: jsonSerialization['bookId'] as int,
       language: jsonSerialization['language'] as String,
       title: jsonSerialization['title'] as String,
     );
@@ -44,7 +44,7 @@ abstract class BookTranslation
   @override
   int? id;
 
-  int book_id;
+  int bookId;
 
   String language;
 
@@ -58,7 +58,7 @@ abstract class BookTranslation
   @_i1.useResult
   BookTranslation copyWith({
     int? id,
-    int? book_id,
+    int? bookId,
     String? language,
     String? title,
   });
@@ -67,7 +67,7 @@ abstract class BookTranslation
     return {
       '__className__': 'BookTranslation',
       if (id != null) 'id': id,
-      'book_id': book_id,
+      'bookId': bookId,
       'language': language,
       'title': title,
     };
@@ -78,7 +78,7 @@ abstract class BookTranslation
     return {
       '__className__': 'BookTranslation',
       if (id != null) 'id': id,
-      'book_id': book_id,
+      'bookId': bookId,
       'language': language,
       'title': title,
     };
@@ -121,12 +121,12 @@ class _Undefined {}
 class _BookTranslationImpl extends BookTranslation {
   _BookTranslationImpl({
     int? id,
-    required int book_id,
+    required int bookId,
     required String language,
     required String title,
   }) : super._(
          id: id,
-         book_id: book_id,
+         bookId: bookId,
          language: language,
          title: title,
        );
@@ -137,13 +137,13 @@ class _BookTranslationImpl extends BookTranslation {
   @override
   BookTranslation copyWith({
     Object? id = _Undefined,
-    int? book_id,
+    int? bookId,
     String? language,
     String? title,
   }) {
     return BookTranslation(
       id: id is int? ? id : this.id,
-      book_id: book_id ?? this.book_id,
+      bookId: bookId ?? this.bookId,
       language: language ?? this.language,
       title: title ?? this.title,
     );
@@ -153,8 +153,8 @@ class _BookTranslationImpl extends BookTranslation {
 class BookTranslationUpdateTable extends _i1.UpdateTable<BookTranslationTable> {
   BookTranslationUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> book_id(int value) => _i1.ColumnValue(
-    table.book_id,
+  _i1.ColumnValue<int, int> bookId(int value) => _i1.ColumnValue(
+    table.bookId,
     value,
   );
 
@@ -173,8 +173,8 @@ class BookTranslationTable extends _i1.Table<int?> {
   BookTranslationTable({super.tableRelation})
     : super(tableName: 'book_translation') {
     updateTable = BookTranslationUpdateTable(this);
-    book_id = _i1.ColumnInt(
-      'book_id',
+    bookId = _i1.ColumnInt(
+      'bookId',
       this,
     );
     language = _i1.ColumnString(
@@ -189,7 +189,7 @@ class BookTranslationTable extends _i1.Table<int?> {
 
   late final BookTranslationUpdateTable updateTable;
 
-  late final _i1.ColumnInt book_id;
+  late final _i1.ColumnInt bookId;
 
   late final _i1.ColumnString language;
 
@@ -198,7 +198,7 @@ class BookTranslationTable extends _i1.Table<int?> {
   @override
   List<_i1.Column> get columns => [
     id,
-    book_id,
+    bookId,
     language,
     title,
   ];

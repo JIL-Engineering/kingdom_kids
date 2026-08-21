@@ -15,46 +15,46 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 abstract class ReadingProgress implements _i1.SerializableModel {
   ReadingProgress._({
     this.id,
-    required this.child_id,
-    required this.book_id,
-    required this.current_page,
+    required this.childId,
+    required this.bookId,
+    required this.currentPage,
     required this.completed,
-    required this.started_at,
-    this.completed_at,
-    required this.total_time_seconds,
-    required this.synced_at,
+    required this.startedAt,
+    this.completedAt,
+    required this.totalTimeSeconds,
+    required this.syncedAt,
   });
 
   factory ReadingProgress({
     int? id,
-    required int child_id,
-    required int book_id,
-    required int current_page,
+    required int childId,
+    required int bookId,
+    required int currentPage,
     required bool completed,
-    required DateTime started_at,
-    DateTime? completed_at,
-    required int total_time_seconds,
-    required DateTime synced_at,
+    required DateTime startedAt,
+    DateTime? completedAt,
+    required int totalTimeSeconds,
+    required DateTime syncedAt,
   }) = _ReadingProgressImpl;
 
   factory ReadingProgress.fromJson(Map<String, dynamic> jsonSerialization) {
     return ReadingProgress(
       id: jsonSerialization['id'] as int?,
-      child_id: jsonSerialization['child_id'] as int,
-      book_id: jsonSerialization['book_id'] as int,
-      current_page: jsonSerialization['current_page'] as int,
+      childId: jsonSerialization['childId'] as int,
+      bookId: jsonSerialization['bookId'] as int,
+      currentPage: jsonSerialization['currentPage'] as int,
       completed: _i1.BoolJsonExtension.fromJson(jsonSerialization['completed']),
-      started_at: _i1.DateTimeJsonExtension.fromJson(
-        jsonSerialization['started_at'],
+      startedAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['startedAt'],
       ),
-      completed_at: jsonSerialization['completed_at'] == null
+      completedAt: jsonSerialization['completedAt'] == null
           ? null
           : _i1.DateTimeJsonExtension.fromJson(
-              jsonSerialization['completed_at'],
+              jsonSerialization['completedAt'],
             ),
-      total_time_seconds: jsonSerialization['total_time_seconds'] as int,
-      synced_at: _i1.DateTimeJsonExtension.fromJson(
-        jsonSerialization['synced_at'],
+      totalTimeSeconds: jsonSerialization['totalTimeSeconds'] as int,
+      syncedAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['syncedAt'],
       ),
     );
   }
@@ -64,49 +64,49 @@ abstract class ReadingProgress implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  int child_id;
+  int childId;
 
-  int book_id;
+  int bookId;
 
-  int current_page;
+  int currentPage;
 
   bool completed;
 
-  DateTime started_at;
+  DateTime startedAt;
 
-  DateTime? completed_at;
+  DateTime? completedAt;
 
-  int total_time_seconds;
+  int totalTimeSeconds;
 
-  DateTime synced_at;
+  DateTime syncedAt;
 
   /// Returns a shallow copy of this [ReadingProgress]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   ReadingProgress copyWith({
     int? id,
-    int? child_id,
-    int? book_id,
-    int? current_page,
+    int? childId,
+    int? bookId,
+    int? currentPage,
     bool? completed,
-    DateTime? started_at,
-    DateTime? completed_at,
-    int? total_time_seconds,
-    DateTime? synced_at,
+    DateTime? startedAt,
+    DateTime? completedAt,
+    int? totalTimeSeconds,
+    DateTime? syncedAt,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'ReadingProgress',
       if (id != null) 'id': id,
-      'child_id': child_id,
-      'book_id': book_id,
-      'current_page': current_page,
+      'childId': childId,
+      'bookId': bookId,
+      'currentPage': currentPage,
       'completed': completed,
-      'started_at': started_at.toJson(),
-      if (completed_at != null) 'completed_at': completed_at?.toJson(),
-      'total_time_seconds': total_time_seconds,
-      'synced_at': synced_at.toJson(),
+      'startedAt': startedAt.toJson(),
+      if (completedAt != null) 'completedAt': completedAt?.toJson(),
+      'totalTimeSeconds': totalTimeSeconds,
+      'syncedAt': syncedAt.toJson(),
     };
   }
 
@@ -121,24 +121,24 @@ class _Undefined {}
 class _ReadingProgressImpl extends ReadingProgress {
   _ReadingProgressImpl({
     int? id,
-    required int child_id,
-    required int book_id,
-    required int current_page,
+    required int childId,
+    required int bookId,
+    required int currentPage,
     required bool completed,
-    required DateTime started_at,
-    DateTime? completed_at,
-    required int total_time_seconds,
-    required DateTime synced_at,
+    required DateTime startedAt,
+    DateTime? completedAt,
+    required int totalTimeSeconds,
+    required DateTime syncedAt,
   }) : super._(
          id: id,
-         child_id: child_id,
-         book_id: book_id,
-         current_page: current_page,
+         childId: childId,
+         bookId: bookId,
+         currentPage: currentPage,
          completed: completed,
-         started_at: started_at,
-         completed_at: completed_at,
-         total_time_seconds: total_time_seconds,
-         synced_at: synced_at,
+         startedAt: startedAt,
+         completedAt: completedAt,
+         totalTimeSeconds: totalTimeSeconds,
+         syncedAt: syncedAt,
        );
 
   /// Returns a shallow copy of this [ReadingProgress]
@@ -147,27 +147,25 @@ class _ReadingProgressImpl extends ReadingProgress {
   @override
   ReadingProgress copyWith({
     Object? id = _Undefined,
-    int? child_id,
-    int? book_id,
-    int? current_page,
+    int? childId,
+    int? bookId,
+    int? currentPage,
     bool? completed,
-    DateTime? started_at,
-    Object? completed_at = _Undefined,
-    int? total_time_seconds,
-    DateTime? synced_at,
+    DateTime? startedAt,
+    Object? completedAt = _Undefined,
+    int? totalTimeSeconds,
+    DateTime? syncedAt,
   }) {
     return ReadingProgress(
       id: id is int? ? id : this.id,
-      child_id: child_id ?? this.child_id,
-      book_id: book_id ?? this.book_id,
-      current_page: current_page ?? this.current_page,
+      childId: childId ?? this.childId,
+      bookId: bookId ?? this.bookId,
+      currentPage: currentPage ?? this.currentPage,
       completed: completed ?? this.completed,
-      started_at: started_at ?? this.started_at,
-      completed_at: completed_at is DateTime?
-          ? completed_at
-          : this.completed_at,
-      total_time_seconds: total_time_seconds ?? this.total_time_seconds,
-      synced_at: synced_at ?? this.synced_at,
+      startedAt: startedAt ?? this.startedAt,
+      completedAt: completedAt is DateTime? ? completedAt : this.completedAt,
+      totalTimeSeconds: totalTimeSeconds ?? this.totalTimeSeconds,
+      syncedAt: syncedAt ?? this.syncedAt,
     );
   }
 }

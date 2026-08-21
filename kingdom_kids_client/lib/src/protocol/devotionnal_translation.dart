@@ -15,22 +15,22 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 abstract class DevotionalTranslation implements _i1.SerializableModel {
   DevotionalTranslation._({
     this.id,
-    required this.devotional_id,
+    required this.devotionalId,
     required this.language,
-    required this.verse_reference,
-    required this.verse_text,
-    required this.thought_text,
-    required this.prayer_prompt,
+    required this.verseReference,
+    required this.verseText,
+    required this.thoughtText,
+    required this.prayerPrompt,
   });
 
   factory DevotionalTranslation({
     int? id,
-    required int devotional_id,
+    required int devotionalId,
     required String language,
-    required String verse_reference,
-    required String verse_text,
-    required String thought_text,
-    required String prayer_prompt,
+    required String verseReference,
+    required String verseText,
+    required String thoughtText,
+    required String prayerPrompt,
   }) = _DevotionalTranslationImpl;
 
   factory DevotionalTranslation.fromJson(
@@ -38,12 +38,12 @@ abstract class DevotionalTranslation implements _i1.SerializableModel {
   ) {
     return DevotionalTranslation(
       id: jsonSerialization['id'] as int?,
-      devotional_id: jsonSerialization['devotional_id'] as int,
+      devotionalId: jsonSerialization['devotionalId'] as int,
       language: jsonSerialization['language'] as String,
-      verse_reference: jsonSerialization['verse_reference'] as String,
-      verse_text: jsonSerialization['verse_text'] as String,
-      thought_text: jsonSerialization['thought_text'] as String,
-      prayer_prompt: jsonSerialization['prayer_prompt'] as String,
+      verseReference: jsonSerialization['verseReference'] as String,
+      verseText: jsonSerialization['verseText'] as String,
+      thoughtText: jsonSerialization['thoughtText'] as String,
+      prayerPrompt: jsonSerialization['prayerPrompt'] as String,
     );
   }
 
@@ -52,41 +52,41 @@ abstract class DevotionalTranslation implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  int devotional_id;
+  int devotionalId;
 
   String language;
 
-  String verse_reference;
+  String verseReference;
 
-  String verse_text;
+  String verseText;
 
-  String thought_text;
+  String thoughtText;
 
-  String prayer_prompt;
+  String prayerPrompt;
 
   /// Returns a shallow copy of this [DevotionalTranslation]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   DevotionalTranslation copyWith({
     int? id,
-    int? devotional_id,
+    int? devotionalId,
     String? language,
-    String? verse_reference,
-    String? verse_text,
-    String? thought_text,
-    String? prayer_prompt,
+    String? verseReference,
+    String? verseText,
+    String? thoughtText,
+    String? prayerPrompt,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'DevotionalTranslation',
       if (id != null) 'id': id,
-      'devotional_id': devotional_id,
+      'devotionalId': devotionalId,
       'language': language,
-      'verse_reference': verse_reference,
-      'verse_text': verse_text,
-      'thought_text': thought_text,
-      'prayer_prompt': prayer_prompt,
+      'verseReference': verseReference,
+      'verseText': verseText,
+      'thoughtText': thoughtText,
+      'prayerPrompt': prayerPrompt,
     };
   }
 
@@ -101,20 +101,20 @@ class _Undefined {}
 class _DevotionalTranslationImpl extends DevotionalTranslation {
   _DevotionalTranslationImpl({
     int? id,
-    required int devotional_id,
+    required int devotionalId,
     required String language,
-    required String verse_reference,
-    required String verse_text,
-    required String thought_text,
-    required String prayer_prompt,
+    required String verseReference,
+    required String verseText,
+    required String thoughtText,
+    required String prayerPrompt,
   }) : super._(
          id: id,
-         devotional_id: devotional_id,
+         devotionalId: devotionalId,
          language: language,
-         verse_reference: verse_reference,
-         verse_text: verse_text,
-         thought_text: thought_text,
-         prayer_prompt: prayer_prompt,
+         verseReference: verseReference,
+         verseText: verseText,
+         thoughtText: thoughtText,
+         prayerPrompt: prayerPrompt,
        );
 
   /// Returns a shallow copy of this [DevotionalTranslation]
@@ -123,21 +123,21 @@ class _DevotionalTranslationImpl extends DevotionalTranslation {
   @override
   DevotionalTranslation copyWith({
     Object? id = _Undefined,
-    int? devotional_id,
+    int? devotionalId,
     String? language,
-    String? verse_reference,
-    String? verse_text,
-    String? thought_text,
-    String? prayer_prompt,
+    String? verseReference,
+    String? verseText,
+    String? thoughtText,
+    String? prayerPrompt,
   }) {
     return DevotionalTranslation(
       id: id is int? ? id : this.id,
-      devotional_id: devotional_id ?? this.devotional_id,
+      devotionalId: devotionalId ?? this.devotionalId,
       language: language ?? this.language,
-      verse_reference: verse_reference ?? this.verse_reference,
-      verse_text: verse_text ?? this.verse_text,
-      thought_text: thought_text ?? this.thought_text,
-      prayer_prompt: prayer_prompt ?? this.prayer_prompt,
+      verseReference: verseReference ?? this.verseReference,
+      verseText: verseText ?? this.verseText,
+      thoughtText: thoughtText ?? this.thoughtText,
+      prayerPrompt: prayerPrompt ?? this.prayerPrompt,
     );
   }
 }

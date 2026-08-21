@@ -15,25 +15,25 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 abstract class ChildBadge implements _i1.SerializableModel {
   ChildBadge._({
     this.id,
-    required this.child_id,
-    required this.badge_id,
-    required this.earned_at,
+    required this.childId,
+    required this.badgeId,
+    required this.earnedAt,
   });
 
   factory ChildBadge({
     int? id,
-    required int child_id,
-    required int badge_id,
-    required DateTime earned_at,
+    required int childId,
+    required int badgeId,
+    required DateTime earnedAt,
   }) = _ChildBadgeImpl;
 
   factory ChildBadge.fromJson(Map<String, dynamic> jsonSerialization) {
     return ChildBadge(
       id: jsonSerialization['id'] as int?,
-      child_id: jsonSerialization['child_id'] as int,
-      badge_id: jsonSerialization['badge_id'] as int,
-      earned_at: _i1.DateTimeJsonExtension.fromJson(
-        jsonSerialization['earned_at'],
+      childId: jsonSerialization['childId'] as int,
+      badgeId: jsonSerialization['badgeId'] as int,
+      earnedAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['earnedAt'],
       ),
     );
   }
@@ -43,29 +43,29 @@ abstract class ChildBadge implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  int child_id;
+  int childId;
 
-  int badge_id;
+  int badgeId;
 
-  DateTime earned_at;
+  DateTime earnedAt;
 
   /// Returns a shallow copy of this [ChildBadge]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   ChildBadge copyWith({
     int? id,
-    int? child_id,
-    int? badge_id,
-    DateTime? earned_at,
+    int? childId,
+    int? badgeId,
+    DateTime? earnedAt,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'ChildBadge',
       if (id != null) 'id': id,
-      'child_id': child_id,
-      'badge_id': badge_id,
-      'earned_at': earned_at.toJson(),
+      'childId': childId,
+      'badgeId': badgeId,
+      'earnedAt': earnedAt.toJson(),
     };
   }
 
@@ -80,14 +80,14 @@ class _Undefined {}
 class _ChildBadgeImpl extends ChildBadge {
   _ChildBadgeImpl({
     int? id,
-    required int child_id,
-    required int badge_id,
-    required DateTime earned_at,
+    required int childId,
+    required int badgeId,
+    required DateTime earnedAt,
   }) : super._(
          id: id,
-         child_id: child_id,
-         badge_id: badge_id,
-         earned_at: earned_at,
+         childId: childId,
+         badgeId: badgeId,
+         earnedAt: earnedAt,
        );
 
   /// Returns a shallow copy of this [ChildBadge]
@@ -96,15 +96,15 @@ class _ChildBadgeImpl extends ChildBadge {
   @override
   ChildBadge copyWith({
     Object? id = _Undefined,
-    int? child_id,
-    int? badge_id,
-    DateTime? earned_at,
+    int? childId,
+    int? badgeId,
+    DateTime? earnedAt,
   }) {
     return ChildBadge(
       id: id is int? ? id : this.id,
-      child_id: child_id ?? this.child_id,
-      badge_id: badge_id ?? this.badge_id,
-      earned_at: earned_at ?? this.earned_at,
+      childId: childId ?? this.childId,
+      badgeId: badgeId ?? this.badgeId,
+      earnedAt: earnedAt ?? this.earnedAt,
     );
   }
 }

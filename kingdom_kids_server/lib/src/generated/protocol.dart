@@ -83,13 +83,13 @@ class Protocol extends _i1.DatabaseSerializationManager {
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'icon_asset',
+          name: 'iconAsset',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'trigger_rule',
+          name: 'triggerRule',
           columnType: _i2.ColumnType.json,
           isNullable: false,
           dartType: 'Map<String,dynamic>',
@@ -146,13 +146,13 @@ class Protocol extends _i1.DatabaseSerializationManager {
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'age_bracket_min',
+          name: 'ageBracketMin',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'age_bracket_max',
+          name: 'ageBracketMax',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
@@ -164,31 +164,31 @@ class Protocol extends _i1.DatabaseSerializationManager {
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'cover_image_asset',
+          name: 'coverImageAsset',
           columnType: _i2.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
         _i2.ColumnDefinition(
-          name: 'is_published',
+          name: 'isPublished',
           columnType: _i2.ColumnType.boolean,
           isNullable: false,
           dartType: 'bool',
         ),
         _i2.ColumnDefinition(
-          name: 'content_version',
+          name: 'contentVersion',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
-          name: 'updated_at',
+          name: 'updatedAt',
           columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
         ),
         _i2.ColumnDefinition(
-          name: 'created_at',
+          name: 'createdAt',
           columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
@@ -239,7 +239,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
-          name: 'book_id',
+          name: 'bookId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
@@ -260,7 +260,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
       foreignKeys: [
         _i2.ForeignKeyDefinition(
           constraintName: 'book_translation_fk_0',
-          columns: ['book_id'],
+          columns: ['bookId'],
           referenceTable: 'book',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
@@ -276,7 +276,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           elements: [
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'book_id',
+              definition: 'bookId',
             ),
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
@@ -304,19 +304,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
-          name: 'child_id',
+          name: 'childId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
-          name: 'badge_id',
+          name: 'badgeId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
-          name: 'earned_at',
+          name: 'earnedAt',
           columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
@@ -325,7 +325,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
       foreignKeys: [
         _i2.ForeignKeyDefinition(
           constraintName: 'child_badge_fk_0',
-          columns: ['child_id'],
+          columns: ['childId'],
           referenceTable: 'child_profiles',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
@@ -335,7 +335,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
         ),
         _i2.ForeignKeyDefinition(
           constraintName: 'child_badge_fk_1',
-          columns: ['badge_id'],
+          columns: ['badgeId'],
           referenceTable: 'badge',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
@@ -351,11 +351,11 @@ class Protocol extends _i1.DatabaseSerializationManager {
           elements: [
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'child_id',
+              definition: 'childId',
             ),
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'badge_id',
+              definition: 'badgeId',
             ),
           ],
           type: 'btree',
@@ -379,49 +379,49 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
-          name: 'parent_id',
+          name: 'parentId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
-          name: 'display_name',
+          name: 'displayName',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'birth_year',
+          name: 'birthYear',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
-          name: 'age_bracket',
+          name: 'ageBracket',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'preferred_language',
+          name: 'preferredLanguage',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'avatar_id',
+          name: 'avatarId',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'pin_protected',
+          name: 'pinProtected',
           columnType: _i2.ColumnType.boolean,
           isNullable: false,
           dartType: 'bool',
         ),
         _i2.ColumnDefinition(
-          name: 'created_at',
+          name: 'createdAt',
           columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
@@ -430,7 +430,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
       foreignKeys: [
         _i2.ForeignKeyDefinition(
           constraintName: 'child_profiles_fk_0',
-          columns: ['parent_id'],
+          columns: ['parentId'],
           referenceTable: 'user',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
@@ -446,7 +446,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           elements: [
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'parent_id',
+              definition: 'parentId',
             ),
           ],
           type: 'btree',
@@ -527,7 +527,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
-          name: 'devotional_id',
+          name: 'devotionalId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
@@ -539,25 +539,25 @@ class Protocol extends _i1.DatabaseSerializationManager {
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'verse_reference',
+          name: 'verseReference',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'verse_text',
+          name: 'verseText',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'thought_text',
+          name: 'thoughtText',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'prayer_prompt',
+          name: 'prayerPrompt',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
@@ -566,7 +566,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
       foreignKeys: [
         _i2.ForeignKeyDefinition(
           constraintName: 'devotional_translation_fk_0',
-          columns: ['devotional_id'],
+          columns: ['devotionalId'],
           referenceTable: 'devotional',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
@@ -582,7 +582,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           elements: [
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'devotional_id',
+              definition: 'devotionalId',
             ),
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
@@ -610,25 +610,25 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
-          name: 'child_id',
+          name: 'childId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
-          name: 'book_id',
+          name: 'bookId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
-          name: 'device_id',
+          name: 'deviceId',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'downloaded_at',
+          name: 'downloadedAt',
           columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
@@ -637,7 +637,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
       foreignKeys: [
         _i2.ForeignKeyDefinition(
           constraintName: 'download_record_fk_0',
-          columns: ['child_id'],
+          columns: ['childId'],
           referenceTable: 'child_profiles',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
@@ -647,7 +647,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
         ),
         _i2.ForeignKeyDefinition(
           constraintName: 'download_record_fk_1',
-          columns: ['book_id'],
+          columns: ['bookId'],
           referenceTable: 'book',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
@@ -663,11 +663,11 @@ class Protocol extends _i1.DatabaseSerializationManager {
           elements: [
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'child_id',
+              definition: 'childId',
             ),
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'book_id',
+              definition: 'bookId',
             ),
           ],
           type: 'btree',
@@ -691,25 +691,25 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
-          name: 'book_id',
+          name: 'bookId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
-          name: 'page_number',
+          name: 'pageNumber',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
-          name: 'illustration_asset',
+          name: 'illustrationAsset',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'layout_type',
+          name: 'layoutType',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
@@ -718,7 +718,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
       foreignKeys: [
         _i2.ForeignKeyDefinition(
           constraintName: 'page_fk_0',
-          columns: ['book_id'],
+          columns: ['bookId'],
           referenceTable: 'book',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
@@ -734,11 +734,11 @@ class Protocol extends _i1.DatabaseSerializationManager {
           elements: [
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'book_id',
+              definition: 'bookId',
             ),
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'page_number',
+              definition: 'pageNumber',
             ),
           ],
           type: 'btree',
@@ -751,7 +751,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           elements: [
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'book_id',
+              definition: 'bookId',
             ),
           ],
           type: 'btree',
@@ -775,7 +775,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
-          name: 'page_id',
+          name: 'pageId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
@@ -793,7 +793,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'audio_asset',
+          name: 'audioAsset',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
@@ -802,7 +802,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
       foreignKeys: [
         _i2.ForeignKeyDefinition(
           constraintName: 'page_content_fk_0',
-          columns: ['page_id'],
+          columns: ['pageId'],
           referenceTable: 'page',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
@@ -818,7 +818,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           elements: [
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'page_id',
+              definition: 'pageId',
             ),
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
@@ -846,19 +846,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
-          name: 'child_id',
+          name: 'childId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
-          name: 'book_id',
+          name: 'bookId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
-          name: 'current_page',
+          name: 'currentPage',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
@@ -870,25 +870,25 @@ class Protocol extends _i1.DatabaseSerializationManager {
           dartType: 'bool',
         ),
         _i2.ColumnDefinition(
-          name: 'started_at',
+          name: 'startedAt',
           columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
         ),
         _i2.ColumnDefinition(
-          name: 'completed_at',
+          name: 'completedAt',
           columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: true,
           dartType: 'DateTime?',
         ),
         _i2.ColumnDefinition(
-          name: 'total_time_seconds',
+          name: 'totalTimeSeconds',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
         _i2.ColumnDefinition(
-          name: 'synced_at',
+          name: 'syncedAt',
           columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
@@ -897,7 +897,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
       foreignKeys: [
         _i2.ForeignKeyDefinition(
           constraintName: 'reading_progress_fk_0',
-          columns: ['child_id'],
+          columns: ['childId'],
           referenceTable: 'child_profiles',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
@@ -907,7 +907,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
         ),
         _i2.ForeignKeyDefinition(
           constraintName: 'reading_progress_fk_1',
-          columns: ['book_id'],
+          columns: ['bookId'],
           referenceTable: 'book',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
@@ -923,11 +923,11 @@ class Protocol extends _i1.DatabaseSerializationManager {
           elements: [
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'child_id',
+              definition: 'childId',
             ),
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'book_id',
+              definition: 'bookId',
             ),
           ],
           type: 'btree',
@@ -940,11 +940,11 @@ class Protocol extends _i1.DatabaseSerializationManager {
           elements: [
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'child_id',
+              definition: 'childId',
             ),
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'started_at',
+              definition: 'startedAt',
             ),
           ],
           type: 'btree',
@@ -974,7 +974,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'password_hash',
+          name: 'passwordHash',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
@@ -992,19 +992,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'preferred_language',
+          name: 'preferredLanguage',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'consent_given_at',
+          name: 'consentGivenAt',
           columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: true,
           dartType: 'DateTime?',
         ),
         _i2.ColumnDefinition(
-          name: 'created_at',
+          name: 'createdAt',
           columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',

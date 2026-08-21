@@ -1,13 +1,13 @@
 class: DevotionalTranslation
 table: devotional_translation
 fields:
-  devotional_id: int, relation(parent=devotional, onDelete=Cascade)
+  devotionalId: int, relation(parent=devotional, onDelete=Cascade)
   language: String
-  verse_reference: String
-  verse_text: String
-  thought_text: String
-  prayer_prompt: String
+  verseReference: String
+  verseText: String
+  thoughtText: String
+  prayerPrompt: String
 indexes:
   idx_devotional_translations_dev_lang:
-    fields: devotional_id, language
+    fields: devotionalId, language
     unique: true

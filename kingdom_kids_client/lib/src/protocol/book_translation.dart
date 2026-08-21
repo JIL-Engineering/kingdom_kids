@@ -15,14 +15,14 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 abstract class BookTranslation implements _i1.SerializableModel {
   BookTranslation._({
     this.id,
-    required this.book_id,
+    required this.bookId,
     required this.language,
     required this.title,
   });
 
   factory BookTranslation({
     int? id,
-    required int book_id,
+    required int bookId,
     required String language,
     required String title,
   }) = _BookTranslationImpl;
@@ -30,7 +30,7 @@ abstract class BookTranslation implements _i1.SerializableModel {
   factory BookTranslation.fromJson(Map<String, dynamic> jsonSerialization) {
     return BookTranslation(
       id: jsonSerialization['id'] as int?,
-      book_id: jsonSerialization['book_id'] as int,
+      bookId: jsonSerialization['bookId'] as int,
       language: jsonSerialization['language'] as String,
       title: jsonSerialization['title'] as String,
     );
@@ -41,7 +41,7 @@ abstract class BookTranslation implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  int book_id;
+  int bookId;
 
   String language;
 
@@ -52,7 +52,7 @@ abstract class BookTranslation implements _i1.SerializableModel {
   @_i1.useResult
   BookTranslation copyWith({
     int? id,
-    int? book_id,
+    int? bookId,
     String? language,
     String? title,
   });
@@ -61,7 +61,7 @@ abstract class BookTranslation implements _i1.SerializableModel {
     return {
       '__className__': 'BookTranslation',
       if (id != null) 'id': id,
-      'book_id': book_id,
+      'bookId': bookId,
       'language': language,
       'title': title,
     };
@@ -78,12 +78,12 @@ class _Undefined {}
 class _BookTranslationImpl extends BookTranslation {
   _BookTranslationImpl({
     int? id,
-    required int book_id,
+    required int bookId,
     required String language,
     required String title,
   }) : super._(
          id: id,
-         book_id: book_id,
+         bookId: bookId,
          language: language,
          title: title,
        );
@@ -94,13 +94,13 @@ class _BookTranslationImpl extends BookTranslation {
   @override
   BookTranslation copyWith({
     Object? id = _Undefined,
-    int? book_id,
+    int? bookId,
     String? language,
     String? title,
   }) {
     return BookTranslation(
       id: id is int? ? id : this.id,
-      book_id: book_id ?? this.book_id,
+      bookId: bookId ?? this.bookId,
       language: language ?? this.language,
       title: title ?? this.title,
     );

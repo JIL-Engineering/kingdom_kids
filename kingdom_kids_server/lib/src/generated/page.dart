@@ -15,27 +15,27 @@ import 'package:serverpod/serverpod.dart' as _i1;
 abstract class Page implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   Page._({
     this.id,
-    required this.book_id,
-    required this.page_number,
-    required this.illustration_asset,
-    required this.layout_type,
+    required this.bookId,
+    required this.pageNumber,
+    required this.illustrationAsset,
+    required this.layoutType,
   });
 
   factory Page({
     int? id,
-    required int book_id,
-    required int page_number,
-    required String illustration_asset,
-    required String layout_type,
+    required int bookId,
+    required int pageNumber,
+    required String illustrationAsset,
+    required String layoutType,
   }) = _PageImpl;
 
   factory Page.fromJson(Map<String, dynamic> jsonSerialization) {
     return Page(
       id: jsonSerialization['id'] as int?,
-      book_id: jsonSerialization['book_id'] as int,
-      page_number: jsonSerialization['page_number'] as int,
-      illustration_asset: jsonSerialization['illustration_asset'] as String,
-      layout_type: jsonSerialization['layout_type'] as String,
+      bookId: jsonSerialization['bookId'] as int,
+      pageNumber: jsonSerialization['pageNumber'] as int,
+      illustrationAsset: jsonSerialization['illustrationAsset'] as String,
+      layoutType: jsonSerialization['layoutType'] as String,
     );
   }
 
@@ -46,13 +46,13 @@ abstract class Page implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   @override
   int? id;
 
-  int book_id;
+  int bookId;
 
-  int page_number;
+  int pageNumber;
 
-  String illustration_asset;
+  String illustrationAsset;
 
-  String layout_type;
+  String layoutType;
 
   @override
   _i1.Table<int?> get table => t;
@@ -62,20 +62,20 @@ abstract class Page implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   @_i1.useResult
   Page copyWith({
     int? id,
-    int? book_id,
-    int? page_number,
-    String? illustration_asset,
-    String? layout_type,
+    int? bookId,
+    int? pageNumber,
+    String? illustrationAsset,
+    String? layoutType,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'Page',
       if (id != null) 'id': id,
-      'book_id': book_id,
-      'page_number': page_number,
-      'illustration_asset': illustration_asset,
-      'layout_type': layout_type,
+      'bookId': bookId,
+      'pageNumber': pageNumber,
+      'illustrationAsset': illustrationAsset,
+      'layoutType': layoutType,
     };
   }
 
@@ -84,10 +84,10 @@ abstract class Page implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
     return {
       '__className__': 'Page',
       if (id != null) 'id': id,
-      'book_id': book_id,
-      'page_number': page_number,
-      'illustration_asset': illustration_asset,
-      'layout_type': layout_type,
+      'bookId': bookId,
+      'pageNumber': pageNumber,
+      'illustrationAsset': illustrationAsset,
+      'layoutType': layoutType,
     };
   }
 
@@ -128,16 +128,16 @@ class _Undefined {}
 class _PageImpl extends Page {
   _PageImpl({
     int? id,
-    required int book_id,
-    required int page_number,
-    required String illustration_asset,
-    required String layout_type,
+    required int bookId,
+    required int pageNumber,
+    required String illustrationAsset,
+    required String layoutType,
   }) : super._(
          id: id,
-         book_id: book_id,
-         page_number: page_number,
-         illustration_asset: illustration_asset,
-         layout_type: layout_type,
+         bookId: bookId,
+         pageNumber: pageNumber,
+         illustrationAsset: illustrationAsset,
+         layoutType: layoutType,
        );
 
   /// Returns a shallow copy of this [Page]
@@ -146,17 +146,17 @@ class _PageImpl extends Page {
   @override
   Page copyWith({
     Object? id = _Undefined,
-    int? book_id,
-    int? page_number,
-    String? illustration_asset,
-    String? layout_type,
+    int? bookId,
+    int? pageNumber,
+    String? illustrationAsset,
+    String? layoutType,
   }) {
     return Page(
       id: id is int? ? id : this.id,
-      book_id: book_id ?? this.book_id,
-      page_number: page_number ?? this.page_number,
-      illustration_asset: illustration_asset ?? this.illustration_asset,
-      layout_type: layout_type ?? this.layout_type,
+      bookId: bookId ?? this.bookId,
+      pageNumber: pageNumber ?? this.pageNumber,
+      illustrationAsset: illustrationAsset ?? this.illustrationAsset,
+      layoutType: layoutType ?? this.layoutType,
     );
   }
 }
@@ -164,24 +164,24 @@ class _PageImpl extends Page {
 class PageUpdateTable extends _i1.UpdateTable<PageTable> {
   PageUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> book_id(int value) => _i1.ColumnValue(
-    table.book_id,
+  _i1.ColumnValue<int, int> bookId(int value) => _i1.ColumnValue(
+    table.bookId,
     value,
   );
 
-  _i1.ColumnValue<int, int> page_number(int value) => _i1.ColumnValue(
-    table.page_number,
+  _i1.ColumnValue<int, int> pageNumber(int value) => _i1.ColumnValue(
+    table.pageNumber,
     value,
   );
 
-  _i1.ColumnValue<String, String> illustration_asset(String value) =>
+  _i1.ColumnValue<String, String> illustrationAsset(String value) =>
       _i1.ColumnValue(
-        table.illustration_asset,
+        table.illustrationAsset,
         value,
       );
 
-  _i1.ColumnValue<String, String> layout_type(String value) => _i1.ColumnValue(
-    table.layout_type,
+  _i1.ColumnValue<String, String> layoutType(String value) => _i1.ColumnValue(
+    table.layoutType,
     value,
   );
 }
@@ -189,41 +189,41 @@ class PageUpdateTable extends _i1.UpdateTable<PageTable> {
 class PageTable extends _i1.Table<int?> {
   PageTable({super.tableRelation}) : super(tableName: 'page') {
     updateTable = PageUpdateTable(this);
-    book_id = _i1.ColumnInt(
-      'book_id',
+    bookId = _i1.ColumnInt(
+      'bookId',
       this,
     );
-    page_number = _i1.ColumnInt(
-      'page_number',
+    pageNumber = _i1.ColumnInt(
+      'pageNumber',
       this,
     );
-    illustration_asset = _i1.ColumnString(
-      'illustration_asset',
+    illustrationAsset = _i1.ColumnString(
+      'illustrationAsset',
       this,
     );
-    layout_type = _i1.ColumnString(
-      'layout_type',
+    layoutType = _i1.ColumnString(
+      'layoutType',
       this,
     );
   }
 
   late final PageUpdateTable updateTable;
 
-  late final _i1.ColumnInt book_id;
+  late final _i1.ColumnInt bookId;
 
-  late final _i1.ColumnInt page_number;
+  late final _i1.ColumnInt pageNumber;
 
-  late final _i1.ColumnString illustration_asset;
+  late final _i1.ColumnString illustrationAsset;
 
-  late final _i1.ColumnString layout_type;
+  late final _i1.ColumnString layoutType;
 
   @override
   List<_i1.Column> get columns => [
     id,
-    book_id,
-    page_number,
-    illustration_asset,
-    layout_type,
+    bookId,
+    pageNumber,
+    illustrationAsset,
+    layoutType,
   ];
 }
 

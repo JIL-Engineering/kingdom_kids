@@ -16,25 +16,25 @@ abstract class ChildBadge
     implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   ChildBadge._({
     this.id,
-    required this.child_id,
-    required this.badge_id,
-    required this.earned_at,
+    required this.childId,
+    required this.badgeId,
+    required this.earnedAt,
   });
 
   factory ChildBadge({
     int? id,
-    required int child_id,
-    required int badge_id,
-    required DateTime earned_at,
+    required int childId,
+    required int badgeId,
+    required DateTime earnedAt,
   }) = _ChildBadgeImpl;
 
   factory ChildBadge.fromJson(Map<String, dynamic> jsonSerialization) {
     return ChildBadge(
       id: jsonSerialization['id'] as int?,
-      child_id: jsonSerialization['child_id'] as int,
-      badge_id: jsonSerialization['badge_id'] as int,
-      earned_at: _i1.DateTimeJsonExtension.fromJson(
-        jsonSerialization['earned_at'],
+      childId: jsonSerialization['childId'] as int,
+      badgeId: jsonSerialization['badgeId'] as int,
+      earnedAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['earnedAt'],
       ),
     );
   }
@@ -46,11 +46,11 @@ abstract class ChildBadge
   @override
   int? id;
 
-  int child_id;
+  int childId;
 
-  int badge_id;
+  int badgeId;
 
-  DateTime earned_at;
+  DateTime earnedAt;
 
   @override
   _i1.Table<int?> get table => t;
@@ -60,18 +60,18 @@ abstract class ChildBadge
   @_i1.useResult
   ChildBadge copyWith({
     int? id,
-    int? child_id,
-    int? badge_id,
-    DateTime? earned_at,
+    int? childId,
+    int? badgeId,
+    DateTime? earnedAt,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'ChildBadge',
       if (id != null) 'id': id,
-      'child_id': child_id,
-      'badge_id': badge_id,
-      'earned_at': earned_at.toJson(),
+      'childId': childId,
+      'badgeId': badgeId,
+      'earnedAt': earnedAt.toJson(),
     };
   }
 
@@ -80,9 +80,9 @@ abstract class ChildBadge
     return {
       '__className__': 'ChildBadge',
       if (id != null) 'id': id,
-      'child_id': child_id,
-      'badge_id': badge_id,
-      'earned_at': earned_at.toJson(),
+      'childId': childId,
+      'badgeId': badgeId,
+      'earnedAt': earnedAt.toJson(),
     };
   }
 
@@ -123,14 +123,14 @@ class _Undefined {}
 class _ChildBadgeImpl extends ChildBadge {
   _ChildBadgeImpl({
     int? id,
-    required int child_id,
-    required int badge_id,
-    required DateTime earned_at,
+    required int childId,
+    required int badgeId,
+    required DateTime earnedAt,
   }) : super._(
          id: id,
-         child_id: child_id,
-         badge_id: badge_id,
-         earned_at: earned_at,
+         childId: childId,
+         badgeId: badgeId,
+         earnedAt: earnedAt,
        );
 
   /// Returns a shallow copy of this [ChildBadge]
@@ -139,15 +139,15 @@ class _ChildBadgeImpl extends ChildBadge {
   @override
   ChildBadge copyWith({
     Object? id = _Undefined,
-    int? child_id,
-    int? badge_id,
-    DateTime? earned_at,
+    int? childId,
+    int? badgeId,
+    DateTime? earnedAt,
   }) {
     return ChildBadge(
       id: id is int? ? id : this.id,
-      child_id: child_id ?? this.child_id,
-      badge_id: badge_id ?? this.badge_id,
-      earned_at: earned_at ?? this.earned_at,
+      childId: childId ?? this.childId,
+      badgeId: badgeId ?? this.badgeId,
+      earnedAt: earnedAt ?? this.earnedAt,
     );
   }
 }
@@ -155,19 +155,19 @@ class _ChildBadgeImpl extends ChildBadge {
 class ChildBadgeUpdateTable extends _i1.UpdateTable<ChildBadgeTable> {
   ChildBadgeUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> child_id(int value) => _i1.ColumnValue(
-    table.child_id,
+  _i1.ColumnValue<int, int> childId(int value) => _i1.ColumnValue(
+    table.childId,
     value,
   );
 
-  _i1.ColumnValue<int, int> badge_id(int value) => _i1.ColumnValue(
-    table.badge_id,
+  _i1.ColumnValue<int, int> badgeId(int value) => _i1.ColumnValue(
+    table.badgeId,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> earned_at(DateTime value) =>
+  _i1.ColumnValue<DateTime, DateTime> earnedAt(DateTime value) =>
       _i1.ColumnValue(
-        table.earned_at,
+        table.earnedAt,
         value,
       );
 }
@@ -175,34 +175,34 @@ class ChildBadgeUpdateTable extends _i1.UpdateTable<ChildBadgeTable> {
 class ChildBadgeTable extends _i1.Table<int?> {
   ChildBadgeTable({super.tableRelation}) : super(tableName: 'child_badge') {
     updateTable = ChildBadgeUpdateTable(this);
-    child_id = _i1.ColumnInt(
-      'child_id',
+    childId = _i1.ColumnInt(
+      'childId',
       this,
     );
-    badge_id = _i1.ColumnInt(
-      'badge_id',
+    badgeId = _i1.ColumnInt(
+      'badgeId',
       this,
     );
-    earned_at = _i1.ColumnDateTime(
-      'earned_at',
+    earnedAt = _i1.ColumnDateTime(
+      'earnedAt',
       this,
     );
   }
 
   late final ChildBadgeUpdateTable updateTable;
 
-  late final _i1.ColumnInt child_id;
+  late final _i1.ColumnInt childId;
 
-  late final _i1.ColumnInt badge_id;
+  late final _i1.ColumnInt badgeId;
 
-  late final _i1.ColumnDateTime earned_at;
+  late final _i1.ColumnDateTime earnedAt;
 
   @override
   List<_i1.Column> get columns => [
     id,
-    child_id,
-    badge_id,
-    earned_at,
+    childId,
+    badgeId,
+    earnedAt,
   ];
 }
 

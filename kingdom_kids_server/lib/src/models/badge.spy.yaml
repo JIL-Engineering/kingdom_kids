@@ -4,8 +4,8 @@ fields:
   code: String, unique
   name: String
   description: String
-  icon_asset: String
-  trigger_rule: Map<String, dynamic>
+  iconAsset: String
+  triggerRule: Map<String, dynamic>
 indexes:
   badges_code_idx:
     fields: code

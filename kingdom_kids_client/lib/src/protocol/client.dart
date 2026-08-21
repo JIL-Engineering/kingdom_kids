@@ -242,6 +242,62 @@ class EndpointJwtRefresh extends _i4.EndpointRefreshJwtTokens {
   );
 }
 
+/// {@category Endpoint}
+class EndpointAuth extends _i2.EndpointRef {
+  EndpointAuth(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'auth';
+}
+
+/// {@category Endpoint}
+class EndpointBadge extends _i2.EndpointRef {
+  EndpointBadge(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'badge';
+}
+
+/// {@category Endpoint}
+class EndpointChild extends _i2.EndpointRef {
+  EndpointChild(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'child';
+}
+
+/// {@category Endpoint}
+class EndpointDashboard extends _i2.EndpointRef {
+  EndpointDashboard(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'dashboard';
+}
+
+/// {@category Endpoint}
+class EndpointDevotional extends _i2.EndpointRef {
+  EndpointDevotional(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'devotional';
+}
+
+/// {@category Endpoint}
+class EndpointLibrary extends _i2.EndpointRef {
+  EndpointLibrary(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'library';
+}
+
+/// {@category Endpoint}
+class EndpointProgress extends _i2.EndpointRef {
+  EndpointProgress(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'progress';
+}
+
 /// This is an example endpoint that returns a greeting message through
 /// its [hello] method.
 /// {@category Endpoint}
@@ -304,6 +360,13 @@ class Client extends _i2.ServerpodClientShared {
        ) {
     emailIdp = EndpointEmailIdp(this);
     jwtRefresh = EndpointJwtRefresh(this);
+    auth = EndpointAuth(this);
+    badge = EndpointBadge(this);
+    child = EndpointChild(this);
+    dashboard = EndpointDashboard(this);
+    devotional = EndpointDevotional(this);
+    library = EndpointLibrary(this);
+    progress = EndpointProgress(this);
     greeting = EndpointGreeting(this);
     modules = Modules(this);
   }
@@ -311,6 +374,20 @@ class Client extends _i2.ServerpodClientShared {
   late final EndpointEmailIdp emailIdp;
 
   late final EndpointJwtRefresh jwtRefresh;
+
+  late final EndpointAuth auth;
+
+  late final EndpointBadge badge;
+
+  late final EndpointChild child;
+
+  late final EndpointDashboard dashboard;
+
+  late final EndpointDevotional devotional;
+
+  late final EndpointLibrary library;
+
+  late final EndpointProgress progress;
 
   late final EndpointGreeting greeting;
 
@@ -320,6 +397,13 @@ class Client extends _i2.ServerpodClientShared {
   Map<String, _i2.EndpointRef> get endpointRefLookup => {
     'emailIdp': emailIdp,
     'jwtRefresh': jwtRefresh,
+    'auth': auth,
+    'badge': badge,
+    'child': child,
+    'dashboard': dashboard,
+    'devotional': devotional,
+    'library': library,
+    'progress': progress,
     'greeting': greeting,
   };
 

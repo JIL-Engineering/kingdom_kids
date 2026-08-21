@@ -16,22 +16,22 @@ abstract class DevotionalTranslation
     implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   DevotionalTranslation._({
     this.id,
-    required this.devotional_id,
+    required this.devotionalId,
     required this.language,
-    required this.verse_reference,
-    required this.verse_text,
-    required this.thought_text,
-    required this.prayer_prompt,
+    required this.verseReference,
+    required this.verseText,
+    required this.thoughtText,
+    required this.prayerPrompt,
   });
 
   factory DevotionalTranslation({
     int? id,
-    required int devotional_id,
+    required int devotionalId,
     required String language,
-    required String verse_reference,
-    required String verse_text,
-    required String thought_text,
-    required String prayer_prompt,
+    required String verseReference,
+    required String verseText,
+    required String thoughtText,
+    required String prayerPrompt,
   }) = _DevotionalTranslationImpl;
 
   factory DevotionalTranslation.fromJson(
@@ -39,12 +39,12 @@ abstract class DevotionalTranslation
   ) {
     return DevotionalTranslation(
       id: jsonSerialization['id'] as int?,
-      devotional_id: jsonSerialization['devotional_id'] as int,
+      devotionalId: jsonSerialization['devotionalId'] as int,
       language: jsonSerialization['language'] as String,
-      verse_reference: jsonSerialization['verse_reference'] as String,
-      verse_text: jsonSerialization['verse_text'] as String,
-      thought_text: jsonSerialization['thought_text'] as String,
-      prayer_prompt: jsonSerialization['prayer_prompt'] as String,
+      verseReference: jsonSerialization['verseReference'] as String,
+      verseText: jsonSerialization['verseText'] as String,
+      thoughtText: jsonSerialization['thoughtText'] as String,
+      prayerPrompt: jsonSerialization['prayerPrompt'] as String,
     );
   }
 
@@ -55,17 +55,17 @@ abstract class DevotionalTranslation
   @override
   int? id;
 
-  int devotional_id;
+  int devotionalId;
 
   String language;
 
-  String verse_reference;
+  String verseReference;
 
-  String verse_text;
+  String verseText;
 
-  String thought_text;
+  String thoughtText;
 
-  String prayer_prompt;
+  String prayerPrompt;
 
   @override
   _i1.Table<int?> get table => t;
@@ -75,24 +75,24 @@ abstract class DevotionalTranslation
   @_i1.useResult
   DevotionalTranslation copyWith({
     int? id,
-    int? devotional_id,
+    int? devotionalId,
     String? language,
-    String? verse_reference,
-    String? verse_text,
-    String? thought_text,
-    String? prayer_prompt,
+    String? verseReference,
+    String? verseText,
+    String? thoughtText,
+    String? prayerPrompt,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'DevotionalTranslation',
       if (id != null) 'id': id,
-      'devotional_id': devotional_id,
+      'devotionalId': devotionalId,
       'language': language,
-      'verse_reference': verse_reference,
-      'verse_text': verse_text,
-      'thought_text': thought_text,
-      'prayer_prompt': prayer_prompt,
+      'verseReference': verseReference,
+      'verseText': verseText,
+      'thoughtText': thoughtText,
+      'prayerPrompt': prayerPrompt,
     };
   }
 
@@ -101,12 +101,12 @@ abstract class DevotionalTranslation
     return {
       '__className__': 'DevotionalTranslation',
       if (id != null) 'id': id,
-      'devotional_id': devotional_id,
+      'devotionalId': devotionalId,
       'language': language,
-      'verse_reference': verse_reference,
-      'verse_text': verse_text,
-      'thought_text': thought_text,
-      'prayer_prompt': prayer_prompt,
+      'verseReference': verseReference,
+      'verseText': verseText,
+      'thoughtText': thoughtText,
+      'prayerPrompt': prayerPrompt,
     };
   }
 
@@ -147,20 +147,20 @@ class _Undefined {}
 class _DevotionalTranslationImpl extends DevotionalTranslation {
   _DevotionalTranslationImpl({
     int? id,
-    required int devotional_id,
+    required int devotionalId,
     required String language,
-    required String verse_reference,
-    required String verse_text,
-    required String thought_text,
-    required String prayer_prompt,
+    required String verseReference,
+    required String verseText,
+    required String thoughtText,
+    required String prayerPrompt,
   }) : super._(
          id: id,
-         devotional_id: devotional_id,
+         devotionalId: devotionalId,
          language: language,
-         verse_reference: verse_reference,
-         verse_text: verse_text,
-         thought_text: thought_text,
-         prayer_prompt: prayer_prompt,
+         verseReference: verseReference,
+         verseText: verseText,
+         thoughtText: thoughtText,
+         prayerPrompt: prayerPrompt,
        );
 
   /// Returns a shallow copy of this [DevotionalTranslation]
@@ -169,21 +169,21 @@ class _DevotionalTranslationImpl extends DevotionalTranslation {
   @override
   DevotionalTranslation copyWith({
     Object? id = _Undefined,
-    int? devotional_id,
+    int? devotionalId,
     String? language,
-    String? verse_reference,
-    String? verse_text,
-    String? thought_text,
-    String? prayer_prompt,
+    String? verseReference,
+    String? verseText,
+    String? thoughtText,
+    String? prayerPrompt,
   }) {
     return DevotionalTranslation(
       id: id is int? ? id : this.id,
-      devotional_id: devotional_id ?? this.devotional_id,
+      devotionalId: devotionalId ?? this.devotionalId,
       language: language ?? this.language,
-      verse_reference: verse_reference ?? this.verse_reference,
-      verse_text: verse_text ?? this.verse_text,
-      thought_text: thought_text ?? this.thought_text,
-      prayer_prompt: prayer_prompt ?? this.prayer_prompt,
+      verseReference: verseReference ?? this.verseReference,
+      verseText: verseText ?? this.verseText,
+      thoughtText: thoughtText ?? this.thoughtText,
+      prayerPrompt: prayerPrompt ?? this.prayerPrompt,
     );
   }
 }
@@ -192,8 +192,8 @@ class DevotionalTranslationUpdateTable
     extends _i1.UpdateTable<DevotionalTranslationTable> {
   DevotionalTranslationUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> devotional_id(int value) => _i1.ColumnValue(
-    table.devotional_id,
+  _i1.ColumnValue<int, int> devotionalId(int value) => _i1.ColumnValue(
+    table.devotionalId,
     value,
   );
 
@@ -202,82 +202,81 @@ class DevotionalTranslationUpdateTable
     value,
   );
 
-  _i1.ColumnValue<String, String> verse_reference(String value) =>
+  _i1.ColumnValue<String, String> verseReference(String value) =>
       _i1.ColumnValue(
-        table.verse_reference,
+        table.verseReference,
         value,
       );
 
-  _i1.ColumnValue<String, String> verse_text(String value) => _i1.ColumnValue(
-    table.verse_text,
+  _i1.ColumnValue<String, String> verseText(String value) => _i1.ColumnValue(
+    table.verseText,
     value,
   );
 
-  _i1.ColumnValue<String, String> thought_text(String value) => _i1.ColumnValue(
-    table.thought_text,
+  _i1.ColumnValue<String, String> thoughtText(String value) => _i1.ColumnValue(
+    table.thoughtText,
     value,
   );
 
-  _i1.ColumnValue<String, String> prayer_prompt(String value) =>
-      _i1.ColumnValue(
-        table.prayer_prompt,
-        value,
-      );
+  _i1.ColumnValue<String, String> prayerPrompt(String value) => _i1.ColumnValue(
+    table.prayerPrompt,
+    value,
+  );
 }
 
 class DevotionalTranslationTable extends _i1.Table<int?> {
   DevotionalTranslationTable({super.tableRelation})
     : super(tableName: 'devotional_translation') {
     updateTable = DevotionalTranslationUpdateTable(this);
-    devotional_id = _i1.ColumnInt(
-      'devotional_id',
+    devotionalId = _i1.ColumnInt(
+      'devotionalId',
       this,
     );
     language = _i1.ColumnString(
       'language',
       this,
     );
-    verse_reference = _i1.ColumnString(
-      'verse_reference',
+    verseReference = _i1.ColumnString(
+      'verseReference',
       this,
     );
-    verse_text = _i1.ColumnString(
-      'verse_text',
+    verseText = _i1.ColumnString(
+      'verseText',
       this,
     );
-    thought_text = _i1.ColumnString(
-      'thought_text',
+    thoughtText = _i1.ColumnString(
+      'thoughtText',
       this,
     );
-    prayer_prompt = _i1.ColumnString(
-      'prayer_prompt',
+    prayerPrompt = _i1.ColumnString(
+      'prayerPrompt',
       this,
     );
   }
 
   late final DevotionalTranslationUpdateTable updateTable;
 
-  late final _i1.ColumnInt devotional_id;
+  late final _i1.ColumnInt devotionalId;
 
   late final _i1.ColumnString language;
 
-  late final _i1.ColumnString verse_reference;
+  late final _i1.ColumnString verseReference;
 
-  late final _i1.ColumnString verse_text;
+  late final _i1.ColumnString verseText;
 
-  late final _i1.ColumnString thought_text;
+  late final _i1.ColumnString thoughtText;
 
-  late final _i1.ColumnString prayer_prompt;
+  late final _i1.ColumnString prayerPrompt;
 
   @override
   List<_i1.Column> get columns => [
     id,
-    devotional_id,
+    devotionalId,
     language,
-    verse_reference,
-    verse_text,
-    thought_text,
-    prayer_prompt,
+    verseReference,
+    verseText,
+    thoughtText,
+    prayerPrompt,
   ];
 }
 

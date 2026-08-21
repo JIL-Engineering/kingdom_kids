@@ -1,16 +1,16 @@
 class: ReadingProgress
 table: reading_progress
 fields:
-  child_id: int, relation(parent=child_profiles, onDelete=Cascade)
-  book_id: int, relation(parent=book)
-  current_page: int
+  childId: int, relation(parent=child_profiles, onDelete=Cascade)
+  bookId: int, relation(parent=book)
+  currentPage: int
   completed: bool
-  started_at: DateTime
-  completed_at: DateTime?
-  total_time_seconds: int
-  synced_at: DateTime
+  startedAt: DateTime
+  completedAt: DateTime?
+  totalTimeSeconds: int
+  syncedAt: DateTime
 indexes:
   idx_progress_child_book:
-    fields: child_id, book_id
+    fields: childId, bookId
   idx_progress_child_started:
-    fields: child_id, started_at
+    fields: childId, startedAt

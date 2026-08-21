@@ -19,8 +19,8 @@ abstract class Badge implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
     required this.code,
     required this.name,
     required this.description,
-    required this.icon_asset,
-    required this.trigger_rule,
+    required this.iconAsset,
+    required this.triggerRule,
   });
 
   factory Badge({
@@ -28,8 +28,8 @@ abstract class Badge implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
     required String code,
     required String name,
     required String description,
-    required String icon_asset,
-    required Map<String, dynamic> trigger_rule,
+    required String iconAsset,
+    required Map<String, dynamic> triggerRule,
   }) = _BadgeImpl;
 
   factory Badge.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -38,9 +38,9 @@ abstract class Badge implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       code: jsonSerialization['code'] as String,
       name: jsonSerialization['name'] as String,
       description: jsonSerialization['description'] as String,
-      icon_asset: jsonSerialization['icon_asset'] as String,
-      trigger_rule: _i2.Protocol().deserialize<Map<String, dynamic>>(
-        jsonSerialization['trigger_rule'],
+      iconAsset: jsonSerialization['iconAsset'] as String,
+      triggerRule: _i2.Protocol().deserialize<Map<String, dynamic>>(
+        jsonSerialization['triggerRule'],
       ),
     );
   }
@@ -58,9 +58,9 @@ abstract class Badge implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
 
   String description;
 
-  String icon_asset;
+  String iconAsset;
 
-  Map<String, dynamic> trigger_rule;
+  Map<String, dynamic> triggerRule;
 
   @override
   _i1.Table<int?> get table => t;
@@ -73,8 +73,8 @@ abstract class Badge implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
     String? code,
     String? name,
     String? description,
-    String? icon_asset,
-    Map<String, dynamic>? trigger_rule,
+    String? iconAsset,
+    Map<String, dynamic>? triggerRule,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -84,8 +84,8 @@ abstract class Badge implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       'code': code,
       'name': name,
       'description': description,
-      'icon_asset': icon_asset,
-      'trigger_rule': trigger_rule.toJson(
+      'iconAsset': iconAsset,
+      'triggerRule': triggerRule.toJson(
         valueToJson: (v) => _i2.Protocol().dynamicFieldToJson(v),
       ),
     };
@@ -99,8 +99,8 @@ abstract class Badge implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       'code': code,
       'name': name,
       'description': description,
-      'icon_asset': icon_asset,
-      'trigger_rule': trigger_rule.toJson(
+      'iconAsset': iconAsset,
+      'triggerRule': triggerRule.toJson(
         valueToJson: (v) => _i2.Protocol().dynamicFieldToJson(
           v,
           forProtocol: true,
@@ -149,15 +149,15 @@ class _BadgeImpl extends Badge {
     required String code,
     required String name,
     required String description,
-    required String icon_asset,
-    required Map<String, dynamic> trigger_rule,
+    required String iconAsset,
+    required Map<String, dynamic> triggerRule,
   }) : super._(
          id: id,
          code: code,
          name: name,
          description: description,
-         icon_asset: icon_asset,
-         trigger_rule: trigger_rule,
+         iconAsset: iconAsset,
+         triggerRule: triggerRule,
        );
 
   /// Returns a shallow copy of this [Badge]
@@ -169,18 +169,18 @@ class _BadgeImpl extends Badge {
     String? code,
     String? name,
     String? description,
-    String? icon_asset,
-    Map<String, dynamic>? trigger_rule,
+    String? iconAsset,
+    Map<String, dynamic>? triggerRule,
   }) {
     return Badge(
       id: id is int? ? id : this.id,
       code: code ?? this.code,
       name: name ?? this.name,
       description: description ?? this.description,
-      icon_asset: icon_asset ?? this.icon_asset,
-      trigger_rule:
-          trigger_rule ??
-          this.trigger_rule.map(
+      iconAsset: iconAsset ?? this.iconAsset,
+      triggerRule:
+          triggerRule ??
+          this.triggerRule.map(
             (
               key0,
               value0,
@@ -211,15 +211,15 @@ class BadgeUpdateTable extends _i1.UpdateTable<BadgeTable> {
     value,
   );
 
-  _i1.ColumnValue<String, String> icon_asset(String value) => _i1.ColumnValue(
-    table.icon_asset,
+  _i1.ColumnValue<String, String> iconAsset(String value) => _i1.ColumnValue(
+    table.iconAsset,
     value,
   );
 
-  _i1.ColumnValue<Map<String, dynamic>, Map<String, dynamic>> trigger_rule(
+  _i1.ColumnValue<Map<String, dynamic>, Map<String, dynamic>> triggerRule(
     Map<String, dynamic> value,
   ) => _i1.ColumnValue(
-    table.trigger_rule,
+    table.triggerRule,
     value,
   );
 }
@@ -239,12 +239,12 @@ class BadgeTable extends _i1.Table<int?> {
       'description',
       this,
     );
-    icon_asset = _i1.ColumnString(
-      'icon_asset',
+    iconAsset = _i1.ColumnString(
+      'iconAsset',
       this,
     );
-    trigger_rule = _i1.ColumnSerializable<Map<String, dynamic>>(
-      'trigger_rule',
+    triggerRule = _i1.ColumnSerializable<Map<String, dynamic>>(
+      'triggerRule',
       this,
     );
   }
@@ -257,9 +257,9 @@ class BadgeTable extends _i1.Table<int?> {
 
   late final _i1.ColumnString description;
 
-  late final _i1.ColumnString icon_asset;
+  late final _i1.ColumnString iconAsset;
 
-  late final _i1.ColumnSerializable<Map<String, dynamic>> trigger_rule;
+  late final _i1.ColumnSerializable<Map<String, dynamic>> triggerRule;
 
   @override
   List<_i1.Column> get columns => [
@@ -267,8 +267,8 @@ class BadgeTable extends _i1.Table<int?> {
     code,
     name,
     description,
-    icon_asset,
-    trigger_rule,
+    iconAsset,
+    triggerRule,
   ];
 }
 

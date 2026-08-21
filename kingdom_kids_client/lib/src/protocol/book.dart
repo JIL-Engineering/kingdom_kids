@@ -16,46 +16,46 @@ abstract class Book implements _i1.SerializableModel {
   Book._({
     this.id,
     required this.slug,
-    required this.age_bracket_min,
-    required this.age_bracket_max,
+    required this.ageBracketMin,
+    required this.ageBracketMax,
     required this.category,
-    this.cover_image_asset,
-    required this.is_published,
-    required this.content_version,
-    required this.updated_at,
-    required this.created_at,
+    this.coverImageAsset,
+    required this.isPublished,
+    required this.contentVersion,
+    required this.updatedAt,
+    required this.createdAt,
   });
 
   factory Book({
     int? id,
     required String slug,
-    required String age_bracket_min,
-    required String age_bracket_max,
+    required String ageBracketMin,
+    required String ageBracketMax,
     required String category,
-    String? cover_image_asset,
-    required bool is_published,
-    required int content_version,
-    required DateTime updated_at,
-    required DateTime created_at,
+    String? coverImageAsset,
+    required bool isPublished,
+    required int contentVersion,
+    required DateTime updatedAt,
+    required DateTime createdAt,
   }) = _BookImpl;
 
   factory Book.fromJson(Map<String, dynamic> jsonSerialization) {
     return Book(
       id: jsonSerialization['id'] as int?,
       slug: jsonSerialization['slug'] as String,
-      age_bracket_min: jsonSerialization['age_bracket_min'] as String,
-      age_bracket_max: jsonSerialization['age_bracket_max'] as String,
+      ageBracketMin: jsonSerialization['ageBracketMin'] as String,
+      ageBracketMax: jsonSerialization['ageBracketMax'] as String,
       category: jsonSerialization['category'] as String,
-      cover_image_asset: jsonSerialization['cover_image_asset'] as String?,
-      is_published: _i1.BoolJsonExtension.fromJson(
-        jsonSerialization['is_published'],
+      coverImageAsset: jsonSerialization['coverImageAsset'] as String?,
+      isPublished: _i1.BoolJsonExtension.fromJson(
+        jsonSerialization['isPublished'],
       ),
-      content_version: jsonSerialization['content_version'] as int,
-      updated_at: _i1.DateTimeJsonExtension.fromJson(
-        jsonSerialization['updated_at'],
+      contentVersion: jsonSerialization['contentVersion'] as int,
+      updatedAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['updatedAt'],
       ),
-      created_at: _i1.DateTimeJsonExtension.fromJson(
-        jsonSerialization['created_at'],
+      createdAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['createdAt'],
       ),
     );
   }
@@ -67,21 +67,21 @@ abstract class Book implements _i1.SerializableModel {
 
   String slug;
 
-  String age_bracket_min;
+  String ageBracketMin;
 
-  String age_bracket_max;
+  String ageBracketMax;
 
   String category;
 
-  String? cover_image_asset;
+  String? coverImageAsset;
 
-  bool is_published;
+  bool isPublished;
 
-  int content_version;
+  int contentVersion;
 
-  DateTime updated_at;
+  DateTime updatedAt;
 
-  DateTime created_at;
+  DateTime createdAt;
 
   /// Returns a shallow copy of this [Book]
   /// with some or all fields replaced by the given arguments.
@@ -89,14 +89,14 @@ abstract class Book implements _i1.SerializableModel {
   Book copyWith({
     int? id,
     String? slug,
-    String? age_bracket_min,
-    String? age_bracket_max,
+    String? ageBracketMin,
+    String? ageBracketMax,
     String? category,
-    String? cover_image_asset,
-    bool? is_published,
-    int? content_version,
-    DateTime? updated_at,
-    DateTime? created_at,
+    String? coverImageAsset,
+    bool? isPublished,
+    int? contentVersion,
+    DateTime? updatedAt,
+    DateTime? createdAt,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -104,14 +104,14 @@ abstract class Book implements _i1.SerializableModel {
       '__className__': 'Book',
       if (id != null) 'id': id,
       'slug': slug,
-      'age_bracket_min': age_bracket_min,
-      'age_bracket_max': age_bracket_max,
+      'ageBracketMin': ageBracketMin,
+      'ageBracketMax': ageBracketMax,
       'category': category,
-      if (cover_image_asset != null) 'cover_image_asset': cover_image_asset,
-      'is_published': is_published,
-      'content_version': content_version,
-      'updated_at': updated_at.toJson(),
-      'created_at': created_at.toJson(),
+      if (coverImageAsset != null) 'coverImageAsset': coverImageAsset,
+      'isPublished': isPublished,
+      'contentVersion': contentVersion,
+      'updatedAt': updatedAt.toJson(),
+      'createdAt': createdAt.toJson(),
     };
   }
 
@@ -127,25 +127,25 @@ class _BookImpl extends Book {
   _BookImpl({
     int? id,
     required String slug,
-    required String age_bracket_min,
-    required String age_bracket_max,
+    required String ageBracketMin,
+    required String ageBracketMax,
     required String category,
-    String? cover_image_asset,
-    required bool is_published,
-    required int content_version,
-    required DateTime updated_at,
-    required DateTime created_at,
+    String? coverImageAsset,
+    required bool isPublished,
+    required int contentVersion,
+    required DateTime updatedAt,
+    required DateTime createdAt,
   }) : super._(
          id: id,
          slug: slug,
-         age_bracket_min: age_bracket_min,
-         age_bracket_max: age_bracket_max,
+         ageBracketMin: ageBracketMin,
+         ageBracketMax: ageBracketMax,
          category: category,
-         cover_image_asset: cover_image_asset,
-         is_published: is_published,
-         content_version: content_version,
-         updated_at: updated_at,
-         created_at: created_at,
+         coverImageAsset: coverImageAsset,
+         isPublished: isPublished,
+         contentVersion: contentVersion,
+         updatedAt: updatedAt,
+         createdAt: createdAt,
        );
 
   /// Returns a shallow copy of this [Book]
@@ -155,28 +155,28 @@ class _BookImpl extends Book {
   Book copyWith({
     Object? id = _Undefined,
     String? slug,
-    String? age_bracket_min,
-    String? age_bracket_max,
+    String? ageBracketMin,
+    String? ageBracketMax,
     String? category,
-    Object? cover_image_asset = _Undefined,
-    bool? is_published,
-    int? content_version,
-    DateTime? updated_at,
-    DateTime? created_at,
+    Object? coverImageAsset = _Undefined,
+    bool? isPublished,
+    int? contentVersion,
+    DateTime? updatedAt,
+    DateTime? createdAt,
   }) {
     return Book(
       id: id is int? ? id : this.id,
       slug: slug ?? this.slug,
-      age_bracket_min: age_bracket_min ?? this.age_bracket_min,
-      age_bracket_max: age_bracket_max ?? this.age_bracket_max,
+      ageBracketMin: ageBracketMin ?? this.ageBracketMin,
+      ageBracketMax: ageBracketMax ?? this.ageBracketMax,
       category: category ?? this.category,
-      cover_image_asset: cover_image_asset is String?
-          ? cover_image_asset
-          : this.cover_image_asset,
-      is_published: is_published ?? this.is_published,
-      content_version: content_version ?? this.content_version,
-      updated_at: updated_at ?? this.updated_at,
-      created_at: created_at ?? this.created_at,
+      coverImageAsset: coverImageAsset is String?
+          ? coverImageAsset
+          : this.coverImageAsset,
+      isPublished: isPublished ?? this.isPublished,
+      contentVersion: contentVersion ?? this.contentVersion,
+      updatedAt: updatedAt ?? this.updatedAt,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 }
