@@ -19,12 +19,12 @@ import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
 import 'greetings/greeting.dart' as _i5;
 export 'greetings/greeting.dart';
 
-class Protocol extends _i1.DatabaseSerializationManager {
+class Protocol extends _i1.SerializationManagerServer {
   Protocol._();
 
   factory Protocol() => _instance;
 
-  static final Protocol _instance = Protocol._().._registerHostProtocols();
+  static final Protocol _instance = Protocol._();
 
   static final List<_i2.TableDefinition> targetTableDefinitions = [
     ..._i3.Protocol.targetTableDefinitions,
@@ -100,21 +100,17 @@ class Protocol extends _i1.DatabaseSerializationManager {
       case _i5.Greeting():
         return 'Greeting';
     }
+    className = _i2.Protocol().getClassNameForObject(data);
+    if (className != null) {
+      return 'serverpod.$className';
+    }
     className = _i3.Protocol().getClassNameForObject(data);
     if (className != null) {
-      return className.contains('.')
-          ? className
-          : 'serverpod_auth_idp.$className';
+      return 'serverpod_auth_idp.$className';
     }
     className = _i4.Protocol().getClassNameForObject(data);
     if (className != null) {
-      return className.contains('.')
-          ? className
-          : 'serverpod_auth_core.$className';
-    }
-    className = _i2.Protocol().getClassNameForObject(data);
-    if (className != null) {
-      return className.contains('.') ? className : 'serverpod.$className';
+      return 'serverpod_auth_core.$className';
     }
     return null;
   }
@@ -128,6 +124,10 @@ class Protocol extends _i1.DatabaseSerializationManager {
     if (dataClassName == 'Greeting') {
       return deserialize<_i5.Greeting>(data['data']);
     }
+    if (dataClassName.startsWith('serverpod.')) {
+      data['className'] = dataClassName.substring(10);
+      return _i2.Protocol().deserializeByClassName(data);
+    }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);
       return _i3.Protocol().deserializeByClassName(data);
@@ -136,16 +136,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
       data['className'] = dataClassName.substring(20);
       return _i4.Protocol().deserializeByClassName(data);
     }
-    if (dataClassName.startsWith('serverpod.')) {
-      data['className'] = dataClassName.substring(10);
-      return _i2.Protocol().deserializeByClassName(data);
-    }
     return super.deserializeByClassName(data);
-  }
-
-  void _registerHostProtocols() {
-    _i3.Protocol().registerHostProtocol('kingdom_kids', this);
-    _i4.Protocol().registerHostProtocol('kingdom_kids', this);
   }
 
   @override

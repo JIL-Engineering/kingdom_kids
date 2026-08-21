@@ -13,12 +13,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_test/serverpod_test.dart' as _i1;
 import 'package:serverpod/serverpod.dart' as _i2;
-import 'dart:io' as _i3;
-import 'dart:async' as _i4;
+import 'dart:async' as _i3;
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
-    as _i5;
+    as _i4;
 import 'package:kingdom_kids_server/src/generated/greetings/greeting.dart'
-    as _i6;
+    as _i5;
 import 'package:kingdom_kids_server/src/generated/protocol.dart';
 import 'package:kingdom_kids_server/src/generated/endpoints.dart';
 export 'package:serverpod_test/serverpod_test_public_exports.dart';
@@ -93,13 +92,6 @@ export 'package:serverpod_test/serverpod_test_public_exports.dart';
 /// This property allows this tag to be overridden to something else. Defaults to `['integration']`.
 ///
 /// [experimentalFeatures] Optionally specify experimental features. See [Serverpod] for more information.
-///
-/// [serverDirectory] The server package directory `config/<runMode>.yaml`, `config/passwords.yaml`,
-/// and `migrations/<module>/...` are resolved against. Defaults to
-/// [Directory.current] at the time the test boots. Pass this when the test
-/// isolate's cwd is not the server package root (e.g. running tests from a
-/// workspace parent directory) so config and migrations are still loaded
-/// from the right place.
 @_i1.isTestGroup
 void withServerpod(
   String testGroupName,
@@ -111,7 +103,6 @@ void withServerpod(
   _i1.RollbackDatabase? rollbackDatabase,
   String? runMode,
   _i2.RuntimeParametersListBuilder? runtimeParametersBuilder,
-  _i3.Directory? serverDirectory,
   _i2.ServerpodLoggingMode? serverpodLoggingMode,
   Duration? serverpodStartTimeout,
   List<String>? testGroupTagsOverride,
@@ -128,7 +119,6 @@ void withServerpod(
       isDatabaseEnabled: true,
       serverpodLoggingMode: serverpodLoggingMode,
       testServerOutputMode: testServerOutputMode,
-      serverDirectory: serverDirectory,
       experimentalFeatures: experimentalFeatures,
       configOverride: configOverride,
       runtimeParametersBuilder: runtimeParametersBuilder,
@@ -181,7 +171,7 @@ class _EmailIdpEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i5.AuthSuccess> login(
+  _i3.Future<_i4.AuthSuccess> login(
     _i1.TestSessionBuilder sessionBuilder, {
     required String email,
     required String password,
@@ -208,7 +198,7 @@ class _EmailIdpEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i5.AuthSuccess>);
+                as _i3.Future<_i4.AuthSuccess>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -216,7 +206,7 @@ class _EmailIdpEndpoint {
     });
   }
 
-  _i4.Future<_i2.UuidValue> startRegistration(
+  _i3.Future<_i2.UuidValue> startRegistration(
     _i1.TestSessionBuilder sessionBuilder, {
     required String email,
   }) async {
@@ -239,7 +229,7 @@ class _EmailIdpEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i2.UuidValue>);
+                as _i3.Future<_i2.UuidValue>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -247,7 +237,7 @@ class _EmailIdpEndpoint {
     });
   }
 
-  _i4.Future<String> verifyRegistrationCode(
+  _i3.Future<String> verifyRegistrationCode(
     _i1.TestSessionBuilder sessionBuilder, {
     required _i2.UuidValue accountRequestId,
     required String verificationCode,
@@ -274,7 +264,7 @@ class _EmailIdpEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<String>);
+                as _i3.Future<String>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -282,7 +272,7 @@ class _EmailIdpEndpoint {
     });
   }
 
-  _i4.Future<_i5.AuthSuccess> finishRegistration(
+  _i3.Future<_i4.AuthSuccess> finishRegistration(
     _i1.TestSessionBuilder sessionBuilder, {
     required String registrationToken,
     required String password,
@@ -309,7 +299,7 @@ class _EmailIdpEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i5.AuthSuccess>);
+                as _i3.Future<_i4.AuthSuccess>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -317,7 +307,7 @@ class _EmailIdpEndpoint {
     });
   }
 
-  _i4.Future<_i2.UuidValue> startPasswordReset(
+  _i3.Future<_i2.UuidValue> startPasswordReset(
     _i1.TestSessionBuilder sessionBuilder, {
     required String email,
   }) async {
@@ -340,7 +330,7 @@ class _EmailIdpEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i2.UuidValue>);
+                as _i3.Future<_i2.UuidValue>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -348,7 +338,7 @@ class _EmailIdpEndpoint {
     });
   }
 
-  _i4.Future<String> verifyPasswordResetCode(
+  _i3.Future<String> verifyPasswordResetCode(
     _i1.TestSessionBuilder sessionBuilder, {
     required _i2.UuidValue passwordResetRequestId,
     required String verificationCode,
@@ -375,7 +365,7 @@ class _EmailIdpEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<String>);
+                as _i3.Future<String>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -383,7 +373,7 @@ class _EmailIdpEndpoint {
     });
   }
 
-  _i4.Future<void> finishPasswordReset(
+  _i3.Future<void> finishPasswordReset(
     _i1.TestSessionBuilder sessionBuilder, {
     required String finishPasswordResetToken,
     required String newPassword,
@@ -410,7 +400,7 @@ class _EmailIdpEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<void>);
+                as _i3.Future<void>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -418,7 +408,7 @@ class _EmailIdpEndpoint {
     });
   }
 
-  _i4.Future<bool> hasAccount(_i1.TestSessionBuilder sessionBuilder) async {
+  _i3.Future<bool> hasAccount(_i1.TestSessionBuilder sessionBuilder) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
           (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
@@ -438,7 +428,7 @@ class _EmailIdpEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<bool>);
+                as _i3.Future<bool>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -457,7 +447,7 @@ class _JwtRefreshEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i5.AuthSuccess> refreshAccessToken(
+  _i3.Future<_i4.AuthSuccess> refreshAccessToken(
     _i1.TestSessionBuilder sessionBuilder, {
     required String refreshToken,
   }) async {
@@ -480,7 +470,7 @@ class _JwtRefreshEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i5.AuthSuccess>);
+                as _i3.Future<_i4.AuthSuccess>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -499,7 +489,7 @@ class _GreetingEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i6.Greeting> hello(
+  _i3.Future<_i5.Greeting> hello(
     _i1.TestSessionBuilder sessionBuilder,
     String name,
   ) async {
@@ -522,7 +512,7 @@ class _GreetingEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i6.Greeting>);
+                as _i3.Future<_i5.Greeting>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
