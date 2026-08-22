@@ -11,17 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SERVERPOD_CLI_VERSION: '4.0.0-beta.0'
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_PASSWORD: postgres
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      SERVERPOD_PASSWORD_database: 'bzVmH68bnJLVnSn9oB2-kMAfrdB67GU6'
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
+      - name: Start database containers
+        working-directory: kingdom_kids_server
+        run: docker compose up --quiet-pull --build -d postgres_test
       - name: Check Serverpod codegen is up to date
         working-directory: kingdom_kids_server
         run: |
@@ -33,6 +29,10 @@ jobs:
       - name: Run server tests
         working-directory: kingdom_kids_server
         run: dart test
+      - name: Stop database containers
+        if: always()
+        working-directory: kingdom_kids_server
+        run: docker compose down -v
 
   flutter:
     runs-on: ubuntu-latest
