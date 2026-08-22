@@ -9,6 +9,8 @@ on:
 jobs:
   server:
     runs-on: ubuntu-latest
+    env:
+      SERVERPOD_CLI_VERSION: '4.0.0-beta.0'
     services:
       postgres:
         image: postgres:16
@@ -24,7 +26,7 @@ jobs:
         working-directory: kingdom_kids_server
         run: |
           flutter pub get
-          dart pub global activate serverpod_cli
+          dart pub global activate serverpod_cli $SERVERPOD_CLI_VERSION
           serverpod generate
           git diff --exit-code -- ../kingdom_kids_server/lib/src/generated ../kingdom_kids_client/lib/src/protocol \
             || (echo "Generated code is stale — run 'serverpod generate' and commit the result" && exit 1)
