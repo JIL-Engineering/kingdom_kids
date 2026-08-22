@@ -3,3 +3,7 @@ table: devotionals
 fields:
   date: DateTime
   category: String?
+indexes:
+  devotionals_date_idx:
+    fields: date
+    unique: true

@@ -10,3 +10,7 @@ fields:
   contentVersion: int
   updatedAt: DateTime
   createdAt: DateTime
+indexes:
+  books_slug_idx:
+    fields: slug
+    unique: true

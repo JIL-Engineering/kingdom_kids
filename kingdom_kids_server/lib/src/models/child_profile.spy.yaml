@@ -1,7 +1,7 @@
 class: ChildProfile
 table: child_profiles
 fields:
-  parentId: int
+  parentId: int, relation(parent=users, onDelete=Cascade)
   displayName: String
   birthYear: int
   ageBracket: String
@@ -9,3 +9,6 @@ fields:
   avatarId: String
   pinProtected: bool
   createdAt: DateTime
+indexes:
+  child_profiles_parent_idx:
+    fields: parentId

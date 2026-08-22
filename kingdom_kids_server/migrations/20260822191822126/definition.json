@@ -68,6 +68,20 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "badges_code_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "code"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -109,7 +123,22 @@
           "dartType": "String"
         }
       ],
-      "foreignKeys": [],
+      "foreignKeys": [
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "book_translations_fk_0",
+          "columns": [
+            "bookId"
+          ],
+          "referenceTable": "books",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        }
+      ],
       "indexes": [
         {
           "__className__": "serverpod.IndexDefinition",
@@ -124,6 +153,25 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "book_translations_book_language_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "bookId"
+            },
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "language"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -222,6 +270,20 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "books_slug_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "slug"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -263,7 +325,36 @@
           "dartType": "DateTime"
         }
       ],
-      "foreignKeys": [],
+      "foreignKeys": [
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "child_badges_fk_0",
+          "columns": [
+            "childId"
+          ],
+          "referenceTable": "child_profiles",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        },
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "child_badges_fk_1",
+          "columns": [
+            "badgeId"
+          ],
+          "referenceTable": "badges",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        }
+      ],
       "indexes": [
         {
           "__className__": "serverpod.IndexDefinition",
@@ -278,6 +369,25 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "child_badges_child_badge_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "childId"
+            },
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "badgeId"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -354,7 +464,22 @@
           "dartType": "DateTime"
         }
       ],
-      "foreignKeys": [],
+      "foreignKeys": [
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "child_profiles_fk_0",
+          "columns": [
+            "parentId"
+          ],
+          "referenceTable": "users",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        }
+      ],
       "indexes": [
         {
           "__className__": "serverpod.IndexDefinition",
@@ -369,6 +494,20 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "child_profiles_parent_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "parentId"
+            }
+          ],
+          "type": "btree",
+          "isUnique": false,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -431,7 +570,22 @@
           "dartType": "String"
         }
       ],
-      "foreignKeys": [],
+      "foreignKeys": [
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "devotional_translations_fk_0",
+          "columns": [
+            "devotionalId"
+          ],
+          "referenceTable": "devotionals",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        }
+      ],
       "indexes": [
         {
           "__className__": "serverpod.IndexDefinition",
@@ -446,6 +600,25 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "devotional_translations_devotional_language_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "devotionalId"
+            },
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "language"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -495,6 +668,20 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "devotionals_date_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "date"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -543,7 +730,36 @@
           "dartType": "DateTime"
         }
       ],
-      "foreignKeys": [],
+      "foreignKeys": [
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "download_records_fk_0",
+          "columns": [
+            "childId"
+          ],
+          "referenceTable": "child_profiles",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        },
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "download_records_fk_1",
+          "columns": [
+            "bookId"
+          ],
+          "referenceTable": "books",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        }
+      ],
       "indexes": [
         {
           "__className__": "serverpod.IndexDefinition",
@@ -558,6 +774,25 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "download_records_child_book_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "childId"
+            },
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "bookId"
+            }
+          ],
+          "type": "btree",
+          "isUnique": false,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -606,7 +841,22 @@
           "dartType": "String"
         }
       ],
-      "foreignKeys": [],
+      "foreignKeys": [
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "page_contents_fk_0",
+          "columns": [
+            "pageId"
+          ],
+          "referenceTable": "pages",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        }
+      ],
       "indexes": [
         {
           "__className__": "serverpod.IndexDefinition",
@@ -621,6 +871,25 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "page_contents_page_language_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "pageId"
+            },
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "language"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -669,7 +938,22 @@
           "dartType": "String"
         }
       ],
-      "foreignKeys": [],
+      "foreignKeys": [
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "pages_fk_0",
+          "columns": [
+            "bookId"
+          ],
+          "referenceTable": "books",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        }
+      ],
       "indexes": [
         {
           "__className__": "serverpod.IndexDefinition",
@@ -684,6 +968,25 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "pages_book_page_number_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "bookId"
+            },
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "pageNumber"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -760,7 +1063,36 @@
           "dartType": "DateTime"
         }
       ],
-      "foreignKeys": [],
+      "foreignKeys": [
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "reading_progress_fk_0",
+          "columns": [
+            "childId"
+          ],
+          "referenceTable": "child_profiles",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        },
+        {
+          "__className__": "serverpod.ForeignKeyDefinition",
+          "constraintName": "reading_progress_fk_1",
+          "columns": [
+            "bookId"
+          ],
+          "referenceTable": "books",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 4
+        }
+      ],
       "indexes": [
         {
           "__className__": "serverpod.IndexDefinition",
@@ -775,6 +1107,25 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "reading_progress_child_book_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "childId"
+            },
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "bookId"
+            }
+          ],
+          "type": "btree",
+          "isUnique": false,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -782,7 +1133,7 @@
     {
       "__className__": "serverpod.TableDefinition",
       "name": "users",
-      "dartName": "AppUser",
+      "dartName": "User",
       "module": "kingdom_kids",
       "schema": "public",
       "columns": [
@@ -859,6 +1210,20 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "users_email_idx",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "email"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -3652,7 +4017,7 @@
     {
       "__className__": "serverpod.DatabaseMigrationVersion",
       "module": "kingdom_kids",
-      "version": "20260821204304924"
+      "version": "20260822191822126"
     },
     {
       "__className__": "serverpod.DatabaseMigrationVersion",
