@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SERVERPOD_CLI_VERSION: '4.0.0-beta.0'
-      SERVERPOD_PASSWORD_database: 'bzVmH68bnJLVnSn9oB2-kMAfrdB67GU6'
+      SERVERPOD_PASSWORD_database: ${{ secrets.SERVERPOD_TEST_DB_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
