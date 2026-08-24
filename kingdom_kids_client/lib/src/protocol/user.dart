@@ -10,9 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
-abstract class User implements _i1.SerializableModel {
+abstract class User
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   User._({
     this.id,
     required this.email,
@@ -45,10 +46,10 @@ abstract class User implements _i1.SerializableModel {
       preferredLanguage: jsonSerialization['preferredLanguage'] as String,
       consentGivenAt: jsonSerialization['consentGivenAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _isc.DateTimeJsonExtension.fromJson(
               jsonSerialization['consentGivenAt'],
             ),
-      createdAt: _i1.DateTimeJsonExtension.fromJson(
+      createdAt: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['createdAt'],
       ),
     );
@@ -75,7 +76,7 @@ abstract class User implements _i1.SerializableModel {
 
   /// Returns a shallow copy of this [User]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   User copyWith({
     int? id,
     String? email,
@@ -102,8 +103,23 @@ abstract class User implements _i1.SerializableModel {
   }
 
   @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'User',
+      if (id != null) 'id': id,
+      'email': email,
+      'passwordHash': passwordHash,
+      if (country != null) 'country': country,
+      'timezone': timezone,
+      'preferredLanguage': preferredLanguage,
+      if (consentGivenAt != null) 'consentGivenAt': consentGivenAt?.toJson(),
+      'createdAt': createdAt.toJson(),
+    };
+  }
+
+  @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -132,7 +148,7 @@ class _UserImpl extends User {
 
   /// Returns a shallow copy of this [User]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   User copyWith({
     Object? id = _Undefined,

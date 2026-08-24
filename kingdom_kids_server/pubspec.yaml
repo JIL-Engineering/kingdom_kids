@@ -11,12 +11,12 @@ resolution: workspace
 dependencies:
   bcrypt: ^1.2.0
   dart_jsonwebtoken: ^3.4.1
-  serverpod: 4.0.0-beta.0
-  serverpod_auth_idp_server: 4.0.0-beta.0
+  serverpod: 4.0.0-beta.4
+  serverpod_auth_idp_server: 4.0.0-beta.4
 
 dev_dependencies:
   lints: '>=3.0.0 <7.0.0'
-  serverpod_test: 4.0.0-beta.0
+  serverpod_test: 4.0.0-beta.4
   test: ^1.25.5
 
 serverpod:

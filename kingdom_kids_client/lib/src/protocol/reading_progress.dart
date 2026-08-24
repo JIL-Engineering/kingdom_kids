@@ -10,9 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
-abstract class ReadingProgress implements _i1.SerializableModel {
+abstract class ReadingProgress
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   ReadingProgress._({
     this.id,
     required this.childId,
@@ -43,17 +44,19 @@ abstract class ReadingProgress implements _i1.SerializableModel {
       childId: jsonSerialization['childId'] as int,
       bookId: jsonSerialization['bookId'] as int,
       currentPage: jsonSerialization['currentPage'] as int,
-      completed: _i1.BoolJsonExtension.fromJson(jsonSerialization['completed']),
-      startedAt: _i1.DateTimeJsonExtension.fromJson(
+      completed: _isc.BoolJsonExtension.fromJson(
+        jsonSerialization['completed'],
+      ),
+      startedAt: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['startedAt'],
       ),
       completedAt: jsonSerialization['completedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _isc.DateTimeJsonExtension.fromJson(
               jsonSerialization['completedAt'],
             ),
       totalTimeSeconds: jsonSerialization['totalTimeSeconds'] as int,
-      syncedAt: _i1.DateTimeJsonExtension.fromJson(
+      syncedAt: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['syncedAt'],
       ),
     );
@@ -82,7 +85,7 @@ abstract class ReadingProgress implements _i1.SerializableModel {
 
   /// Returns a shallow copy of this [ReadingProgress]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   ReadingProgress copyWith({
     int? id,
     int? childId,
@@ -111,8 +114,24 @@ abstract class ReadingProgress implements _i1.SerializableModel {
   }
 
   @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'ReadingProgress',
+      if (id != null) 'id': id,
+      'childId': childId,
+      'bookId': bookId,
+      'currentPage': currentPage,
+      'completed': completed,
+      'startedAt': startedAt.toJson(),
+      if (completedAt != null) 'completedAt': completedAt?.toJson(),
+      'totalTimeSeconds': totalTimeSeconds,
+      'syncedAt': syncedAt.toJson(),
+    };
+  }
+
+  @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -143,7 +162,7 @@ class _ReadingProgressImpl extends ReadingProgress {
 
   /// Returns a shallow copy of this [ReadingProgress]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   ReadingProgress copyWith({
     Object? id = _Undefined,

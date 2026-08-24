@@ -10,10 +10,11 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import 'package:kingdom_kids_client/src/protocol/protocol.dart' as _i2;
+import 'package:kingdom_kids_client/src/protocol/protocol.dart' as _iral95z9;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
-abstract class Badge implements _i1.SerializableModel {
+abstract class Badge
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   Badge._({
     this.id,
     required this.code,
@@ -39,7 +40,7 @@ abstract class Badge implements _i1.SerializableModel {
       name: jsonSerialization['name'] as String,
       description: jsonSerialization['description'] as String,
       iconAsset: jsonSerialization['iconAsset'] as String,
-      triggerRule: _i2.Protocol().deserialize<Map<String, dynamic>>(
+      triggerRule: _iral95z9.Protocol().deserialize<Map<String, dynamic>>(
         jsonSerialization['triggerRule'],
       ),
     );
@@ -62,7 +63,7 @@ abstract class Badge implements _i1.SerializableModel {
 
   /// Returns a shallow copy of this [Badge]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   Badge copyWith({
     int? id,
     String? code,
@@ -81,14 +82,32 @@ abstract class Badge implements _i1.SerializableModel {
       'description': description,
       'iconAsset': iconAsset,
       'triggerRule': triggerRule.toJson(
-        valueToJson: (v) => _i2.Protocol().dynamicFieldToJson(v),
+        valueToJson: (v) => _iral95z9.Protocol().dynamicFieldToJson(v),
+      ),
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'Badge',
+      if (id != null) 'id': id,
+      'code': code,
+      'name': name,
+      'description': description,
+      'iconAsset': iconAsset,
+      'triggerRule': triggerRule.toJson(
+        valueToJson: (v) => _iral95z9.Protocol().dynamicFieldToJson(
+          v,
+          forProtocol: true,
+        ),
       ),
     };
   }
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -113,7 +132,7 @@ class _BadgeImpl extends Badge {
 
   /// Returns a shallow copy of this [Badge]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   Badge copyWith({
     Object? id = _Undefined,

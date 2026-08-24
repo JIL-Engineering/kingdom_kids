@@ -10,6 +10,8 @@ emailIdp:
 jwtRefresh:
   - refreshAccessToken:
 auth:
+  - register:
+  - login:
 badge:
 child:
 dashboard:

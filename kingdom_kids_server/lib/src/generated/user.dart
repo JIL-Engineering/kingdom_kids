@@ -10,9 +10,9 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
+import 'package:serverpod/serverpod.dart' as _is;
 
-abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+abstract class User implements _is.TableRow<int?>, _is.ProtocolSerialization {
   User._({
     this.id,
     required this.email,
@@ -45,10 +45,10 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       preferredLanguage: jsonSerialization['preferredLanguage'] as String,
       consentGivenAt: jsonSerialization['consentGivenAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['consentGivenAt'],
             ),
-      createdAt: _i1.DateTimeJsonExtension.fromJson(
+      createdAt: _is.DateTimeJsonExtension.fromJson(
         jsonSerialization['createdAt'],
       ),
     );
@@ -76,11 +76,11 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   DateTime createdAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [User]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   User copyWith({
     int? id,
     String? email,
@@ -126,13 +126,11 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   }
 
   static UserIncludeList includeList({
-    _i1.WhereExpressionBuilder<UserTable>? where,
+    _is.WhereExpressionBuilder<UserTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<UserTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.OrderByListBuilder<UserTable>? orderByList,
+    _is.OrderByBuilder<UserTable>? orderBy,
+    _is.OrderByListBuilder<UserTable>? orderByList,
     UserInclude? include,
   }) {
     return UserIncludeList._(
@@ -140,8 +138,6 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(User.t),
-      orderDescending: // ignore: deprecated_member_use_from_same_package
-          orderDescending,
       orderByList: orderByList?.call(User.t),
       include: include,
     );
@@ -149,7 +145,7 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -178,7 +174,7 @@ class _UserImpl extends User {
 
   /// Returns a shallow copy of this [User]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   User copyWith({
     Object? id = _Undefined,
@@ -205,76 +201,76 @@ class _UserImpl extends User {
   }
 }
 
-class UserUpdateTable extends _i1.UpdateTable<UserTable> {
+class UserUpdateTable extends _is.UpdateTable<UserTable> {
   UserUpdateTable(super.table);
 
-  _i1.ColumnValue<String, String> email(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> email(String value) => _is.ColumnValue(
     table.email,
     value,
   );
 
-  _i1.ColumnValue<String, String> passwordHash(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> passwordHash(String value) => _is.ColumnValue(
     table.passwordHash,
     value,
   );
 
-  _i1.ColumnValue<String, String> country(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> country(String? value) => _is.ColumnValue(
     table.country,
     value,
   );
 
-  _i1.ColumnValue<String, String> timezone(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> timezone(String value) => _is.ColumnValue(
     table.timezone,
     value,
   );
 
-  _i1.ColumnValue<String, String> preferredLanguage(String value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<String, String> preferredLanguage(String value) =>
+      _is.ColumnValue(
         table.preferredLanguage,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> consentGivenAt(DateTime? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> consentGivenAt(DateTime? value) =>
+      _is.ColumnValue(
         table.consentGivenAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _is.ColumnValue(
         table.createdAt,
         value,
       );
 }
 
-class UserTable extends _i1.Table<int?> {
+class UserTable extends _is.Table<int?> {
   UserTable({super.tableRelation}) : super(tableName: 'user') {
     updateTable = UserUpdateTable(this);
-    email = _i1.ColumnString(
+    email = _is.ColumnString(
       'email',
       this,
     );
-    passwordHash = _i1.ColumnString(
+    passwordHash = _is.ColumnString(
       'passwordHash',
       this,
     );
-    country = _i1.ColumnString(
+    country = _is.ColumnString(
       'country',
       this,
     );
-    timezone = _i1.ColumnString(
+    timezone = _is.ColumnString(
       'timezone',
       this,
     );
-    preferredLanguage = _i1.ColumnString(
+    preferredLanguage = _is.ColumnString(
       'preferredLanguage',
       this,
     );
-    consentGivenAt = _i1.ColumnDateTime(
+    consentGivenAt = _is.ColumnDateTime(
       'consentGivenAt',
       this,
     );
-    createdAt = _i1.ColumnDateTime(
+    createdAt = _is.ColumnDateTime(
       'createdAt',
       this,
     );
@@ -282,22 +278,22 @@ class UserTable extends _i1.Table<int?> {
 
   late final UserUpdateTable updateTable;
 
-  late final _i1.ColumnString email;
+  late final _is.ColumnString email;
 
-  late final _i1.ColumnString passwordHash;
+  late final _is.ColumnString passwordHash;
 
-  late final _i1.ColumnString country;
+  late final _is.ColumnString country;
 
-  late final _i1.ColumnString timezone;
+  late final _is.ColumnString timezone;
 
-  late final _i1.ColumnString preferredLanguage;
+  late final _is.ColumnString preferredLanguage;
 
-  late final _i1.ColumnDateTime consentGivenAt;
+  late final _is.ColumnDateTime consentGivenAt;
 
-  late final _i1.ColumnDateTime createdAt;
+  late final _is.ColumnDateTime createdAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     email,
     passwordHash,
@@ -309,24 +305,22 @@ class UserTable extends _i1.Table<int?> {
   ];
 }
 
-class UserInclude extends _i1.IncludeObject {
+class UserInclude extends _is.IncludeObject {
   UserInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<int?> get table => User.t;
+  _is.Table<int?> get table => User.t;
 }
 
-class UserIncludeList extends _i1.IncludeList {
+class UserIncludeList extends _is.IncludeList {
   UserIncludeList._({
-    _i1.WhereExpressionBuilder<UserTable>? where,
+    _is.WhereExpressionBuilder<UserTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -334,10 +328,10 @@ class UserIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => User.t;
+  _is.Table<int?> get table => User.t;
 }
 
 class UserRepository {
@@ -366,24 +360,20 @@ class UserRepository {
   /// );
   /// ```
   Future<List<User>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<UserTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<UserTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<UserTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.OrderByListBuilder<UserTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<UserTable>? orderBy,
+    _is.OrderByListBuilder<UserTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<User>(
       where: where?.call(User.t),
       orderBy: orderBy?.call(User.t),
       orderByList: orderByList?.call(User.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -410,23 +400,19 @@ class UserRepository {
   /// );
   /// ```
   Future<User?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<UserTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<UserTable>? where,
     int? offset,
-    _i1.OrderByBuilder<UserTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.OrderByListBuilder<UserTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<UserTable>? orderBy,
+    _is.OrderByListBuilder<UserTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<User>(
       where: where?.call(User.t),
       orderBy: orderBy?.call(User.t),
       orderByList: orderByList?.call(User.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -436,11 +422,11 @@ class UserRepository {
 
   /// Finds a single [User] by its [id] or null if no such row exists.
   Future<User?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<User>(
       id,
@@ -465,9 +451,9 @@ class UserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<User>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<User> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -483,9 +469,9 @@ class UserRepository {
   ///
   /// The returned [User] will have its `id` field set.
   Future<User> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     User row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<User>(
       row,
@@ -514,12 +500,12 @@ class UserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<User>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<User> rows, {
-    required _i1.ColumnSelections<UserTable> conflictColumns,
-    _i1.ColumnSelections<UserTable>? updateColumns,
-    _i1.WhereExpressionBuilder<UserTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<UserTable> conflictColumns,
+    _is.ColumnSelections<UserTable>? updateColumns,
+    _is.WhereExpressionBuilder<UserTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<User>(
@@ -546,12 +532,12 @@ class UserRepository {
   ///
   /// The returned [User] will have its `id` field set.
   Future<User?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     User row, {
-    required _i1.ColumnSelections<UserTable> conflictColumns,
-    _i1.ColumnSelections<UserTable>? updateColumns,
-    _i1.WhereExpressionBuilder<UserTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<UserTable> conflictColumns,
+    _is.ColumnSelections<UserTable>? updateColumns,
+    _is.WhereExpressionBuilder<UserTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<User>(
       row,
@@ -572,10 +558,10 @@ class UserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<User>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<User> rows, {
-    _i1.ColumnSelections<UserTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<UserTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<User>(
@@ -590,10 +576,10 @@ class UserRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<User> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     User row, {
-    _i1.ColumnSelections<UserTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<UserTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<User>(
       row,
@@ -605,10 +591,10 @@ class UserRepository {
   /// Updates a single [User] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<User?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<UserUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<UserUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<User>(
       id,
@@ -624,16 +610,14 @@ class UserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<User>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<UserUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<UserTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<UserUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<UserTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<UserTable>? orderBy,
-    _i1.OrderByListBuilder<UserTable>? orderByList,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<UserTable>? orderBy,
+    _is.OrderByListBuilder<UserTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<User>(
@@ -643,8 +627,6 @@ class UserRepository {
       offset: offset,
       orderBy: orderBy?.call(User.t),
       orderByList: orderByList?.call(User.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -662,21 +644,17 @@ class UserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<User>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<User> rows, {
-    _i1.OrderByBuilder<UserTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.OrderByListBuilder<UserTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<UserTable>? orderBy,
+    _is.OrderByListBuilder<UserTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<User>(
       rows,
       orderBy: orderBy?.call(User.t),
       orderByList: orderByList?.call(User.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -684,9 +662,9 @@ class UserRepository {
 
   /// Deletes a single [User].
   Future<User> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     User row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<User>(
       row,
@@ -703,21 +681,17 @@ class UserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<User>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<UserTable> where,
-    _i1.OrderByBuilder<UserTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.OrderByListBuilder<UserTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<UserTable> where,
+    _is.OrderByBuilder<UserTable>? orderBy,
+    _is.OrderByListBuilder<UserTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<User>(
       where: where(User.t),
       orderBy: orderBy?.call(User.t),
       orderByList: orderByList?.call(User.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -726,10 +700,10 @@ class UserRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<UserTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<UserTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<User>(
       where: where?.call(User.t),
@@ -740,11 +714,11 @@ class UserRepository {
 
   /// Acquires row-level locks on [User] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<UserTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<UserTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<User>(
       where: where(User.t),
