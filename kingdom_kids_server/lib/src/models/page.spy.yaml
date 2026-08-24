@@ -1,0 +1,13 @@
+class: Page
+table: pages
+fields:
+  bookId: int, relation(parent=books, onDelete=Cascade)
+  pageNumber: int
+  illustrationAsset: String
+  layoutType: String
+indexes:
+  idx_pages_book:
+    fields: bookId
+  pages_book_number_idx:
+    fields: bookId, pageNumber
+    unique: true
