@@ -29,13 +29,12 @@ webServer:
 
 # This is the database setup for your server.
 database:
-  host: localhost
-  port: 8090
-  name: kingdom_kids
-  user: postgres
-  #requireSsl: true # defaults to false
+  host: aws-1-eu-west-1.pooler.supabase.com
+  port: 5432
+  name: postgres
+  user: postgres.kfcfpzldjtfuaeuxcgwh
+  requireSsl: true
   #isUnixSocket: true # defaults to false
-  dataPath: .serverpod/development/pgdata
   #maxConnectionCount: 10 # Defaults to 10, a negative or null value removes the limit
 
 
