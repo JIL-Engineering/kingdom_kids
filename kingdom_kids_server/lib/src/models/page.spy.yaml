@@ -6,6 +6,8 @@ fields:
   illustrationAsset: String
   layoutType: String
 indexes:
-  pages_book_page_number_idx:
+  idx_pages_book:
+    fields: bookId
+  pages_book_number_idx:
     fields: bookId, pageNumber
     unique: true

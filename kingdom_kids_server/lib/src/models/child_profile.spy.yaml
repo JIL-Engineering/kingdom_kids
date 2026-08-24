@@ -10,5 +10,5 @@ fields:
   pinProtected: bool
   createdAt: DateTime
 indexes:
-  child_profiles_parent_idx:
+  idx_child_profiles_parent:
     fields: parentId

@@ -1,5 +1,6 @@
 {
   "__className__": "serverpod.DatabaseDefinition",
+  "schemaVersion": 2,
   "moduleName": "kingdom_kids",
   "tables": [
     {
@@ -12,14 +13,16 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "id",
+          "fieldName": "id",
           "columnType": 6,
           "isNullable": false,
-          "columnDefault": "nextval('badges_id_seq'::regclass)",
+          "columnDefault": "serial",
           "dartType": "int?"
         },
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "code",
+          "fieldName": "code",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -27,6 +30,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "name",
+          "fieldName": "name",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -34,6 +38,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "description",
+          "fieldName": "description",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -41,6 +46,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "iconAsset",
+          "fieldName": "iconAsset",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -48,6 +54,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "triggerRule",
+          "fieldName": "triggerRule",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -55,20 +62,6 @@
       ],
       "foreignKeys": [],
       "indexes": [
-        {
-          "__className__": "serverpod.IndexDefinition",
-          "indexName": "badges_pkey",
-          "elements": [
-            {
-              "__className__": "serverpod.IndexElementDefinition",
-              "type": 0,
-              "definition": "id"
-            }
-          ],
-          "type": "btree",
-          "isUnique": true,
-          "isPrimary": true
-        },
         {
           "__className__": "serverpod.IndexDefinition",
           "indexName": "badges_code_idx",
@@ -96,14 +89,16 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "id",
+          "fieldName": "id",
           "columnType": 6,
           "isNullable": false,
-          "columnDefault": "nextval('book_translations_id_seq'::regclass)",
+          "columnDefault": "serial",
           "dartType": "int?"
         },
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "bookId",
+          "fieldName": "bookId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -111,6 +106,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "language",
+          "fieldName": "language",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -118,6 +114,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "title",
+          "fieldName": "title",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -140,20 +137,6 @@
         }
       ],
       "indexes": [
-        {
-          "__className__": "serverpod.IndexDefinition",
-          "indexName": "book_translations_pkey",
-          "elements": [
-            {
-              "__className__": "serverpod.IndexElementDefinition",
-              "type": 0,
-              "definition": "id"
-            }
-          ],
-          "type": "btree",
-          "isUnique": true,
-          "isPrimary": true
-        },
         {
           "__className__": "serverpod.IndexDefinition",
           "indexName": "book_translations_book_language_idx",
@@ -186,14 +169,16 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "id",
+          "fieldName": "id",
           "columnType": 6,
           "isNullable": false,
-          "columnDefault": "nextval('books_id_seq'::regclass)",
+          "columnDefault": "serial",
           "dartType": "int?"
         },
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "slug",
+          "fieldName": "slug",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -201,6 +186,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "ageBracketMin",
+          "fieldName": "ageBracketMin",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -208,6 +194,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "ageBracketMax",
+          "fieldName": "ageBracketMax",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -215,6 +202,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "category",
+          "fieldName": "category",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -222,6 +210,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "coverImageAsset",
+          "fieldName": "coverImageAsset",
           "columnType": 0,
           "isNullable": true,
           "dartType": "String?"
@@ -229,6 +218,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "isPublished",
+          "fieldName": "isPublished",
           "columnType": 1,
           "isNullable": false,
           "dartType": "bool"
@@ -236,6 +226,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "contentVersion",
+          "fieldName": "contentVersion",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -243,6 +234,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "updatedAt",
+          "fieldName": "updatedAt",
           "columnType": 4,
           "isNullable": false,
           "dartType": "DateTime"
@@ -250,6 +242,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "createdAt",
+          "fieldName": "createdAt",
           "columnType": 4,
           "isNullable": false,
           "dartType": "DateTime"
@@ -257,20 +250,6 @@
       ],
       "foreignKeys": [],
       "indexes": [
-        {
-          "__className__": "serverpod.IndexDefinition",
-          "indexName": "books_pkey",
-          "elements": [
-            {
-              "__className__": "serverpod.IndexElementDefinition",
-              "type": 0,
-              "definition": "id"
-            }
-          ],
-          "type": "btree",
-          "isUnique": true,
-          "isPrimary": true
-        },
         {
           "__className__": "serverpod.IndexDefinition",
           "indexName": "books_slug_idx",
@@ -298,14 +277,16 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "id",
+          "fieldName": "id",
           "columnType": 6,
           "isNullable": false,
-          "columnDefault": "nextval('child_badges_id_seq'::regclass)",
+          "columnDefault": "serial",
           "dartType": "int?"
         },
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "childId",
+          "fieldName": "childId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -313,6 +294,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "badgeId",
+          "fieldName": "badgeId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -320,6 +302,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "earnedAt",
+          "fieldName": "earnedAt",
           "columnType": 4,
           "isNullable": false,
           "dartType": "DateTime"
@@ -352,24 +335,10 @@
             "id"
           ],
           "onUpdate": 3,
-          "onDelete": 4
+          "onDelete": 3
         }
       ],
       "indexes": [
-        {
-          "__className__": "serverpod.IndexDefinition",
-          "indexName": "child_badges_pkey",
-          "elements": [
-            {
-              "__className__": "serverpod.IndexElementDefinition",
-              "type": 0,
-              "definition": "id"
-            }
-          ],
-          "type": "btree",
-          "isUnique": true,
-          "isPrimary": true
-        },
         {
           "__className__": "serverpod.IndexDefinition",
           "indexName": "child_badges_child_badge_idx",
@@ -402,14 +371,16 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "id",
+          "fieldName": "id",
           "columnType": 6,
           "isNullable": false,
-          "columnDefault": "nextval('child_profiles_id_seq'::regclass)",
+          "columnDefault": "serial",
           "dartType": "int?"
         },
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "parentId",
+          "fieldName": "parentId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -417,6 +388,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "displayName",
+          "fieldName": "displayName",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -424,6 +396,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "birthYear",
+          "fieldName": "birthYear",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -431,6 +404,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "ageBracket",
+          "fieldName": "ageBracket",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -438,6 +412,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "preferredLanguage",
+          "fieldName": "preferredLanguage",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -445,6 +420,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "avatarId",
+          "fieldName": "avatarId",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -452,6 +428,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "pinProtected",
+          "fieldName": "pinProtected",
           "columnType": 1,
           "isNullable": false,
           "dartType": "bool"
@@ -459,6 +436,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "createdAt",
+          "fieldName": "createdAt",
           "columnType": 4,
           "isNullable": false,
           "dartType": "DateTime"
@@ -483,21 +461,7 @@
       "indexes": [
         {
           "__className__": "serverpod.IndexDefinition",
-          "indexName": "child_profiles_pkey",
-          "elements": [
-            {
-              "__className__": "serverpod.IndexElementDefinition",
-              "type": 0,
-              "definition": "id"
-            }
-          ],
-          "type": "btree",
-          "isUnique": true,
-          "isPrimary": true
-        },
-        {
-          "__className__": "serverpod.IndexDefinition",
-          "indexName": "child_profiles_parent_idx",
+          "indexName": "idx_child_profiles_parent",
           "elements": [
             {
               "__className__": "serverpod.IndexElementDefinition",
@@ -522,14 +486,16 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "id",
+          "fieldName": "id",
           "columnType": 6,
           "isNullable": false,
-          "columnDefault": "nextval('devotional_translations_id_seq'::regclass)",
+          "columnDefault": "serial",
           "dartType": "int?"
         },
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "devotionalId",
+          "fieldName": "devotionalId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -537,6 +503,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "language",
+          "fieldName": "language",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -544,6 +511,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "verseReference",
+          "fieldName": "verseReference",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -551,6 +519,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "verseText",
+          "fieldName": "verseText",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -558,6 +527,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "thoughtText",
+          "fieldName": "thoughtText",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -565,6 +535,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "prayerPrompt",
+          "fieldName": "prayerPrompt",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -587,20 +558,6 @@
         }
       ],
       "indexes": [
-        {
-          "__className__": "serverpod.IndexDefinition",
-          "indexName": "devotional_translations_pkey",
-          "elements": [
-            {
-              "__className__": "serverpod.IndexElementDefinition",
-              "type": 0,
-              "definition": "id"
-            }
-          ],
-          "type": "btree",
-          "isUnique": true,
-          "isPrimary": true
-        },
         {
           "__className__": "serverpod.IndexDefinition",
           "indexName": "devotional_translations_devotional_language_idx",
@@ -633,14 +590,16 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "id",
+          "fieldName": "id",
           "columnType": 6,
           "isNullable": false,
-          "columnDefault": "nextval('devotionals_id_seq'::regclass)",
+          "columnDefault": "serial",
           "dartType": "int?"
         },
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "date",
+          "fieldName": "date",
           "columnType": 4,
           "isNullable": false,
           "dartType": "DateTime"
@@ -648,6 +607,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "category",
+          "fieldName": "category",
           "columnType": 0,
           "isNullable": true,
           "dartType": "String?"
@@ -655,20 +615,6 @@
       ],
       "foreignKeys": [],
       "indexes": [
-        {
-          "__className__": "serverpod.IndexDefinition",
-          "indexName": "devotionals_pkey",
-          "elements": [
-            {
-              "__className__": "serverpod.IndexElementDefinition",
-              "type": 0,
-              "definition": "id"
-            }
-          ],
-          "type": "btree",
-          "isUnique": true,
-          "isPrimary": true
-        },
         {
           "__className__": "serverpod.IndexDefinition",
           "indexName": "devotionals_date_idx",
@@ -696,14 +642,16 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "id",
-          "columnType": 6,
+          "fieldName": "id",
+          "columnType": 7,
           "isNullable": false,
-          "columnDefault": "nextval('download_records_id_seq'::regclass)",
-          "dartType": "int?"
+          "columnDefault": "random",
+          "dartType": "UuidValue"
         },
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "childId",
+          "fieldName": "childId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -711,6 +659,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "bookId",
+          "fieldName": "bookId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -718,6 +667,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "deviceId",
+          "fieldName": "deviceId",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -725,6 +675,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "downloadedAt",
+          "fieldName": "downloadedAt",
           "columnType": 4,
           "isNullable": false,
           "dartType": "DateTime"
@@ -757,27 +708,13 @@
             "id"
           ],
           "onUpdate": 3,
-          "onDelete": 4
+          "onDelete": 3
         }
       ],
       "indexes": [
         {
           "__className__": "serverpod.IndexDefinition",
-          "indexName": "download_records_pkey",
-          "elements": [
-            {
-              "__className__": "serverpod.IndexElementDefinition",
-              "type": 0,
-              "definition": "id"
-            }
-          ],
-          "type": "btree",
-          "isUnique": true,
-          "isPrimary": true
-        },
-        {
-          "__className__": "serverpod.IndexDefinition",
-          "indexName": "download_records_child_book_idx",
+          "indexName": "idx_downloads_child_book",
           "elements": [
             {
               "__className__": "serverpod.IndexElementDefinition",
@@ -807,14 +744,16 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "id",
+          "fieldName": "id",
           "columnType": 6,
           "isNullable": false,
-          "columnDefault": "nextval('page_contents_id_seq'::regclass)",
+          "columnDefault": "serial",
           "dartType": "int?"
         },
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "pageId",
+          "fieldName": "pageId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -822,6 +761,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "language",
+          "fieldName": "language",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -829,6 +769,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "text",
+          "fieldName": "text",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -836,6 +777,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "audioAsset",
+          "fieldName": "audioAsset",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -858,20 +800,6 @@
         }
       ],
       "indexes": [
-        {
-          "__className__": "serverpod.IndexDefinition",
-          "indexName": "page_contents_pkey",
-          "elements": [
-            {
-              "__className__": "serverpod.IndexElementDefinition",
-              "type": 0,
-              "definition": "id"
-            }
-          ],
-          "type": "btree",
-          "isUnique": true,
-          "isPrimary": true
-        },
         {
           "__className__": "serverpod.IndexDefinition",
           "indexName": "page_contents_page_language_idx",
@@ -904,14 +832,16 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "id",
+          "fieldName": "id",
           "columnType": 6,
           "isNullable": false,
-          "columnDefault": "nextval('pages_id_seq'::regclass)",
+          "columnDefault": "serial",
           "dartType": "int?"
         },
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "bookId",
+          "fieldName": "bookId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -919,6 +849,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "pageNumber",
+          "fieldName": "pageNumber",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -926,6 +857,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "illustrationAsset",
+          "fieldName": "illustrationAsset",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -933,6 +865,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "layoutType",
+          "fieldName": "layoutType",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -957,21 +890,21 @@
       "indexes": [
         {
           "__className__": "serverpod.IndexDefinition",
-          "indexName": "pages_pkey",
+          "indexName": "idx_pages_book",
           "elements": [
             {
               "__className__": "serverpod.IndexElementDefinition",
               "type": 0,
-              "definition": "id"
+              "definition": "bookId"
             }
           ],
           "type": "btree",
-          "isUnique": true,
-          "isPrimary": true
+          "isUnique": false,
+          "isPrimary": false
         },
         {
           "__className__": "serverpod.IndexDefinition",
-          "indexName": "pages_book_page_number_idx",
+          "indexName": "pages_book_number_idx",
           "elements": [
             {
               "__className__": "serverpod.IndexElementDefinition",
@@ -1001,14 +934,16 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "id",
-          "columnType": 6,
+          "fieldName": "id",
+          "columnType": 7,
           "isNullable": false,
-          "columnDefault": "nextval('reading_progress_id_seq'::regclass)",
-          "dartType": "int?"
+          "columnDefault": "random",
+          "dartType": "UuidValue"
         },
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "childId",
+          "fieldName": "childId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -1016,6 +951,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "bookId",
+          "fieldName": "bookId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -1023,6 +959,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "currentPage",
+          "fieldName": "currentPage",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -1030,6 +967,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "completed",
+          "fieldName": "completed",
           "columnType": 1,
           "isNullable": false,
           "dartType": "bool"
@@ -1037,6 +975,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "startedAt",
+          "fieldName": "startedAt",
           "columnType": 4,
           "isNullable": false,
           "dartType": "DateTime"
@@ -1044,6 +983,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "completedAt",
+          "fieldName": "completedAt",
           "columnType": 4,
           "isNullable": true,
           "dartType": "DateTime?"
@@ -1051,6 +991,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "totalTimeSeconds",
+          "fieldName": "totalTimeSeconds",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -1058,6 +999,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "syncedAt",
+          "fieldName": "syncedAt",
           "columnType": 4,
           "isNullable": false,
           "dartType": "DateTime"
@@ -1090,27 +1032,13 @@
             "id"
           ],
           "onUpdate": 3,
-          "onDelete": 4
+          "onDelete": 3
         }
       ],
       "indexes": [
         {
           "__className__": "serverpod.IndexDefinition",
-          "indexName": "reading_progress_pkey",
-          "elements": [
-            {
-              "__className__": "serverpod.IndexElementDefinition",
-              "type": 0,
-              "definition": "id"
-            }
-          ],
-          "type": "btree",
-          "isUnique": true,
-          "isPrimary": true
-        },
-        {
-          "__className__": "serverpod.IndexDefinition",
-          "indexName": "reading_progress_child_book_idx",
+          "indexName": "idx_progress_child_book",
           "elements": [
             {
               "__className__": "serverpod.IndexElementDefinition",
@@ -1126,6 +1054,25 @@
           "type": "btree",
           "isUnique": false,
           "isPrimary": false
+        },
+        {
+          "__className__": "serverpod.IndexDefinition",
+          "indexName": "idx_progress_child_started",
+          "elements": [
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "childId"
+            },
+            {
+              "__className__": "serverpod.IndexElementDefinition",
+              "type": 0,
+              "definition": "startedAt"
+            }
+          ],
+          "type": "btree",
+          "isUnique": false,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -1133,21 +1080,23 @@
     {
       "__className__": "serverpod.TableDefinition",
       "name": "users",
-      "dartName": "User",
+      "dartName": "AppUser",
       "module": "kingdom_kids",
       "schema": "public",
       "columns": [
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "id",
+          "fieldName": "id",
           "columnType": 6,
           "isNullable": false,
-          "columnDefault": "nextval('users_id_seq'::regclass)",
+          "columnDefault": "serial",
           "dartType": "int?"
         },
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "email",
+          "fieldName": "email",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -1155,6 +1104,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "passwordHash",
+          "fieldName": "passwordHash",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -1162,6 +1112,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "country",
+          "fieldName": "country",
           "columnType": 0,
           "isNullable": true,
           "dartType": "String?"
@@ -1169,6 +1120,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "timezone",
+          "fieldName": "timezone",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -1176,6 +1128,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "preferredLanguage",
+          "fieldName": "preferredLanguage",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
@@ -1183,6 +1136,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "consentGivenAt",
+          "fieldName": "consentGivenAt",
           "columnType": 4,
           "isNullable": true,
           "dartType": "DateTime?"
@@ -1190,6 +1144,7 @@
         {
           "__className__": "serverpod.ColumnDefinition",
           "name": "createdAt",
+          "fieldName": "createdAt",
           "columnType": 4,
           "isNullable": false,
           "dartType": "DateTime"
@@ -1197,20 +1152,6 @@
       ],
       "foreignKeys": [],
       "indexes": [
-        {
-          "__className__": "serverpod.IndexDefinition",
-          "indexName": "users_pkey",
-          "elements": [
-            {
-              "__className__": "serverpod.IndexElementDefinition",
-              "type": 0,
-              "definition": "id"
-            }
-          ],
-          "type": "btree",
-          "isUnique": true,
-          "isPrimary": true
-        },
         {
           "__className__": "serverpod.IndexDefinition",
           "indexName": "users_email_idx",

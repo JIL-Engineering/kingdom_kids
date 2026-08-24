@@ -12,8 +12,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class User implements _i1.SerializableModel {
-  User._({
+abstract class AppUser implements _i1.SerializableModel {
+  AppUser._({
     this.id,
     required this.email,
     required this.passwordHash,
@@ -24,7 +24,7 @@ abstract class User implements _i1.SerializableModel {
     required this.createdAt,
   });
 
-  factory User({
+  factory AppUser({
     int? id,
     required String email,
     required String passwordHash,
@@ -33,10 +33,10 @@ abstract class User implements _i1.SerializableModel {
     required String preferredLanguage,
     DateTime? consentGivenAt,
     required DateTime createdAt,
-  }) = _UserImpl;
+  }) = _AppUserImpl;
 
-  factory User.fromJson(Map<String, dynamic> jsonSerialization) {
-    return User(
+  factory AppUser.fromJson(Map<String, dynamic> jsonSerialization) {
+    return AppUser(
       id: jsonSerialization['id'] as int?,
       email: jsonSerialization['email'] as String,
       passwordHash: jsonSerialization['passwordHash'] as String,
@@ -73,10 +73,10 @@ abstract class User implements _i1.SerializableModel {
 
   DateTime createdAt;
 
-  /// Returns a shallow copy of this [User]
+  /// Returns a shallow copy of this [AppUser]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
-  User copyWith({
+  AppUser copyWith({
     int? id,
     String? email,
     String? passwordHash,
@@ -89,7 +89,7 @@ abstract class User implements _i1.SerializableModel {
   @override
   Map<String, dynamic> toJson() {
     return {
-      '__className__': 'User',
+      '__className__': 'AppUser',
       if (id != null) 'id': id,
       'email': email,
       'passwordHash': passwordHash,
@@ -109,8 +109,8 @@ abstract class User implements _i1.SerializableModel {
 
 class _Undefined {}
 
-class _UserImpl extends User {
-  _UserImpl({
+class _AppUserImpl extends AppUser {
+  _AppUserImpl({
     int? id,
     required String email,
     required String passwordHash,
@@ -130,11 +130,11 @@ class _UserImpl extends User {
          createdAt: createdAt,
        );
 
-  /// Returns a shallow copy of this [User]
+  /// Returns a shallow copy of this [AppUser]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   @override
-  User copyWith({
+  AppUser copyWith({
     Object? id = _Undefined,
     String? email,
     String? passwordHash,
@@ -144,7 +144,7 @@ class _UserImpl extends User {
     Object? consentGivenAt = _Undefined,
     DateTime? createdAt,
   }) {
-    return User(
+    return AppUser(
       id: id is int? ? id : this.id,
       email: email ?? this.email,
       passwordHash: passwordHash ?? this.passwordHash,

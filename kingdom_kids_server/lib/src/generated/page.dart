@@ -100,6 +100,7 @@ abstract class Page implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
     int? limit,
     int? offset,
     _i1.OrderByBuilder<PageTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
     bool orderDescending = false,
     _i1.OrderByListBuilder<PageTable>? orderByList,
     PageInclude? include,
@@ -109,7 +110,8 @@ abstract class Page implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(Page.t),
-      orderDescending: orderDescending,
+      orderDescending: // ignore: deprecated_member_use_from_same_package
+          orderDescending,
       orderByList: orderByList?.call(Page.t),
       include: include,
     );
@@ -241,6 +243,7 @@ class PageIncludeList extends _i1.IncludeList {
     super.limit,
     super.offset,
     super.orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
     super.orderDescending,
     super.orderByList,
     super.include,
@@ -286,6 +289,7 @@ class PageRepository {
     int? limit,
     int? offset,
     _i1.OrderByBuilder<PageTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
     bool orderDescending = false,
     _i1.OrderByListBuilder<PageTable>? orderByList,
     _i1.Transaction? transaction,
@@ -296,7 +300,8 @@ class PageRepository {
       where: where?.call(Page.t),
       orderBy: orderBy?.call(Page.t),
       orderByList: orderByList?.call(Page.t),
-      orderDescending: orderDescending,
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -327,6 +332,7 @@ class PageRepository {
     _i1.WhereExpressionBuilder<PageTable>? where,
     int? offset,
     _i1.OrderByBuilder<PageTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
     bool orderDescending = false,
     _i1.OrderByListBuilder<PageTable>? orderByList,
     _i1.Transaction? transaction,
@@ -337,7 +343,8 @@ class PageRepository {
       where: where?.call(Page.t),
       orderBy: orderBy?.call(Page.t),
       orderByList: orderByList?.call(Page.t),
-      orderDescending: orderDescending,
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -371,16 +378,22 @@ class PageRepository {
   /// If [ignoreConflicts] is set to `true`, rows that conflict with existing
   /// rows are silently skipped, and only the successfully inserted rows are
   /// returned.
+  ///
+  /// If [noReturn] is set to `true`, the inserted rows are not read back from
+  /// the database and an empty list is returned. This avoids the overhead of
+  /// transferring and deserializing the rows when the result is not needed.
   Future<List<Page>> insert(
     _i1.DatabaseSession session,
     List<Page> rows, {
     _i1.Transaction? transaction,
     bool ignoreConflicts = false,
+    bool noReturn = false,
   }) async {
     return session.db.insert<Page>(
       rows,
       transaction: transaction,
       ignoreConflicts: ignoreConflicts,
+      noReturn: noReturn,
     );
   }
 
@@ -398,21 +411,96 @@ class PageRepository {
     );
   }
 
+  /// Upserts all [Page]s in the list and returns the resulting rows.
+  ///
+  /// If a row conflicts on the given [conflictColumns], the existing row is
+  /// updated with the new values. Otherwise, a new row is inserted.
+  ///
+  /// If [updateColumns] is provided, only those columns will be updated on
+  /// conflict. If null, all non-conflict, non-id columns are updated.
+  ///
+  /// If [updateWhere] is provided, the update only applies to rows matching the
+  /// given expression. Conflicting rows that don't match are skipped and not
+  /// returned, so the resulting list may be shorter than [rows].
+  ///
+  /// The returned [Page]s will have their `id` fields set.
+  ///
+  /// This is an atomic operation, meaning that if one of the rows fails,
+  /// none of the rows will be affected.
+  ///
+  /// If [noReturn] is set to `true`, the resulting rows are not read back from
+  /// the database and an empty list is returned. This avoids the overhead of
+  /// transferring and deserializing the rows when the result is not needed.
+  Future<List<Page>> upsert(
+    _i1.DatabaseSession session,
+    List<Page> rows, {
+    required _i1.ColumnSelections<PageTable> conflictColumns,
+    _i1.ColumnSelections<PageTable>? updateColumns,
+    _i1.WhereExpressionBuilder<PageTable>? updateWhere,
+    _i1.Transaction? transaction,
+    bool noReturn = false,
+  }) async {
+    return session.db.upsert<Page>(
+      rows,
+      conflictColumns: conflictColumns(Page.t),
+      updateColumns: updateColumns?.call(Page.t),
+      updateWhere: updateWhere?.call(Page.t),
+      transaction: transaction,
+      noReturn: noReturn,
+    );
+  }
+
+  /// Upserts a single [Page] and returns the resulting row.
+  ///
+  /// If the row conflicts on the given [conflictColumns], the existing row is
+  /// updated. Otherwise, a new row is inserted.
+  ///
+  /// If [updateColumns] is provided, only those columns will be updated on
+  /// conflict. If null, all non-conflict, non-id columns are updated.
+  ///
+  /// If [updateWhere] is provided, the update only applies when the existing
+  /// row matches the expression. Returns `null` if no row was affected — for
+  /// example when [updateWhere] does not match the conflicting row.
+  ///
+  /// The returned [Page] will have its `id` field set.
+  Future<Page?> upsertRow(
+    _i1.DatabaseSession session,
+    Page row, {
+    required _i1.ColumnSelections<PageTable> conflictColumns,
+    _i1.ColumnSelections<PageTable>? updateColumns,
+    _i1.WhereExpressionBuilder<PageTable>? updateWhere,
+    _i1.Transaction? transaction,
+  }) async {
+    return session.db.upsertRow<Page>(
+      row,
+      conflictColumns: conflictColumns(Page.t),
+      updateColumns: updateColumns?.call(Page.t),
+      updateWhere: updateWhere?.call(Page.t),
+      transaction: transaction,
+    );
+  }
+
   /// Updates all [Page]s in the list and returns the updated rows. If
   /// [columns] is provided, only those columns will be updated. Defaults to
   /// all columns.
   /// This is an atomic operation, meaning that if one of the rows fails to
   /// update, none of the rows will be updated.
+  ///
+  /// If [noReturn] is set to `true`, the updated rows are not read back from
+  /// the database and an empty list is returned. This avoids the overhead of
+  /// transferring and deserializing the rows when the result is not needed.
   Future<List<Page>> update(
     _i1.DatabaseSession session,
     List<Page> rows, {
     _i1.ColumnSelections<PageTable>? columns,
     _i1.Transaction? transaction,
+    bool noReturn = false,
   }) async {
     return session.db.update<Page>(
       rows,
       columns: columns?.call(Page.t),
       transaction: transaction,
+      noReturn: noReturn,
     );
   }
 
@@ -449,6 +537,10 @@ class PageRepository {
 
   /// Updates all [Page]s matching the [where] expression with the specified [columnValues].
   /// Returns the list of updated rows.
+  ///
+  /// If [noReturn] is set to `true`, the updated rows are not read back from
+  /// the database and an empty list is returned. This avoids the overhead of
+  /// transferring and deserializing the rows when the result is not needed.
   Future<List<Page>> updateWhere(
     _i1.DatabaseSession session, {
     required _i1.ColumnValueListBuilder<PageUpdateTable> columnValues,
@@ -457,8 +549,10 @@ class PageRepository {
     int? offset,
     _i1.OrderByBuilder<PageTable>? orderBy,
     _i1.OrderByListBuilder<PageTable>? orderByList,
+    @Deprecated('Use desc() on the orderBy column instead.')
     bool orderDescending = false,
     _i1.Transaction? transaction,
+    bool noReturn = false,
   }) async {
     return session.db.updateWhere<Page>(
       columnValues: columnValues(Page.t.updateTable),
@@ -467,22 +561,42 @@ class PageRepository {
       offset: offset,
       orderBy: orderBy?.call(Page.t),
       orderByList: orderByList?.call(Page.t),
-      orderDescending: orderDescending,
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
+      noReturn: noReturn,
     );
   }
 
   /// Deletes all [Page]s in the list and returns the deleted rows.
+  ///
+  /// To specify the order of the returned rows use [orderBy] or [orderByList]
+  /// when sorting by multiple columns.
+  ///
   /// This is an atomic operation, meaning that if one of the rows fail to
   /// be deleted, none of the rows will be deleted.
+  ///
+  /// If [noReturn] is set to `true`, the deleted rows are not read back from
+  /// the database and an empty list is returned. This avoids the overhead of
+  /// transferring and deserializing the rows when the result is not needed.
   Future<List<Page>> delete(
     _i1.DatabaseSession session,
     List<Page> rows, {
+    _i1.OrderByBuilder<PageTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<PageTable>? orderByList,
     _i1.Transaction? transaction,
+    bool noReturn = false,
   }) async {
     return session.db.delete<Page>(
       rows,
+      orderBy: orderBy?.call(Page.t),
+      orderByList: orderByList?.call(Page.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
+      noReturn: noReturn,
     );
   }
 
@@ -499,14 +613,31 @@ class PageRepository {
   }
 
   /// Deletes all rows matching the [where] expression.
+  ///
+  /// To specify the order of the returned rows use [orderBy] or [orderByList]
+  /// when sorting by multiple columns.
+  ///
+  /// If [noReturn] is set to `true`, the deleted rows are not read back from
+  /// the database and an empty list is returned. This avoids the overhead of
+  /// transferring and deserializing the rows when the result is not needed.
   Future<List<Page>> deleteWhere(
     _i1.DatabaseSession session, {
     required _i1.WhereExpressionBuilder<PageTable> where,
+    _i1.OrderByBuilder<PageTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<PageTable>? orderByList,
     _i1.Transaction? transaction,
+    bool noReturn = false,
   }) async {
     return session.db.deleteWhere<Page>(
       where: where(Page.t),
+      orderBy: orderBy?.call(Page.t),
+      orderByList: orderByList?.call(Page.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
+      noReturn: noReturn,
     );
   }
 

@@ -16,19 +16,20 @@ import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
     as _i3;
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
     as _i4;
-import 'badge.dart' as _i5;
-import 'book.dart' as _i6;
-import 'book_translation.dart' as _i7;
-import 'child_badge.dart' as _i8;
-import 'child_profile.dart' as _i9;
-import 'devotional.dart' as _i10;
-import 'devotional_translation.dart' as _i11;
-import 'download_record.dart' as _i12;
-import 'greetings/greeting.dart' as _i13;
-import 'page.dart' as _i14;
-import 'page_content.dart' as _i15;
-import 'reading_progress.dart' as _i16;
-import 'user.dart' as _i17;
+import 'app_user.dart' as _i5;
+import 'badge.dart' as _i6;
+import 'book.dart' as _i7;
+import 'book_translation.dart' as _i8;
+import 'child_badge.dart' as _i9;
+import 'child_profile.dart' as _i10;
+import 'devotional.dart' as _i11;
+import 'devotional_translation.dart' as _i12;
+import 'download_record.dart' as _i13;
+import 'greetings/greeting.dart' as _i14;
+import 'page.dart' as _i15;
+import 'page_content.dart' as _i16;
+import 'reading_progress.dart' as _i17;
+export 'app_user.dart';
 export 'badge.dart';
 export 'book.dart';
 export 'book_translation.dart';
@@ -41,14 +42,13 @@ export 'greetings/greeting.dart';
 export 'page.dart';
 export 'page_content.dart';
 export 'reading_progress.dart';
-export 'user.dart';
 
-class Protocol extends _i1.SerializationManagerServer {
+class Protocol extends _i1.DatabaseSerializationManager {
   Protocol._();
 
   factory Protocol() => _instance;
 
-  static final Protocol _instance = Protocol._();
+  static final Protocol _instance = Protocol._().._registerHostProtocols();
 
   static final List<_i2.TableDefinition> targetTableDefinitions = [
     _i2.TableDefinition(
@@ -62,7 +62,7 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'nextval(\'badges_id_seq\'::regclass)',
+          columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
           name: 'code',
@@ -98,19 +98,6 @@ class Protocol extends _i1.SerializationManagerServer {
       foreignKeys: [],
       indexes: [
         _i2.IndexDefinition(
-          indexName: 'badges_pkey',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'id',
-            ),
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: true,
-        ),
-        _i2.IndexDefinition(
           indexName: 'badges_code_idx',
           tableSpace: null,
           elements: [
@@ -137,7 +124,7 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'nextval(\'book_translations_id_seq\'::regclass)',
+          columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
           name: 'bookId',
@@ -172,19 +159,6 @@ class Protocol extends _i1.SerializationManagerServer {
       ],
       indexes: [
         _i2.IndexDefinition(
-          indexName: 'book_translations_pkey',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'id',
-            ),
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: true,
-        ),
-        _i2.IndexDefinition(
           indexName: 'book_translations_book_language_idx',
           tableSpace: null,
           elements: [
@@ -215,7 +189,7 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'nextval(\'books_id_seq\'::regclass)',
+          columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
           name: 'slug',
@@ -275,19 +249,6 @@ class Protocol extends _i1.SerializationManagerServer {
       foreignKeys: [],
       indexes: [
         _i2.IndexDefinition(
-          indexName: 'books_pkey',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'id',
-            ),
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: true,
-        ),
-        _i2.IndexDefinition(
           indexName: 'books_slug_idx',
           tableSpace: null,
           elements: [
@@ -314,7 +275,7 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'nextval(\'child_badges_id_seq\'::regclass)',
+          columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
           name: 'childId',
@@ -353,24 +314,11 @@ class Protocol extends _i1.SerializationManagerServer {
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onDelete: _i2.ForeignKeyAction.noAction,
           matchType: null,
         ),
       ],
       indexes: [
-        _i2.IndexDefinition(
-          indexName: 'child_badges_pkey',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'id',
-            ),
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: true,
-        ),
         _i2.IndexDefinition(
           indexName: 'child_badges_child_badge_idx',
           tableSpace: null,
@@ -402,7 +350,7 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'nextval(\'child_profiles_id_seq\'::regclass)',
+          columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
           name: 'parentId',
@@ -467,20 +415,7 @@ class Protocol extends _i1.SerializationManagerServer {
       ],
       indexes: [
         _i2.IndexDefinition(
-          indexName: 'child_profiles_pkey',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'id',
-            ),
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: true,
-        ),
-        _i2.IndexDefinition(
-          indexName: 'child_profiles_parent_idx',
+          indexName: 'idx_child_profiles_parent',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -506,8 +441,7 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault:
-              'nextval(\'devotional_translations_id_seq\'::regclass)',
+          columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
           name: 'devotionalId',
@@ -560,19 +494,6 @@ class Protocol extends _i1.SerializationManagerServer {
       ],
       indexes: [
         _i2.IndexDefinition(
-          indexName: 'devotional_translations_pkey',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'id',
-            ),
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: true,
-        ),
-        _i2.IndexDefinition(
           indexName: 'devotional_translations_devotional_language_idx',
           tableSpace: null,
           elements: [
@@ -603,7 +524,7 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'nextval(\'devotionals_id_seq\'::regclass)',
+          columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
           name: 'date',
@@ -620,19 +541,6 @@ class Protocol extends _i1.SerializationManagerServer {
       ],
       foreignKeys: [],
       indexes: [
-        _i2.IndexDefinition(
-          indexName: 'devotionals_pkey',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'id',
-            ),
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: true,
-        ),
         _i2.IndexDefinition(
           indexName: 'devotionals_date_idx',
           tableSpace: null,
@@ -657,10 +565,10 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _i2.ColumnType.uuid,
           isNullable: false,
-          dartType: 'int?',
-          columnDefault: 'nextval(\'download_records_id_seq\'::regclass)',
+          dartType: 'UuidValue',
+          columnDefault: 'random',
         ),
         _i2.ColumnDefinition(
           name: 'childId',
@@ -705,26 +613,13 @@ class Protocol extends _i1.SerializationManagerServer {
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onDelete: _i2.ForeignKeyAction.noAction,
           matchType: null,
         ),
       ],
       indexes: [
         _i2.IndexDefinition(
-          indexName: 'download_records_pkey',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'id',
-            ),
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: true,
-        ),
-        _i2.IndexDefinition(
-          indexName: 'download_records_child_book_idx',
+          indexName: 'idx_downloads_child_book',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -754,7 +649,7 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'nextval(\'page_contents_id_seq\'::regclass)',
+          columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
           name: 'pageId',
@@ -795,19 +690,6 @@ class Protocol extends _i1.SerializationManagerServer {
       ],
       indexes: [
         _i2.IndexDefinition(
-          indexName: 'page_contents_pkey',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'id',
-            ),
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: true,
-        ),
-        _i2.IndexDefinition(
           indexName: 'page_contents_page_language_idx',
           tableSpace: null,
           elements: [
@@ -838,7 +720,7 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'nextval(\'pages_id_seq\'::regclass)',
+          columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
           name: 'bookId',
@@ -879,20 +761,20 @@ class Protocol extends _i1.SerializationManagerServer {
       ],
       indexes: [
         _i2.IndexDefinition(
-          indexName: 'pages_pkey',
+          indexName: 'idx_pages_book',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
               type: _i2.IndexElementDefinitionType.column,
-              definition: 'id',
+              definition: 'bookId',
             ),
           ],
           type: 'btree',
-          isUnique: true,
-          isPrimary: true,
+          isUnique: false,
+          isPrimary: false,
         ),
         _i2.IndexDefinition(
-          indexName: 'pages_book_page_number_idx',
+          indexName: 'pages_book_number_idx',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -919,10 +801,10 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _i2.ColumnType.uuid,
           isNullable: false,
-          dartType: 'int?',
-          columnDefault: 'nextval(\'reading_progress_id_seq\'::regclass)',
+          dartType: 'UuidValue',
+          columnDefault: 'random',
         ),
         _i2.ColumnDefinition(
           name: 'childId',
@@ -991,26 +873,13 @@ class Protocol extends _i1.SerializationManagerServer {
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _i2.ForeignKeyAction.noAction,
-          onDelete: _i2.ForeignKeyAction.cascade,
+          onDelete: _i2.ForeignKeyAction.noAction,
           matchType: null,
         ),
       ],
       indexes: [
         _i2.IndexDefinition(
-          indexName: 'reading_progress_pkey',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'id',
-            ),
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: true,
-        ),
-        _i2.IndexDefinition(
-          indexName: 'reading_progress_child_book_idx',
+          indexName: 'idx_progress_child_book',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -1026,12 +895,29 @@ class Protocol extends _i1.SerializationManagerServer {
           isUnique: false,
           isPrimary: false,
         ),
+        _i2.IndexDefinition(
+          indexName: 'idx_progress_child_started',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'childId',
+            ),
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'startedAt',
+            ),
+          ],
+          type: 'btree',
+          isUnique: false,
+          isPrimary: false,
+        ),
       ],
       managed: true,
     ),
     _i2.TableDefinition(
       name: 'users',
-      dartName: 'User',
+      dartName: 'AppUser',
       schema: 'public',
       module: 'kingdom_kids',
       columns: [
@@ -1040,7 +926,7 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'nextval(\'users_id_seq\'::regclass)',
+          columnDefault: 'serial',
         ),
         _i2.ColumnDefinition(
           name: 'email',
@@ -1087,19 +973,6 @@ class Protocol extends _i1.SerializationManagerServer {
       ],
       foreignKeys: [],
       indexes: [
-        _i2.IndexDefinition(
-          indexName: 'users_pkey',
-          tableSpace: null,
-          elements: [
-            _i2.IndexElementDefinition(
-              type: _i2.IndexElementDefinitionType.column,
-              definition: 'id',
-            ),
-          ],
-          type: 'btree',
-          isUnique: true,
-          isPrimary: true,
-        ),
         _i2.IndexDefinition(
           indexName: 'users_email_idx',
           tableSpace: null,
@@ -1148,84 +1021,84 @@ class Protocol extends _i1.SerializationManagerServer {
       }
     }
 
-    if (t == _i5.Badge) {
-      return _i5.Badge.fromJson(data) as T;
+    if (t == _i5.AppUser) {
+      return _i5.AppUser.fromJson(data) as T;
     }
-    if (t == _i6.Book) {
-      return _i6.Book.fromJson(data) as T;
+    if (t == _i6.Badge) {
+      return _i6.Badge.fromJson(data) as T;
     }
-    if (t == _i7.BookTranslation) {
-      return _i7.BookTranslation.fromJson(data) as T;
+    if (t == _i7.Book) {
+      return _i7.Book.fromJson(data) as T;
     }
-    if (t == _i8.ChildBadge) {
-      return _i8.ChildBadge.fromJson(data) as T;
+    if (t == _i8.BookTranslation) {
+      return _i8.BookTranslation.fromJson(data) as T;
     }
-    if (t == _i9.ChildProfile) {
-      return _i9.ChildProfile.fromJson(data) as T;
+    if (t == _i9.ChildBadge) {
+      return _i9.ChildBadge.fromJson(data) as T;
     }
-    if (t == _i10.Devotional) {
-      return _i10.Devotional.fromJson(data) as T;
+    if (t == _i10.ChildProfile) {
+      return _i10.ChildProfile.fromJson(data) as T;
     }
-    if (t == _i11.DevotionalTranslation) {
-      return _i11.DevotionalTranslation.fromJson(data) as T;
+    if (t == _i11.Devotional) {
+      return _i11.Devotional.fromJson(data) as T;
     }
-    if (t == _i12.DownloadRecord) {
-      return _i12.DownloadRecord.fromJson(data) as T;
+    if (t == _i12.DevotionalTranslation) {
+      return _i12.DevotionalTranslation.fromJson(data) as T;
     }
-    if (t == _i13.Greeting) {
-      return _i13.Greeting.fromJson(data) as T;
+    if (t == _i13.DownloadRecord) {
+      return _i13.DownloadRecord.fromJson(data) as T;
     }
-    if (t == _i14.Page) {
-      return _i14.Page.fromJson(data) as T;
+    if (t == _i14.Greeting) {
+      return _i14.Greeting.fromJson(data) as T;
     }
-    if (t == _i15.PageContent) {
-      return _i15.PageContent.fromJson(data) as T;
+    if (t == _i15.Page) {
+      return _i15.Page.fromJson(data) as T;
     }
-    if (t == _i16.ReadingProgress) {
-      return _i16.ReadingProgress.fromJson(data) as T;
+    if (t == _i16.PageContent) {
+      return _i16.PageContent.fromJson(data) as T;
     }
-    if (t == _i17.User) {
-      return _i17.User.fromJson(data) as T;
+    if (t == _i17.ReadingProgress) {
+      return _i17.ReadingProgress.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i5.Badge?>()) {
-      return (data != null ? _i5.Badge.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i5.AppUser?>()) {
+      return (data != null ? _i5.AppUser.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i6.Book?>()) {
-      return (data != null ? _i6.Book.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i6.Badge?>()) {
+      return (data != null ? _i6.Badge.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i7.BookTranslation?>()) {
-      return (data != null ? _i7.BookTranslation.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i7.Book?>()) {
+      return (data != null ? _i7.Book.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i8.ChildBadge?>()) {
-      return (data != null ? _i8.ChildBadge.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i8.BookTranslation?>()) {
+      return (data != null ? _i8.BookTranslation.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.ChildProfile?>()) {
-      return (data != null ? _i9.ChildProfile.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i9.ChildBadge?>()) {
+      return (data != null ? _i9.ChildBadge.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i10.Devotional?>()) {
-      return (data != null ? _i10.Devotional.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i10.ChildProfile?>()) {
+      return (data != null ? _i10.ChildProfile.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i11.DevotionalTranslation?>()) {
-      return (data != null ? _i11.DevotionalTranslation.fromJson(data) : null)
+    if (t == _i1.getType<_i11.Devotional?>()) {
+      return (data != null ? _i11.Devotional.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i12.DevotionalTranslation?>()) {
+      return (data != null ? _i12.DevotionalTranslation.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i12.DownloadRecord?>()) {
-      return (data != null ? _i12.DownloadRecord.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i13.DownloadRecord?>()) {
+      return (data != null ? _i13.DownloadRecord.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i13.Greeting?>()) {
-      return (data != null ? _i13.Greeting.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i14.Greeting?>()) {
+      return (data != null ? _i14.Greeting.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i14.Page?>()) {
-      return (data != null ? _i14.Page.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i15.Page?>()) {
+      return (data != null ? _i15.Page.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i15.PageContent?>()) {
-      return (data != null ? _i15.PageContent.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i16.PageContent?>()) {
+      return (data != null ? _i16.PageContent.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i16.ReadingProgress?>()) {
-      return (data != null ? _i16.ReadingProgress.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i17.User?>()) {
-      return (data != null ? _i17.User.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i17.ReadingProgress?>()) {
+      return (data != null ? _i17.ReadingProgress.fromJson(data) : null) as T;
     }
     try {
       return _i3.Protocol().deserialize<T>(data, t);
@@ -1241,19 +1114,19 @@ class Protocol extends _i1.SerializationManagerServer {
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
-      _i5.Badge => 'Badge',
-      _i6.Book => 'Book',
-      _i7.BookTranslation => 'BookTranslation',
-      _i8.ChildBadge => 'ChildBadge',
-      _i9.ChildProfile => 'ChildProfile',
-      _i10.Devotional => 'Devotional',
-      _i11.DevotionalTranslation => 'DevotionalTranslation',
-      _i12.DownloadRecord => 'DownloadRecord',
-      _i13.Greeting => 'Greeting',
-      _i14.Page => 'Page',
-      _i15.PageContent => 'PageContent',
-      _i16.ReadingProgress => 'ReadingProgress',
-      _i17.User => 'User',
+      _i5.AppUser => 'AppUser',
+      _i6.Badge => 'Badge',
+      _i7.Book => 'Book',
+      _i8.BookTranslation => 'BookTranslation',
+      _i9.ChildBadge => 'ChildBadge',
+      _i10.ChildProfile => 'ChildProfile',
+      _i11.Devotional => 'Devotional',
+      _i12.DevotionalTranslation => 'DevotionalTranslation',
+      _i13.DownloadRecord => 'DownloadRecord',
+      _i14.Greeting => 'Greeting',
+      _i15.Page => 'Page',
+      _i16.PageContent => 'PageContent',
+      _i17.ReadingProgress => 'ReadingProgress',
       _ => null,
     };
   }
@@ -1271,44 +1144,48 @@ class Protocol extends _i1.SerializationManagerServer {
     }
 
     switch (data) {
-      case _i5.Badge():
+      case _i5.AppUser():
+        return 'AppUser';
+      case _i6.Badge():
         return 'Badge';
-      case _i6.Book():
+      case _i7.Book():
         return 'Book';
-      case _i7.BookTranslation():
+      case _i8.BookTranslation():
         return 'BookTranslation';
-      case _i8.ChildBadge():
+      case _i9.ChildBadge():
         return 'ChildBadge';
-      case _i9.ChildProfile():
+      case _i10.ChildProfile():
         return 'ChildProfile';
-      case _i10.Devotional():
+      case _i11.Devotional():
         return 'Devotional';
-      case _i11.DevotionalTranslation():
+      case _i12.DevotionalTranslation():
         return 'DevotionalTranslation';
-      case _i12.DownloadRecord():
+      case _i13.DownloadRecord():
         return 'DownloadRecord';
-      case _i13.Greeting():
+      case _i14.Greeting():
         return 'Greeting';
-      case _i14.Page():
+      case _i15.Page():
         return 'Page';
-      case _i15.PageContent():
+      case _i16.PageContent():
         return 'PageContent';
-      case _i16.ReadingProgress():
+      case _i17.ReadingProgress():
         return 'ReadingProgress';
-      case _i17.User():
-        return 'User';
-    }
-    className = _i2.Protocol().getClassNameForObject(data);
-    if (className != null) {
-      return 'serverpod.$className';
     }
     className = _i3.Protocol().getClassNameForObject(data);
     if (className != null) {
-      return 'serverpod_auth_idp.$className';
+      return className.contains('.')
+          ? className
+          : 'serverpod_auth_idp.$className';
     }
     className = _i4.Protocol().getClassNameForObject(data);
     if (className != null) {
-      return 'serverpod_auth_core.$className';
+      return className.contains('.')
+          ? className
+          : 'serverpod_auth_core.$className';
+    }
+    className = _i2.Protocol().getClassNameForObject(data);
+    if (className != null) {
+      return className.contains('.') ? className : 'serverpod.$className';
     }
     return null;
   }
@@ -1319,48 +1196,44 @@ class Protocol extends _i1.SerializationManagerServer {
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
     }
+    if (dataClassName == 'AppUser') {
+      return deserialize<_i5.AppUser>(data['data']);
+    }
     if (dataClassName == 'Badge') {
-      return deserialize<_i5.Badge>(data['data']);
+      return deserialize<_i6.Badge>(data['data']);
     }
     if (dataClassName == 'Book') {
-      return deserialize<_i6.Book>(data['data']);
+      return deserialize<_i7.Book>(data['data']);
     }
     if (dataClassName == 'BookTranslation') {
-      return deserialize<_i7.BookTranslation>(data['data']);
+      return deserialize<_i8.BookTranslation>(data['data']);
     }
     if (dataClassName == 'ChildBadge') {
-      return deserialize<_i8.ChildBadge>(data['data']);
+      return deserialize<_i9.ChildBadge>(data['data']);
     }
     if (dataClassName == 'ChildProfile') {
-      return deserialize<_i9.ChildProfile>(data['data']);
+      return deserialize<_i10.ChildProfile>(data['data']);
     }
     if (dataClassName == 'Devotional') {
-      return deserialize<_i10.Devotional>(data['data']);
+      return deserialize<_i11.Devotional>(data['data']);
     }
     if (dataClassName == 'DevotionalTranslation') {
-      return deserialize<_i11.DevotionalTranslation>(data['data']);
+      return deserialize<_i12.DevotionalTranslation>(data['data']);
     }
     if (dataClassName == 'DownloadRecord') {
-      return deserialize<_i12.DownloadRecord>(data['data']);
+      return deserialize<_i13.DownloadRecord>(data['data']);
     }
     if (dataClassName == 'Greeting') {
-      return deserialize<_i13.Greeting>(data['data']);
+      return deserialize<_i14.Greeting>(data['data']);
     }
     if (dataClassName == 'Page') {
-      return deserialize<_i14.Page>(data['data']);
+      return deserialize<_i15.Page>(data['data']);
     }
     if (dataClassName == 'PageContent') {
-      return deserialize<_i15.PageContent>(data['data']);
+      return deserialize<_i16.PageContent>(data['data']);
     }
     if (dataClassName == 'ReadingProgress') {
-      return deserialize<_i16.ReadingProgress>(data['data']);
-    }
-    if (dataClassName == 'User') {
-      return deserialize<_i17.User>(data['data']);
-    }
-    if (dataClassName.startsWith('serverpod.')) {
-      data['className'] = dataClassName.substring(10);
-      return _i2.Protocol().deserializeByClassName(data);
+      return deserialize<_i17.ReadingProgress>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);
@@ -1370,7 +1243,16 @@ class Protocol extends _i1.SerializationManagerServer {
       data['className'] = dataClassName.substring(20);
       return _i4.Protocol().deserializeByClassName(data);
     }
+    if (dataClassName.startsWith('serverpod.')) {
+      data['className'] = dataClassName.substring(10);
+      return _i2.Protocol().deserializeByClassName(data);
+    }
     return super.deserializeByClassName(data);
+  }
+
+  void _registerHostProtocols() {
+    _i3.Protocol().registerHostProtocol('kingdom_kids', this);
+    _i4.Protocol().registerHostProtocol('kingdom_kids', this);
   }
 
   @override
@@ -1394,30 +1276,30 @@ class Protocol extends _i1.SerializationManagerServer {
       }
     }
     switch (t) {
-      case _i5.Badge:
-        return _i5.Badge.t;
-      case _i6.Book:
-        return _i6.Book.t;
-      case _i7.BookTranslation:
-        return _i7.BookTranslation.t;
-      case _i8.ChildBadge:
-        return _i8.ChildBadge.t;
-      case _i9.ChildProfile:
-        return _i9.ChildProfile.t;
-      case _i10.Devotional:
-        return _i10.Devotional.t;
-      case _i11.DevotionalTranslation:
-        return _i11.DevotionalTranslation.t;
-      case _i12.DownloadRecord:
-        return _i12.DownloadRecord.t;
-      case _i14.Page:
-        return _i14.Page.t;
-      case _i15.PageContent:
-        return _i15.PageContent.t;
-      case _i16.ReadingProgress:
-        return _i16.ReadingProgress.t;
-      case _i17.User:
-        return _i17.User.t;
+      case _i5.AppUser:
+        return _i5.AppUser.t;
+      case _i6.Badge:
+        return _i6.Badge.t;
+      case _i7.Book:
+        return _i7.Book.t;
+      case _i8.BookTranslation:
+        return _i8.BookTranslation.t;
+      case _i9.ChildBadge:
+        return _i9.ChildBadge.t;
+      case _i10.ChildProfile:
+        return _i10.ChildProfile.t;
+      case _i11.Devotional:
+        return _i11.Devotional.t;
+      case _i12.DevotionalTranslation:
+        return _i12.DevotionalTranslation.t;
+      case _i13.DownloadRecord:
+        return _i13.DownloadRecord.t;
+      case _i15.Page:
+        return _i15.Page.t;
+      case _i16.PageContent:
+        return _i16.PageContent.t;
+      case _i17.ReadingProgress:
+        return _i17.ReadingProgress.t;
     }
     return null;
   }

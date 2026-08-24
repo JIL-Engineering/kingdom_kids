@@ -14,7 +14,7 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
 abstract class ReadingProgress implements _i1.SerializableModel {
   ReadingProgress._({
-    this.id,
+    _i1.UuidValue? id,
     required this.childId,
     required this.bookId,
     required this.currentPage,
@@ -23,10 +23,10 @@ abstract class ReadingProgress implements _i1.SerializableModel {
     this.completedAt,
     required this.totalTimeSeconds,
     required this.syncedAt,
-  });
+  }) : id = id ?? const _i1.Uuid().v4obj();
 
   factory ReadingProgress({
-    int? id,
+    _i1.UuidValue? id,
     required int childId,
     required int bookId,
     required int currentPage,
@@ -39,7 +39,9 @@ abstract class ReadingProgress implements _i1.SerializableModel {
 
   factory ReadingProgress.fromJson(Map<String, dynamic> jsonSerialization) {
     return ReadingProgress(
-      id: jsonSerialization['id'] as int?,
+      id: jsonSerialization['id'] == null
+          ? null
+          : _i1.UuidValueJsonExtension.fromJson(jsonSerialization['id']),
       childId: jsonSerialization['childId'] as int,
       bookId: jsonSerialization['bookId'] as int,
       currentPage: jsonSerialization['currentPage'] as int,
@@ -59,10 +61,8 @@ abstract class ReadingProgress implements _i1.SerializableModel {
     );
   }
 
-  /// The database id, set if the object has been inserted into the
-  /// database or if it has been fetched from the database. Otherwise,
-  /// the id will be null.
-  int? id;
+  /// The id of the object.
+  _i1.UuidValue id;
 
   int childId;
 
@@ -84,7 +84,7 @@ abstract class ReadingProgress implements _i1.SerializableModel {
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   ReadingProgress copyWith({
-    int? id,
+    _i1.UuidValue? id,
     int? childId,
     int? bookId,
     int? currentPage,
@@ -98,7 +98,7 @@ abstract class ReadingProgress implements _i1.SerializableModel {
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'ReadingProgress',
-      if (id != null) 'id': id,
+      'id': id.toJson(),
       'childId': childId,
       'bookId': bookId,
       'currentPage': currentPage,
@@ -120,7 +120,7 @@ class _Undefined {}
 
 class _ReadingProgressImpl extends ReadingProgress {
   _ReadingProgressImpl({
-    int? id,
+    _i1.UuidValue? id,
     required int childId,
     required int bookId,
     required int currentPage,
@@ -146,7 +146,7 @@ class _ReadingProgressImpl extends ReadingProgress {
   @_i1.useResult
   @override
   ReadingProgress copyWith({
-    Object? id = _Undefined,
+    _i1.UuidValue? id,
     int? childId,
     int? bookId,
     int? currentPage,
@@ -157,7 +157,7 @@ class _ReadingProgressImpl extends ReadingProgress {
     DateTime? syncedAt,
   }) {
     return ReadingProgress(
-      id: id is int? ? id : this.id,
+      id: id ?? this.id,
       childId: childId ?? this.childId,
       bookId: bookId ?? this.bookId,
       currentPage: currentPage ?? this.currentPage,

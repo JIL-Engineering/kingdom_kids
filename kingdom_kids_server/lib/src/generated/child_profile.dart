@@ -137,6 +137,7 @@ abstract class ChildProfile
     int? limit,
     int? offset,
     _i1.OrderByBuilder<ChildProfileTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
     bool orderDescending = false,
     _i1.OrderByListBuilder<ChildProfileTable>? orderByList,
     ChildProfileInclude? include,
@@ -146,7 +147,8 @@ abstract class ChildProfile
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(ChildProfile.t),
-      orderDescending: orderDescending,
+      orderDescending: // ignore: deprecated_member_use_from_same_package
+          orderDescending,
       orderByList: orderByList?.call(ChildProfile.t),
       include: include,
     );
@@ -344,6 +346,7 @@ class ChildProfileIncludeList extends _i1.IncludeList {
     super.limit,
     super.offset,
     super.orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
     super.orderDescending,
     super.orderByList,
     super.include,
@@ -389,6 +392,7 @@ class ChildProfileRepository {
     int? limit,
     int? offset,
     _i1.OrderByBuilder<ChildProfileTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
     bool orderDescending = false,
     _i1.OrderByListBuilder<ChildProfileTable>? orderByList,
     _i1.Transaction? transaction,
@@ -399,7 +403,8 @@ class ChildProfileRepository {
       where: where?.call(ChildProfile.t),
       orderBy: orderBy?.call(ChildProfile.t),
       orderByList: orderByList?.call(ChildProfile.t),
-      orderDescending: orderDescending,
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -430,6 +435,7 @@ class ChildProfileRepository {
     _i1.WhereExpressionBuilder<ChildProfileTable>? where,
     int? offset,
     _i1.OrderByBuilder<ChildProfileTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
     bool orderDescending = false,
     _i1.OrderByListBuilder<ChildProfileTable>? orderByList,
     _i1.Transaction? transaction,
@@ -440,7 +446,8 @@ class ChildProfileRepository {
       where: where?.call(ChildProfile.t),
       orderBy: orderBy?.call(ChildProfile.t),
       orderByList: orderByList?.call(ChildProfile.t),
-      orderDescending: orderDescending,
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -474,16 +481,22 @@ class ChildProfileRepository {
   /// If [ignoreConflicts] is set to `true`, rows that conflict with existing
   /// rows are silently skipped, and only the successfully inserted rows are
   /// returned.
+  ///
+  /// If [noReturn] is set to `true`, the inserted rows are not read back from
+  /// the database and an empty list is returned. This avoids the overhead of
+  /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildProfile>> insert(
     _i1.DatabaseSession session,
     List<ChildProfile> rows, {
     _i1.Transaction? transaction,
     bool ignoreConflicts = false,
+    bool noReturn = false,
   }) async {
     return session.db.insert<ChildProfile>(
       rows,
       transaction: transaction,
       ignoreConflicts: ignoreConflicts,
+      noReturn: noReturn,
     );
   }
 
@@ -501,21 +514,96 @@ class ChildProfileRepository {
     );
   }
 
+  /// Upserts all [ChildProfile]s in the list and returns the resulting rows.
+  ///
+  /// If a row conflicts on the given [conflictColumns], the existing row is
+  /// updated with the new values. Otherwise, a new row is inserted.
+  ///
+  /// If [updateColumns] is provided, only those columns will be updated on
+  /// conflict. If null, all non-conflict, non-id columns are updated.
+  ///
+  /// If [updateWhere] is provided, the update only applies to rows matching the
+  /// given expression. Conflicting rows that don't match are skipped and not
+  /// returned, so the resulting list may be shorter than [rows].
+  ///
+  /// The returned [ChildProfile]s will have their `id` fields set.
+  ///
+  /// This is an atomic operation, meaning that if one of the rows fails,
+  /// none of the rows will be affected.
+  ///
+  /// If [noReturn] is set to `true`, the resulting rows are not read back from
+  /// the database and an empty list is returned. This avoids the overhead of
+  /// transferring and deserializing the rows when the result is not needed.
+  Future<List<ChildProfile>> upsert(
+    _i1.DatabaseSession session,
+    List<ChildProfile> rows, {
+    required _i1.ColumnSelections<ChildProfileTable> conflictColumns,
+    _i1.ColumnSelections<ChildProfileTable>? updateColumns,
+    _i1.WhereExpressionBuilder<ChildProfileTable>? updateWhere,
+    _i1.Transaction? transaction,
+    bool noReturn = false,
+  }) async {
+    return session.db.upsert<ChildProfile>(
+      rows,
+      conflictColumns: conflictColumns(ChildProfile.t),
+      updateColumns: updateColumns?.call(ChildProfile.t),
+      updateWhere: updateWhere?.call(ChildProfile.t),
+      transaction: transaction,
+      noReturn: noReturn,
+    );
+  }
+
+  /// Upserts a single [ChildProfile] and returns the resulting row.
+  ///
+  /// If the row conflicts on the given [conflictColumns], the existing row is
+  /// updated. Otherwise, a new row is inserted.
+  ///
+  /// If [updateColumns] is provided, only those columns will be updated on
+  /// conflict. If null, all non-conflict, non-id columns are updated.
+  ///
+  /// If [updateWhere] is provided, the update only applies when the existing
+  /// row matches the expression. Returns `null` if no row was affected — for
+  /// example when [updateWhere] does not match the conflicting row.
+  ///
+  /// The returned [ChildProfile] will have its `id` field set.
+  Future<ChildProfile?> upsertRow(
+    _i1.DatabaseSession session,
+    ChildProfile row, {
+    required _i1.ColumnSelections<ChildProfileTable> conflictColumns,
+    _i1.ColumnSelections<ChildProfileTable>? updateColumns,
+    _i1.WhereExpressionBuilder<ChildProfileTable>? updateWhere,
+    _i1.Transaction? transaction,
+  }) async {
+    return session.db.upsertRow<ChildProfile>(
+      row,
+      conflictColumns: conflictColumns(ChildProfile.t),
+      updateColumns: updateColumns?.call(ChildProfile.t),
+      updateWhere: updateWhere?.call(ChildProfile.t),
+      transaction: transaction,
+    );
+  }
+
   /// Updates all [ChildProfile]s in the list and returns the updated rows. If
   /// [columns] is provided, only those columns will be updated. Defaults to
   /// all columns.
   /// This is an atomic operation, meaning that if one of the rows fails to
   /// update, none of the rows will be updated.
+  ///
+  /// If [noReturn] is set to `true`, the updated rows are not read back from
+  /// the database and an empty list is returned. This avoids the overhead of
+  /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildProfile>> update(
     _i1.DatabaseSession session,
     List<ChildProfile> rows, {
     _i1.ColumnSelections<ChildProfileTable>? columns,
     _i1.Transaction? transaction,
+    bool noReturn = false,
   }) async {
     return session.db.update<ChildProfile>(
       rows,
       columns: columns?.call(ChildProfile.t),
       transaction: transaction,
+      noReturn: noReturn,
     );
   }
 
@@ -552,6 +640,10 @@ class ChildProfileRepository {
 
   /// Updates all [ChildProfile]s matching the [where] expression with the specified [columnValues].
   /// Returns the list of updated rows.
+  ///
+  /// If [noReturn] is set to `true`, the updated rows are not read back from
+  /// the database and an empty list is returned. This avoids the overhead of
+  /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildProfile>> updateWhere(
     _i1.DatabaseSession session, {
     required _i1.ColumnValueListBuilder<ChildProfileUpdateTable> columnValues,
@@ -560,8 +652,10 @@ class ChildProfileRepository {
     int? offset,
     _i1.OrderByBuilder<ChildProfileTable>? orderBy,
     _i1.OrderByListBuilder<ChildProfileTable>? orderByList,
+    @Deprecated('Use desc() on the orderBy column instead.')
     bool orderDescending = false,
     _i1.Transaction? transaction,
+    bool noReturn = false,
   }) async {
     return session.db.updateWhere<ChildProfile>(
       columnValues: columnValues(ChildProfile.t.updateTable),
@@ -570,22 +664,42 @@ class ChildProfileRepository {
       offset: offset,
       orderBy: orderBy?.call(ChildProfile.t),
       orderByList: orderByList?.call(ChildProfile.t),
-      orderDescending: orderDescending,
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
+      noReturn: noReturn,
     );
   }
 
   /// Deletes all [ChildProfile]s in the list and returns the deleted rows.
+  ///
+  /// To specify the order of the returned rows use [orderBy] or [orderByList]
+  /// when sorting by multiple columns.
+  ///
   /// This is an atomic operation, meaning that if one of the rows fail to
   /// be deleted, none of the rows will be deleted.
+  ///
+  /// If [noReturn] is set to `true`, the deleted rows are not read back from
+  /// the database and an empty list is returned. This avoids the overhead of
+  /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildProfile>> delete(
     _i1.DatabaseSession session,
     List<ChildProfile> rows, {
+    _i1.OrderByBuilder<ChildProfileTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<ChildProfileTable>? orderByList,
     _i1.Transaction? transaction,
+    bool noReturn = false,
   }) async {
     return session.db.delete<ChildProfile>(
       rows,
+      orderBy: orderBy?.call(ChildProfile.t),
+      orderByList: orderByList?.call(ChildProfile.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
+      noReturn: noReturn,
     );
   }
 
@@ -602,14 +716,31 @@ class ChildProfileRepository {
   }
 
   /// Deletes all rows matching the [where] expression.
+  ///
+  /// To specify the order of the returned rows use [orderBy] or [orderByList]
+  /// when sorting by multiple columns.
+  ///
+  /// If [noReturn] is set to `true`, the deleted rows are not read back from
+  /// the database and an empty list is returned. This avoids the overhead of
+  /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildProfile>> deleteWhere(
     _i1.DatabaseSession session, {
     required _i1.WhereExpressionBuilder<ChildProfileTable> where,
+    _i1.OrderByBuilder<ChildProfileTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<ChildProfileTable>? orderByList,
     _i1.Transaction? transaction,
+    bool noReturn = false,
   }) async {
     return session.db.deleteWhere<ChildProfile>(
       where: where(ChildProfile.t),
+      orderBy: orderBy?.call(ChildProfile.t),
+      orderByList: orderByList?.call(ChildProfile.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
+      noReturn: noReturn,
     );
   }
 
