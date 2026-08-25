@@ -16,6 +16,7 @@ import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
 import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
     as _iaic;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'app_user.dart' as _i2j2xfrn;
 import 'auth_response.dart' as _iuyz7l8a;
 import 'badge.dart' as _i55tj3uz;
 import 'book.dart' as _ik00prxe;
@@ -29,7 +30,7 @@ import 'greetings/greeting.dart' as _izw8z7ou;
 import 'page.dart' as _imk4symu;
 import 'page_content.dart' as _idzt3dm3;
 import 'reading_progress.dart' as _i2h1sfz6;
-import 'user.dart' as _iv73i78m;
+export 'app_user.dart';
 export 'auth_response.dart';
 export 'badge.dart';
 export 'book.dart';
@@ -43,7 +44,6 @@ export 'greetings/greeting.dart';
 export 'page.dart';
 export 'page_content.dart';
 export 'reading_progress.dart';
-export 'user.dart';
 export 'client.dart';
 
 class Protocol extends _isc.SerializationManager {
@@ -80,6 +80,9 @@ class Protocol extends _isc.SerializationManager {
       }
     }
 
+    if (t == _i2j2xfrn.AppUser) {
+      return _i2j2xfrn.AppUser.fromJson(data) as T;
+    }
     if (t == _iuyz7l8a.AuthResponse) {
       return _iuyz7l8a.AuthResponse.fromJson(data) as T;
     }
@@ -119,8 +122,8 @@ class Protocol extends _isc.SerializationManager {
     if (t == _i2h1sfz6.ReadingProgress) {
       return _i2h1sfz6.ReadingProgress.fromJson(data) as T;
     }
-    if (t == _iv73i78m.User) {
-      return _iv73i78m.User.fromJson(data) as T;
+    if (t == _isc.getType<_i2j2xfrn.AppUser?>()) {
+      return (data != null ? _i2j2xfrn.AppUser.fromJson(data) : null) as T;
     }
     if (t == _isc.getType<_iuyz7l8a.AuthResponse?>()) {
       return (data != null ? _iuyz7l8a.AuthResponse.fromJson(data) : null) as T;
@@ -167,9 +170,6 @@ class Protocol extends _isc.SerializationManager {
       return (data != null ? _i2h1sfz6.ReadingProgress.fromJson(data) : null)
           as T;
     }
-    if (t == _isc.getType<_iv73i78m.User?>()) {
-      return (data != null ? _iv73i78m.User.fromJson(data) : null) as T;
-    }
     if (t == Map<String, dynamic>) {
       return (data as Map).map(
             (k, v) => MapEntry(deserialize<String>(k), deserialize<dynamic>(v)),
@@ -190,6 +190,7 @@ class Protocol extends _isc.SerializationManager {
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
+      _i2j2xfrn.AppUser => 'AppUser',
       _iuyz7l8a.AuthResponse => 'AuthResponse',
       _i55tj3uz.Badge => 'Badge',
       _ik00prxe.Book => 'Book',
@@ -203,7 +204,6 @@ class Protocol extends _isc.SerializationManager {
       _imk4symu.Page => 'Page',
       _idzt3dm3.PageContent => 'PageContent',
       _i2h1sfz6.ReadingProgress => 'ReadingProgress',
-      _iv73i78m.User => 'User',
       _ => null,
     };
   }
@@ -221,6 +221,8 @@ class Protocol extends _isc.SerializationManager {
     }
 
     switch (data) {
+      case _i2j2xfrn.AppUser():
+        return 'AppUser';
       case _iuyz7l8a.AuthResponse():
         return 'AuthResponse';
       case _i55tj3uz.Badge():
@@ -247,8 +249,6 @@ class Protocol extends _isc.SerializationManager {
         return 'PageContent';
       case _i2h1sfz6.ReadingProgress():
         return 'ReadingProgress';
-      case _iv73i78m.User():
-        return 'User';
     }
     className = _iaic.Protocol().getClassNameForObject(data);
     if (className != null) {
@@ -270,6 +270,9 @@ class Protocol extends _isc.SerializationManager {
     var dataClassName = data['className'];
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
+    }
+    if (dataClassName == 'AppUser') {
+      return deserialize<_i2j2xfrn.AppUser>(data['data']);
     }
     if (dataClassName == 'AuthResponse') {
       return deserialize<_iuyz7l8a.AuthResponse>(data['data']);
@@ -309,9 +312,6 @@ class Protocol extends _isc.SerializationManager {
     }
     if (dataClassName == 'ReadingProgress') {
       return deserialize<_i2h1sfz6.ReadingProgress>(data['data']);
-    }
-    if (dataClassName == 'User') {
-      return deserialize<_iv73i78m.User>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);

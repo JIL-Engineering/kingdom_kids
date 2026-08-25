@@ -12,6 +12,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _ida;
 import 'package:http/http.dart' as _i85jenna;
+import 'package:kingdom_kids_client/src/protocol/app_user.dart' as _ipxjsvhn;
 import 'package:kingdom_kids_client/src/protocol/auth_response.dart'
     as _idqvfyfc;
 import 'package:kingdom_kids_client/src/protocol/greetings/greeting.dart'
@@ -329,6 +330,28 @@ class EndpointLibrary extends _isc.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointParentProfile extends _isc.EndpointRef {
+  EndpointParentProfile(_isc.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'parentProfile';
+
+  _ida.Future<_ipxjsvhn.AppUser> completeParentProfile(String email) =>
+      caller.callServerEndpoint<_ipxjsvhn.AppUser>(
+        'parentProfile',
+        'completeParentProfile',
+        {'email': email},
+      );
+
+  _ida.Future<_ipxjsvhn.AppUser> giveConsent() =>
+      caller.callServerEndpoint<_ipxjsvhn.AppUser>(
+        'parentProfile',
+        'giveConsent',
+        {},
+      );
+}
+
+/// {@category Endpoint}
 class EndpointProgress extends _isc.EndpointRef {
   EndpointProgress(_isc.EndpointCaller caller) : super(caller);
 
@@ -400,6 +423,7 @@ class Client extends _isc.ServerpodClientShared {
     dashboard = EndpointDashboard(this);
     devotional = EndpointDevotional(this);
     library = EndpointLibrary(this);
+    parentProfile = EndpointParentProfile(this);
     progress = EndpointProgress(this);
     greeting = EndpointGreeting(this);
     modules = Modules(this);
@@ -421,6 +445,8 @@ class Client extends _isc.ServerpodClientShared {
 
   late final EndpointLibrary library;
 
+  late final EndpointParentProfile parentProfile;
+
   late final EndpointProgress progress;
 
   late final EndpointGreeting greeting;
@@ -437,6 +463,7 @@ class Client extends _isc.ServerpodClientShared {
     'dashboard': dashboard,
     'devotional': devotional,
     'library': library,
+    'parentProfile': parentProfile,
     'progress': progress,
     'greeting': greeting,
   };

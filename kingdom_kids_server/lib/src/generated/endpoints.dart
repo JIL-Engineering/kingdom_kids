@@ -23,6 +23,7 @@ import '../endpoints/child_endpoint.dart' as _iwc9vzr7;
 import '../endpoints/dashboard_endpoint.dart' as _ibmx856o;
 import '../endpoints/devotional_endpoint.dart' as _izk0rdl5;
 import '../endpoints/library_endpoint.dart' as _iqlmnpik;
+import '../endpoints/parent_profile_endpoint.dart' as _ia7w3qp1;
 import '../endpoints/progress_endpoint.dart' as _irlw1y7u;
 import '../greetings/greeting_endpoint.dart' as _il624ik7;
 
@@ -76,6 +77,12 @@ class Endpoints extends _is.EndpointDispatch {
         ..initialize(
           server,
           'library',
+          null,
+        ),
+      'parentProfile': _ia7w3qp1.ParentProfileEndpoint()
+        ..initialize(
+          server,
+          'parentProfile',
           null,
         ),
       'progress': _irlw1y7u.ProgressEndpoint()
@@ -399,6 +406,45 @@ class Endpoints extends _is.EndpointDispatch {
       name: 'library',
       endpoint: endpoints['library']!,
       methodConnectors: {},
+    );
+    connectors['parentProfile'] = _is.EndpointConnector(
+      name: 'parentProfile',
+      endpoint: endpoints['parentProfile']!,
+      methodConnectors: {
+        'completeParentProfile': _is.MethodConnector(
+          name: 'completeParentProfile',
+          params: {
+            'email': _is.ParameterDescription(
+              name: 'email',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['parentProfile']
+                          as _ia7w3qp1.ParentProfileEndpoint)
+                      .completeParentProfile(
+                        session,
+                        params['email'],
+                      ),
+        ),
+        'giveConsent': _is.MethodConnector(
+          name: 'giveConsent',
+          params: {},
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['parentProfile']
+                          as _ia7w3qp1.ParentProfileEndpoint)
+                      .giveConsent(session),
+        ),
+      },
     );
     connectors['progress'] = _is.EndpointConnector(
       name: 'progress',

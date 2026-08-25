@@ -1,8 +1,8 @@
-class: User
-table: user
+class: AppUser
+table: users
 fields:
-  email: String, unique
-  passwordHash: String
+  email: String
+  authUserId: int
   country: String?
   timezone: String
   preferredLanguage: String
@@ -11,4 +11,7 @@ fields:
 indexes:
   users_email_idx:
     fields: email
+    unique: true
+  users_auth_user_id_idx:
+    fields: authUserId
     unique: true

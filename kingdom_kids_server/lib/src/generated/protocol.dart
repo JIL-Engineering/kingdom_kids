@@ -17,6 +17,7 @@ import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
     as _iacs;
 import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
     as _iais;
+import 'app_user.dart' as _i2j2xfrn;
 import 'auth_response.dart' as _iuyz7l8a;
 import 'badge.dart' as _i55tj3uz;
 import 'book.dart' as _ik00prxe;
@@ -30,7 +31,7 @@ import 'greetings/greeting.dart' as _izw8z7ou;
 import 'page.dart' as _imk4symu;
 import 'page_content.dart' as _idzt3dm3;
 import 'reading_progress.dart' as _i2h1sfz6;
-import 'user.dart' as _iv73i78m;
+export 'app_user.dart';
 export 'auth_response.dart';
 export 'badge.dart';
 export 'book.dart';
@@ -44,7 +45,6 @@ export 'greetings/greeting.dart';
 export 'page.dart';
 export 'page_content.dart';
 export 'reading_progress.dart';
-export 'user.dart';
 
 class Protocol extends _is.DatabaseSerializationManager {
   Protocol._();
@@ -434,7 +434,7 @@ class Protocol extends _is.DatabaseSerializationManager {
         _isp.ForeignKeyDefinition(
           constraintName: 'child_profiles_fk_0',
           columns: ['parentId'],
-          referenceTable: 'user',
+          referenceTable: 'users',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
           onUpdate: _isp.ForeignKeyAction.noAction,
@@ -958,8 +958,8 @@ class Protocol extends _is.DatabaseSerializationManager {
       managed: true,
     ),
     _isp.TableDefinition(
-      name: 'user',
-      dartName: 'User',
+      name: 'users',
+      dartName: 'AppUser',
       schema: 'public',
       module: 'kingdom_kids',
       columns: [
@@ -977,10 +977,10 @@ class Protocol extends _is.DatabaseSerializationManager {
           dartType: 'String',
         ),
         _isp.ColumnDefinition(
-          name: 'passwordHash',
-          columnType: _isp.ColumnType.text,
+          name: 'authUserId',
+          columnType: _isp.ColumnType.bigint,
           isNullable: false,
-          dartType: 'String',
+          dartType: 'int',
         ),
         _isp.ColumnDefinition(
           name: 'country',
@@ -1016,7 +1016,7 @@ class Protocol extends _is.DatabaseSerializationManager {
       foreignKeys: [],
       indexes: [
         _isp.IndexDefinition(
-          indexName: 'user__email__unique_idx',
+          indexName: 'users_email_idx',
           tableSpace: null,
           elements: [
             _isp.IndexElementDefinition(
@@ -1029,12 +1029,12 @@ class Protocol extends _is.DatabaseSerializationManager {
           isPrimary: false,
         ),
         _isp.IndexDefinition(
-          indexName: 'users_email_idx',
+          indexName: 'users_auth_user_id_idx',
           tableSpace: null,
           elements: [
             _isp.IndexElementDefinition(
               type: _isp.IndexElementDefinitionType.column,
-              definition: 'email',
+              definition: 'authUserId',
             ),
           ],
           type: 'btree',
@@ -1076,6 +1076,9 @@ class Protocol extends _is.DatabaseSerializationManager {
       }
     }
 
+    if (t == _i2j2xfrn.AppUser) {
+      return _i2j2xfrn.AppUser.fromJson(data) as T;
+    }
     if (t == _iuyz7l8a.AuthResponse) {
       return _iuyz7l8a.AuthResponse.fromJson(data) as T;
     }
@@ -1115,8 +1118,8 @@ class Protocol extends _is.DatabaseSerializationManager {
     if (t == _i2h1sfz6.ReadingProgress) {
       return _i2h1sfz6.ReadingProgress.fromJson(data) as T;
     }
-    if (t == _iv73i78m.User) {
-      return _iv73i78m.User.fromJson(data) as T;
+    if (t == _is.getType<_i2j2xfrn.AppUser?>()) {
+      return (data != null ? _i2j2xfrn.AppUser.fromJson(data) : null) as T;
     }
     if (t == _is.getType<_iuyz7l8a.AuthResponse?>()) {
       return (data != null ? _iuyz7l8a.AuthResponse.fromJson(data) : null) as T;
@@ -1163,9 +1166,6 @@ class Protocol extends _is.DatabaseSerializationManager {
       return (data != null ? _i2h1sfz6.ReadingProgress.fromJson(data) : null)
           as T;
     }
-    if (t == _is.getType<_iv73i78m.User?>()) {
-      return (data != null ? _iv73i78m.User.fromJson(data) : null) as T;
-    }
     if (t == Map<String, dynamic>) {
       return (data as Map).map(
             (k, v) => MapEntry(deserialize<String>(k), deserialize<dynamic>(v)),
@@ -1189,6 +1189,7 @@ class Protocol extends _is.DatabaseSerializationManager {
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
+      _i2j2xfrn.AppUser => 'AppUser',
       _iuyz7l8a.AuthResponse => 'AuthResponse',
       _i55tj3uz.Badge => 'Badge',
       _ik00prxe.Book => 'Book',
@@ -1202,7 +1203,6 @@ class Protocol extends _is.DatabaseSerializationManager {
       _imk4symu.Page => 'Page',
       _idzt3dm3.PageContent => 'PageContent',
       _i2h1sfz6.ReadingProgress => 'ReadingProgress',
-      _iv73i78m.User => 'User',
       _ => null,
     };
   }
@@ -1220,6 +1220,8 @@ class Protocol extends _is.DatabaseSerializationManager {
     }
 
     switch (data) {
+      case _i2j2xfrn.AppUser():
+        return 'AppUser';
       case _iuyz7l8a.AuthResponse():
         return 'AuthResponse';
       case _i55tj3uz.Badge():
@@ -1246,8 +1248,6 @@ class Protocol extends _is.DatabaseSerializationManager {
         return 'PageContent';
       case _i2h1sfz6.ReadingProgress():
         return 'ReadingProgress';
-      case _iv73i78m.User():
-        return 'User';
     }
     className = _iais.Protocol().getClassNameForObject(data);
     if (className != null) {
@@ -1273,6 +1273,9 @@ class Protocol extends _is.DatabaseSerializationManager {
     var dataClassName = data['className'];
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
+    }
+    if (dataClassName == 'AppUser') {
+      return deserialize<_i2j2xfrn.AppUser>(data['data']);
     }
     if (dataClassName == 'AuthResponse') {
       return deserialize<_iuyz7l8a.AuthResponse>(data['data']);
@@ -1312,9 +1315,6 @@ class Protocol extends _is.DatabaseSerializationManager {
     }
     if (dataClassName == 'ReadingProgress') {
       return deserialize<_i2h1sfz6.ReadingProgress>(data['data']);
-    }
-    if (dataClassName == 'User') {
-      return deserialize<_iv73i78m.User>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);
@@ -1357,6 +1357,8 @@ class Protocol extends _is.DatabaseSerializationManager {
       }
     }
     switch (t) {
+      case _i2j2xfrn.AppUser:
+        return _i2j2xfrn.AppUser.t;
       case _i55tj3uz.Badge:
         return _i55tj3uz.Badge.t;
       case _ik00prxe.Book:
@@ -1379,8 +1381,6 @@ class Protocol extends _is.DatabaseSerializationManager {
         return _idzt3dm3.PageContent.t;
       case _i2h1sfz6.ReadingProgress:
         return _i2h1sfz6.ReadingProgress.t;
-      case _iv73i78m.User:
-        return _iv73i78m.User.t;
     }
     return null;
   }

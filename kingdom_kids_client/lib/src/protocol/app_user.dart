@@ -12,12 +12,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
-abstract class User
+abstract class AppUser
     implements _isc.SerializableModel, _isc.ProtocolSerialization {
-  User._({
+  AppUser._({
     this.id,
     required this.email,
-    required this.passwordHash,
+    required this.authUserId,
     this.country,
     required this.timezone,
     required this.preferredLanguage,
@@ -25,22 +25,22 @@ abstract class User
     required this.createdAt,
   });
 
-  factory User({
+  factory AppUser({
     int? id,
     required String email,
-    required String passwordHash,
+    required int authUserId,
     String? country,
     required String timezone,
     required String preferredLanguage,
     DateTime? consentGivenAt,
     required DateTime createdAt,
-  }) = _UserImpl;
+  }) = _AppUserImpl;
 
-  factory User.fromJson(Map<String, dynamic> jsonSerialization) {
-    return User(
+  factory AppUser.fromJson(Map<String, dynamic> jsonSerialization) {
+    return AppUser(
       id: jsonSerialization['id'] as int?,
       email: jsonSerialization['email'] as String,
-      passwordHash: jsonSerialization['passwordHash'] as String,
+      authUserId: jsonSerialization['authUserId'] as int,
       country: jsonSerialization['country'] as String?,
       timezone: jsonSerialization['timezone'] as String,
       preferredLanguage: jsonSerialization['preferredLanguage'] as String,
@@ -62,7 +62,7 @@ abstract class User
 
   String email;
 
-  String passwordHash;
+  int authUserId;
 
   String? country;
 
@@ -74,13 +74,13 @@ abstract class User
 
   DateTime createdAt;
 
-  /// Returns a shallow copy of this [User]
+  /// Returns a shallow copy of this [AppUser]
   /// with some or all fields replaced by the given arguments.
   @_isc.useResult
-  User copyWith({
+  AppUser copyWith({
     int? id,
     String? email,
-    String? passwordHash,
+    int? authUserId,
     String? country,
     String? timezone,
     String? preferredLanguage,
@@ -90,10 +90,10 @@ abstract class User
   @override
   Map<String, dynamic> toJson() {
     return {
-      '__className__': 'User',
+      '__className__': 'AppUser',
       if (id != null) 'id': id,
       'email': email,
-      'passwordHash': passwordHash,
+      'authUserId': authUserId,
       if (country != null) 'country': country,
       'timezone': timezone,
       'preferredLanguage': preferredLanguage,
@@ -105,10 +105,10 @@ abstract class User
   @override
   Map<String, dynamic> toJsonForProtocol() {
     return {
-      '__className__': 'User',
+      '__className__': 'AppUser',
       if (id != null) 'id': id,
       'email': email,
-      'passwordHash': passwordHash,
+      'authUserId': authUserId,
       if (country != null) 'country': country,
       'timezone': timezone,
       'preferredLanguage': preferredLanguage,
@@ -125,11 +125,11 @@ abstract class User
 
 class _Undefined {}
 
-class _UserImpl extends User {
-  _UserImpl({
+class _AppUserImpl extends AppUser {
+  _AppUserImpl({
     int? id,
     required String email,
-    required String passwordHash,
+    required int authUserId,
     String? country,
     required String timezone,
     required String preferredLanguage,
@@ -138,7 +138,7 @@ class _UserImpl extends User {
   }) : super._(
          id: id,
          email: email,
-         passwordHash: passwordHash,
+         authUserId: authUserId,
          country: country,
          timezone: timezone,
          preferredLanguage: preferredLanguage,
@@ -146,24 +146,24 @@ class _UserImpl extends User {
          createdAt: createdAt,
        );
 
-  /// Returns a shallow copy of this [User]
+  /// Returns a shallow copy of this [AppUser]
   /// with some or all fields replaced by the given arguments.
   @_isc.useResult
   @override
-  User copyWith({
+  AppUser copyWith({
     Object? id = _Undefined,
     String? email,
-    String? passwordHash,
+    int? authUserId,
     Object? country = _Undefined,
     String? timezone,
     String? preferredLanguage,
     Object? consentGivenAt = _Undefined,
     DateTime? createdAt,
   }) {
-    return User(
+    return AppUser(
       id: id is int? ? id : this.id,
       email: email ?? this.email,
-      passwordHash: passwordHash ?? this.passwordHash,
+      authUserId: authUserId ?? this.authUserId,
       country: country is String? ? country : this.country,
       timezone: timezone ?? this.timezone,
       preferredLanguage: preferredLanguage ?? this.preferredLanguage,

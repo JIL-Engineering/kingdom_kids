@@ -17,6 +17,9 @@ child:
 dashboard:
 devotional:
 library:
+parentProfile:
+  - completeParentProfile:
+  - giveConsent:
 progress:
 greeting:
   - hello:

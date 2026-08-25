@@ -13,6 +13,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _ida;
 import 'dart:io' as _idi;
+import 'package:kingdom_kids_server/src/generated/app_user.dart' as _imp9n1ua;
 import 'package:kingdom_kids_server/src/generated/auth_response.dart'
     as _idmvxkkl;
 import 'package:kingdom_kids_server/src/generated/greetings/greeting.dart'
@@ -165,6 +166,8 @@ class TestEndpoints {
 
   late final _LibraryEndpoint library;
 
+  late final _ParentProfileEndpoint parentProfile;
+
   late final _ProgressEndpoint progress;
 
   late final _GreetingEndpoint greeting;
@@ -206,6 +209,10 @@ class _InternalTestEndpoints extends TestEndpoints
       serializationManager,
     );
     library = _LibraryEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    parentProfile = _ParentProfileEndpoint(
       endpoints,
       serializationManager,
     );
@@ -660,6 +667,78 @@ class _LibraryEndpoint {
     _endpointDispatch,
     _serializationManager,
   );
+}
+
+class _ParentProfileEndpoint {
+  _ParentProfileEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _is.EndpointDispatch _endpointDispatch;
+
+  final _is.SerializationManager _serializationManager;
+
+  _ida.Future<_imp9n1ua.AppUser> completeParentProfile(
+    _ist.TestSessionBuilder sessionBuilder,
+    String email,
+  ) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'parentProfile',
+            method: 'completeParentProfile',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'parentProfile',
+          methodName: 'completeParentProfile',
+          parameters: _ist.testObjectToJson({'email': email}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_imp9n1ua.AppUser>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _ida.Future<_imp9n1ua.AppUser> giveConsent(
+    _ist.TestSessionBuilder sessionBuilder,
+  ) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'parentProfile',
+            method: 'giveConsent',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'parentProfile',
+          methodName: 'giveConsent',
+          parameters: _ist.testObjectToJson({}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_imp9n1ua.AppUser>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
 }
 
 class _ProgressEndpoint {
