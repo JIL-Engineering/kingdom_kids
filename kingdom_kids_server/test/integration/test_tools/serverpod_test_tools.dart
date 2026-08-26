@@ -14,8 +14,6 @@
 import 'dart:async' as _ida;
 import 'dart:io' as _idi;
 import 'package:kingdom_kids_server/src/generated/app_user.dart' as _imp9n1ua;
-import 'package:kingdom_kids_server/src/generated/auth_response.dart'
-    as _idmvxkkl;
 import 'package:kingdom_kids_server/src/generated/greetings/greeting.dart'
     as _ijwjakhq;
 import 'package:serverpod/serverpod.dart' as _is;
@@ -158,8 +156,6 @@ class TestEndpoints {
 
   late final _BadgeEndpoint badge;
 
-  late final _ChildEndpoint child;
-
   late final _DashboardEndpoint dashboard;
 
   late final _DevotionalEndpoint devotional;
@@ -193,10 +189,6 @@ class _InternalTestEndpoints extends TestEndpoints
       serializationManager,
     );
     badge = _BadgeEndpoint(
-      endpoints,
-      serializationManager,
-    );
-    child = _ChildEndpoint(
       endpoints,
       serializationManager,
     );
@@ -555,10 +547,8 @@ class _AuthEndpoint {
 
   final _is.SerializationManager _serializationManager;
 
-  _ida.Future<_idmvxkkl.AuthResponse> register(
+  _ida.Future<_imp9n1ua.AppUser> completeProfile(
     _ist.TestSessionBuilder sessionBuilder,
-    String email,
-    String password,
     String country,
     String timezone,
     String preferredLanguage,
@@ -568,16 +558,14 @@ class _AuthEndpoint {
       var _localUniqueSession =
           (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
             endpoint: 'auth',
-            method: 'register',
+            method: 'completeProfile',
           );
       try {
         var _localCallContext = await _endpointDispatch.getMethodCallContext(
           createSessionCallback: (_) => _localUniqueSession,
           endpointPath: 'auth',
-          methodName: 'register',
+          methodName: 'completeProfile',
           parameters: _ist.testObjectToJson({
-            'email': email,
-            'password': password,
             'country': country,
             'timezone': timezone,
             'preferredLanguage': preferredLanguage,
@@ -590,42 +578,7 @@ class _AuthEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _ida.Future<_idmvxkkl.AuthResponse>);
-        return _localReturnValue;
-      } finally {
-        await _localUniqueSession.close();
-      }
-    });
-  }
-
-  _ida.Future<_idmvxkkl.AuthResponse> login(
-    _ist.TestSessionBuilder sessionBuilder,
-    String email,
-    String password,
-  ) async {
-    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
-      var _localUniqueSession =
-          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
-            endpoint: 'auth',
-            method: 'login',
-          );
-      try {
-        var _localCallContext = await _endpointDispatch.getMethodCallContext(
-          createSessionCallback: (_) => _localUniqueSession,
-          endpointPath: 'auth',
-          methodName: 'login',
-          parameters: _ist.testObjectToJson({
-            'email': email,
-            'password': password,
-          }),
-          serializationManager: _serializationManager,
-        );
-        var _localReturnValue =
-            await (_localCallContext.method.call(
-                  _localUniqueSession,
-                  _localCallContext.arguments,
-                )
-                as _ida.Future<_idmvxkkl.AuthResponse>);
+                as _ida.Future<_imp9n1ua.AppUser>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -636,13 +589,6 @@ class _AuthEndpoint {
 
 class _BadgeEndpoint {
   _BadgeEndpoint(
-    _endpointDispatch,
-    _serializationManager,
-  );
-}
-
-class _ChildEndpoint {
-  _ChildEndpoint(
     _endpointDispatch,
     _serializationManager,
   );
@@ -681,7 +627,6 @@ class _ParentProfileEndpoint {
 
   _ida.Future<_imp9n1ua.AppUser> completeParentProfile(
     _ist.TestSessionBuilder sessionBuilder,
-    String email,
   ) async {
     return _ist.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
@@ -694,7 +639,7 @@ class _ParentProfileEndpoint {
           createSessionCallback: (_) => _localUniqueSession,
           endpointPath: 'parentProfile',
           methodName: 'completeParentProfile',
-          parameters: _ist.testObjectToJson({'email': email}),
+          parameters: _ist.testObjectToJson({}),
           serializationManager: _serializationManager,
         );
         var _localReturnValue =

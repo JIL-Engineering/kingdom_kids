@@ -1,27 +1,26 @@
 import 'package:serverpod/serverpod.dart';
-
 import '../generated/protocol.dart';
 
 class ParentProfileEndpoint extends Endpoint {
-  Future<AppUser> completeParentProfile(Session session, String email) async {
+  
+  Future<AppUser> completeParentProfile(Session session) async {
+    // 1. Récupération de l'UUID (UuidValue) au lieu d'un int
     final authUserId = _requireAuthenticatedUserId(session);
+    
     final existing = await AppUser.db.findFirstRow(
       session,
       where: (table) => table.authUserId.equals(authUserId),
     );
+    
     if (existing != null) {
       return existing;
     }
 
-    final normalizedEmail = email.trim().toLowerCase();
-    if (normalizedEmail.isEmpty) {
-      throw ArgumentError.value(email, 'email');
-    }
+    // 2. Création de l'utilisateur sans le paramètre 'email' s'il n'est plus dans le modèle
     return AppUser.db.insertRow(
       session,
       AppUser(
         authUserId: authUserId,
-        email: normalizedEmail,
         timezone: 'UTC',
         preferredLanguage: 'en',
         createdAt: DateTime.now().toUtc(),
@@ -43,15 +42,18 @@ class ParentProfileEndpoint extends Endpoint {
     return AppUser.db.updateRow(session, parent);
   }
 
-  int _requireAuthenticatedUserId(Session session) {
+  // 3. Fonction utilitaire mise à jour pour renvoyer un UuidValue conforme
+  UuidValue _requireAuthenticatedUserId(Session session) {
     final authenticationInfo = session.authenticated;
     if (authenticationInfo == null) {
       throw StateError('Unauthorized: authentication required.');
     }
-    final authUserId = int.tryParse(authenticationInfo.userIdentifier);
-    if (authUserId == null) {
-      throw StateError('Unauthorized: authenticated user ID is not numeric.');
+    
+    try {
+      // Conversion de l'identifiant texte en UuidValue conforme
+      return UuidValue.fromString(authenticationInfo.userIdentifier);
+    } catch (e) {
+      throw StateError('Unauthorized: authenticated user ID is not a valid UUID.');
     }
-    return authUserId;
   }
 }

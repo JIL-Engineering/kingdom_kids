@@ -10,11 +10,12 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
-abstract class ReadingProgress implements _i1.SerializableModel {
+abstract class ReadingProgress
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   ReadingProgress._({
-    _i1.UuidValue? id,
+    _isc.UuidValue? id,
     required this.childId,
     required this.bookId,
     required this.currentPage,
@@ -23,10 +24,10 @@ abstract class ReadingProgress implements _i1.SerializableModel {
     this.completedAt,
     required this.totalTimeSeconds,
     required this.syncedAt,
-  }) : id = id ?? const _i1.Uuid().v4obj();
+  }) : id = id ?? const _isc.Uuid().v4obj();
 
   factory ReadingProgress({
-    _i1.UuidValue? id,
+    _isc.UuidValue? id,
     required int childId,
     required int bookId,
     required int currentPage,
@@ -41,28 +42,30 @@ abstract class ReadingProgress implements _i1.SerializableModel {
     return ReadingProgress(
       id: jsonSerialization['id'] == null
           ? null
-          : _i1.UuidValueJsonExtension.fromJson(jsonSerialization['id']),
+          : _isc.UuidValueJsonExtension.fromJson(jsonSerialization['id']),
       childId: jsonSerialization['childId'] as int,
       bookId: jsonSerialization['bookId'] as int,
       currentPage: jsonSerialization['currentPage'] as int,
-      completed: _i1.BoolJsonExtension.fromJson(jsonSerialization['completed']),
-      startedAt: _i1.DateTimeJsonExtension.fromJson(
+      completed: _isc.BoolJsonExtension.fromJson(
+        jsonSerialization['completed'],
+      ),
+      startedAt: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['startedAt'],
       ),
       completedAt: jsonSerialization['completedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _isc.DateTimeJsonExtension.fromJson(
               jsonSerialization['completedAt'],
             ),
       totalTimeSeconds: jsonSerialization['totalTimeSeconds'] as int,
-      syncedAt: _i1.DateTimeJsonExtension.fromJson(
+      syncedAt: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['syncedAt'],
       ),
     );
   }
 
   /// The id of the object.
-  _i1.UuidValue id;
+  _isc.UuidValue id;
 
   int childId;
 
@@ -82,9 +85,9 @@ abstract class ReadingProgress implements _i1.SerializableModel {
 
   /// Returns a shallow copy of this [ReadingProgress]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   ReadingProgress copyWith({
-    _i1.UuidValue? id,
+    _isc.UuidValue? id,
     int? childId,
     int? bookId,
     int? currentPage,
@@ -111,8 +114,24 @@ abstract class ReadingProgress implements _i1.SerializableModel {
   }
 
   @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'ReadingProgress',
+      'id': id.toJson(),
+      'childId': childId,
+      'bookId': bookId,
+      'currentPage': currentPage,
+      'completed': completed,
+      'startedAt': startedAt.toJson(),
+      if (completedAt != null) 'completedAt': completedAt?.toJson(),
+      'totalTimeSeconds': totalTimeSeconds,
+      'syncedAt': syncedAt.toJson(),
+    };
+  }
+
+  @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -120,7 +139,7 @@ class _Undefined {}
 
 class _ReadingProgressImpl extends ReadingProgress {
   _ReadingProgressImpl({
-    _i1.UuidValue? id,
+    _isc.UuidValue? id,
     required int childId,
     required int bookId,
     required int currentPage,
@@ -143,10 +162,10 @@ class _ReadingProgressImpl extends ReadingProgress {
 
   /// Returns a shallow copy of this [ReadingProgress]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   ReadingProgress copyWith({
-    _i1.UuidValue? id,
+    _isc.UuidValue? id,
     int? childId,
     int? bookId,
     int? currentPage,

@@ -13,8 +13,6 @@
 import 'dart:async' as _ida;
 import 'package:http/http.dart' as _i85jenna;
 import 'package:kingdom_kids_client/src/protocol/app_user.dart' as _ipxjsvhn;
-import 'package:kingdom_kids_client/src/protocol/auth_response.dart'
-    as _idqvfyfc;
 import 'package:kingdom_kids_client/src/protocol/greetings/greeting.dart'
     as _ipwyumbq;
 import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
@@ -256,35 +254,20 @@ class EndpointAuth extends _isc.EndpointRef {
   @override
   String get name => 'auth';
 
-  _ida.Future<_idqvfyfc.AuthResponse> register(
-    String email,
-    String password,
+  /// Étape 3 du sprint : Méthode completeProfile appelée juste après l'inscription
+  _ida.Future<_ipxjsvhn.AppUser> completeProfile(
     String country,
     String timezone,
     String preferredLanguage,
     bool consentAccepted,
-  ) => caller.callServerEndpoint<_idqvfyfc.AuthResponse>(
+  ) => caller.callServerEndpoint<_ipxjsvhn.AppUser>(
     'auth',
-    'register',
+    'completeProfile',
     {
-      'email': email,
-      'password': password,
       'country': country,
       'timezone': timezone,
       'preferredLanguage': preferredLanguage,
       'consentAccepted': consentAccepted,
-    },
-  );
-
-  _ida.Future<_idqvfyfc.AuthResponse> login(
-    String email,
-    String password,
-  ) => caller.callServerEndpoint<_idqvfyfc.AuthResponse>(
-    'auth',
-    'login',
-    {
-      'email': email,
-      'password': password,
     },
   );
 }
@@ -295,14 +278,6 @@ class EndpointBadge extends _isc.EndpointRef {
 
   @override
   String get name => 'badge';
-}
-
-/// {@category Endpoint}
-class EndpointChild extends _isc.EndpointRef {
-  EndpointChild(_isc.EndpointCaller caller) : super(caller);
-
-  @override
-  String get name => 'child';
 }
 
 /// {@category Endpoint}
@@ -336,11 +311,11 @@ class EndpointParentProfile extends _isc.EndpointRef {
   @override
   String get name => 'parentProfile';
 
-  _ida.Future<_ipxjsvhn.AppUser> completeParentProfile(String email) =>
+  _ida.Future<_ipxjsvhn.AppUser> completeParentProfile() =>
       caller.callServerEndpoint<_ipxjsvhn.AppUser>(
         'parentProfile',
         'completeParentProfile',
-        {'email': email},
+        {},
       );
 
   _ida.Future<_ipxjsvhn.AppUser> giveConsent() =>
@@ -419,7 +394,6 @@ class Client extends _isc.ServerpodClientShared {
     jwtRefresh = EndpointJwtRefresh(this);
     auth = EndpointAuth(this);
     badge = EndpointBadge(this);
-    child = EndpointChild(this);
     dashboard = EndpointDashboard(this);
     devotional = EndpointDevotional(this);
     library = EndpointLibrary(this);
@@ -436,8 +410,6 @@ class Client extends _isc.ServerpodClientShared {
   late final EndpointAuth auth;
 
   late final EndpointBadge badge;
-
-  late final EndpointChild child;
 
   late final EndpointDashboard dashboard;
 
@@ -459,7 +431,6 @@ class Client extends _isc.ServerpodClientShared {
     'jwtRefresh': jwtRefresh,
     'auth': auth,
     'badge': badge,
-    'child': child,
     'dashboard': dashboard,
     'devotional': devotional,
     'library': library,

@@ -10,13 +10,17 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'package:kingdom_kids_client/src/protocol/protocol.dart' as _iral95z9;
+import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
+    as _iacc;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
-abstract class AppUser implements _i1.SerializableModel {
+abstract class AppUser
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   AppUser._({
     this.id,
-    required this.email,
-    required this.passwordHash,
+    required this.authUserId,
+    this.authUser,
     this.country,
     required this.timezone,
     required this.preferredLanguage,
@@ -26,8 +30,8 @@ abstract class AppUser implements _i1.SerializableModel {
 
   factory AppUser({
     int? id,
-    required String email,
-    required String passwordHash,
+    required _isc.UuidValue authUserId,
+    _iacc.AuthUser? authUser,
     String? country,
     required String timezone,
     required String preferredLanguage,
@@ -38,17 +42,23 @@ abstract class AppUser implements _i1.SerializableModel {
   factory AppUser.fromJson(Map<String, dynamic> jsonSerialization) {
     return AppUser(
       id: jsonSerialization['id'] as int?,
-      email: jsonSerialization['email'] as String,
-      passwordHash: jsonSerialization['passwordHash'] as String,
+      authUserId: _isc.UuidValueJsonExtension.fromJson(
+        jsonSerialization['authUserId'],
+      ),
+      authUser: jsonSerialization['authUser'] == null
+          ? null
+          : _iral95z9.Protocol().deserialize<_iacc.AuthUser>(
+              jsonSerialization['authUser'],
+            ),
       country: jsonSerialization['country'] as String?,
       timezone: jsonSerialization['timezone'] as String,
       preferredLanguage: jsonSerialization['preferredLanguage'] as String,
       consentGivenAt: jsonSerialization['consentGivenAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _isc.DateTimeJsonExtension.fromJson(
               jsonSerialization['consentGivenAt'],
             ),
-      createdAt: _i1.DateTimeJsonExtension.fromJson(
+      createdAt: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['createdAt'],
       ),
     );
@@ -59,9 +69,9 @@ abstract class AppUser implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  String email;
+  _isc.UuidValue authUserId;
 
-  String passwordHash;
+  _iacc.AuthUser? authUser;
 
   String? country;
 
@@ -75,11 +85,11 @@ abstract class AppUser implements _i1.SerializableModel {
 
   /// Returns a shallow copy of this [AppUser]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   AppUser copyWith({
     int? id,
-    String? email,
-    String? passwordHash,
+    _isc.UuidValue? authUserId,
+    _iacc.AuthUser? authUser,
     String? country,
     String? timezone,
     String? preferredLanguage,
@@ -91,8 +101,23 @@ abstract class AppUser implements _i1.SerializableModel {
     return {
       '__className__': 'AppUser',
       if (id != null) 'id': id,
-      'email': email,
-      'passwordHash': passwordHash,
+      'authUserId': authUserId.toJson(),
+      if (authUser != null) 'authUser': authUser?.toJson(),
+      if (country != null) 'country': country,
+      'timezone': timezone,
+      'preferredLanguage': preferredLanguage,
+      if (consentGivenAt != null) 'consentGivenAt': consentGivenAt?.toJson(),
+      'createdAt': createdAt.toJson(),
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'AppUser',
+      if (id != null) 'id': id,
+      'authUserId': authUserId.toJson(),
+      if (authUser != null) 'authUser': authUser?.toJson(),
       if (country != null) 'country': country,
       'timezone': timezone,
       'preferredLanguage': preferredLanguage,
@@ -103,7 +128,7 @@ abstract class AppUser implements _i1.SerializableModel {
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -112,8 +137,8 @@ class _Undefined {}
 class _AppUserImpl extends AppUser {
   _AppUserImpl({
     int? id,
-    required String email,
-    required String passwordHash,
+    required _isc.UuidValue authUserId,
+    _iacc.AuthUser? authUser,
     String? country,
     required String timezone,
     required String preferredLanguage,
@@ -121,8 +146,8 @@ class _AppUserImpl extends AppUser {
     required DateTime createdAt,
   }) : super._(
          id: id,
-         email: email,
-         passwordHash: passwordHash,
+         authUserId: authUserId,
+         authUser: authUser,
          country: country,
          timezone: timezone,
          preferredLanguage: preferredLanguage,
@@ -132,12 +157,12 @@ class _AppUserImpl extends AppUser {
 
   /// Returns a shallow copy of this [AppUser]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   AppUser copyWith({
     Object? id = _Undefined,
-    String? email,
-    String? passwordHash,
+    _isc.UuidValue? authUserId,
+    Object? authUser = _Undefined,
     Object? country = _Undefined,
     String? timezone,
     String? preferredLanguage,
@@ -146,8 +171,10 @@ class _AppUserImpl extends AppUser {
   }) {
     return AppUser(
       id: id is int? ? id : this.id,
-      email: email ?? this.email,
-      passwordHash: passwordHash ?? this.passwordHash,
+      authUserId: authUserId ?? this.authUserId,
+      authUser: authUser is _iacc.AuthUser?
+          ? authUser
+          : this.authUser?.copyWith(),
       country: country is String? ? country : this.country,
       timezone: timezone ?? this.timezone,
       preferredLanguage: preferredLanguage ?? this.preferredLanguage,

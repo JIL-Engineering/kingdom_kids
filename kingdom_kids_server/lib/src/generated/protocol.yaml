@@ -10,10 +10,8 @@ emailIdp:
 jwtRefresh:
   - refreshAccessToken:
 auth:
-  - register:
-  - login:
+  - completeProfile:
 badge:
-child:
 dashboard:
 devotional:
 library:

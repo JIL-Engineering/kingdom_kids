@@ -19,7 +19,6 @@ import '../auth/email_idp_endpoint.dart' as _iuc1hd5t;
 import '../auth/jwt_refresh_endpoint.dart' as _inwq3ztq;
 import '../endpoints/auth_endpoint.dart' as _iyggisn2;
 import '../endpoints/badge_endpoint.dart' as _i69molf6;
-import '../endpoints/child_endpoint.dart' as _iwc9vzr7;
 import '../endpoints/dashboard_endpoint.dart' as _ibmx856o;
 import '../endpoints/devotional_endpoint.dart' as _izk0rdl5;
 import '../endpoints/library_endpoint.dart' as _iqlmnpik;
@@ -53,12 +52,6 @@ class Endpoints extends _is.EndpointDispatch {
         ..initialize(
           server,
           'badge',
-          null,
-        ),
-      'child': _iwc9vzr7.ChildEndpoint()
-        ..initialize(
-          server,
-          'child',
           null,
         ),
       'dashboard': _ibmx856o.DashboardEndpoint()
@@ -308,19 +301,9 @@ class Endpoints extends _is.EndpointDispatch {
       name: 'auth',
       endpoint: endpoints['auth']!,
       methodConnectors: {
-        'register': _is.MethodConnector(
-          name: 'register',
+        'completeProfile': _is.MethodConnector(
+          name: 'completeProfile',
           params: {
-            'email': _is.ParameterDescription(
-              name: 'email',
-              type: _is.getType<String>(),
-              nullable: false,
-            ),
-            'password': _is.ParameterDescription(
-              name: 'password',
-              type: _is.getType<String>(),
-              nullable: false,
-            ),
             'country': _is.ParameterDescription(
               name: 'country',
               type: _is.getType<String>(),
@@ -346,50 +329,20 @@ class Endpoints extends _is.EndpointDispatch {
               (
                 _is.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['auth'] as _iyggisn2.AuthEndpoint).register(
-                session,
-                params['email'],
-                params['password'],
-                params['country'],
-                params['timezone'],
-                params['preferredLanguage'],
-                params['consentAccepted'],
-              ),
-        ),
-        'login': _is.MethodConnector(
-          name: 'login',
-          params: {
-            'email': _is.ParameterDescription(
-              name: 'email',
-              type: _is.getType<String>(),
-              nullable: false,
-            ),
-            'password': _is.ParameterDescription(
-              name: 'password',
-              type: _is.getType<String>(),
-              nullable: false,
-            ),
-          },
-          call:
-              (
-                _is.Session session,
-                Map<String, dynamic> params,
-              ) async => (endpoints['auth'] as _iyggisn2.AuthEndpoint).login(
-                session,
-                params['email'],
-                params['password'],
-              ),
+              ) async =>
+                  (endpoints['auth'] as _iyggisn2.AuthEndpoint).completeProfile(
+                    session,
+                    params['country'],
+                    params['timezone'],
+                    params['preferredLanguage'],
+                    params['consentAccepted'],
+                  ),
         ),
       },
     );
     connectors['badge'] = _is.EndpointConnector(
       name: 'badge',
       endpoint: endpoints['badge']!,
-      methodConnectors: {},
-    );
-    connectors['child'] = _is.EndpointConnector(
-      name: 'child',
-      endpoint: endpoints['child']!,
       methodConnectors: {},
     );
     connectors['dashboard'] = _is.EndpointConnector(
@@ -413,13 +366,7 @@ class Endpoints extends _is.EndpointDispatch {
       methodConnectors: {
         'completeParentProfile': _is.MethodConnector(
           name: 'completeParentProfile',
-          params: {
-            'email': _is.ParameterDescription(
-              name: 'email',
-              type: _is.getType<String>(),
-              nullable: false,
-            ),
-          },
+          params: {},
           call:
               (
                 _is.Session session,
@@ -427,10 +374,7 @@ class Endpoints extends _is.EndpointDispatch {
               ) async =>
                   (endpoints['parentProfile']
                           as _ia7w3qp1.ParentProfileEndpoint)
-                      .completeParentProfile(
-                        session,
-                        params['email'],
-                      ),
+                      .completeParentProfile(session),
         ),
         'giveConsent': _is.MethodConnector(
           name: 'giveConsent',

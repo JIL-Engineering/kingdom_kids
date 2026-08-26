@@ -29,11 +29,10 @@ webServer:
 
 # This is the database setup for your server.
 database:
-  host: aws-1-eu-west-1.pooler.supabase.com
-  port: 5432
-  name: postgres
-  user: postgres.kfcfpzldjtfuaeuxcgwh
-  requireSsl: true
+  host: localhost
+  port: 8090
+  name: kingdom_kids
+  user: postgres
   #isUnixSocket: true # defaults to false
   #maxConnectionCount: 10 # Defaults to 10, a negative or null value removes the limit
 
