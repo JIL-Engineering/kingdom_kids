@@ -15,15 +15,18 @@ void main() {
     test(
       '🛑 Doit REFUSER la création d un enfant si le consentement parent est nul',
       () async {
-        // 0. Création d'un vrai AuthUser : authUserId a une contrainte de clé
-        // étrangère vers serverpod_auth_core_user, un UUID inventé ne suffit pas.
-        final authUser = await AuthServices.instance.authUsers.create(
+        // 0. Création d'une vraie ligne AuthUser : authUserId a une contrainte
+        // de clé étrangère vers serverpod_auth_core_user, un UUID inventé ne
+        // suffit pas. On insère directement le modèle de base de données,
+        // pas besoin d'initialiser tout le module d'authentification pour ça.
+        final authUser = await AuthUser.db.insertRow(
           session,
+          AuthUser(scopeNames: {}),
         );
 
         // 1. Création d'un parent SANS date de consentement (consentGivenAt = null)
         final parentSansConsentement = AppUser(
-          authUserId: authUser.id,
+          authUserId: authUser.id!,
           timezone: 'UTC',
           preferredLanguage: 'fr',
           createdAt: DateTime.now().toUtc(),
@@ -35,7 +38,7 @@ void main() {
         await expectLater(
           ChildProfileService.createChildProfile(
             session,
-            authUser.id,
+            authUser.id!,
             'Mon Enfant Test',
             2020,
             'fr',
