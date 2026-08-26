@@ -19,3 +19,7 @@ pubspec_overrides.yaml
 .scloud/
 .env
 **/.env
+
+# AI coding assistant config — local only, not for the shared repo
+AGENTS.md
+CLAUDE.md

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 import 'package:serverpod_auth_idp_flutter/serverpod_auth_idp_flutter.dart';
 
+import 'core/theme/app_theme.dart';
 import 'screens/greetings_screen.dart';
 
 /// Sets up a global client object that can be used to talk to the server from
@@ -45,9 +46,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Serverpod Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const MyHomePage(title: 'Serverpod Example'),
+      title: 'Kingdom Kids',
+      theme: AppTheme.light,
+      home: const MyHomePage(title: 'Kingdom Kids'),
     );
   }
 }

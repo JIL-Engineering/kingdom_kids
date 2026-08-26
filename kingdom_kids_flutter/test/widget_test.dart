@@ -6,6 +6,6 @@ void main() {
   testWidgets('MyApp builds and shows the app bar title', (tester) async {
     await tester.pumpWidget(const MyApp());
 
-    expect(find.text('Serverpod Example'), findsOneWidget);
+    expect(find.text('Kingdom Kids'), findsOneWidget);
   });
 }
