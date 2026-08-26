@@ -287,8 +287,8 @@ class Endpoints extends _is.EndpointDispatch {
           params: {
             'refreshToken': _is.ParameterDescription(
               name: 'refreshToken',
-              type: _is.getType<String?>(),
-              nullable: true,
+              type: _is.getType<String>(),
+              nullable: false,
             ),
           },
           call:

@@ -515,7 +515,7 @@ class _JwtRefreshEndpoint {
 
   _ida.Future<_iacs.AuthSuccess> refreshAccessToken(
     _ist.TestSessionBuilder sessionBuilder, {
-    String? refreshToken,
+    required String refreshToken,
   }) async {
     return _ist.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
