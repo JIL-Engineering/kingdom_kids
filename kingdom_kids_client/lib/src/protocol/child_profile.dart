@@ -10,10 +10,9 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class ChildProfile
-    implements _isc.SerializableModel, _isc.ProtocolSerialization {
+abstract class ChildProfile implements _i1.SerializableModel {
   ChildProfile._({
     this.id,
     required this.parentId,
@@ -47,10 +46,10 @@ abstract class ChildProfile
       ageBracket: jsonSerialization['ageBracket'] as String,
       preferredLanguage: jsonSerialization['preferredLanguage'] as String,
       avatarId: jsonSerialization['avatarId'] as String,
-      pinProtected: _isc.BoolJsonExtension.fromJson(
+      pinProtected: _i1.BoolJsonExtension.fromJson(
         jsonSerialization['pinProtected'],
       ),
-      createdAt: _isc.DateTimeJsonExtension.fromJson(
+      createdAt: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['createdAt'],
       ),
     );
@@ -79,7 +78,7 @@ abstract class ChildProfile
 
   /// Returns a shallow copy of this [ChildProfile]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   ChildProfile copyWith({
     int? id,
     int? parentId,
@@ -108,24 +107,8 @@ abstract class ChildProfile
   }
 
   @override
-  Map<String, dynamic> toJsonForProtocol() {
-    return {
-      '__className__': 'ChildProfile',
-      if (id != null) 'id': id,
-      'parentId': parentId,
-      'displayName': displayName,
-      'birthYear': birthYear,
-      'ageBracket': ageBracket,
-      'preferredLanguage': preferredLanguage,
-      'avatarId': avatarId,
-      'pinProtected': pinProtected,
-      'createdAt': createdAt.toJson(),
-    };
-  }
-
-  @override
   String toString() {
-    return _isc.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -156,7 +139,7 @@ class _ChildProfileImpl extends ChildProfile {
 
   /// Returns a shallow copy of this [ChildProfile]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   @override
   ChildProfile copyWith({
     Object? id = _Undefined,

@@ -10,10 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _is;
+import 'package:serverpod/serverpod.dart' as _i1;
 
 abstract class PageContent
-    implements _is.TableRow<int?>, _is.ProtocolSerialization {
+    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   PageContent._({
     this.id,
     required this.pageId,
@@ -56,11 +56,11 @@ abstract class PageContent
   String audioAsset;
 
   @override
-  _is.Table<int?> get table => t;
+  _i1.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [PageContent]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   PageContent copyWith({
     int? id,
     int? pageId,
@@ -97,11 +97,13 @@ abstract class PageContent
   }
 
   static PageContentIncludeList includeList({
-    _is.WhereExpressionBuilder<PageContentTable>? where,
+    _i1.WhereExpressionBuilder<PageContentTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<PageContentTable>? orderBy,
-    _is.OrderByListBuilder<PageContentTable>? orderByList,
+    _i1.OrderByBuilder<PageContentTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<PageContentTable>? orderByList,
     PageContentInclude? include,
   }) {
     return PageContentIncludeList._(
@@ -109,6 +111,8 @@ abstract class PageContent
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(PageContent.t),
+      orderDescending: // ignore: deprecated_member_use_from_same_package
+          orderDescending,
       orderByList: orderByList?.call(PageContent.t),
       include: include,
     );
@@ -116,7 +120,7 @@ abstract class PageContent
 
   @override
   String toString() {
-    return _is.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -139,7 +143,7 @@ class _PageContentImpl extends PageContent {
 
   /// Returns a shallow copy of this [PageContent]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   @override
   PageContent copyWith({
     Object? id = _Undefined,
@@ -158,46 +162,46 @@ class _PageContentImpl extends PageContent {
   }
 }
 
-class PageContentUpdateTable extends _is.UpdateTable<PageContentTable> {
+class PageContentUpdateTable extends _i1.UpdateTable<PageContentTable> {
   PageContentUpdateTable(super.table);
 
-  _is.ColumnValue<int, int> pageId(int value) => _is.ColumnValue(
+  _i1.ColumnValue<int, int> pageId(int value) => _i1.ColumnValue(
     table.pageId,
     value,
   );
 
-  _is.ColumnValue<String, String> language(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> language(String value) => _i1.ColumnValue(
     table.language,
     value,
   );
 
-  _is.ColumnValue<String, String> text(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> text(String value) => _i1.ColumnValue(
     table.text,
     value,
   );
 
-  _is.ColumnValue<String, String> audioAsset(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> audioAsset(String value) => _i1.ColumnValue(
     table.audioAsset,
     value,
   );
 }
 
-class PageContentTable extends _is.Table<int?> {
-  PageContentTable({super.tableRelation}) : super(tableName: 'page_content') {
+class PageContentTable extends _i1.Table<int?> {
+  PageContentTable({super.tableRelation}) : super(tableName: 'page_contents') {
     updateTable = PageContentUpdateTable(this);
-    pageId = _is.ColumnInt(
+    pageId = _i1.ColumnInt(
       'pageId',
       this,
     );
-    language = _is.ColumnString(
+    language = _i1.ColumnString(
       'language',
       this,
     );
-    text = _is.ColumnString(
+    text = _i1.ColumnString(
       'text',
       this,
     );
-    audioAsset = _is.ColumnString(
+    audioAsset = _i1.ColumnString(
       'audioAsset',
       this,
     );
@@ -205,16 +209,16 @@ class PageContentTable extends _is.Table<int?> {
 
   late final PageContentUpdateTable updateTable;
 
-  late final _is.ColumnInt pageId;
+  late final _i1.ColumnInt pageId;
 
-  late final _is.ColumnString language;
+  late final _i1.ColumnString language;
 
-  late final _is.ColumnString text;
+  late final _i1.ColumnString text;
 
-  late final _is.ColumnString audioAsset;
+  late final _i1.ColumnString audioAsset;
 
   @override
-  List<_is.Column> get columns => [
+  List<_i1.Column> get columns => [
     id,
     pageId,
     language,
@@ -223,22 +227,24 @@ class PageContentTable extends _is.Table<int?> {
   ];
 }
 
-class PageContentInclude extends _is.IncludeObject {
+class PageContentInclude extends _i1.IncludeObject {
   PageContentInclude._();
 
   @override
-  Map<String, _is.Include?> get includes => {};
+  Map<String, _i1.Include?> get includes => {};
 
   @override
-  _is.Table<int?> get table => PageContent.t;
+  _i1.Table<int?> get table => PageContent.t;
 }
 
-class PageContentIncludeList extends _is.IncludeList {
+class PageContentIncludeList extends _i1.IncludeList {
   PageContentIncludeList._({
-    _is.WhereExpressionBuilder<PageContentTable>? where,
+    _i1.WhereExpressionBuilder<PageContentTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -246,10 +252,10 @@ class PageContentIncludeList extends _is.IncludeList {
   }
 
   @override
-  Map<String, _is.Include?> get includes => include?.includes ?? {};
+  Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _is.Table<int?> get table => PageContent.t;
+  _i1.Table<int?> get table => PageContent.t;
 }
 
 class PageContentRepository {
@@ -278,20 +284,24 @@ class PageContentRepository {
   /// );
   /// ```
   Future<List<PageContent>> find(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<PageContentTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<PageContentTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<PageContentTable>? orderBy,
-    _is.OrderByListBuilder<PageContentTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<PageContentTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<PageContentTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<PageContent>(
       where: where?.call(PageContent.t),
       orderBy: orderBy?.call(PageContent.t),
       orderByList: orderByList?.call(PageContent.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -318,19 +328,23 @@ class PageContentRepository {
   /// );
   /// ```
   Future<PageContent?> findFirstRow(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<PageContentTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<PageContentTable>? where,
     int? offset,
-    _is.OrderByBuilder<PageContentTable>? orderBy,
-    _is.OrderByListBuilder<PageContentTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<PageContentTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<PageContentTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<PageContent>(
       where: where?.call(PageContent.t),
       orderBy: orderBy?.call(PageContent.t),
       orderByList: orderByList?.call(PageContent.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -340,11 +354,11 @@ class PageContentRepository {
 
   /// Finds a single [PageContent] by its [id] or null if no such row exists.
   Future<PageContent?> findById(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     int id, {
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<PageContent>(
       id,
@@ -369,9 +383,9 @@ class PageContentRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<PageContent>> insert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<PageContent> rows, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -387,9 +401,9 @@ class PageContentRepository {
   ///
   /// The returned [PageContent] will have its `id` field set.
   Future<PageContent> insertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     PageContent row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.insertRow<PageContent>(
       row,
@@ -418,12 +432,12 @@ class PageContentRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<PageContent>> upsert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<PageContent> rows, {
-    required _is.ColumnSelections<PageContentTable> conflictColumns,
-    _is.ColumnSelections<PageContentTable>? updateColumns,
-    _is.WhereExpressionBuilder<PageContentTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<PageContentTable> conflictColumns,
+    _i1.ColumnSelections<PageContentTable>? updateColumns,
+    _i1.WhereExpressionBuilder<PageContentTable>? updateWhere,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<PageContent>(
@@ -450,12 +464,12 @@ class PageContentRepository {
   ///
   /// The returned [PageContent] will have its `id` field set.
   Future<PageContent?> upsertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     PageContent row, {
-    required _is.ColumnSelections<PageContentTable> conflictColumns,
-    _is.ColumnSelections<PageContentTable>? updateColumns,
-    _is.WhereExpressionBuilder<PageContentTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<PageContentTable> conflictColumns,
+    _i1.ColumnSelections<PageContentTable>? updateColumns,
+    _i1.WhereExpressionBuilder<PageContentTable>? updateWhere,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.upsertRow<PageContent>(
       row,
@@ -476,10 +490,10 @@ class PageContentRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<PageContent>> update(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<PageContent> rows, {
-    _is.ColumnSelections<PageContentTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<PageContentTable>? columns,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<PageContent>(
@@ -494,10 +508,10 @@ class PageContentRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<PageContent> updateRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     PageContent row, {
-    _is.ColumnSelections<PageContentTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<PageContentTable>? columns,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateRow<PageContent>(
       row,
@@ -509,10 +523,10 @@ class PageContentRepository {
   /// Updates a single [PageContent] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<PageContent?> updateById(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     int id, {
-    required _is.ColumnValueListBuilder<PageContentUpdateTable> columnValues,
-    _is.Transaction? transaction,
+    required _i1.ColumnValueListBuilder<PageContentUpdateTable> columnValues,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateById<PageContent>(
       id,
@@ -528,14 +542,16 @@ class PageContentRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<PageContent>> updateWhere(
-    _is.DatabaseSession session, {
-    required _is.ColumnValueListBuilder<PageContentUpdateTable> columnValues,
-    required _is.WhereExpressionBuilder<PageContentTable> where,
+    _i1.DatabaseSession session, {
+    required _i1.ColumnValueListBuilder<PageContentUpdateTable> columnValues,
+    required _i1.WhereExpressionBuilder<PageContentTable> where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<PageContentTable>? orderBy,
-    _is.OrderByListBuilder<PageContentTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<PageContentTable>? orderBy,
+    _i1.OrderByListBuilder<PageContentTable>? orderByList,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<PageContent>(
@@ -545,6 +561,8 @@ class PageContentRepository {
       offset: offset,
       orderBy: orderBy?.call(PageContent.t),
       orderByList: orderByList?.call(PageContent.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -562,17 +580,21 @@ class PageContentRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<PageContent>> delete(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<PageContent> rows, {
-    _is.OrderByBuilder<PageContentTable>? orderBy,
-    _is.OrderByListBuilder<PageContentTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<PageContentTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<PageContentTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<PageContent>(
       rows,
       orderBy: orderBy?.call(PageContent.t),
       orderByList: orderByList?.call(PageContent.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -580,9 +602,9 @@ class PageContentRepository {
 
   /// Deletes a single [PageContent].
   Future<PageContent> deleteRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     PageContent row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.deleteRow<PageContent>(
       row,
@@ -599,17 +621,21 @@ class PageContentRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<PageContent>> deleteWhere(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<PageContentTable> where,
-    _is.OrderByBuilder<PageContentTable>? orderBy,
-    _is.OrderByListBuilder<PageContentTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<PageContentTable> where,
+    _i1.OrderByBuilder<PageContentTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<PageContentTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<PageContent>(
       where: where(PageContent.t),
       orderBy: orderBy?.call(PageContent.t),
       orderByList: orderByList?.call(PageContent.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -618,10 +644,10 @@ class PageContentRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<PageContentTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<PageContentTable>? where,
     int? limit,
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.count<PageContent>(
       where: where?.call(PageContent.t),
@@ -632,11 +658,11 @@ class PageContentRepository {
 
   /// Acquires row-level locks on [PageContent] rows matching the [where] expression.
   Future<void> lockRows(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<PageContentTable> where,
-    required _is.LockMode lockMode,
-    required _is.Transaction transaction,
-    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<PageContentTable> where,
+    required _i1.LockMode lockMode,
+    required _i1.Transaction transaction,
+    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
   }) async {
     return session.db.lockRows<PageContent>(
       where: where(PageContent.t),

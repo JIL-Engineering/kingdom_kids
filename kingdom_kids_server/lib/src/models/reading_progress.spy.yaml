@@ -1,8 +1,9 @@
 class: ReadingProgress
 table: reading_progress
 fields:
+  id: UuidValue, defaultModel=random
   childId: int, relation(parent=child_profiles, onDelete=Cascade)
-  bookId: int, relation(parent=book)
+  bookId: int, relation(parent=books)
   currentPage: int
   completed: bool
   startedAt: DateTime

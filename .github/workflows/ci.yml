@@ -1,0 +1,46 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  server:
+    runs-on: ubuntu-latest
+    env:
+      SERVERPOD_CLI_VERSION: '4.0.0-beta.0'
+      SERVERPOD_PASSWORD_database: ${{ secrets.SERVERPOD_TEST_DB_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+      - name: Start database containers
+        working-directory: kingdom_kids_server
+        run: docker compose up --quiet-pull --build -d postgres_test
+      - name: Check Serverpod codegen is up to date
+        working-directory: kingdom_kids_server
+        run: |
+          flutter pub get
+          dart pub global activate serverpod_cli $SERVERPOD_CLI_VERSION
+          serverpod generate
+          git diff --exit-code -- ../kingdom_kids_server/lib/src/generated ../kingdom_kids_client/lib/src/protocol \
+            || (echo "Generated code is stale — run 'serverpod generate' and commit the result" && exit 1)
+      - name: Run server tests
+        working-directory: kingdom_kids_server
+        run: dart test
+      - name: Stop database containers
+        if: always()
+        working-directory: kingdom_kids_server
+        run: docker compose down -v
+
+  flutter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+      - working-directory: kingdom_kids_flutter
+        run: |
+          flutter pub get
+          flutter analyze
+          flutter test

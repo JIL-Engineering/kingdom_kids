@@ -10,14 +10,13 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class AppUser
-    implements _isc.SerializableModel, _isc.ProtocolSerialization {
+abstract class AppUser implements _i1.SerializableModel {
   AppUser._({
     this.id,
     required this.email,
-    required this.authUserId,
+    required this.passwordHash,
     this.country,
     required this.timezone,
     required this.preferredLanguage,
@@ -28,7 +27,7 @@ abstract class AppUser
   factory AppUser({
     int? id,
     required String email,
-    required int authUserId,
+    required String passwordHash,
     String? country,
     required String timezone,
     required String preferredLanguage,
@@ -40,16 +39,16 @@ abstract class AppUser
     return AppUser(
       id: jsonSerialization['id'] as int?,
       email: jsonSerialization['email'] as String,
-      authUserId: jsonSerialization['authUserId'] as int,
+      passwordHash: jsonSerialization['passwordHash'] as String,
       country: jsonSerialization['country'] as String?,
       timezone: jsonSerialization['timezone'] as String,
       preferredLanguage: jsonSerialization['preferredLanguage'] as String,
       consentGivenAt: jsonSerialization['consentGivenAt'] == null
           ? null
-          : _isc.DateTimeJsonExtension.fromJson(
+          : _i1.DateTimeJsonExtension.fromJson(
               jsonSerialization['consentGivenAt'],
             ),
-      createdAt: _isc.DateTimeJsonExtension.fromJson(
+      createdAt: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['createdAt'],
       ),
     );
@@ -62,7 +61,7 @@ abstract class AppUser
 
   String email;
 
-  int authUserId;
+  String passwordHash;
 
   String? country;
 
@@ -76,11 +75,11 @@ abstract class AppUser
 
   /// Returns a shallow copy of this [AppUser]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   AppUser copyWith({
     int? id,
     String? email,
-    int? authUserId,
+    String? passwordHash,
     String? country,
     String? timezone,
     String? preferredLanguage,
@@ -93,22 +92,7 @@ abstract class AppUser
       '__className__': 'AppUser',
       if (id != null) 'id': id,
       'email': email,
-      'authUserId': authUserId,
-      if (country != null) 'country': country,
-      'timezone': timezone,
-      'preferredLanguage': preferredLanguage,
-      if (consentGivenAt != null) 'consentGivenAt': consentGivenAt?.toJson(),
-      'createdAt': createdAt.toJson(),
-    };
-  }
-
-  @override
-  Map<String, dynamic> toJsonForProtocol() {
-    return {
-      '__className__': 'AppUser',
-      if (id != null) 'id': id,
-      'email': email,
-      'authUserId': authUserId,
+      'passwordHash': passwordHash,
       if (country != null) 'country': country,
       'timezone': timezone,
       'preferredLanguage': preferredLanguage,
@@ -119,7 +103,7 @@ abstract class AppUser
 
   @override
   String toString() {
-    return _isc.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -129,7 +113,7 @@ class _AppUserImpl extends AppUser {
   _AppUserImpl({
     int? id,
     required String email,
-    required int authUserId,
+    required String passwordHash,
     String? country,
     required String timezone,
     required String preferredLanguage,
@@ -138,7 +122,7 @@ class _AppUserImpl extends AppUser {
   }) : super._(
          id: id,
          email: email,
-         authUserId: authUserId,
+         passwordHash: passwordHash,
          country: country,
          timezone: timezone,
          preferredLanguage: preferredLanguage,
@@ -148,12 +132,12 @@ class _AppUserImpl extends AppUser {
 
   /// Returns a shallow copy of this [AppUser]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   @override
   AppUser copyWith({
     Object? id = _Undefined,
     String? email,
-    int? authUserId,
+    String? passwordHash,
     Object? country = _Undefined,
     String? timezone,
     String? preferredLanguage,
@@ -163,7 +147,7 @@ class _AppUserImpl extends AppUser {
     return AppUser(
       id: id is int? ? id : this.id,
       email: email ?? this.email,
-      authUserId: authUserId ?? this.authUserId,
+      passwordHash: passwordHash ?? this.passwordHash,
       country: country is String? ? country : this.country,
       timezone: timezone ?? this.timezone,
       preferredLanguage: preferredLanguage ?? this.preferredLanguage,

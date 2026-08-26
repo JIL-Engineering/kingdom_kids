@@ -1,7 +1,7 @@
 class: Book
-table: book
+table: books
 fields:
-  slug: String, unique
+  slug: String
   ageBracketMin: String
   ageBracketMax: String
   category: String

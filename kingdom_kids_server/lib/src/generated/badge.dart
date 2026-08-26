@@ -10,10 +10,9 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:kingdom_kids_server/src/generated/protocol.dart' as _i8n4m1vh;
-import 'package:serverpod/serverpod.dart' as _is;
+import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Badge implements _is.TableRow<int?>, _is.ProtocolSerialization {
+abstract class Badge implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   Badge._({
     this.id,
     required this.code,
@@ -29,7 +28,7 @@ abstract class Badge implements _is.TableRow<int?>, _is.ProtocolSerialization {
     required String name,
     required String description,
     required String iconAsset,
-    required Map<String, dynamic> triggerRule,
+    required String triggerRule,
   }) = _BadgeImpl;
 
   factory Badge.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -39,9 +38,7 @@ abstract class Badge implements _is.TableRow<int?>, _is.ProtocolSerialization {
       name: jsonSerialization['name'] as String,
       description: jsonSerialization['description'] as String,
       iconAsset: jsonSerialization['iconAsset'] as String,
-      triggerRule: _i8n4m1vh.Protocol().deserialize<Map<String, dynamic>>(
-        jsonSerialization['triggerRule'],
-      ),
+      triggerRule: jsonSerialization['triggerRule'] as String,
     );
   }
 
@@ -60,21 +57,21 @@ abstract class Badge implements _is.TableRow<int?>, _is.ProtocolSerialization {
 
   String iconAsset;
 
-  Map<String, dynamic> triggerRule;
+  String triggerRule;
 
   @override
-  _is.Table<int?> get table => t;
+  _i1.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [Badge]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   Badge copyWith({
     int? id,
     String? code,
     String? name,
     String? description,
     String? iconAsset,
-    Map<String, dynamic>? triggerRule,
+    String? triggerRule,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -85,9 +82,7 @@ abstract class Badge implements _is.TableRow<int?>, _is.ProtocolSerialization {
       'name': name,
       'description': description,
       'iconAsset': iconAsset,
-      'triggerRule': triggerRule.toJson(
-        valueToJson: (v) => _i8n4m1vh.Protocol().dynamicFieldToJson(v),
-      ),
+      'triggerRule': triggerRule,
     };
   }
 
@@ -100,12 +95,7 @@ abstract class Badge implements _is.TableRow<int?>, _is.ProtocolSerialization {
       'name': name,
       'description': description,
       'iconAsset': iconAsset,
-      'triggerRule': triggerRule.toJson(
-        valueToJson: (v) => _i8n4m1vh.Protocol().dynamicFieldToJson(
-          v,
-          forProtocol: true,
-        ),
-      ),
+      'triggerRule': triggerRule,
     };
   }
 
@@ -114,11 +104,13 @@ abstract class Badge implements _is.TableRow<int?>, _is.ProtocolSerialization {
   }
 
   static BadgeIncludeList includeList({
-    _is.WhereExpressionBuilder<BadgeTable>? where,
+    _i1.WhereExpressionBuilder<BadgeTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<BadgeTable>? orderBy,
-    _is.OrderByListBuilder<BadgeTable>? orderByList,
+    _i1.OrderByBuilder<BadgeTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<BadgeTable>? orderByList,
     BadgeInclude? include,
   }) {
     return BadgeIncludeList._(
@@ -126,6 +118,8 @@ abstract class Badge implements _is.TableRow<int?>, _is.ProtocolSerialization {
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(Badge.t),
+      orderDescending: // ignore: deprecated_member_use_from_same_package
+          orderDescending,
       orderByList: orderByList?.call(Badge.t),
       include: include,
     );
@@ -133,7 +127,7 @@ abstract class Badge implements _is.TableRow<int?>, _is.ProtocolSerialization {
 
   @override
   String toString() {
-    return _is.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -146,7 +140,7 @@ class _BadgeImpl extends Badge {
     required String name,
     required String description,
     required String iconAsset,
-    required Map<String, dynamic> triggerRule,
+    required String triggerRule,
   }) : super._(
          id: id,
          code: code,
@@ -158,7 +152,7 @@ class _BadgeImpl extends Badge {
 
   /// Returns a shallow copy of this [Badge]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   @override
   Badge copyWith({
     Object? id = _Undefined,
@@ -166,7 +160,7 @@ class _BadgeImpl extends Badge {
     String? name,
     String? description,
     String? iconAsset,
-    Map<String, dynamic>? triggerRule,
+    String? triggerRule,
   }) {
     return Badge(
       id: id is int? ? id : this.id,
@@ -174,72 +168,60 @@ class _BadgeImpl extends Badge {
       name: name ?? this.name,
       description: description ?? this.description,
       iconAsset: iconAsset ?? this.iconAsset,
-      triggerRule:
-          triggerRule ??
-          this.triggerRule.map(
-            (
-              key0,
-              value0,
-            ) => MapEntry(
-              key0,
-              value0,
-            ),
-          ),
+      triggerRule: triggerRule ?? this.triggerRule,
     );
   }
 }
 
-class BadgeUpdateTable extends _is.UpdateTable<BadgeTable> {
+class BadgeUpdateTable extends _i1.UpdateTable<BadgeTable> {
   BadgeUpdateTable(super.table);
 
-  _is.ColumnValue<String, String> code(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> code(String value) => _i1.ColumnValue(
     table.code,
     value,
   );
 
-  _is.ColumnValue<String, String> name(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> name(String value) => _i1.ColumnValue(
     table.name,
     value,
   );
 
-  _is.ColumnValue<String, String> description(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> description(String value) => _i1.ColumnValue(
     table.description,
     value,
   );
 
-  _is.ColumnValue<String, String> iconAsset(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> iconAsset(String value) => _i1.ColumnValue(
     table.iconAsset,
     value,
   );
 
-  _is.ColumnValue<Map<String, dynamic>, Map<String, dynamic>> triggerRule(
-    Map<String, dynamic> value,
-  ) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> triggerRule(String value) => _i1.ColumnValue(
     table.triggerRule,
     value,
   );
 }
 
-class BadgeTable extends _is.Table<int?> {
-  BadgeTable({super.tableRelation}) : super(tableName: 'badge') {
+class BadgeTable extends _i1.Table<int?> {
+  BadgeTable({super.tableRelation}) : super(tableName: 'badges') {
     updateTable = BadgeUpdateTable(this);
-    code = _is.ColumnString(
+    code = _i1.ColumnString(
       'code',
       this,
     );
-    name = _is.ColumnString(
+    name = _i1.ColumnString(
       'name',
       this,
     );
-    description = _is.ColumnString(
+    description = _i1.ColumnString(
       'description',
       this,
     );
-    iconAsset = _is.ColumnString(
+    iconAsset = _i1.ColumnString(
       'iconAsset',
       this,
     );
-    triggerRule = _is.ColumnSerializable<Map<String, dynamic>>(
+    triggerRule = _i1.ColumnString(
       'triggerRule',
       this,
     );
@@ -247,18 +229,18 @@ class BadgeTable extends _is.Table<int?> {
 
   late final BadgeUpdateTable updateTable;
 
-  late final _is.ColumnString code;
+  late final _i1.ColumnString code;
 
-  late final _is.ColumnString name;
+  late final _i1.ColumnString name;
 
-  late final _is.ColumnString description;
+  late final _i1.ColumnString description;
 
-  late final _is.ColumnString iconAsset;
+  late final _i1.ColumnString iconAsset;
 
-  late final _is.ColumnSerializable<Map<String, dynamic>> triggerRule;
+  late final _i1.ColumnString triggerRule;
 
   @override
-  List<_is.Column> get columns => [
+  List<_i1.Column> get columns => [
     id,
     code,
     name,
@@ -268,22 +250,24 @@ class BadgeTable extends _is.Table<int?> {
   ];
 }
 
-class BadgeInclude extends _is.IncludeObject {
+class BadgeInclude extends _i1.IncludeObject {
   BadgeInclude._();
 
   @override
-  Map<String, _is.Include?> get includes => {};
+  Map<String, _i1.Include?> get includes => {};
 
   @override
-  _is.Table<int?> get table => Badge.t;
+  _i1.Table<int?> get table => Badge.t;
 }
 
-class BadgeIncludeList extends _is.IncludeList {
+class BadgeIncludeList extends _i1.IncludeList {
   BadgeIncludeList._({
-    _is.WhereExpressionBuilder<BadgeTable>? where,
+    _i1.WhereExpressionBuilder<BadgeTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -291,10 +275,10 @@ class BadgeIncludeList extends _is.IncludeList {
   }
 
   @override
-  Map<String, _is.Include?> get includes => include?.includes ?? {};
+  Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _is.Table<int?> get table => Badge.t;
+  _i1.Table<int?> get table => Badge.t;
 }
 
 class BadgeRepository {
@@ -323,20 +307,24 @@ class BadgeRepository {
   /// );
   /// ```
   Future<List<Badge>> find(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<BadgeTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<BadgeTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<BadgeTable>? orderBy,
-    _is.OrderByListBuilder<BadgeTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<BadgeTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<BadgeTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<Badge>(
       where: where?.call(Badge.t),
       orderBy: orderBy?.call(Badge.t),
       orderByList: orderByList?.call(Badge.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -363,19 +351,23 @@ class BadgeRepository {
   /// );
   /// ```
   Future<Badge?> findFirstRow(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<BadgeTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<BadgeTable>? where,
     int? offset,
-    _is.OrderByBuilder<BadgeTable>? orderBy,
-    _is.OrderByListBuilder<BadgeTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<BadgeTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<BadgeTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<Badge>(
       where: where?.call(Badge.t),
       orderBy: orderBy?.call(Badge.t),
       orderByList: orderByList?.call(Badge.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -385,11 +377,11 @@ class BadgeRepository {
 
   /// Finds a single [Badge] by its [id] or null if no such row exists.
   Future<Badge?> findById(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     int id, {
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<Badge>(
       id,
@@ -414,9 +406,9 @@ class BadgeRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Badge>> insert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<Badge> rows, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -432,9 +424,9 @@ class BadgeRepository {
   ///
   /// The returned [Badge] will have its `id` field set.
   Future<Badge> insertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     Badge row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.insertRow<Badge>(
       row,
@@ -463,12 +455,12 @@ class BadgeRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Badge>> upsert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<Badge> rows, {
-    required _is.ColumnSelections<BadgeTable> conflictColumns,
-    _is.ColumnSelections<BadgeTable>? updateColumns,
-    _is.WhereExpressionBuilder<BadgeTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<BadgeTable> conflictColumns,
+    _i1.ColumnSelections<BadgeTable>? updateColumns,
+    _i1.WhereExpressionBuilder<BadgeTable>? updateWhere,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<Badge>(
@@ -495,12 +487,12 @@ class BadgeRepository {
   ///
   /// The returned [Badge] will have its `id` field set.
   Future<Badge?> upsertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     Badge row, {
-    required _is.ColumnSelections<BadgeTable> conflictColumns,
-    _is.ColumnSelections<BadgeTable>? updateColumns,
-    _is.WhereExpressionBuilder<BadgeTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<BadgeTable> conflictColumns,
+    _i1.ColumnSelections<BadgeTable>? updateColumns,
+    _i1.WhereExpressionBuilder<BadgeTable>? updateWhere,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.upsertRow<Badge>(
       row,
@@ -521,10 +513,10 @@ class BadgeRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Badge>> update(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<Badge> rows, {
-    _is.ColumnSelections<BadgeTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<BadgeTable>? columns,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<Badge>(
@@ -539,10 +531,10 @@ class BadgeRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<Badge> updateRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     Badge row, {
-    _is.ColumnSelections<BadgeTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<BadgeTable>? columns,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateRow<Badge>(
       row,
@@ -554,10 +546,10 @@ class BadgeRepository {
   /// Updates a single [Badge] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<Badge?> updateById(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     int id, {
-    required _is.ColumnValueListBuilder<BadgeUpdateTable> columnValues,
-    _is.Transaction? transaction,
+    required _i1.ColumnValueListBuilder<BadgeUpdateTable> columnValues,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateById<Badge>(
       id,
@@ -573,14 +565,16 @@ class BadgeRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Badge>> updateWhere(
-    _is.DatabaseSession session, {
-    required _is.ColumnValueListBuilder<BadgeUpdateTable> columnValues,
-    required _is.WhereExpressionBuilder<BadgeTable> where,
+    _i1.DatabaseSession session, {
+    required _i1.ColumnValueListBuilder<BadgeUpdateTable> columnValues,
+    required _i1.WhereExpressionBuilder<BadgeTable> where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<BadgeTable>? orderBy,
-    _is.OrderByListBuilder<BadgeTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<BadgeTable>? orderBy,
+    _i1.OrderByListBuilder<BadgeTable>? orderByList,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<Badge>(
@@ -590,6 +584,8 @@ class BadgeRepository {
       offset: offset,
       orderBy: orderBy?.call(Badge.t),
       orderByList: orderByList?.call(Badge.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -607,17 +603,21 @@ class BadgeRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Badge>> delete(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<Badge> rows, {
-    _is.OrderByBuilder<BadgeTable>? orderBy,
-    _is.OrderByListBuilder<BadgeTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<BadgeTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<BadgeTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<Badge>(
       rows,
       orderBy: orderBy?.call(Badge.t),
       orderByList: orderByList?.call(Badge.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -625,9 +625,9 @@ class BadgeRepository {
 
   /// Deletes a single [Badge].
   Future<Badge> deleteRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     Badge row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.deleteRow<Badge>(
       row,
@@ -644,17 +644,21 @@ class BadgeRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Badge>> deleteWhere(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<BadgeTable> where,
-    _is.OrderByBuilder<BadgeTable>? orderBy,
-    _is.OrderByListBuilder<BadgeTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<BadgeTable> where,
+    _i1.OrderByBuilder<BadgeTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<BadgeTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<Badge>(
       where: where(Badge.t),
       orderBy: orderBy?.call(Badge.t),
       orderByList: orderByList?.call(Badge.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -663,10 +667,10 @@ class BadgeRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<BadgeTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<BadgeTable>? where,
     int? limit,
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.count<Badge>(
       where: where?.call(Badge.t),
@@ -677,11 +681,11 @@ class BadgeRepository {
 
   /// Acquires row-level locks on [Badge] rows matching the [where] expression.
   Future<void> lockRows(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<BadgeTable> where,
-    required _is.LockMode lockMode,
-    required _is.Transaction transaction,
-    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<BadgeTable> where,
+    required _i1.LockMode lockMode,
+    required _i1.Transaction transaction,
+    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
   }) async {
     return session.db.lockRows<Badge>(
       where: where(Badge.t),

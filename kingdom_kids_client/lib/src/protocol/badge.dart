@@ -10,11 +10,9 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:kingdom_kids_client/src/protocol/protocol.dart' as _iral95z9;
-import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class Badge
-    implements _isc.SerializableModel, _isc.ProtocolSerialization {
+abstract class Badge implements _i1.SerializableModel {
   Badge._({
     this.id,
     required this.code,
@@ -30,7 +28,7 @@ abstract class Badge
     required String name,
     required String description,
     required String iconAsset,
-    required Map<String, dynamic> triggerRule,
+    required String triggerRule,
   }) = _BadgeImpl;
 
   factory Badge.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -40,9 +38,7 @@ abstract class Badge
       name: jsonSerialization['name'] as String,
       description: jsonSerialization['description'] as String,
       iconAsset: jsonSerialization['iconAsset'] as String,
-      triggerRule: _iral95z9.Protocol().deserialize<Map<String, dynamic>>(
-        jsonSerialization['triggerRule'],
-      ),
+      triggerRule: jsonSerialization['triggerRule'] as String,
     );
   }
 
@@ -59,18 +55,18 @@ abstract class Badge
 
   String iconAsset;
 
-  Map<String, dynamic> triggerRule;
+  String triggerRule;
 
   /// Returns a shallow copy of this [Badge]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   Badge copyWith({
     int? id,
     String? code,
     String? name,
     String? description,
     String? iconAsset,
-    Map<String, dynamic>? triggerRule,
+    String? triggerRule,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -81,33 +77,13 @@ abstract class Badge
       'name': name,
       'description': description,
       'iconAsset': iconAsset,
-      'triggerRule': triggerRule.toJson(
-        valueToJson: (v) => _iral95z9.Protocol().dynamicFieldToJson(v),
-      ),
-    };
-  }
-
-  @override
-  Map<String, dynamic> toJsonForProtocol() {
-    return {
-      '__className__': 'Badge',
-      if (id != null) 'id': id,
-      'code': code,
-      'name': name,
-      'description': description,
-      'iconAsset': iconAsset,
-      'triggerRule': triggerRule.toJson(
-        valueToJson: (v) => _iral95z9.Protocol().dynamicFieldToJson(
-          v,
-          forProtocol: true,
-        ),
-      ),
+      'triggerRule': triggerRule,
     };
   }
 
   @override
   String toString() {
-    return _isc.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -120,7 +96,7 @@ class _BadgeImpl extends Badge {
     required String name,
     required String description,
     required String iconAsset,
-    required Map<String, dynamic> triggerRule,
+    required String triggerRule,
   }) : super._(
          id: id,
          code: code,
@@ -132,7 +108,7 @@ class _BadgeImpl extends Badge {
 
   /// Returns a shallow copy of this [Badge]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   @override
   Badge copyWith({
     Object? id = _Undefined,
@@ -140,7 +116,7 @@ class _BadgeImpl extends Badge {
     String? name,
     String? description,
     String? iconAsset,
-    Map<String, dynamic>? triggerRule,
+    String? triggerRule,
   }) {
     return Badge(
       id: id is int? ? id : this.id,
@@ -148,17 +124,7 @@ class _BadgeImpl extends Badge {
       name: name ?? this.name,
       description: description ?? this.description,
       iconAsset: iconAsset ?? this.iconAsset,
-      triggerRule:
-          triggerRule ??
-          this.triggerRule.map(
-            (
-              key0,
-              value0,
-            ) => MapEntry(
-              key0,
-              value0,
-            ),
-          ),
+      triggerRule: triggerRule ?? this.triggerRule,
     );
   }
 }

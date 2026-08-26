@@ -1,10 +1,10 @@
 class: BookTranslation
-table: book_translation
+table: book_translations
 fields:
-  bookId: int, relation(parent=book, onDelete=Cascade)
+  bookId: int, relation(parent=books, onDelete=Cascade)
   language: String
   title: String
 indexes:
-  idx_book_translations_book_lang:
+  book_translations_book_language_idx:
     fields: bookId, language
     unique: true

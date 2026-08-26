@@ -17,3 +17,9 @@ pubspec_overrides.yaml
 
 # Serverpod Cloud CLI
 .scloud/
+.env
+**/.env
+
+# AI coding assistant config — local only, not for the shared repo
+AGENTS.md
+CLAUDE.md

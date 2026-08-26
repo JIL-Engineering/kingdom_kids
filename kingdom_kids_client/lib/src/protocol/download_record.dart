@@ -10,20 +10,19 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class DownloadRecord
-    implements _isc.SerializableModel, _isc.ProtocolSerialization {
+abstract class DownloadRecord implements _i1.SerializableModel {
   DownloadRecord._({
-    this.id,
+    _i1.UuidValue? id,
     required this.childId,
     required this.bookId,
     required this.deviceId,
     required this.downloadedAt,
-  });
+  }) : id = id ?? const _i1.Uuid().v4obj();
 
   factory DownloadRecord({
-    int? id,
+    _i1.UuidValue? id,
     required int childId,
     required int bookId,
     required String deviceId,
@@ -32,20 +31,20 @@ abstract class DownloadRecord
 
   factory DownloadRecord.fromJson(Map<String, dynamic> jsonSerialization) {
     return DownloadRecord(
-      id: jsonSerialization['id'] as int?,
+      id: jsonSerialization['id'] == null
+          ? null
+          : _i1.UuidValueJsonExtension.fromJson(jsonSerialization['id']),
       childId: jsonSerialization['childId'] as int,
       bookId: jsonSerialization['bookId'] as int,
       deviceId: jsonSerialization['deviceId'] as String,
-      downloadedAt: _isc.DateTimeJsonExtension.fromJson(
+      downloadedAt: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['downloadedAt'],
       ),
     );
   }
 
-  /// The database id, set if the object has been inserted into the
-  /// database or if it has been fetched from the database. Otherwise,
-  /// the id will be null.
-  int? id;
+  /// The id of the object.
+  _i1.UuidValue id;
 
   int childId;
 
@@ -57,9 +56,9 @@ abstract class DownloadRecord
 
   /// Returns a shallow copy of this [DownloadRecord]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   DownloadRecord copyWith({
-    int? id,
+    _i1.UuidValue? id,
     int? childId,
     int? bookId,
     String? deviceId,
@@ -69,19 +68,7 @@ abstract class DownloadRecord
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'DownloadRecord',
-      if (id != null) 'id': id,
-      'childId': childId,
-      'bookId': bookId,
-      'deviceId': deviceId,
-      'downloadedAt': downloadedAt.toJson(),
-    };
-  }
-
-  @override
-  Map<String, dynamic> toJsonForProtocol() {
-    return {
-      '__className__': 'DownloadRecord',
-      if (id != null) 'id': id,
+      'id': id.toJson(),
       'childId': childId,
       'bookId': bookId,
       'deviceId': deviceId,
@@ -91,15 +78,13 @@ abstract class DownloadRecord
 
   @override
   String toString() {
-    return _isc.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
-class _Undefined {}
-
 class _DownloadRecordImpl extends DownloadRecord {
   _DownloadRecordImpl({
-    int? id,
+    _i1.UuidValue? id,
     required int childId,
     required int bookId,
     required String deviceId,
@@ -114,17 +99,17 @@ class _DownloadRecordImpl extends DownloadRecord {
 
   /// Returns a shallow copy of this [DownloadRecord]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   @override
   DownloadRecord copyWith({
-    Object? id = _Undefined,
+    _i1.UuidValue? id,
     int? childId,
     int? bookId,
     String? deviceId,
     DateTime? downloadedAt,
   }) {
     return DownloadRecord(
-      id: id is int? ? id : this.id,
+      id: id ?? this.id,
       childId: childId ?? this.childId,
       bookId: bookId ?? this.bookId,
       deviceId: deviceId ?? this.deviceId,

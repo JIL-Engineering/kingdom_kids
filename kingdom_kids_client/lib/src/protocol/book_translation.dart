@@ -10,10 +10,9 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class BookTranslation
-    implements _isc.SerializableModel, _isc.ProtocolSerialization {
+abstract class BookTranslation implements _i1.SerializableModel {
   BookTranslation._({
     this.id,
     required this.bookId,
@@ -50,7 +49,7 @@ abstract class BookTranslation
 
   /// Returns a shallow copy of this [BookTranslation]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   BookTranslation copyWith({
     int? id,
     int? bookId,
@@ -69,19 +68,8 @@ abstract class BookTranslation
   }
 
   @override
-  Map<String, dynamic> toJsonForProtocol() {
-    return {
-      '__className__': 'BookTranslation',
-      if (id != null) 'id': id,
-      'bookId': bookId,
-      'language': language,
-      'title': title,
-    };
-  }
-
-  @override
   String toString() {
-    return _isc.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -102,7 +90,7 @@ class _BookTranslationImpl extends BookTranslation {
 
   /// Returns a shallow copy of this [BookTranslation]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   @override
   BookTranslation copyWith({
     Object? id = _Undefined,

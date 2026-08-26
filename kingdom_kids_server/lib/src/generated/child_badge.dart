@@ -10,10 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _is;
+import 'package:serverpod/serverpod.dart' as _i1;
 
 abstract class ChildBadge
-    implements _is.TableRow<int?>, _is.ProtocolSerialization {
+    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   ChildBadge._({
     this.id,
     required this.childId,
@@ -33,7 +33,7 @@ abstract class ChildBadge
       id: jsonSerialization['id'] as int?,
       childId: jsonSerialization['childId'] as int,
       badgeId: jsonSerialization['badgeId'] as int,
-      earnedAt: _is.DateTimeJsonExtension.fromJson(
+      earnedAt: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['earnedAt'],
       ),
     );
@@ -53,11 +53,11 @@ abstract class ChildBadge
   DateTime earnedAt;
 
   @override
-  _is.Table<int?> get table => t;
+  _i1.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [ChildBadge]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   ChildBadge copyWith({
     int? id,
     int? childId,
@@ -91,11 +91,13 @@ abstract class ChildBadge
   }
 
   static ChildBadgeIncludeList includeList({
-    _is.WhereExpressionBuilder<ChildBadgeTable>? where,
+    _i1.WhereExpressionBuilder<ChildBadgeTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<ChildBadgeTable>? orderBy,
-    _is.OrderByListBuilder<ChildBadgeTable>? orderByList,
+    _i1.OrderByBuilder<ChildBadgeTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<ChildBadgeTable>? orderByList,
     ChildBadgeInclude? include,
   }) {
     return ChildBadgeIncludeList._(
@@ -103,6 +105,8 @@ abstract class ChildBadge
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(ChildBadge.t),
+      orderDescending: // ignore: deprecated_member_use_from_same_package
+          orderDescending,
       orderByList: orderByList?.call(ChildBadge.t),
       include: include,
     );
@@ -110,7 +114,7 @@ abstract class ChildBadge
 
   @override
   String toString() {
-    return _is.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -131,7 +135,7 @@ class _ChildBadgeImpl extends ChildBadge {
 
   /// Returns a shallow copy of this [ChildBadge]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   @override
   ChildBadge copyWith({
     Object? id = _Undefined,
@@ -148,38 +152,38 @@ class _ChildBadgeImpl extends ChildBadge {
   }
 }
 
-class ChildBadgeUpdateTable extends _is.UpdateTable<ChildBadgeTable> {
+class ChildBadgeUpdateTable extends _i1.UpdateTable<ChildBadgeTable> {
   ChildBadgeUpdateTable(super.table);
 
-  _is.ColumnValue<int, int> childId(int value) => _is.ColumnValue(
+  _i1.ColumnValue<int, int> childId(int value) => _i1.ColumnValue(
     table.childId,
     value,
   );
 
-  _is.ColumnValue<int, int> badgeId(int value) => _is.ColumnValue(
+  _i1.ColumnValue<int, int> badgeId(int value) => _i1.ColumnValue(
     table.badgeId,
     value,
   );
 
-  _is.ColumnValue<DateTime, DateTime> earnedAt(DateTime value) =>
-      _is.ColumnValue(
+  _i1.ColumnValue<DateTime, DateTime> earnedAt(DateTime value) =>
+      _i1.ColumnValue(
         table.earnedAt,
         value,
       );
 }
 
-class ChildBadgeTable extends _is.Table<int?> {
-  ChildBadgeTable({super.tableRelation}) : super(tableName: 'child_badge') {
+class ChildBadgeTable extends _i1.Table<int?> {
+  ChildBadgeTable({super.tableRelation}) : super(tableName: 'child_badges') {
     updateTable = ChildBadgeUpdateTable(this);
-    childId = _is.ColumnInt(
+    childId = _i1.ColumnInt(
       'childId',
       this,
     );
-    badgeId = _is.ColumnInt(
+    badgeId = _i1.ColumnInt(
       'badgeId',
       this,
     );
-    earnedAt = _is.ColumnDateTime(
+    earnedAt = _i1.ColumnDateTime(
       'earnedAt',
       this,
     );
@@ -187,14 +191,14 @@ class ChildBadgeTable extends _is.Table<int?> {
 
   late final ChildBadgeUpdateTable updateTable;
 
-  late final _is.ColumnInt childId;
+  late final _i1.ColumnInt childId;
 
-  late final _is.ColumnInt badgeId;
+  late final _i1.ColumnInt badgeId;
 
-  late final _is.ColumnDateTime earnedAt;
+  late final _i1.ColumnDateTime earnedAt;
 
   @override
-  List<_is.Column> get columns => [
+  List<_i1.Column> get columns => [
     id,
     childId,
     badgeId,
@@ -202,22 +206,24 @@ class ChildBadgeTable extends _is.Table<int?> {
   ];
 }
 
-class ChildBadgeInclude extends _is.IncludeObject {
+class ChildBadgeInclude extends _i1.IncludeObject {
   ChildBadgeInclude._();
 
   @override
-  Map<String, _is.Include?> get includes => {};
+  Map<String, _i1.Include?> get includes => {};
 
   @override
-  _is.Table<int?> get table => ChildBadge.t;
+  _i1.Table<int?> get table => ChildBadge.t;
 }
 
-class ChildBadgeIncludeList extends _is.IncludeList {
+class ChildBadgeIncludeList extends _i1.IncludeList {
   ChildBadgeIncludeList._({
-    _is.WhereExpressionBuilder<ChildBadgeTable>? where,
+    _i1.WhereExpressionBuilder<ChildBadgeTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -225,10 +231,10 @@ class ChildBadgeIncludeList extends _is.IncludeList {
   }
 
   @override
-  Map<String, _is.Include?> get includes => include?.includes ?? {};
+  Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _is.Table<int?> get table => ChildBadge.t;
+  _i1.Table<int?> get table => ChildBadge.t;
 }
 
 class ChildBadgeRepository {
@@ -257,20 +263,24 @@ class ChildBadgeRepository {
   /// );
   /// ```
   Future<List<ChildBadge>> find(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<ChildBadgeTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<ChildBadgeTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<ChildBadgeTable>? orderBy,
-    _is.OrderByListBuilder<ChildBadgeTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<ChildBadgeTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<ChildBadgeTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<ChildBadge>(
       where: where?.call(ChildBadge.t),
       orderBy: orderBy?.call(ChildBadge.t),
       orderByList: orderByList?.call(ChildBadge.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -297,19 +307,23 @@ class ChildBadgeRepository {
   /// );
   /// ```
   Future<ChildBadge?> findFirstRow(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<ChildBadgeTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<ChildBadgeTable>? where,
     int? offset,
-    _is.OrderByBuilder<ChildBadgeTable>? orderBy,
-    _is.OrderByListBuilder<ChildBadgeTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<ChildBadgeTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<ChildBadgeTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<ChildBadge>(
       where: where?.call(ChildBadge.t),
       orderBy: orderBy?.call(ChildBadge.t),
       orderByList: orderByList?.call(ChildBadge.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -319,11 +333,11 @@ class ChildBadgeRepository {
 
   /// Finds a single [ChildBadge] by its [id] or null if no such row exists.
   Future<ChildBadge?> findById(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     int id, {
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<ChildBadge>(
       id,
@@ -348,9 +362,9 @@ class ChildBadgeRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildBadge>> insert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<ChildBadge> rows, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -366,9 +380,9 @@ class ChildBadgeRepository {
   ///
   /// The returned [ChildBadge] will have its `id` field set.
   Future<ChildBadge> insertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     ChildBadge row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.insertRow<ChildBadge>(
       row,
@@ -397,12 +411,12 @@ class ChildBadgeRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildBadge>> upsert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<ChildBadge> rows, {
-    required _is.ColumnSelections<ChildBadgeTable> conflictColumns,
-    _is.ColumnSelections<ChildBadgeTable>? updateColumns,
-    _is.WhereExpressionBuilder<ChildBadgeTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<ChildBadgeTable> conflictColumns,
+    _i1.ColumnSelections<ChildBadgeTable>? updateColumns,
+    _i1.WhereExpressionBuilder<ChildBadgeTable>? updateWhere,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<ChildBadge>(
@@ -429,12 +443,12 @@ class ChildBadgeRepository {
   ///
   /// The returned [ChildBadge] will have its `id` field set.
   Future<ChildBadge?> upsertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     ChildBadge row, {
-    required _is.ColumnSelections<ChildBadgeTable> conflictColumns,
-    _is.ColumnSelections<ChildBadgeTable>? updateColumns,
-    _is.WhereExpressionBuilder<ChildBadgeTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<ChildBadgeTable> conflictColumns,
+    _i1.ColumnSelections<ChildBadgeTable>? updateColumns,
+    _i1.WhereExpressionBuilder<ChildBadgeTable>? updateWhere,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.upsertRow<ChildBadge>(
       row,
@@ -455,10 +469,10 @@ class ChildBadgeRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildBadge>> update(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<ChildBadge> rows, {
-    _is.ColumnSelections<ChildBadgeTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<ChildBadgeTable>? columns,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<ChildBadge>(
@@ -473,10 +487,10 @@ class ChildBadgeRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<ChildBadge> updateRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     ChildBadge row, {
-    _is.ColumnSelections<ChildBadgeTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<ChildBadgeTable>? columns,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateRow<ChildBadge>(
       row,
@@ -488,10 +502,10 @@ class ChildBadgeRepository {
   /// Updates a single [ChildBadge] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<ChildBadge?> updateById(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     int id, {
-    required _is.ColumnValueListBuilder<ChildBadgeUpdateTable> columnValues,
-    _is.Transaction? transaction,
+    required _i1.ColumnValueListBuilder<ChildBadgeUpdateTable> columnValues,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateById<ChildBadge>(
       id,
@@ -507,14 +521,16 @@ class ChildBadgeRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildBadge>> updateWhere(
-    _is.DatabaseSession session, {
-    required _is.ColumnValueListBuilder<ChildBadgeUpdateTable> columnValues,
-    required _is.WhereExpressionBuilder<ChildBadgeTable> where,
+    _i1.DatabaseSession session, {
+    required _i1.ColumnValueListBuilder<ChildBadgeUpdateTable> columnValues,
+    required _i1.WhereExpressionBuilder<ChildBadgeTable> where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<ChildBadgeTable>? orderBy,
-    _is.OrderByListBuilder<ChildBadgeTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<ChildBadgeTable>? orderBy,
+    _i1.OrderByListBuilder<ChildBadgeTable>? orderByList,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<ChildBadge>(
@@ -524,6 +540,8 @@ class ChildBadgeRepository {
       offset: offset,
       orderBy: orderBy?.call(ChildBadge.t),
       orderByList: orderByList?.call(ChildBadge.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -541,17 +559,21 @@ class ChildBadgeRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildBadge>> delete(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<ChildBadge> rows, {
-    _is.OrderByBuilder<ChildBadgeTable>? orderBy,
-    _is.OrderByListBuilder<ChildBadgeTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<ChildBadgeTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<ChildBadgeTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<ChildBadge>(
       rows,
       orderBy: orderBy?.call(ChildBadge.t),
       orderByList: orderByList?.call(ChildBadge.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -559,9 +581,9 @@ class ChildBadgeRepository {
 
   /// Deletes a single [ChildBadge].
   Future<ChildBadge> deleteRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     ChildBadge row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.deleteRow<ChildBadge>(
       row,
@@ -578,17 +600,21 @@ class ChildBadgeRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildBadge>> deleteWhere(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<ChildBadgeTable> where,
-    _is.OrderByBuilder<ChildBadgeTable>? orderBy,
-    _is.OrderByListBuilder<ChildBadgeTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<ChildBadgeTable> where,
+    _i1.OrderByBuilder<ChildBadgeTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<ChildBadgeTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<ChildBadge>(
       where: where(ChildBadge.t),
       orderBy: orderBy?.call(ChildBadge.t),
       orderByList: orderByList?.call(ChildBadge.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -597,10 +623,10 @@ class ChildBadgeRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<ChildBadgeTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<ChildBadgeTable>? where,
     int? limit,
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.count<ChildBadge>(
       where: where?.call(ChildBadge.t),
@@ -611,11 +637,11 @@ class ChildBadgeRepository {
 
   /// Acquires row-level locks on [ChildBadge] rows matching the [where] expression.
   Future<void> lockRows(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<ChildBadgeTable> where,
-    required _is.LockMode lockMode,
-    required _is.Transaction transaction,
-    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<ChildBadgeTable> where,
+    required _i1.LockMode lockMode,
+    required _i1.Transaction transaction,
+    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
   }) async {
     return session.db.lockRows<ChildBadge>(
       where: where(ChildBadge.t),

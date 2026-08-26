@@ -10,20 +10,20 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _is;
+import 'package:serverpod/serverpod.dart' as _i1;
 
 abstract class DownloadRecord
-    implements _is.TableRow<int?>, _is.ProtocolSerialization {
+    implements _i1.TableRow<_i1.UuidValue>, _i1.ProtocolSerialization {
   DownloadRecord._({
-    this.id,
+    _i1.UuidValue? id,
     required this.childId,
     required this.bookId,
     required this.deviceId,
     required this.downloadedAt,
-  });
+  }) : id = id ?? const _i1.Uuid().v4obj();
 
   factory DownloadRecord({
-    int? id,
+    _i1.UuidValue? id,
     required int childId,
     required int bookId,
     required String deviceId,
@@ -32,11 +32,13 @@ abstract class DownloadRecord
 
   factory DownloadRecord.fromJson(Map<String, dynamic> jsonSerialization) {
     return DownloadRecord(
-      id: jsonSerialization['id'] as int?,
+      id: jsonSerialization['id'] == null
+          ? null
+          : _i1.UuidValueJsonExtension.fromJson(jsonSerialization['id']),
       childId: jsonSerialization['childId'] as int,
       bookId: jsonSerialization['bookId'] as int,
       deviceId: jsonSerialization['deviceId'] as String,
-      downloadedAt: _is.DateTimeJsonExtension.fromJson(
+      downloadedAt: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['downloadedAt'],
       ),
     );
@@ -47,7 +49,7 @@ abstract class DownloadRecord
   static const db = DownloadRecordRepository._();
 
   @override
-  int? id;
+  _i1.UuidValue id;
 
   int childId;
 
@@ -58,13 +60,13 @@ abstract class DownloadRecord
   DateTime downloadedAt;
 
   @override
-  _is.Table<int?> get table => t;
+  _i1.Table<_i1.UuidValue> get table => t;
 
   /// Returns a shallow copy of this [DownloadRecord]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   DownloadRecord copyWith({
-    int? id,
+    _i1.UuidValue? id,
     int? childId,
     int? bookId,
     String? deviceId,
@@ -74,7 +76,7 @@ abstract class DownloadRecord
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'DownloadRecord',
-      if (id != null) 'id': id,
+      'id': id.toJson(),
       'childId': childId,
       'bookId': bookId,
       'deviceId': deviceId,
@@ -86,7 +88,7 @@ abstract class DownloadRecord
   Map<String, dynamic> toJsonForProtocol() {
     return {
       '__className__': 'DownloadRecord',
-      if (id != null) 'id': id,
+      'id': id.toJson(),
       'childId': childId,
       'bookId': bookId,
       'deviceId': deviceId,
@@ -99,11 +101,13 @@ abstract class DownloadRecord
   }
 
   static DownloadRecordIncludeList includeList({
-    _is.WhereExpressionBuilder<DownloadRecordTable>? where,
+    _i1.WhereExpressionBuilder<DownloadRecordTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<DownloadRecordTable>? orderBy,
-    _is.OrderByListBuilder<DownloadRecordTable>? orderByList,
+    _i1.OrderByBuilder<DownloadRecordTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<DownloadRecordTable>? orderByList,
     DownloadRecordInclude? include,
   }) {
     return DownloadRecordIncludeList._(
@@ -111,6 +115,8 @@ abstract class DownloadRecord
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(DownloadRecord.t),
+      orderDescending: // ignore: deprecated_member_use_from_same_package
+          orderDescending,
       orderByList: orderByList?.call(DownloadRecord.t),
       include: include,
     );
@@ -118,15 +124,13 @@ abstract class DownloadRecord
 
   @override
   String toString() {
-    return _is.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
-class _Undefined {}
-
 class _DownloadRecordImpl extends DownloadRecord {
   _DownloadRecordImpl({
-    int? id,
+    _i1.UuidValue? id,
     required int childId,
     required int bookId,
     required String deviceId,
@@ -141,17 +145,17 @@ class _DownloadRecordImpl extends DownloadRecord {
 
   /// Returns a shallow copy of this [DownloadRecord]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   @override
   DownloadRecord copyWith({
-    Object? id = _Undefined,
+    _i1.UuidValue? id,
     int? childId,
     int? bookId,
     String? deviceId,
     DateTime? downloadedAt,
   }) {
     return DownloadRecord(
-      id: id is int? ? id : this.id,
+      id: id ?? this.id,
       childId: childId ?? this.childId,
       bookId: bookId ?? this.bookId,
       deviceId: deviceId ?? this.deviceId,
@@ -160,48 +164,48 @@ class _DownloadRecordImpl extends DownloadRecord {
   }
 }
 
-class DownloadRecordUpdateTable extends _is.UpdateTable<DownloadRecordTable> {
+class DownloadRecordUpdateTable extends _i1.UpdateTable<DownloadRecordTable> {
   DownloadRecordUpdateTable(super.table);
 
-  _is.ColumnValue<int, int> childId(int value) => _is.ColumnValue(
+  _i1.ColumnValue<int, int> childId(int value) => _i1.ColumnValue(
     table.childId,
     value,
   );
 
-  _is.ColumnValue<int, int> bookId(int value) => _is.ColumnValue(
+  _i1.ColumnValue<int, int> bookId(int value) => _i1.ColumnValue(
     table.bookId,
     value,
   );
 
-  _is.ColumnValue<String, String> deviceId(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> deviceId(String value) => _i1.ColumnValue(
     table.deviceId,
     value,
   );
 
-  _is.ColumnValue<DateTime, DateTime> downloadedAt(DateTime value) =>
-      _is.ColumnValue(
+  _i1.ColumnValue<DateTime, DateTime> downloadedAt(DateTime value) =>
+      _i1.ColumnValue(
         table.downloadedAt,
         value,
       );
 }
 
-class DownloadRecordTable extends _is.Table<int?> {
+class DownloadRecordTable extends _i1.Table<_i1.UuidValue> {
   DownloadRecordTable({super.tableRelation})
-    : super(tableName: 'download_record') {
+    : super(tableName: 'download_records') {
     updateTable = DownloadRecordUpdateTable(this);
-    childId = _is.ColumnInt(
+    childId = _i1.ColumnInt(
       'childId',
       this,
     );
-    bookId = _is.ColumnInt(
+    bookId = _i1.ColumnInt(
       'bookId',
       this,
     );
-    deviceId = _is.ColumnString(
+    deviceId = _i1.ColumnString(
       'deviceId',
       this,
     );
-    downloadedAt = _is.ColumnDateTime(
+    downloadedAt = _i1.ColumnDateTime(
       'downloadedAt',
       this,
     );
@@ -209,16 +213,16 @@ class DownloadRecordTable extends _is.Table<int?> {
 
   late final DownloadRecordUpdateTable updateTable;
 
-  late final _is.ColumnInt childId;
+  late final _i1.ColumnInt childId;
 
-  late final _is.ColumnInt bookId;
+  late final _i1.ColumnInt bookId;
 
-  late final _is.ColumnString deviceId;
+  late final _i1.ColumnString deviceId;
 
-  late final _is.ColumnDateTime downloadedAt;
+  late final _i1.ColumnDateTime downloadedAt;
 
   @override
-  List<_is.Column> get columns => [
+  List<_i1.Column> get columns => [
     id,
     childId,
     bookId,
@@ -227,22 +231,24 @@ class DownloadRecordTable extends _is.Table<int?> {
   ];
 }
 
-class DownloadRecordInclude extends _is.IncludeObject {
+class DownloadRecordInclude extends _i1.IncludeObject {
   DownloadRecordInclude._();
 
   @override
-  Map<String, _is.Include?> get includes => {};
+  Map<String, _i1.Include?> get includes => {};
 
   @override
-  _is.Table<int?> get table => DownloadRecord.t;
+  _i1.Table<_i1.UuidValue> get table => DownloadRecord.t;
 }
 
-class DownloadRecordIncludeList extends _is.IncludeList {
+class DownloadRecordIncludeList extends _i1.IncludeList {
   DownloadRecordIncludeList._({
-    _is.WhereExpressionBuilder<DownloadRecordTable>? where,
+    _i1.WhereExpressionBuilder<DownloadRecordTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -250,10 +256,10 @@ class DownloadRecordIncludeList extends _is.IncludeList {
   }
 
   @override
-  Map<String, _is.Include?> get includes => include?.includes ?? {};
+  Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _is.Table<int?> get table => DownloadRecord.t;
+  _i1.Table<_i1.UuidValue> get table => DownloadRecord.t;
 }
 
 class DownloadRecordRepository {
@@ -282,20 +288,24 @@ class DownloadRecordRepository {
   /// );
   /// ```
   Future<List<DownloadRecord>> find(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<DownloadRecordTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<DownloadRecordTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<DownloadRecordTable>? orderBy,
-    _is.OrderByListBuilder<DownloadRecordTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<DownloadRecordTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<DownloadRecordTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<DownloadRecord>(
       where: where?.call(DownloadRecord.t),
       orderBy: orderBy?.call(DownloadRecord.t),
       orderByList: orderByList?.call(DownloadRecord.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -322,19 +332,23 @@ class DownloadRecordRepository {
   /// );
   /// ```
   Future<DownloadRecord?> findFirstRow(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<DownloadRecordTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<DownloadRecordTable>? where,
     int? offset,
-    _is.OrderByBuilder<DownloadRecordTable>? orderBy,
-    _is.OrderByListBuilder<DownloadRecordTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<DownloadRecordTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<DownloadRecordTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<DownloadRecord>(
       where: where?.call(DownloadRecord.t),
       orderBy: orderBy?.call(DownloadRecord.t),
       orderByList: orderByList?.call(DownloadRecord.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -344,11 +358,11 @@ class DownloadRecordRepository {
 
   /// Finds a single [DownloadRecord] by its [id] or null if no such row exists.
   Future<DownloadRecord?> findById(
-    _is.DatabaseSession session,
-    int id, {
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.DatabaseSession session,
+    _i1.UuidValue id, {
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<DownloadRecord>(
       id,
@@ -373,9 +387,9 @@ class DownloadRecordRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<DownloadRecord>> insert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<DownloadRecord> rows, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -391,9 +405,9 @@ class DownloadRecordRepository {
   ///
   /// The returned [DownloadRecord] will have its `id` field set.
   Future<DownloadRecord> insertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     DownloadRecord row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.insertRow<DownloadRecord>(
       row,
@@ -422,12 +436,12 @@ class DownloadRecordRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<DownloadRecord>> upsert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<DownloadRecord> rows, {
-    required _is.ColumnSelections<DownloadRecordTable> conflictColumns,
-    _is.ColumnSelections<DownloadRecordTable>? updateColumns,
-    _is.WhereExpressionBuilder<DownloadRecordTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<DownloadRecordTable> conflictColumns,
+    _i1.ColumnSelections<DownloadRecordTable>? updateColumns,
+    _i1.WhereExpressionBuilder<DownloadRecordTable>? updateWhere,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<DownloadRecord>(
@@ -454,12 +468,12 @@ class DownloadRecordRepository {
   ///
   /// The returned [DownloadRecord] will have its `id` field set.
   Future<DownloadRecord?> upsertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     DownloadRecord row, {
-    required _is.ColumnSelections<DownloadRecordTable> conflictColumns,
-    _is.ColumnSelections<DownloadRecordTable>? updateColumns,
-    _is.WhereExpressionBuilder<DownloadRecordTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<DownloadRecordTable> conflictColumns,
+    _i1.ColumnSelections<DownloadRecordTable>? updateColumns,
+    _i1.WhereExpressionBuilder<DownloadRecordTable>? updateWhere,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.upsertRow<DownloadRecord>(
       row,
@@ -480,10 +494,10 @@ class DownloadRecordRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<DownloadRecord>> update(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<DownloadRecord> rows, {
-    _is.ColumnSelections<DownloadRecordTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<DownloadRecordTable>? columns,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<DownloadRecord>(
@@ -498,10 +512,10 @@ class DownloadRecordRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<DownloadRecord> updateRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     DownloadRecord row, {
-    _is.ColumnSelections<DownloadRecordTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<DownloadRecordTable>? columns,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateRow<DownloadRecord>(
       row,
@@ -513,10 +527,10 @@ class DownloadRecordRepository {
   /// Updates a single [DownloadRecord] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<DownloadRecord?> updateById(
-    _is.DatabaseSession session,
-    int id, {
-    required _is.ColumnValueListBuilder<DownloadRecordUpdateTable> columnValues,
-    _is.Transaction? transaction,
+    _i1.DatabaseSession session,
+    _i1.UuidValue id, {
+    required _i1.ColumnValueListBuilder<DownloadRecordUpdateTable> columnValues,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateById<DownloadRecord>(
       id,
@@ -532,14 +546,16 @@ class DownloadRecordRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<DownloadRecord>> updateWhere(
-    _is.DatabaseSession session, {
-    required _is.ColumnValueListBuilder<DownloadRecordUpdateTable> columnValues,
-    required _is.WhereExpressionBuilder<DownloadRecordTable> where,
+    _i1.DatabaseSession session, {
+    required _i1.ColumnValueListBuilder<DownloadRecordUpdateTable> columnValues,
+    required _i1.WhereExpressionBuilder<DownloadRecordTable> where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<DownloadRecordTable>? orderBy,
-    _is.OrderByListBuilder<DownloadRecordTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<DownloadRecordTable>? orderBy,
+    _i1.OrderByListBuilder<DownloadRecordTable>? orderByList,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<DownloadRecord>(
@@ -549,6 +565,8 @@ class DownloadRecordRepository {
       offset: offset,
       orderBy: orderBy?.call(DownloadRecord.t),
       orderByList: orderByList?.call(DownloadRecord.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -566,17 +584,21 @@ class DownloadRecordRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<DownloadRecord>> delete(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<DownloadRecord> rows, {
-    _is.OrderByBuilder<DownloadRecordTable>? orderBy,
-    _is.OrderByListBuilder<DownloadRecordTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<DownloadRecordTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<DownloadRecordTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<DownloadRecord>(
       rows,
       orderBy: orderBy?.call(DownloadRecord.t),
       orderByList: orderByList?.call(DownloadRecord.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -584,9 +606,9 @@ class DownloadRecordRepository {
 
   /// Deletes a single [DownloadRecord].
   Future<DownloadRecord> deleteRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     DownloadRecord row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.deleteRow<DownloadRecord>(
       row,
@@ -603,17 +625,21 @@ class DownloadRecordRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<DownloadRecord>> deleteWhere(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<DownloadRecordTable> where,
-    _is.OrderByBuilder<DownloadRecordTable>? orderBy,
-    _is.OrderByListBuilder<DownloadRecordTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<DownloadRecordTable> where,
+    _i1.OrderByBuilder<DownloadRecordTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<DownloadRecordTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<DownloadRecord>(
       where: where(DownloadRecord.t),
       orderBy: orderBy?.call(DownloadRecord.t),
       orderByList: orderByList?.call(DownloadRecord.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -622,10 +648,10 @@ class DownloadRecordRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<DownloadRecordTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<DownloadRecordTable>? where,
     int? limit,
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.count<DownloadRecord>(
       where: where?.call(DownloadRecord.t),
@@ -636,11 +662,11 @@ class DownloadRecordRepository {
 
   /// Acquires row-level locks on [DownloadRecord] rows matching the [where] expression.
   Future<void> lockRows(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<DownloadRecordTable> where,
-    required _is.LockMode lockMode,
-    required _is.Transaction transaction,
-    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<DownloadRecordTable> where,
+    required _i1.LockMode lockMode,
+    required _i1.Transaction transaction,
+    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
   }) async {
     return session.db.lockRows<DownloadRecord>(
       where: where(DownloadRecord.t),

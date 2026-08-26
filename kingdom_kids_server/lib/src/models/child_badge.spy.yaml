@@ -1,10 +1,10 @@
 class: ChildBadge
-table: child_badge
+table: child_badges
 fields:
   childId: int, relation(parent=child_profiles, onDelete=Cascade)
-  badgeId: int, relation(parent=badge)
+  badgeId: int, relation(parent=badges)
   earnedAt: DateTime
 indexes:
-  idx_child_badges_child_badge:
+  child_badges_child_badge_idx:
     fields: childId, badgeId
     unique: true

@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '^3.10.3'
+  sdk: '^3.12.0'
   flutter: '^3.38.4'
 
 resolution: workspace
@@ -29,11 +29,14 @@ dependencies:
   cupertino_icons: ^1.0.5
   flutter:
     sdk: flutter
+  go_router: ^18.0.0
   google_fonts: ^8.1.0
   kingdom_kids_client:
     path: ../kingdom_kids_client
-  serverpod_auth_idp_flutter: 4.0.0-beta.4
-  serverpod_flutter: 4.0.0-beta.4
+  provider: ^6.1.5+1
+  serverpod_auth_idp_flutter: 4.0.0-beta.0
+  serverpod_flutter: 4.0.0-beta.0
+  supabase_flutter: ^2.17.2
 
 dev_dependencies:
   # Used for agents to drive the app through the Dart MCP
