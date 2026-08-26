@@ -34,8 +34,8 @@ dependencies:
   kingdom_kids_client:
     path: ../kingdom_kids_client
   provider: ^6.1.5+1
-  serverpod_auth_idp_flutter: 4.0.0-beta.4
-  serverpod_flutter: 4.0.0-beta.4
+  serverpod_auth_idp_flutter: 4.0.0-beta.0
+  serverpod_flutter: 4.0.0-beta.0
   supabase_flutter: ^2.17.2
 
 dev_dependencies:

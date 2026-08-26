@@ -11,6 +11,8 @@
 // ignore_for_file: dead_code, unnecessary_type_check
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:kingdom_kids_client/src/protocol/child_profile.dart'
+    as _iau7mj9f;
 import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
     as _iacc;
 import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
@@ -168,6 +170,12 @@ class Protocol extends _isc.SerializationManager {
     }
     if (t == _isc.getType<_i2h1sfz6.ReadingProgress?>()) {
       return (data != null ? _i2h1sfz6.ReadingProgress.fromJson(data) : null)
+          as T;
+    }
+    if (t == List<_iau7mj9f.ChildProfile>) {
+      return (data as List)
+              .map((e) => deserialize<_iau7mj9f.ChildProfile>(e))
+              .toList()
           as T;
     }
     try {

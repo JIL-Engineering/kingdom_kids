@@ -1,1 +1,0 @@
-Dossier des ressources de base de donnees du projet.

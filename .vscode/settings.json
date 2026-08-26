@@ -1,5 +1,0 @@
-{
-  "terminal.integrated.env.linux": {
-    "PATH": "${env:HOME}/.pub-cache/bin:${env:PATH}"
-  }
-}

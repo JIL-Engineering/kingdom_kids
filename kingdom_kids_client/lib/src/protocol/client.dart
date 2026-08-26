@@ -13,6 +13,8 @@
 import 'dart:async' as _ida;
 import 'package:http/http.dart' as _i85jenna;
 import 'package:kingdom_kids_client/src/protocol/app_user.dart' as _ipxjsvhn;
+import 'package:kingdom_kids_client/src/protocol/child_profile.dart'
+    as _iau7mj9f;
 import 'package:kingdom_kids_client/src/protocol/greetings/greeting.dart'
     as _ipwyumbq;
 import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
@@ -281,6 +283,57 @@ class EndpointBadge extends _isc.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointChild extends _isc.EndpointRef {
+  EndpointChild(_isc.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'child';
+
+  /// Liste uniquement les enfants du parent connecté
+  _ida.Future<List<_iau7mj9f.ChildProfile>> listChildren() =>
+      caller.callServerEndpoint<List<_iau7mj9f.ChildProfile>>(
+        'child',
+        'listChildren',
+        {},
+      );
+
+  /// Crée un enfant via le service sécurisé
+  _ida.Future<_iau7mj9f.ChildProfile> createChild(
+    String displayName,
+    int birthYear,
+    String preferredLanguage,
+    String avatarId,
+  ) => caller.callServerEndpoint<_iau7mj9f.ChildProfile>(
+    'child',
+    'createChild',
+    {
+      'displayName': displayName,
+      'birthYear': birthYear,
+      'preferredLanguage': preferredLanguage,
+      'avatarId': avatarId,
+    },
+  );
+
+  _ida.Future<_iau7mj9f.ChildProfile> updateChild(
+    int childId,
+    String displayName,
+    int birthYear,
+    String preferredLanguage,
+    String avatarId,
+  ) => caller.callServerEndpoint<_iau7mj9f.ChildProfile>(
+    'child',
+    'updateChild',
+    {
+      'childId': childId,
+      'displayName': displayName,
+      'birthYear': birthYear,
+      'preferredLanguage': preferredLanguage,
+      'avatarId': avatarId,
+    },
+  );
+}
+
+/// {@category Endpoint}
 class EndpointDashboard extends _isc.EndpointRef {
   EndpointDashboard(_isc.EndpointCaller caller) : super(caller);
 
@@ -394,6 +447,7 @@ class Client extends _isc.ServerpodClientShared {
     jwtRefresh = EndpointJwtRefresh(this);
     auth = EndpointAuth(this);
     badge = EndpointBadge(this);
+    child = EndpointChild(this);
     dashboard = EndpointDashboard(this);
     devotional = EndpointDevotional(this);
     library = EndpointLibrary(this);
@@ -410,6 +464,8 @@ class Client extends _isc.ServerpodClientShared {
   late final EndpointAuth auth;
 
   late final EndpointBadge badge;
+
+  late final EndpointChild child;
 
   late final EndpointDashboard dashboard;
 
@@ -431,6 +487,7 @@ class Client extends _isc.ServerpodClientShared {
     'jwtRefresh': jwtRefresh,
     'auth': auth,
     'badge': badge,
+    'child': child,
     'dashboard': dashboard,
     'devotional': devotional,
     'library': library,
