@@ -19,6 +19,7 @@ import '../auth/email_idp_endpoint.dart' as _iuc1hd5t;
 import '../auth/jwt_refresh_endpoint.dart' as _inwq3ztq;
 import '../endpoints/auth_endpoint.dart' as _iyggisn2;
 import '../endpoints/badge_endpoint.dart' as _i69molf6;
+import '../endpoints/child_endpoint.dart' as _iwc9vzr7;
 import '../endpoints/dashboard_endpoint.dart' as _ibmx856o;
 import '../endpoints/devotional_endpoint.dart' as _izk0rdl5;
 import '../endpoints/library_endpoint.dart' as _iqlmnpik;
@@ -52,6 +53,12 @@ class Endpoints extends _is.EndpointDispatch {
         ..initialize(
           server,
           'badge',
+          null,
+        ),
+      'child': _iwc9vzr7.ChildEndpoint()
+        ..initialize(
+          server,
+          'child',
           null,
         ),
       'dashboard': _ibmx856o.DashboardEndpoint()
@@ -344,6 +351,102 @@ class Endpoints extends _is.EndpointDispatch {
       name: 'badge',
       endpoint: endpoints['badge']!,
       methodConnectors: {},
+    );
+    connectors['child'] = _is.EndpointConnector(
+      name: 'child',
+      endpoint: endpoints['child']!,
+      methodConnectors: {
+        'listChildren': _is.MethodConnector(
+          name: 'listChildren',
+          params: {},
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['child'] as _iwc9vzr7.ChildEndpoint)
+                  .listChildren(session),
+        ),
+        'createChild': _is.MethodConnector(
+          name: 'createChild',
+          params: {
+            'displayName': _is.ParameterDescription(
+              name: 'displayName',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'birthYear': _is.ParameterDescription(
+              name: 'birthYear',
+              type: _is.getType<int>(),
+              nullable: false,
+            ),
+            'preferredLanguage': _is.ParameterDescription(
+              name: 'preferredLanguage',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'avatarId': _is.ParameterDescription(
+              name: 'avatarId',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['child'] as _iwc9vzr7.ChildEndpoint).createChild(
+                    session,
+                    params['displayName'],
+                    params['birthYear'],
+                    params['preferredLanguage'],
+                    params['avatarId'],
+                  ),
+        ),
+        'updateChild': _is.MethodConnector(
+          name: 'updateChild',
+          params: {
+            'childId': _is.ParameterDescription(
+              name: 'childId',
+              type: _is.getType<int>(),
+              nullable: false,
+            ),
+            'displayName': _is.ParameterDescription(
+              name: 'displayName',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'birthYear': _is.ParameterDescription(
+              name: 'birthYear',
+              type: _is.getType<int>(),
+              nullable: false,
+            ),
+            'preferredLanguage': _is.ParameterDescription(
+              name: 'preferredLanguage',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'avatarId': _is.ParameterDescription(
+              name: 'avatarId',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['child'] as _iwc9vzr7.ChildEndpoint).updateChild(
+                    session,
+                    params['childId'],
+                    params['displayName'],
+                    params['birthYear'],
+                    params['preferredLanguage'],
+                    params['avatarId'],
+                  ),
+        ),
+      },
     );
     connectors['dashboard'] = _is.EndpointConnector(
       name: 'dashboard',

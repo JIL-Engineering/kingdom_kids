@@ -12,6 +12,10 @@ jwtRefresh:
 auth:
   - completeProfile:
 badge:
+child:
+  - listChildren:
+  - createChild:
+  - updateChild:
 dashboard:
 devotional:
 library:

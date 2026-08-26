@@ -14,6 +14,8 @@
 import 'dart:async' as _ida;
 import 'dart:io' as _idi;
 import 'package:kingdom_kids_server/src/generated/app_user.dart' as _imp9n1ua;
+import 'package:kingdom_kids_server/src/generated/child_profile.dart'
+    as _i7m2af96;
 import 'package:kingdom_kids_server/src/generated/greetings/greeting.dart'
     as _ijwjakhq;
 import 'package:serverpod/serverpod.dart' as _is;
@@ -156,6 +158,8 @@ class TestEndpoints {
 
   late final _BadgeEndpoint badge;
 
+  late final _ChildEndpoint child;
+
   late final _DashboardEndpoint dashboard;
 
   late final _DevotionalEndpoint devotional;
@@ -189,6 +193,10 @@ class _InternalTestEndpoints extends TestEndpoints
       serializationManager,
     );
     badge = _BadgeEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    child = _ChildEndpoint(
       endpoints,
       serializationManager,
     );
@@ -592,6 +600,127 @@ class _BadgeEndpoint {
     _endpointDispatch,
     _serializationManager,
   );
+}
+
+class _ChildEndpoint {
+  _ChildEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _is.EndpointDispatch _endpointDispatch;
+
+  final _is.SerializationManager _serializationManager;
+
+  _ida.Future<List<_i7m2af96.ChildProfile>> listChildren(
+    _ist.TestSessionBuilder sessionBuilder,
+  ) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'child',
+            method: 'listChildren',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'child',
+          methodName: 'listChildren',
+          parameters: _ist.testObjectToJson({}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<List<_i7m2af96.ChildProfile>>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _ida.Future<_i7m2af96.ChildProfile> createChild(
+    _ist.TestSessionBuilder sessionBuilder,
+    String displayName,
+    int birthYear,
+    String preferredLanguage,
+    String avatarId,
+  ) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'child',
+            method: 'createChild',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'child',
+          methodName: 'createChild',
+          parameters: _ist.testObjectToJson({
+            'displayName': displayName,
+            'birthYear': birthYear,
+            'preferredLanguage': preferredLanguage,
+            'avatarId': avatarId,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_i7m2af96.ChildProfile>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _ida.Future<_i7m2af96.ChildProfile> updateChild(
+    _ist.TestSessionBuilder sessionBuilder,
+    int childId,
+    String displayName,
+    int birthYear,
+    String preferredLanguage,
+    String avatarId,
+  ) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'child',
+            method: 'updateChild',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'child',
+          methodName: 'updateChild',
+          parameters: _ist.testObjectToJson({
+            'childId': childId,
+            'displayName': displayName,
+            'birthYear': birthYear,
+            'preferredLanguage': preferredLanguage,
+            'avatarId': avatarId,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_i7m2af96.ChildProfile>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
 }
 
 class _DashboardEndpoint {
