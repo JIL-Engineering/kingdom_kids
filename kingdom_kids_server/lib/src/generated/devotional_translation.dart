@@ -10,10 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _is;
+import 'package:serverpod/serverpod.dart' as _i1;
 
 abstract class DevotionalTranslation
-    implements _is.TableRow<int?>, _is.ProtocolSerialization {
+    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   DevotionalTranslation._({
     this.id,
     required this.devotionalId,
@@ -68,11 +68,11 @@ abstract class DevotionalTranslation
   String prayerPrompt;
 
   @override
-  _is.Table<int?> get table => t;
+  _i1.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [DevotionalTranslation]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   DevotionalTranslation copyWith({
     int? id,
     int? devotionalId,
@@ -115,11 +115,13 @@ abstract class DevotionalTranslation
   }
 
   static DevotionalTranslationIncludeList includeList({
-    _is.WhereExpressionBuilder<DevotionalTranslationTable>? where,
+    _i1.WhereExpressionBuilder<DevotionalTranslationTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<DevotionalTranslationTable>? orderBy,
-    _is.OrderByListBuilder<DevotionalTranslationTable>? orderByList,
+    _i1.OrderByBuilder<DevotionalTranslationTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<DevotionalTranslationTable>? orderByList,
     DevotionalTranslationInclude? include,
   }) {
     return DevotionalTranslationIncludeList._(
@@ -127,6 +129,8 @@ abstract class DevotionalTranslation
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(DevotionalTranslation.t),
+      orderDescending: // ignore: deprecated_member_use_from_same_package
+          orderDescending,
       orderByList: orderByList?.call(DevotionalTranslation.t),
       include: include,
     );
@@ -134,7 +138,7 @@ abstract class DevotionalTranslation
 
   @override
   String toString() {
-    return _is.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -161,7 +165,7 @@ class _DevotionalTranslationImpl extends DevotionalTranslation {
 
   /// Returns a shallow copy of this [DevotionalTranslation]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   @override
   DevotionalTranslation copyWith({
     Object? id = _Undefined,
@@ -185,66 +189,66 @@ class _DevotionalTranslationImpl extends DevotionalTranslation {
 }
 
 class DevotionalTranslationUpdateTable
-    extends _is.UpdateTable<DevotionalTranslationTable> {
+    extends _i1.UpdateTable<DevotionalTranslationTable> {
   DevotionalTranslationUpdateTable(super.table);
 
-  _is.ColumnValue<int, int> devotionalId(int value) => _is.ColumnValue(
+  _i1.ColumnValue<int, int> devotionalId(int value) => _i1.ColumnValue(
     table.devotionalId,
     value,
   );
 
-  _is.ColumnValue<String, String> language(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> language(String value) => _i1.ColumnValue(
     table.language,
     value,
   );
 
-  _is.ColumnValue<String, String> verseReference(String value) =>
-      _is.ColumnValue(
+  _i1.ColumnValue<String, String> verseReference(String value) =>
+      _i1.ColumnValue(
         table.verseReference,
         value,
       );
 
-  _is.ColumnValue<String, String> verseText(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> verseText(String value) => _i1.ColumnValue(
     table.verseText,
     value,
   );
 
-  _is.ColumnValue<String, String> thoughtText(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> thoughtText(String value) => _i1.ColumnValue(
     table.thoughtText,
     value,
   );
 
-  _is.ColumnValue<String, String> prayerPrompt(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> prayerPrompt(String value) => _i1.ColumnValue(
     table.prayerPrompt,
     value,
   );
 }
 
-class DevotionalTranslationTable extends _is.Table<int?> {
+class DevotionalTranslationTable extends _i1.Table<int?> {
   DevotionalTranslationTable({super.tableRelation})
     : super(tableName: 'devotional_translations') {
     updateTable = DevotionalTranslationUpdateTable(this);
-    devotionalId = _is.ColumnInt(
+    devotionalId = _i1.ColumnInt(
       'devotionalId',
       this,
     );
-    language = _is.ColumnString(
+    language = _i1.ColumnString(
       'language',
       this,
     );
-    verseReference = _is.ColumnString(
+    verseReference = _i1.ColumnString(
       'verseReference',
       this,
     );
-    verseText = _is.ColumnString(
+    verseText = _i1.ColumnString(
       'verseText',
       this,
     );
-    thoughtText = _is.ColumnString(
+    thoughtText = _i1.ColumnString(
       'thoughtText',
       this,
     );
-    prayerPrompt = _is.ColumnString(
+    prayerPrompt = _i1.ColumnString(
       'prayerPrompt',
       this,
     );
@@ -252,20 +256,20 @@ class DevotionalTranslationTable extends _is.Table<int?> {
 
   late final DevotionalTranslationUpdateTable updateTable;
 
-  late final _is.ColumnInt devotionalId;
+  late final _i1.ColumnInt devotionalId;
 
-  late final _is.ColumnString language;
+  late final _i1.ColumnString language;
 
-  late final _is.ColumnString verseReference;
+  late final _i1.ColumnString verseReference;
 
-  late final _is.ColumnString verseText;
+  late final _i1.ColumnString verseText;
 
-  late final _is.ColumnString thoughtText;
+  late final _i1.ColumnString thoughtText;
 
-  late final _is.ColumnString prayerPrompt;
+  late final _i1.ColumnString prayerPrompt;
 
   @override
-  List<_is.Column> get columns => [
+  List<_i1.Column> get columns => [
     id,
     devotionalId,
     language,
@@ -276,22 +280,24 @@ class DevotionalTranslationTable extends _is.Table<int?> {
   ];
 }
 
-class DevotionalTranslationInclude extends _is.IncludeObject {
+class DevotionalTranslationInclude extends _i1.IncludeObject {
   DevotionalTranslationInclude._();
 
   @override
-  Map<String, _is.Include?> get includes => {};
+  Map<String, _i1.Include?> get includes => {};
 
   @override
-  _is.Table<int?> get table => DevotionalTranslation.t;
+  _i1.Table<int?> get table => DevotionalTranslation.t;
 }
 
-class DevotionalTranslationIncludeList extends _is.IncludeList {
+class DevotionalTranslationIncludeList extends _i1.IncludeList {
   DevotionalTranslationIncludeList._({
-    _is.WhereExpressionBuilder<DevotionalTranslationTable>? where,
+    _i1.WhereExpressionBuilder<DevotionalTranslationTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -299,10 +305,10 @@ class DevotionalTranslationIncludeList extends _is.IncludeList {
   }
 
   @override
-  Map<String, _is.Include?> get includes => include?.includes ?? {};
+  Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _is.Table<int?> get table => DevotionalTranslation.t;
+  _i1.Table<int?> get table => DevotionalTranslation.t;
 }
 
 class DevotionalTranslationRepository {
@@ -331,20 +337,24 @@ class DevotionalTranslationRepository {
   /// );
   /// ```
   Future<List<DevotionalTranslation>> find(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<DevotionalTranslationTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<DevotionalTranslationTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<DevotionalTranslationTable>? orderBy,
-    _is.OrderByListBuilder<DevotionalTranslationTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<DevotionalTranslationTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<DevotionalTranslationTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<DevotionalTranslation>(
       where: where?.call(DevotionalTranslation.t),
       orderBy: orderBy?.call(DevotionalTranslation.t),
       orderByList: orderByList?.call(DevotionalTranslation.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -371,19 +381,23 @@ class DevotionalTranslationRepository {
   /// );
   /// ```
   Future<DevotionalTranslation?> findFirstRow(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<DevotionalTranslationTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<DevotionalTranslationTable>? where,
     int? offset,
-    _is.OrderByBuilder<DevotionalTranslationTable>? orderBy,
-    _is.OrderByListBuilder<DevotionalTranslationTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<DevotionalTranslationTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<DevotionalTranslationTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<DevotionalTranslation>(
       where: where?.call(DevotionalTranslation.t),
       orderBy: orderBy?.call(DevotionalTranslation.t),
       orderByList: orderByList?.call(DevotionalTranslation.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -393,11 +407,11 @@ class DevotionalTranslationRepository {
 
   /// Finds a single [DevotionalTranslation] by its [id] or null if no such row exists.
   Future<DevotionalTranslation?> findById(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     int id, {
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<DevotionalTranslation>(
       id,
@@ -422,9 +436,9 @@ class DevotionalTranslationRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<DevotionalTranslation>> insert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<DevotionalTranslation> rows, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -440,9 +454,9 @@ class DevotionalTranslationRepository {
   ///
   /// The returned [DevotionalTranslation] will have its `id` field set.
   Future<DevotionalTranslation> insertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     DevotionalTranslation row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.insertRow<DevotionalTranslation>(
       row,
@@ -471,12 +485,12 @@ class DevotionalTranslationRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<DevotionalTranslation>> upsert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<DevotionalTranslation> rows, {
-    required _is.ColumnSelections<DevotionalTranslationTable> conflictColumns,
-    _is.ColumnSelections<DevotionalTranslationTable>? updateColumns,
-    _is.WhereExpressionBuilder<DevotionalTranslationTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<DevotionalTranslationTable> conflictColumns,
+    _i1.ColumnSelections<DevotionalTranslationTable>? updateColumns,
+    _i1.WhereExpressionBuilder<DevotionalTranslationTable>? updateWhere,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<DevotionalTranslation>(
@@ -503,12 +517,12 @@ class DevotionalTranslationRepository {
   ///
   /// The returned [DevotionalTranslation] will have its `id` field set.
   Future<DevotionalTranslation?> upsertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     DevotionalTranslation row, {
-    required _is.ColumnSelections<DevotionalTranslationTable> conflictColumns,
-    _is.ColumnSelections<DevotionalTranslationTable>? updateColumns,
-    _is.WhereExpressionBuilder<DevotionalTranslationTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<DevotionalTranslationTable> conflictColumns,
+    _i1.ColumnSelections<DevotionalTranslationTable>? updateColumns,
+    _i1.WhereExpressionBuilder<DevotionalTranslationTable>? updateWhere,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.upsertRow<DevotionalTranslation>(
       row,
@@ -529,10 +543,10 @@ class DevotionalTranslationRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<DevotionalTranslation>> update(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<DevotionalTranslation> rows, {
-    _is.ColumnSelections<DevotionalTranslationTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<DevotionalTranslationTable>? columns,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<DevotionalTranslation>(
@@ -547,10 +561,10 @@ class DevotionalTranslationRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<DevotionalTranslation> updateRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     DevotionalTranslation row, {
-    _is.ColumnSelections<DevotionalTranslationTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<DevotionalTranslationTable>? columns,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateRow<DevotionalTranslation>(
       row,
@@ -562,11 +576,11 @@ class DevotionalTranslationRepository {
   /// Updates a single [DevotionalTranslation] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<DevotionalTranslation?> updateById(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     int id, {
-    required _is.ColumnValueListBuilder<DevotionalTranslationUpdateTable>
+    required _i1.ColumnValueListBuilder<DevotionalTranslationUpdateTable>
     columnValues,
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateById<DevotionalTranslation>(
       id,
@@ -582,15 +596,17 @@ class DevotionalTranslationRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<DevotionalTranslation>> updateWhere(
-    _is.DatabaseSession session, {
-    required _is.ColumnValueListBuilder<DevotionalTranslationUpdateTable>
+    _i1.DatabaseSession session, {
+    required _i1.ColumnValueListBuilder<DevotionalTranslationUpdateTable>
     columnValues,
-    required _is.WhereExpressionBuilder<DevotionalTranslationTable> where,
+    required _i1.WhereExpressionBuilder<DevotionalTranslationTable> where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<DevotionalTranslationTable>? orderBy,
-    _is.OrderByListBuilder<DevotionalTranslationTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<DevotionalTranslationTable>? orderBy,
+    _i1.OrderByListBuilder<DevotionalTranslationTable>? orderByList,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<DevotionalTranslation>(
@@ -600,6 +616,8 @@ class DevotionalTranslationRepository {
       offset: offset,
       orderBy: orderBy?.call(DevotionalTranslation.t),
       orderByList: orderByList?.call(DevotionalTranslation.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -617,17 +635,21 @@ class DevotionalTranslationRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<DevotionalTranslation>> delete(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<DevotionalTranslation> rows, {
-    _is.OrderByBuilder<DevotionalTranslationTable>? orderBy,
-    _is.OrderByListBuilder<DevotionalTranslationTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<DevotionalTranslationTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<DevotionalTranslationTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<DevotionalTranslation>(
       rows,
       orderBy: orderBy?.call(DevotionalTranslation.t),
       orderByList: orderByList?.call(DevotionalTranslation.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -635,9 +657,9 @@ class DevotionalTranslationRepository {
 
   /// Deletes a single [DevotionalTranslation].
   Future<DevotionalTranslation> deleteRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     DevotionalTranslation row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.deleteRow<DevotionalTranslation>(
       row,
@@ -654,17 +676,21 @@ class DevotionalTranslationRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<DevotionalTranslation>> deleteWhere(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<DevotionalTranslationTable> where,
-    _is.OrderByBuilder<DevotionalTranslationTable>? orderBy,
-    _is.OrderByListBuilder<DevotionalTranslationTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<DevotionalTranslationTable> where,
+    _i1.OrderByBuilder<DevotionalTranslationTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<DevotionalTranslationTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<DevotionalTranslation>(
       where: where(DevotionalTranslation.t),
       orderBy: orderBy?.call(DevotionalTranslation.t),
       orderByList: orderByList?.call(DevotionalTranslation.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -673,10 +699,10 @@ class DevotionalTranslationRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<DevotionalTranslationTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<DevotionalTranslationTable>? where,
     int? limit,
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.count<DevotionalTranslation>(
       where: where?.call(DevotionalTranslation.t),
@@ -687,11 +713,11 @@ class DevotionalTranslationRepository {
 
   /// Acquires row-level locks on [DevotionalTranslation] rows matching the [where] expression.
   Future<void> lockRows(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<DevotionalTranslationTable> where,
-    required _is.LockMode lockMode,
-    required _is.Transaction transaction,
-    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<DevotionalTranslationTable> where,
+    required _i1.LockMode lockMode,
+    required _i1.Transaction transaction,
+    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
   }) async {
     return session.db.lockRows<DevotionalTranslation>(
       where: where(DevotionalTranslation.t),

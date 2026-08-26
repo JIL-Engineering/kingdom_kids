@@ -10,10 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _is;
+import 'package:serverpod/serverpod.dart' as _i1;
 
 abstract class ChildProfile
-    implements _is.TableRow<int?>, _is.ProtocolSerialization {
+    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   ChildProfile._({
     this.id,
     required this.parentId,
@@ -47,10 +47,10 @@ abstract class ChildProfile
       ageBracket: jsonSerialization['ageBracket'] as String,
       preferredLanguage: jsonSerialization['preferredLanguage'] as String,
       avatarId: jsonSerialization['avatarId'] as String,
-      pinProtected: _is.BoolJsonExtension.fromJson(
+      pinProtected: _i1.BoolJsonExtension.fromJson(
         jsonSerialization['pinProtected'],
       ),
-      createdAt: _is.DateTimeJsonExtension.fromJson(
+      createdAt: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['createdAt'],
       ),
     );
@@ -80,11 +80,11 @@ abstract class ChildProfile
   DateTime createdAt;
 
   @override
-  _is.Table<int?> get table => t;
+  _i1.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [ChildProfile]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   ChildProfile copyWith({
     int? id,
     int? parentId,
@@ -133,11 +133,13 @@ abstract class ChildProfile
   }
 
   static ChildProfileIncludeList includeList({
-    _is.WhereExpressionBuilder<ChildProfileTable>? where,
+    _i1.WhereExpressionBuilder<ChildProfileTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<ChildProfileTable>? orderBy,
-    _is.OrderByListBuilder<ChildProfileTable>? orderByList,
+    _i1.OrderByBuilder<ChildProfileTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<ChildProfileTable>? orderByList,
     ChildProfileInclude? include,
   }) {
     return ChildProfileIncludeList._(
@@ -145,6 +147,8 @@ abstract class ChildProfile
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(ChildProfile.t),
+      orderDescending: // ignore: deprecated_member_use_from_same_package
+          orderDescending,
       orderByList: orderByList?.call(ChildProfile.t),
       include: include,
     );
@@ -152,7 +156,7 @@ abstract class ChildProfile
 
   @override
   String toString() {
-    return _is.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -183,7 +187,7 @@ class _ChildProfileImpl extends ChildProfile {
 
   /// Returns a shallow copy of this [ChildProfile]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   @override
   ChildProfile copyWith({
     Object? id = _Undefined,
@@ -210,85 +214,85 @@ class _ChildProfileImpl extends ChildProfile {
   }
 }
 
-class ChildProfileUpdateTable extends _is.UpdateTable<ChildProfileTable> {
+class ChildProfileUpdateTable extends _i1.UpdateTable<ChildProfileTable> {
   ChildProfileUpdateTable(super.table);
 
-  _is.ColumnValue<int, int> parentId(int value) => _is.ColumnValue(
+  _i1.ColumnValue<int, int> parentId(int value) => _i1.ColumnValue(
     table.parentId,
     value,
   );
 
-  _is.ColumnValue<String, String> displayName(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> displayName(String value) => _i1.ColumnValue(
     table.displayName,
     value,
   );
 
-  _is.ColumnValue<int, int> birthYear(int value) => _is.ColumnValue(
+  _i1.ColumnValue<int, int> birthYear(int value) => _i1.ColumnValue(
     table.birthYear,
     value,
   );
 
-  _is.ColumnValue<String, String> ageBracket(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> ageBracket(String value) => _i1.ColumnValue(
     table.ageBracket,
     value,
   );
 
-  _is.ColumnValue<String, String> preferredLanguage(String value) =>
-      _is.ColumnValue(
+  _i1.ColumnValue<String, String> preferredLanguage(String value) =>
+      _i1.ColumnValue(
         table.preferredLanguage,
         value,
       );
 
-  _is.ColumnValue<String, String> avatarId(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> avatarId(String value) => _i1.ColumnValue(
     table.avatarId,
     value,
   );
 
-  _is.ColumnValue<bool, bool> pinProtected(bool value) => _is.ColumnValue(
+  _i1.ColumnValue<bool, bool> pinProtected(bool value) => _i1.ColumnValue(
     table.pinProtected,
     value,
   );
 
-  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _is.ColumnValue(
+  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _i1.ColumnValue(
         table.createdAt,
         value,
       );
 }
 
-class ChildProfileTable extends _is.Table<int?> {
+class ChildProfileTable extends _i1.Table<int?> {
   ChildProfileTable({super.tableRelation})
     : super(tableName: 'child_profiles') {
     updateTable = ChildProfileUpdateTable(this);
-    parentId = _is.ColumnInt(
+    parentId = _i1.ColumnInt(
       'parentId',
       this,
     );
-    displayName = _is.ColumnString(
+    displayName = _i1.ColumnString(
       'displayName',
       this,
     );
-    birthYear = _is.ColumnInt(
+    birthYear = _i1.ColumnInt(
       'birthYear',
       this,
     );
-    ageBracket = _is.ColumnString(
+    ageBracket = _i1.ColumnString(
       'ageBracket',
       this,
     );
-    preferredLanguage = _is.ColumnString(
+    preferredLanguage = _i1.ColumnString(
       'preferredLanguage',
       this,
     );
-    avatarId = _is.ColumnString(
+    avatarId = _i1.ColumnString(
       'avatarId',
       this,
     );
-    pinProtected = _is.ColumnBool(
+    pinProtected = _i1.ColumnBool(
       'pinProtected',
       this,
     );
-    createdAt = _is.ColumnDateTime(
+    createdAt = _i1.ColumnDateTime(
       'createdAt',
       this,
     );
@@ -296,24 +300,24 @@ class ChildProfileTable extends _is.Table<int?> {
 
   late final ChildProfileUpdateTable updateTable;
 
-  late final _is.ColumnInt parentId;
+  late final _i1.ColumnInt parentId;
 
-  late final _is.ColumnString displayName;
+  late final _i1.ColumnString displayName;
 
-  late final _is.ColumnInt birthYear;
+  late final _i1.ColumnInt birthYear;
 
-  late final _is.ColumnString ageBracket;
+  late final _i1.ColumnString ageBracket;
 
-  late final _is.ColumnString preferredLanguage;
+  late final _i1.ColumnString preferredLanguage;
 
-  late final _is.ColumnString avatarId;
+  late final _i1.ColumnString avatarId;
 
-  late final _is.ColumnBool pinProtected;
+  late final _i1.ColumnBool pinProtected;
 
-  late final _is.ColumnDateTime createdAt;
+  late final _i1.ColumnDateTime createdAt;
 
   @override
-  List<_is.Column> get columns => [
+  List<_i1.Column> get columns => [
     id,
     parentId,
     displayName,
@@ -326,22 +330,24 @@ class ChildProfileTable extends _is.Table<int?> {
   ];
 }
 
-class ChildProfileInclude extends _is.IncludeObject {
+class ChildProfileInclude extends _i1.IncludeObject {
   ChildProfileInclude._();
 
   @override
-  Map<String, _is.Include?> get includes => {};
+  Map<String, _i1.Include?> get includes => {};
 
   @override
-  _is.Table<int?> get table => ChildProfile.t;
+  _i1.Table<int?> get table => ChildProfile.t;
 }
 
-class ChildProfileIncludeList extends _is.IncludeList {
+class ChildProfileIncludeList extends _i1.IncludeList {
   ChildProfileIncludeList._({
-    _is.WhereExpressionBuilder<ChildProfileTable>? where,
+    _i1.WhereExpressionBuilder<ChildProfileTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -349,10 +355,10 @@ class ChildProfileIncludeList extends _is.IncludeList {
   }
 
   @override
-  Map<String, _is.Include?> get includes => include?.includes ?? {};
+  Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _is.Table<int?> get table => ChildProfile.t;
+  _i1.Table<int?> get table => ChildProfile.t;
 }
 
 class ChildProfileRepository {
@@ -381,20 +387,24 @@ class ChildProfileRepository {
   /// );
   /// ```
   Future<List<ChildProfile>> find(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<ChildProfileTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<ChildProfileTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<ChildProfileTable>? orderBy,
-    _is.OrderByListBuilder<ChildProfileTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<ChildProfileTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<ChildProfileTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<ChildProfile>(
       where: where?.call(ChildProfile.t),
       orderBy: orderBy?.call(ChildProfile.t),
       orderByList: orderByList?.call(ChildProfile.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -421,19 +431,23 @@ class ChildProfileRepository {
   /// );
   /// ```
   Future<ChildProfile?> findFirstRow(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<ChildProfileTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<ChildProfileTable>? where,
     int? offset,
-    _is.OrderByBuilder<ChildProfileTable>? orderBy,
-    _is.OrderByListBuilder<ChildProfileTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<ChildProfileTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<ChildProfileTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<ChildProfile>(
       where: where?.call(ChildProfile.t),
       orderBy: orderBy?.call(ChildProfile.t),
       orderByList: orderByList?.call(ChildProfile.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -443,11 +457,11 @@ class ChildProfileRepository {
 
   /// Finds a single [ChildProfile] by its [id] or null if no such row exists.
   Future<ChildProfile?> findById(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     int id, {
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<ChildProfile>(
       id,
@@ -472,9 +486,9 @@ class ChildProfileRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildProfile>> insert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<ChildProfile> rows, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -490,9 +504,9 @@ class ChildProfileRepository {
   ///
   /// The returned [ChildProfile] will have its `id` field set.
   Future<ChildProfile> insertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     ChildProfile row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.insertRow<ChildProfile>(
       row,
@@ -521,12 +535,12 @@ class ChildProfileRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildProfile>> upsert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<ChildProfile> rows, {
-    required _is.ColumnSelections<ChildProfileTable> conflictColumns,
-    _is.ColumnSelections<ChildProfileTable>? updateColumns,
-    _is.WhereExpressionBuilder<ChildProfileTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<ChildProfileTable> conflictColumns,
+    _i1.ColumnSelections<ChildProfileTable>? updateColumns,
+    _i1.WhereExpressionBuilder<ChildProfileTable>? updateWhere,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<ChildProfile>(
@@ -553,12 +567,12 @@ class ChildProfileRepository {
   ///
   /// The returned [ChildProfile] will have its `id` field set.
   Future<ChildProfile?> upsertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     ChildProfile row, {
-    required _is.ColumnSelections<ChildProfileTable> conflictColumns,
-    _is.ColumnSelections<ChildProfileTable>? updateColumns,
-    _is.WhereExpressionBuilder<ChildProfileTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<ChildProfileTable> conflictColumns,
+    _i1.ColumnSelections<ChildProfileTable>? updateColumns,
+    _i1.WhereExpressionBuilder<ChildProfileTable>? updateWhere,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.upsertRow<ChildProfile>(
       row,
@@ -579,10 +593,10 @@ class ChildProfileRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildProfile>> update(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<ChildProfile> rows, {
-    _is.ColumnSelections<ChildProfileTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<ChildProfileTable>? columns,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<ChildProfile>(
@@ -597,10 +611,10 @@ class ChildProfileRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<ChildProfile> updateRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     ChildProfile row, {
-    _is.ColumnSelections<ChildProfileTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<ChildProfileTable>? columns,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateRow<ChildProfile>(
       row,
@@ -612,10 +626,10 @@ class ChildProfileRepository {
   /// Updates a single [ChildProfile] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<ChildProfile?> updateById(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     int id, {
-    required _is.ColumnValueListBuilder<ChildProfileUpdateTable> columnValues,
-    _is.Transaction? transaction,
+    required _i1.ColumnValueListBuilder<ChildProfileUpdateTable> columnValues,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateById<ChildProfile>(
       id,
@@ -631,14 +645,16 @@ class ChildProfileRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildProfile>> updateWhere(
-    _is.DatabaseSession session, {
-    required _is.ColumnValueListBuilder<ChildProfileUpdateTable> columnValues,
-    required _is.WhereExpressionBuilder<ChildProfileTable> where,
+    _i1.DatabaseSession session, {
+    required _i1.ColumnValueListBuilder<ChildProfileUpdateTable> columnValues,
+    required _i1.WhereExpressionBuilder<ChildProfileTable> where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<ChildProfileTable>? orderBy,
-    _is.OrderByListBuilder<ChildProfileTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<ChildProfileTable>? orderBy,
+    _i1.OrderByListBuilder<ChildProfileTable>? orderByList,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<ChildProfile>(
@@ -648,6 +664,8 @@ class ChildProfileRepository {
       offset: offset,
       orderBy: orderBy?.call(ChildProfile.t),
       orderByList: orderByList?.call(ChildProfile.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -665,17 +683,21 @@ class ChildProfileRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildProfile>> delete(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<ChildProfile> rows, {
-    _is.OrderByBuilder<ChildProfileTable>? orderBy,
-    _is.OrderByListBuilder<ChildProfileTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<ChildProfileTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<ChildProfileTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<ChildProfile>(
       rows,
       orderBy: orderBy?.call(ChildProfile.t),
       orderByList: orderByList?.call(ChildProfile.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -683,9 +705,9 @@ class ChildProfileRepository {
 
   /// Deletes a single [ChildProfile].
   Future<ChildProfile> deleteRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     ChildProfile row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.deleteRow<ChildProfile>(
       row,
@@ -702,17 +724,21 @@ class ChildProfileRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ChildProfile>> deleteWhere(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<ChildProfileTable> where,
-    _is.OrderByBuilder<ChildProfileTable>? orderBy,
-    _is.OrderByListBuilder<ChildProfileTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<ChildProfileTable> where,
+    _i1.OrderByBuilder<ChildProfileTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<ChildProfileTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<ChildProfile>(
       where: where(ChildProfile.t),
       orderBy: orderBy?.call(ChildProfile.t),
       orderByList: orderByList?.call(ChildProfile.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -721,10 +747,10 @@ class ChildProfileRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<ChildProfileTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<ChildProfileTable>? where,
     int? limit,
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.count<ChildProfile>(
       where: where?.call(ChildProfile.t),
@@ -735,11 +761,11 @@ class ChildProfileRepository {
 
   /// Acquires row-level locks on [ChildProfile] rows matching the [where] expression.
   Future<void> lockRows(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<ChildProfileTable> where,
-    required _is.LockMode lockMode,
-    required _is.Transaction transaction,
-    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<ChildProfileTable> where,
+    required _i1.LockMode lockMode,
+    required _i1.Transaction transaction,
+    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
   }) async {
     return session.db.lockRows<ChildProfile>(
       where: where(ChildProfile.t),

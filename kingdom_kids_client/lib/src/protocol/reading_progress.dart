@@ -10,12 +10,11 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class ReadingProgress
-    implements _isc.SerializableModel, _isc.ProtocolSerialization {
+abstract class ReadingProgress implements _i1.SerializableModel {
   ReadingProgress._({
-    _isc.UuidValue? id,
+    _i1.UuidValue? id,
     required this.childId,
     required this.bookId,
     required this.currentPage,
@@ -24,10 +23,10 @@ abstract class ReadingProgress
     this.completedAt,
     required this.totalTimeSeconds,
     required this.syncedAt,
-  }) : id = id ?? const _isc.Uuid().v4obj();
+  }) : id = id ?? const _i1.Uuid().v4obj();
 
   factory ReadingProgress({
-    _isc.UuidValue? id,
+    _i1.UuidValue? id,
     required int childId,
     required int bookId,
     required int currentPage,
@@ -42,30 +41,28 @@ abstract class ReadingProgress
     return ReadingProgress(
       id: jsonSerialization['id'] == null
           ? null
-          : _isc.UuidValueJsonExtension.fromJson(jsonSerialization['id']),
+          : _i1.UuidValueJsonExtension.fromJson(jsonSerialization['id']),
       childId: jsonSerialization['childId'] as int,
       bookId: jsonSerialization['bookId'] as int,
       currentPage: jsonSerialization['currentPage'] as int,
-      completed: _isc.BoolJsonExtension.fromJson(
-        jsonSerialization['completed'],
-      ),
-      startedAt: _isc.DateTimeJsonExtension.fromJson(
+      completed: _i1.BoolJsonExtension.fromJson(jsonSerialization['completed']),
+      startedAt: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['startedAt'],
       ),
       completedAt: jsonSerialization['completedAt'] == null
           ? null
-          : _isc.DateTimeJsonExtension.fromJson(
+          : _i1.DateTimeJsonExtension.fromJson(
               jsonSerialization['completedAt'],
             ),
       totalTimeSeconds: jsonSerialization['totalTimeSeconds'] as int,
-      syncedAt: _isc.DateTimeJsonExtension.fromJson(
+      syncedAt: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['syncedAt'],
       ),
     );
   }
 
   /// The id of the object.
-  _isc.UuidValue id;
+  _i1.UuidValue id;
 
   int childId;
 
@@ -85,9 +82,9 @@ abstract class ReadingProgress
 
   /// Returns a shallow copy of this [ReadingProgress]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   ReadingProgress copyWith({
-    _isc.UuidValue? id,
+    _i1.UuidValue? id,
     int? childId,
     int? bookId,
     int? currentPage,
@@ -114,24 +111,8 @@ abstract class ReadingProgress
   }
 
   @override
-  Map<String, dynamic> toJsonForProtocol() {
-    return {
-      '__className__': 'ReadingProgress',
-      'id': id.toJson(),
-      'childId': childId,
-      'bookId': bookId,
-      'currentPage': currentPage,
-      'completed': completed,
-      'startedAt': startedAt.toJson(),
-      if (completedAt != null) 'completedAt': completedAt?.toJson(),
-      'totalTimeSeconds': totalTimeSeconds,
-      'syncedAt': syncedAt.toJson(),
-    };
-  }
-
-  @override
   String toString() {
-    return _isc.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -139,7 +120,7 @@ class _Undefined {}
 
 class _ReadingProgressImpl extends ReadingProgress {
   _ReadingProgressImpl({
-    _isc.UuidValue? id,
+    _i1.UuidValue? id,
     required int childId,
     required int bookId,
     required int currentPage,
@@ -162,10 +143,10 @@ class _ReadingProgressImpl extends ReadingProgress {
 
   /// Returns a shallow copy of this [ReadingProgress]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   @override
   ReadingProgress copyWith({
-    _isc.UuidValue? id,
+    _i1.UuidValue? id,
     int? childId,
     int? bookId,
     int? currentPage,

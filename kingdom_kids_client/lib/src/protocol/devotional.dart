@@ -10,10 +10,9 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class Devotional
-    implements _isc.SerializableModel, _isc.ProtocolSerialization {
+abstract class Devotional implements _i1.SerializableModel {
   Devotional._({
     this.id,
     required this.date,
@@ -29,7 +28,7 @@ abstract class Devotional
   factory Devotional.fromJson(Map<String, dynamic> jsonSerialization) {
     return Devotional(
       id: jsonSerialization['id'] as int?,
-      date: _isc.DateTimeJsonExtension.fromJson(jsonSerialization['date']),
+      date: _i1.DateTimeJsonExtension.fromJson(jsonSerialization['date']),
       category: jsonSerialization['category'] as String?,
     );
   }
@@ -45,7 +44,7 @@ abstract class Devotional
 
   /// Returns a shallow copy of this [Devotional]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   Devotional copyWith({
     int? id,
     DateTime? date,
@@ -62,18 +61,8 @@ abstract class Devotional
   }
 
   @override
-  Map<String, dynamic> toJsonForProtocol() {
-    return {
-      '__className__': 'Devotional',
-      if (id != null) 'id': id,
-      'date': date.toJson(),
-      if (category != null) 'category': category,
-    };
-  }
-
-  @override
   String toString() {
-    return _isc.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -92,7 +81,7 @@ class _DevotionalImpl extends Devotional {
 
   /// Returns a shallow copy of this [Devotional]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   @override
   Devotional copyWith({
     Object? id = _Undefined,

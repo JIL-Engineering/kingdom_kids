@@ -10,13 +10,12 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:kingdom_kids_client/src/protocol/protocol.dart' as _iral95z9;
+import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
-    as _iacc;
-import 'package:serverpod_client/serverpod_client.dart' as _isc;
+    as _i2;
+import 'package:kingdom_kids_client/src/protocol/protocol.dart' as _i3;
 
-abstract class AppUser
-    implements _isc.SerializableModel, _isc.ProtocolSerialization {
+abstract class AppUser implements _i1.SerializableModel {
   AppUser._({
     this.id,
     required this.authUserId,
@@ -30,8 +29,8 @@ abstract class AppUser
 
   factory AppUser({
     int? id,
-    required _isc.UuidValue authUserId,
-    _iacc.AuthUser? authUser,
+    required _i1.UuidValue authUserId,
+    _i2.AuthUser? authUser,
     String? country,
     required String timezone,
     required String preferredLanguage,
@@ -42,12 +41,12 @@ abstract class AppUser
   factory AppUser.fromJson(Map<String, dynamic> jsonSerialization) {
     return AppUser(
       id: jsonSerialization['id'] as int?,
-      authUserId: _isc.UuidValueJsonExtension.fromJson(
+      authUserId: _i1.UuidValueJsonExtension.fromJson(
         jsonSerialization['authUserId'],
       ),
       authUser: jsonSerialization['authUser'] == null
           ? null
-          : _iral95z9.Protocol().deserialize<_iacc.AuthUser>(
+          : _i3.Protocol().deserialize<_i2.AuthUser>(
               jsonSerialization['authUser'],
             ),
       country: jsonSerialization['country'] as String?,
@@ -55,10 +54,10 @@ abstract class AppUser
       preferredLanguage: jsonSerialization['preferredLanguage'] as String,
       consentGivenAt: jsonSerialization['consentGivenAt'] == null
           ? null
-          : _isc.DateTimeJsonExtension.fromJson(
+          : _i1.DateTimeJsonExtension.fromJson(
               jsonSerialization['consentGivenAt'],
             ),
-      createdAt: _isc.DateTimeJsonExtension.fromJson(
+      createdAt: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['createdAt'],
       ),
     );
@@ -69,9 +68,9 @@ abstract class AppUser
   /// the id will be null.
   int? id;
 
-  _isc.UuidValue authUserId;
+  _i1.UuidValue authUserId;
 
-  _iacc.AuthUser? authUser;
+  _i2.AuthUser? authUser;
 
   String? country;
 
@@ -85,11 +84,11 @@ abstract class AppUser
 
   /// Returns a shallow copy of this [AppUser]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   AppUser copyWith({
     int? id,
-    _isc.UuidValue? authUserId,
-    _iacc.AuthUser? authUser,
+    _i1.UuidValue? authUserId,
+    _i2.AuthUser? authUser,
     String? country,
     String? timezone,
     String? preferredLanguage,
@@ -112,23 +111,8 @@ abstract class AppUser
   }
 
   @override
-  Map<String, dynamic> toJsonForProtocol() {
-    return {
-      '__className__': 'AppUser',
-      if (id != null) 'id': id,
-      'authUserId': authUserId.toJson(),
-      if (authUser != null) 'authUser': authUser?.toJson(),
-      if (country != null) 'country': country,
-      'timezone': timezone,
-      'preferredLanguage': preferredLanguage,
-      if (consentGivenAt != null) 'consentGivenAt': consentGivenAt?.toJson(),
-      'createdAt': createdAt.toJson(),
-    };
-  }
-
-  @override
   String toString() {
-    return _isc.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -137,8 +121,8 @@ class _Undefined {}
 class _AppUserImpl extends AppUser {
   _AppUserImpl({
     int? id,
-    required _isc.UuidValue authUserId,
-    _iacc.AuthUser? authUser,
+    required _i1.UuidValue authUserId,
+    _i2.AuthUser? authUser,
     String? country,
     required String timezone,
     required String preferredLanguage,
@@ -157,11 +141,11 @@ class _AppUserImpl extends AppUser {
 
   /// Returns a shallow copy of this [AppUser]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   @override
   AppUser copyWith({
     Object? id = _Undefined,
-    _isc.UuidValue? authUserId,
+    _i1.UuidValue? authUserId,
     Object? authUser = _Undefined,
     Object? country = _Undefined,
     String? timezone,
@@ -172,7 +156,7 @@ class _AppUserImpl extends AppUser {
     return AppUser(
       id: id is int? ? id : this.id,
       authUserId: authUserId ?? this.authUserId,
-      authUser: authUser is _iacc.AuthUser?
+      authUser: authUser is _i2.AuthUser?
           ? authUser
           : this.authUser?.copyWith(),
       country: country is String? ? country : this.country,

@@ -8,31 +8,29 @@
 // ignore_for_file: type_literal_in_constant_pattern
 // ignore_for_file: use_super_parameters
 // ignore_for_file: invalid_use_of_internal_member
-// ignore_for_file: dead_code, unnecessary_type_check
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:kingdom_kids_server/src/generated/child_profile.dart'
-    as _i7m2af96;
-import 'package:serverpod/protocol.dart' as _isp;
-import 'package:serverpod/serverpod.dart' as _is;
-import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
-    as _iacs;
+import 'package:serverpod/serverpod.dart' as _i1;
+import 'package:serverpod/protocol.dart' as _i2;
 import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
-    as _iais;
-import 'app_user.dart' as _i2j2xfrn;
-import 'auth_response.dart' as _iuyz7l8a;
-import 'badge.dart' as _i55tj3uz;
-import 'book.dart' as _ik00prxe;
-import 'book_translation.dart' as _imevw7eg;
-import 'child_badge.dart' as _ikzyrfdf;
-import 'child_profile.dart' as _iqdrsmlr;
-import 'devotional.dart' as _il3de6ru;
-import 'devotional_translation.dart' as _i8o3bb0p;
-import 'download_record.dart' as _i6q4hmyd;
-import 'greetings/greeting.dart' as _izw8z7ou;
-import 'page.dart' as _imk4symu;
-import 'page_content.dart' as _idzt3dm3;
-import 'reading_progress.dart' as _i2h1sfz6;
+    as _i3;
+import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
+    as _i4;
+import 'app_user.dart' as _i5;
+import 'auth_response.dart' as _i6;
+import 'badge.dart' as _i7;
+import 'book.dart' as _i8;
+import 'book_translation.dart' as _i9;
+import 'child_badge.dart' as _i10;
+import 'child_profile.dart' as _i11;
+import 'devotional.dart' as _i12;
+import 'devotional_translation.dart' as _i13;
+import 'download_record.dart' as _i14;
+import 'greetings/greeting.dart' as _i15;
+import 'page.dart' as _i16;
+import 'page_content.dart' as _i17;
+import 'reading_progress.dart' as _i18;
+import 'package:kingdom_kids_server/src/generated/child_profile.dart' as _i19;
 export 'app_user.dart';
 export 'auth_response.dart';
 export 'badge.dart';
@@ -48,66 +46,66 @@ export 'page.dart';
 export 'page_content.dart';
 export 'reading_progress.dart';
 
-class Protocol extends _is.DatabaseSerializationManager {
+class Protocol extends _i1.DatabaseSerializationManager {
   Protocol._();
 
   factory Protocol() => _instance;
 
   static final Protocol _instance = Protocol._().._registerHostProtocols();
 
-  static List<_isp.TableDefinition> get targetTableDefinitions => [
-    _isp.TableDefinition(
+  static final List<_i2.TableDefinition> targetTableDefinitions = [
+    _i2.TableDefinition(
       name: 'badges',
       dartName: 'Badge',
       schema: 'public',
       module: 'kingdom_kids',
       columns: [
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'id',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'code',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'name',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'description',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'iconAsset',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'triggerRule',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
       ],
       foreignKeys: [],
       indexes: [
-        _isp.IndexDefinition(
+        _i2.IndexDefinition(
           indexName: 'badges_code_idx',
           tableSpace: null,
           elements: [
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'code',
             ),
           ],
@@ -118,61 +116,61 @@ class Protocol extends _is.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _isp.TableDefinition(
+    _i2.TableDefinition(
       name: 'book_translations',
       dartName: 'BookTranslation',
       schema: 'public',
       module: 'kingdom_kids',
       columns: [
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'id',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'bookId',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'language',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'title',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
       ],
       foreignKeys: [
-        _isp.ForeignKeyDefinition(
+        _i2.ForeignKeyDefinition(
           constraintName: 'book_translations_fk_0',
           columns: ['bookId'],
           referenceTable: 'books',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _isp.ForeignKeyAction.noAction,
-          onDelete: _isp.ForeignKeyAction.cascade,
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.cascade,
           matchType: null,
         ),
       ],
       indexes: [
-        _isp.IndexDefinition(
+        _i2.IndexDefinition(
           indexName: 'book_translations_book_language_idx',
           tableSpace: null,
           elements: [
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'bookId',
             ),
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'language',
             ),
           ],
@@ -183,82 +181,82 @@ class Protocol extends _is.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _isp.TableDefinition(
+    _i2.TableDefinition(
       name: 'books',
       dartName: 'Book',
       schema: 'public',
       module: 'kingdom_kids',
       columns: [
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'id',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'slug',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'ageBracketMin',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'ageBracketMax',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'category',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'coverImageAsset',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'isPublished',
-          columnType: _isp.ColumnType.boolean,
+          columnType: _i2.ColumnType.boolean,
           isNullable: false,
           dartType: 'bool',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'contentVersion',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'updatedAt',
-          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'createdAt',
-          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
         ),
       ],
       foreignKeys: [],
       indexes: [
-        _isp.IndexDefinition(
+        _i2.IndexDefinition(
           indexName: 'books_slug_idx',
           tableSpace: null,
           elements: [
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'slug',
             ),
           ],
@@ -269,71 +267,71 @@ class Protocol extends _is.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _isp.TableDefinition(
+    _i2.TableDefinition(
       name: 'child_badges',
       dartName: 'ChildBadge',
       schema: 'public',
       module: 'kingdom_kids',
       columns: [
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'id',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'childId',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'badgeId',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'earnedAt',
-          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
         ),
       ],
       foreignKeys: [
-        _isp.ForeignKeyDefinition(
+        _i2.ForeignKeyDefinition(
           constraintName: 'child_badges_fk_0',
           columns: ['childId'],
           referenceTable: 'child_profiles',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _isp.ForeignKeyAction.noAction,
-          onDelete: _isp.ForeignKeyAction.cascade,
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.cascade,
           matchType: null,
         ),
-        _isp.ForeignKeyDefinition(
+        _i2.ForeignKeyDefinition(
           constraintName: 'child_badges_fk_1',
           columns: ['badgeId'],
           referenceTable: 'badges',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _isp.ForeignKeyAction.noAction,
-          onDelete: _isp.ForeignKeyAction.noAction,
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
           matchType: null,
         ),
       ],
       indexes: [
-        _isp.IndexDefinition(
+        _i2.IndexDefinition(
           indexName: 'child_badges_child_badge_idx',
           tableSpace: null,
           elements: [
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'childId',
             ),
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'badgeId',
             ),
           ],
@@ -344,87 +342,87 @@ class Protocol extends _is.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _isp.TableDefinition(
+    _i2.TableDefinition(
       name: 'child_profiles',
       dartName: 'ChildProfile',
       schema: 'public',
       module: 'kingdom_kids',
       columns: [
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'id',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'parentId',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'displayName',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'birthYear',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'ageBracket',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'preferredLanguage',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'avatarId',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'pinProtected',
-          columnType: _isp.ColumnType.boolean,
+          columnType: _i2.ColumnType.boolean,
           isNullable: false,
           dartType: 'bool',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'createdAt',
-          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
         ),
       ],
       foreignKeys: [
-        _isp.ForeignKeyDefinition(
+        _i2.ForeignKeyDefinition(
           constraintName: 'child_profiles_fk_0',
           columns: ['parentId'],
           referenceTable: 'users',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _isp.ForeignKeyAction.noAction,
-          onDelete: _isp.ForeignKeyAction.cascade,
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.cascade,
           matchType: null,
         ),
       ],
       indexes: [
-        _isp.IndexDefinition(
+        _i2.IndexDefinition(
           indexName: 'idx_child_profiles_parent',
           tableSpace: null,
           elements: [
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'parentId',
             ),
           ],
@@ -435,79 +433,79 @@ class Protocol extends _is.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _isp.TableDefinition(
+    _i2.TableDefinition(
       name: 'devotional_translations',
       dartName: 'DevotionalTranslation',
       schema: 'public',
       module: 'kingdom_kids',
       columns: [
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'id',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'devotionalId',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'language',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'verseReference',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'verseText',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'thoughtText',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'prayerPrompt',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
       ],
       foreignKeys: [
-        _isp.ForeignKeyDefinition(
+        _i2.ForeignKeyDefinition(
           constraintName: 'devotional_translations_fk_0',
           columns: ['devotionalId'],
           referenceTable: 'devotionals',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _isp.ForeignKeyAction.noAction,
-          onDelete: _isp.ForeignKeyAction.cascade,
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.cascade,
           matchType: null,
         ),
       ],
       indexes: [
-        _isp.IndexDefinition(
+        _i2.IndexDefinition(
           indexName: 'devotional_translations_devotional_language_idx',
           tableSpace: null,
           elements: [
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'devotionalId',
             ),
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'language',
             ),
           ],
@@ -518,40 +516,40 @@ class Protocol extends _is.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _isp.TableDefinition(
+    _i2.TableDefinition(
       name: 'devotionals',
       dartName: 'Devotional',
       schema: 'public',
       module: 'kingdom_kids',
       columns: [
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'id',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'date',
-          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'category',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
       ],
       foreignKeys: [],
       indexes: [
-        _isp.IndexDefinition(
+        _i2.IndexDefinition(
           indexName: 'devotionals_date_idx',
           tableSpace: null,
           elements: [
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'date',
             ),
           ],
@@ -562,77 +560,77 @@ class Protocol extends _is.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _isp.TableDefinition(
+    _i2.TableDefinition(
       name: 'download_records',
       dartName: 'DownloadRecord',
       schema: 'public',
       module: 'kingdom_kids',
       columns: [
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'id',
-          columnType: _isp.ColumnType.uuid,
+          columnType: _i2.ColumnType.uuid,
           isNullable: false,
           dartType: 'UuidValue',
           columnDefault: 'random',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'childId',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'bookId',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'deviceId',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'downloadedAt',
-          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
         ),
       ],
       foreignKeys: [
-        _isp.ForeignKeyDefinition(
+        _i2.ForeignKeyDefinition(
           constraintName: 'download_records_fk_0',
           columns: ['childId'],
           referenceTable: 'child_profiles',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _isp.ForeignKeyAction.noAction,
-          onDelete: _isp.ForeignKeyAction.cascade,
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.cascade,
           matchType: null,
         ),
-        _isp.ForeignKeyDefinition(
+        _i2.ForeignKeyDefinition(
           constraintName: 'download_records_fk_1',
           columns: ['bookId'],
           referenceTable: 'books',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _isp.ForeignKeyAction.noAction,
-          onDelete: _isp.ForeignKeyAction.noAction,
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
           matchType: null,
         ),
       ],
       indexes: [
-        _isp.IndexDefinition(
+        _i2.IndexDefinition(
           indexName: 'idx_downloads_child_book',
           tableSpace: null,
           elements: [
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'childId',
             ),
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'bookId',
             ),
           ],
@@ -643,67 +641,67 @@ class Protocol extends _is.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _isp.TableDefinition(
+    _i2.TableDefinition(
       name: 'page_contents',
       dartName: 'PageContent',
       schema: 'public',
       module: 'kingdom_kids',
       columns: [
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'id',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'pageId',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'language',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'text',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'audioAsset',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
       ],
       foreignKeys: [
-        _isp.ForeignKeyDefinition(
+        _i2.ForeignKeyDefinition(
           constraintName: 'page_contents_fk_0',
           columns: ['pageId'],
           referenceTable: 'pages',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _isp.ForeignKeyAction.noAction,
-          onDelete: _isp.ForeignKeyAction.cascade,
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.cascade,
           matchType: null,
         ),
       ],
       indexes: [
-        _isp.IndexDefinition(
+        _i2.IndexDefinition(
           indexName: 'page_contents_page_language_idx',
           tableSpace: null,
           elements: [
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'pageId',
             ),
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'language',
             ),
           ],
@@ -714,63 +712,63 @@ class Protocol extends _is.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _isp.TableDefinition(
+    _i2.TableDefinition(
       name: 'pages',
       dartName: 'Page',
       schema: 'public',
       module: 'kingdom_kids',
       columns: [
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'id',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'bookId',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'pageNumber',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'illustrationAsset',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'layoutType',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
       ],
       foreignKeys: [
-        _isp.ForeignKeyDefinition(
+        _i2.ForeignKeyDefinition(
           constraintName: 'pages_fk_0',
           columns: ['bookId'],
           referenceTable: 'books',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _isp.ForeignKeyAction.noAction,
-          onDelete: _isp.ForeignKeyAction.cascade,
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.cascade,
           matchType: null,
         ),
       ],
       indexes: [
-        _isp.IndexDefinition(
+        _i2.IndexDefinition(
           indexName: 'idx_pages_book',
           tableSpace: null,
           elements: [
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'bookId',
             ),
           ],
@@ -778,16 +776,16 @@ class Protocol extends _is.DatabaseSerializationManager {
           isUnique: false,
           isPrimary: false,
         ),
-        _isp.IndexDefinition(
+        _i2.IndexDefinition(
           indexName: 'pages_book_number_idx',
           tableSpace: null,
           elements: [
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'bookId',
             ),
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'pageNumber',
             ),
           ],
@@ -798,101 +796,101 @@ class Protocol extends _is.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _isp.TableDefinition(
+    _i2.TableDefinition(
       name: 'reading_progress',
       dartName: 'ReadingProgress',
       schema: 'public',
       module: 'kingdom_kids',
       columns: [
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'id',
-          columnType: _isp.ColumnType.uuid,
+          columnType: _i2.ColumnType.uuid,
           isNullable: false,
           dartType: 'UuidValue',
           columnDefault: 'random',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'childId',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'bookId',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'currentPage',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'completed',
-          columnType: _isp.ColumnType.boolean,
+          columnType: _i2.ColumnType.boolean,
           isNullable: false,
           dartType: 'bool',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'startedAt',
-          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'completedAt',
-          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: true,
           dartType: 'DateTime?',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'totalTimeSeconds',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'syncedAt',
-          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
         ),
       ],
       foreignKeys: [
-        _isp.ForeignKeyDefinition(
+        _i2.ForeignKeyDefinition(
           constraintName: 'reading_progress_fk_0',
           columns: ['childId'],
           referenceTable: 'child_profiles',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _isp.ForeignKeyAction.noAction,
-          onDelete: _isp.ForeignKeyAction.cascade,
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.cascade,
           matchType: null,
         ),
-        _isp.ForeignKeyDefinition(
+        _i2.ForeignKeyDefinition(
           constraintName: 'reading_progress_fk_1',
           columns: ['bookId'],
           referenceTable: 'books',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _isp.ForeignKeyAction.noAction,
-          onDelete: _isp.ForeignKeyAction.noAction,
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
           matchType: null,
         ),
       ],
       indexes: [
-        _isp.IndexDefinition(
+        _i2.IndexDefinition(
           indexName: 'idx_progress_child_book',
           tableSpace: null,
           elements: [
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'childId',
             ),
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'bookId',
             ),
           ],
@@ -900,16 +898,16 @@ class Protocol extends _is.DatabaseSerializationManager {
           isUnique: false,
           isPrimary: false,
         ),
-        _isp.IndexDefinition(
+        _i2.IndexDefinition(
           indexName: 'idx_progress_child_started',
           tableSpace: null,
           elements: [
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'childId',
             ),
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'startedAt',
             ),
           ],
@@ -920,75 +918,75 @@ class Protocol extends _is.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    _isp.TableDefinition(
+    _i2.TableDefinition(
       name: 'users',
       dartName: 'AppUser',
       schema: 'public',
       module: 'kingdom_kids',
       columns: [
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'id',
-          columnType: _isp.ColumnType.bigint,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'serial',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'authUserId',
-          columnType: _isp.ColumnType.uuid,
+          columnType: _i2.ColumnType.uuid,
           isNullable: false,
           dartType: 'UuidValue',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'country',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'timezone',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'preferredLanguage',
-          columnType: _isp.ColumnType.text,
+          columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'consentGivenAt',
-          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: true,
           dartType: 'DateTime?',
         ),
-        _isp.ColumnDefinition(
+        _i2.ColumnDefinition(
           name: 'createdAt',
-          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
           isNullable: false,
           dartType: 'DateTime',
         ),
       ],
       foreignKeys: [
-        _isp.ForeignKeyDefinition(
+        _i2.ForeignKeyDefinition(
           constraintName: 'users_fk_0',
           columns: ['authUserId'],
           referenceTable: 'serverpod_auth_core_user',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
-          onUpdate: _isp.ForeignKeyAction.noAction,
-          onDelete: _isp.ForeignKeyAction.cascade,
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.cascade,
           matchType: null,
         ),
       ],
       indexes: [
-        _isp.IndexDefinition(
+        _i2.IndexDefinition(
           indexName: 'users_auth_user_idx',
           tableSpace: null,
           elements: [
-            _isp.IndexElementDefinition(
-              type: _isp.IndexElementDefinitionType.column,
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
               definition: 'authUserId',
             ),
           ],
@@ -999,9 +997,9 @@ class Protocol extends _is.DatabaseSerializationManager {
       ],
       managed: true,
     ),
-    ..._iais.Protocol.targetTableDefinitions,
-    ..._iacs.Protocol.targetTableDefinitions,
-    ..._isp.Protocol.targetTableDefinitions,
+    ..._i3.Protocol.targetTableDefinitions,
+    ..._i4.Protocol.targetTableDefinitions,
+    ..._i2.Protocol.targetTableDefinitions,
   ];
 
   static String? getClassNameFromObjectJson(dynamic data) {
@@ -1031,130 +1029,125 @@ class Protocol extends _is.DatabaseSerializationManager {
       }
     }
 
-    if (t == _i2j2xfrn.AppUser) {
-      return _i2j2xfrn.AppUser.fromJson(data) as T;
+    if (t == _i5.AppUser) {
+      return _i5.AppUser.fromJson(data) as T;
     }
-    if (t == _iuyz7l8a.AuthResponse) {
-      return _iuyz7l8a.AuthResponse.fromJson(data) as T;
+    if (t == _i6.AuthResponse) {
+      return _i6.AuthResponse.fromJson(data) as T;
     }
-    if (t == _i55tj3uz.Badge) {
-      return _i55tj3uz.Badge.fromJson(data) as T;
+    if (t == _i7.Badge) {
+      return _i7.Badge.fromJson(data) as T;
     }
-    if (t == _ik00prxe.Book) {
-      return _ik00prxe.Book.fromJson(data) as T;
+    if (t == _i8.Book) {
+      return _i8.Book.fromJson(data) as T;
     }
-    if (t == _imevw7eg.BookTranslation) {
-      return _imevw7eg.BookTranslation.fromJson(data) as T;
+    if (t == _i9.BookTranslation) {
+      return _i9.BookTranslation.fromJson(data) as T;
     }
-    if (t == _ikzyrfdf.ChildBadge) {
-      return _ikzyrfdf.ChildBadge.fromJson(data) as T;
+    if (t == _i10.ChildBadge) {
+      return _i10.ChildBadge.fromJson(data) as T;
     }
-    if (t == _iqdrsmlr.ChildProfile) {
-      return _iqdrsmlr.ChildProfile.fromJson(data) as T;
+    if (t == _i11.ChildProfile) {
+      return _i11.ChildProfile.fromJson(data) as T;
     }
-    if (t == _il3de6ru.Devotional) {
-      return _il3de6ru.Devotional.fromJson(data) as T;
+    if (t == _i12.Devotional) {
+      return _i12.Devotional.fromJson(data) as T;
     }
-    if (t == _i8o3bb0p.DevotionalTranslation) {
-      return _i8o3bb0p.DevotionalTranslation.fromJson(data) as T;
+    if (t == _i13.DevotionalTranslation) {
+      return _i13.DevotionalTranslation.fromJson(data) as T;
     }
-    if (t == _i6q4hmyd.DownloadRecord) {
-      return _i6q4hmyd.DownloadRecord.fromJson(data) as T;
+    if (t == _i14.DownloadRecord) {
+      return _i14.DownloadRecord.fromJson(data) as T;
     }
-    if (t == _izw8z7ou.Greeting) {
-      return _izw8z7ou.Greeting.fromJson(data) as T;
+    if (t == _i15.Greeting) {
+      return _i15.Greeting.fromJson(data) as T;
     }
-    if (t == _imk4symu.Page) {
-      return _imk4symu.Page.fromJson(data) as T;
+    if (t == _i16.Page) {
+      return _i16.Page.fromJson(data) as T;
     }
-    if (t == _idzt3dm3.PageContent) {
-      return _idzt3dm3.PageContent.fromJson(data) as T;
+    if (t == _i17.PageContent) {
+      return _i17.PageContent.fromJson(data) as T;
     }
-    if (t == _i2h1sfz6.ReadingProgress) {
-      return _i2h1sfz6.ReadingProgress.fromJson(data) as T;
+    if (t == _i18.ReadingProgress) {
+      return _i18.ReadingProgress.fromJson(data) as T;
     }
-    if (t == _is.getType<_i2j2xfrn.AppUser?>()) {
-      return (data != null ? _i2j2xfrn.AppUser.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i5.AppUser?>()) {
+      return (data != null ? _i5.AppUser.fromJson(data) : null) as T;
     }
-    if (t == _is.getType<_iuyz7l8a.AuthResponse?>()) {
-      return (data != null ? _iuyz7l8a.AuthResponse.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i6.AuthResponse?>()) {
+      return (data != null ? _i6.AuthResponse.fromJson(data) : null) as T;
     }
-    if (t == _is.getType<_i55tj3uz.Badge?>()) {
-      return (data != null ? _i55tj3uz.Badge.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i7.Badge?>()) {
+      return (data != null ? _i7.Badge.fromJson(data) : null) as T;
     }
-    if (t == _is.getType<_ik00prxe.Book?>()) {
-      return (data != null ? _ik00prxe.Book.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i8.Book?>()) {
+      return (data != null ? _i8.Book.fromJson(data) : null) as T;
     }
-    if (t == _is.getType<_imevw7eg.BookTranslation?>()) {
-      return (data != null ? _imevw7eg.BookTranslation.fromJson(data) : null)
+    if (t == _i1.getType<_i9.BookTranslation?>()) {
+      return (data != null ? _i9.BookTranslation.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i10.ChildBadge?>()) {
+      return (data != null ? _i10.ChildBadge.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i11.ChildProfile?>()) {
+      return (data != null ? _i11.ChildProfile.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i12.Devotional?>()) {
+      return (data != null ? _i12.Devotional.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i13.DevotionalTranslation?>()) {
+      return (data != null ? _i13.DevotionalTranslation.fromJson(data) : null)
           as T;
     }
-    if (t == _is.getType<_ikzyrfdf.ChildBadge?>()) {
-      return (data != null ? _ikzyrfdf.ChildBadge.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i14.DownloadRecord?>()) {
+      return (data != null ? _i14.DownloadRecord.fromJson(data) : null) as T;
     }
-    if (t == _is.getType<_iqdrsmlr.ChildProfile?>()) {
-      return (data != null ? _iqdrsmlr.ChildProfile.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i15.Greeting?>()) {
+      return (data != null ? _i15.Greeting.fromJson(data) : null) as T;
     }
-    if (t == _is.getType<_il3de6ru.Devotional?>()) {
-      return (data != null ? _il3de6ru.Devotional.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i16.Page?>()) {
+      return (data != null ? _i16.Page.fromJson(data) : null) as T;
     }
-    if (t == _is.getType<_i8o3bb0p.DevotionalTranslation?>()) {
-      return (data != null
-              ? _i8o3bb0p.DevotionalTranslation.fromJson(data)
-              : null)
-          as T;
+    if (t == _i1.getType<_i17.PageContent?>()) {
+      return (data != null ? _i17.PageContent.fromJson(data) : null) as T;
     }
-    if (t == _is.getType<_i6q4hmyd.DownloadRecord?>()) {
-      return (data != null ? _i6q4hmyd.DownloadRecord.fromJson(data) : null)
-          as T;
+    if (t == _i1.getType<_i18.ReadingProgress?>()) {
+      return (data != null ? _i18.ReadingProgress.fromJson(data) : null) as T;
     }
-    if (t == _is.getType<_izw8z7ou.Greeting?>()) {
-      return (data != null ? _izw8z7ou.Greeting.fromJson(data) : null) as T;
-    }
-    if (t == _is.getType<_imk4symu.Page?>()) {
-      return (data != null ? _imk4symu.Page.fromJson(data) : null) as T;
-    }
-    if (t == _is.getType<_idzt3dm3.PageContent?>()) {
-      return (data != null ? _idzt3dm3.PageContent.fromJson(data) : null) as T;
-    }
-    if (t == _is.getType<_i2h1sfz6.ReadingProgress?>()) {
-      return (data != null ? _i2h1sfz6.ReadingProgress.fromJson(data) : null)
-          as T;
-    }
-    if (t == List<_i7m2af96.ChildProfile>) {
+    if (t == List<_i19.ChildProfile>) {
       return (data as List)
-              .map((e) => deserialize<_i7m2af96.ChildProfile>(e))
+              .map((e) => deserialize<_i19.ChildProfile>(e))
               .toList()
           as T;
     }
     try {
-      return _iais.Protocol().deserialize<T>(data, t);
-    } on _is.DeserializationTypeNotFoundException catch (_) {}
+      return _i3.Protocol().deserialize<T>(data, t);
+    } on _i1.DeserializationTypeNotFoundException catch (_) {}
     try {
-      return _iacs.Protocol().deserialize<T>(data, t);
-    } on _is.DeserializationTypeNotFoundException catch (_) {}
+      return _i4.Protocol().deserialize<T>(data, t);
+    } on _i1.DeserializationTypeNotFoundException catch (_) {}
     try {
-      return _isp.Protocol().deserialize<T>(data, t);
-    } on _is.DeserializationTypeNotFoundException catch (_) {}
+      return _i2.Protocol().deserialize<T>(data, t);
+    } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
-      _i2j2xfrn.AppUser => 'AppUser',
-      _iuyz7l8a.AuthResponse => 'AuthResponse',
-      _i55tj3uz.Badge => 'Badge',
-      _ik00prxe.Book => 'Book',
-      _imevw7eg.BookTranslation => 'BookTranslation',
-      _ikzyrfdf.ChildBadge => 'ChildBadge',
-      _iqdrsmlr.ChildProfile => 'ChildProfile',
-      _il3de6ru.Devotional => 'Devotional',
-      _i8o3bb0p.DevotionalTranslation => 'DevotionalTranslation',
-      _i6q4hmyd.DownloadRecord => 'DownloadRecord',
-      _izw8z7ou.Greeting => 'Greeting',
-      _imk4symu.Page => 'Page',
-      _idzt3dm3.PageContent => 'PageContent',
-      _i2h1sfz6.ReadingProgress => 'ReadingProgress',
+      _i5.AppUser => 'AppUser',
+      _i6.AuthResponse => 'AuthResponse',
+      _i7.Badge => 'Badge',
+      _i8.Book => 'Book',
+      _i9.BookTranslation => 'BookTranslation',
+      _i10.ChildBadge => 'ChildBadge',
+      _i11.ChildProfile => 'ChildProfile',
+      _i12.Devotional => 'Devotional',
+      _i13.DevotionalTranslation => 'DevotionalTranslation',
+      _i14.DownloadRecord => 'DownloadRecord',
+      _i15.Greeting => 'Greeting',
+      _i16.Page => 'Page',
+      _i17.PageContent => 'PageContent',
+      _i18.ReadingProgress => 'ReadingProgress',
       _ => null,
     };
   }
@@ -1172,48 +1165,48 @@ class Protocol extends _is.DatabaseSerializationManager {
     }
 
     switch (data) {
-      case _i2j2xfrn.AppUser():
+      case _i5.AppUser():
         return 'AppUser';
-      case _iuyz7l8a.AuthResponse():
+      case _i6.AuthResponse():
         return 'AuthResponse';
-      case _i55tj3uz.Badge():
+      case _i7.Badge():
         return 'Badge';
-      case _ik00prxe.Book():
+      case _i8.Book():
         return 'Book';
-      case _imevw7eg.BookTranslation():
+      case _i9.BookTranslation():
         return 'BookTranslation';
-      case _ikzyrfdf.ChildBadge():
+      case _i10.ChildBadge():
         return 'ChildBadge';
-      case _iqdrsmlr.ChildProfile():
+      case _i11.ChildProfile():
         return 'ChildProfile';
-      case _il3de6ru.Devotional():
+      case _i12.Devotional():
         return 'Devotional';
-      case _i8o3bb0p.DevotionalTranslation():
+      case _i13.DevotionalTranslation():
         return 'DevotionalTranslation';
-      case _i6q4hmyd.DownloadRecord():
+      case _i14.DownloadRecord():
         return 'DownloadRecord';
-      case _izw8z7ou.Greeting():
+      case _i15.Greeting():
         return 'Greeting';
-      case _imk4symu.Page():
+      case _i16.Page():
         return 'Page';
-      case _idzt3dm3.PageContent():
+      case _i17.PageContent():
         return 'PageContent';
-      case _i2h1sfz6.ReadingProgress():
+      case _i18.ReadingProgress():
         return 'ReadingProgress';
     }
-    className = _iais.Protocol().getClassNameForObject(data);
+    className = _i3.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
           : 'serverpod_auth_idp.$className';
     }
-    className = _iacs.Protocol().getClassNameForObject(data);
+    className = _i4.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
           : 'serverpod_auth_core.$className';
     }
-    className = _isp.Protocol().getClassNameForObject(data);
+    className = _i2.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.') ? className : 'serverpod.$className';
     }
@@ -1227,118 +1220,118 @@ class Protocol extends _is.DatabaseSerializationManager {
       return super.deserializeByClassName(data);
     }
     if (dataClassName == 'AppUser') {
-      return deserialize<_i2j2xfrn.AppUser>(data['data']);
+      return deserialize<_i5.AppUser>(data['data']);
     }
     if (dataClassName == 'AuthResponse') {
-      return deserialize<_iuyz7l8a.AuthResponse>(data['data']);
+      return deserialize<_i6.AuthResponse>(data['data']);
     }
     if (dataClassName == 'Badge') {
-      return deserialize<_i55tj3uz.Badge>(data['data']);
+      return deserialize<_i7.Badge>(data['data']);
     }
     if (dataClassName == 'Book') {
-      return deserialize<_ik00prxe.Book>(data['data']);
+      return deserialize<_i8.Book>(data['data']);
     }
     if (dataClassName == 'BookTranslation') {
-      return deserialize<_imevw7eg.BookTranslation>(data['data']);
+      return deserialize<_i9.BookTranslation>(data['data']);
     }
     if (dataClassName == 'ChildBadge') {
-      return deserialize<_ikzyrfdf.ChildBadge>(data['data']);
+      return deserialize<_i10.ChildBadge>(data['data']);
     }
     if (dataClassName == 'ChildProfile') {
-      return deserialize<_iqdrsmlr.ChildProfile>(data['data']);
+      return deserialize<_i11.ChildProfile>(data['data']);
     }
     if (dataClassName == 'Devotional') {
-      return deserialize<_il3de6ru.Devotional>(data['data']);
+      return deserialize<_i12.Devotional>(data['data']);
     }
     if (dataClassName == 'DevotionalTranslation') {
-      return deserialize<_i8o3bb0p.DevotionalTranslation>(data['data']);
+      return deserialize<_i13.DevotionalTranslation>(data['data']);
     }
     if (dataClassName == 'DownloadRecord') {
-      return deserialize<_i6q4hmyd.DownloadRecord>(data['data']);
+      return deserialize<_i14.DownloadRecord>(data['data']);
     }
     if (dataClassName == 'Greeting') {
-      return deserialize<_izw8z7ou.Greeting>(data['data']);
+      return deserialize<_i15.Greeting>(data['data']);
     }
     if (dataClassName == 'Page') {
-      return deserialize<_imk4symu.Page>(data['data']);
+      return deserialize<_i16.Page>(data['data']);
     }
     if (dataClassName == 'PageContent') {
-      return deserialize<_idzt3dm3.PageContent>(data['data']);
+      return deserialize<_i17.PageContent>(data['data']);
     }
     if (dataClassName == 'ReadingProgress') {
-      return deserialize<_i2h1sfz6.ReadingProgress>(data['data']);
+      return deserialize<_i18.ReadingProgress>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);
-      return _iais.Protocol().deserializeByClassName(data);
+      return _i3.Protocol().deserializeByClassName(data);
     }
     if (dataClassName.startsWith('serverpod_auth_core.')) {
       data['className'] = dataClassName.substring(20);
-      return _iacs.Protocol().deserializeByClassName(data);
+      return _i4.Protocol().deserializeByClassName(data);
     }
     if (dataClassName.startsWith('serverpod.')) {
       data['className'] = dataClassName.substring(10);
-      return _isp.Protocol().deserializeByClassName(data);
+      return _i2.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }
 
   void _registerHostProtocols() {
-    _iais.Protocol().registerHostProtocol('kingdom_kids', this);
-    _iacs.Protocol().registerHostProtocol('kingdom_kids', this);
+    _i3.Protocol().registerHostProtocol('kingdom_kids', this);
+    _i4.Protocol().registerHostProtocol('kingdom_kids', this);
   }
 
   @override
-  _is.Table? getTableForType(Type t) {
+  _i1.Table? getTableForType(Type t) {
     {
-      var table = _iais.Protocol().getTableForType(t);
+      var table = _i3.Protocol().getTableForType(t);
       if (table != null) {
         return table;
       }
     }
     {
-      var table = _iacs.Protocol().getTableForType(t);
+      var table = _i4.Protocol().getTableForType(t);
       if (table != null) {
         return table;
       }
     }
     {
-      var table = _isp.Protocol().getTableForType(t);
+      var table = _i2.Protocol().getTableForType(t);
       if (table != null) {
         return table;
       }
     }
     switch (t) {
-      case _i2j2xfrn.AppUser:
-        return _i2j2xfrn.AppUser.t;
-      case _i55tj3uz.Badge:
-        return _i55tj3uz.Badge.t;
-      case _ik00prxe.Book:
-        return _ik00prxe.Book.t;
-      case _imevw7eg.BookTranslation:
-        return _imevw7eg.BookTranslation.t;
-      case _ikzyrfdf.ChildBadge:
-        return _ikzyrfdf.ChildBadge.t;
-      case _iqdrsmlr.ChildProfile:
-        return _iqdrsmlr.ChildProfile.t;
-      case _il3de6ru.Devotional:
-        return _il3de6ru.Devotional.t;
-      case _i8o3bb0p.DevotionalTranslation:
-        return _i8o3bb0p.DevotionalTranslation.t;
-      case _i6q4hmyd.DownloadRecord:
-        return _i6q4hmyd.DownloadRecord.t;
-      case _imk4symu.Page:
-        return _imk4symu.Page.t;
-      case _idzt3dm3.PageContent:
-        return _idzt3dm3.PageContent.t;
-      case _i2h1sfz6.ReadingProgress:
-        return _i2h1sfz6.ReadingProgress.t;
+      case _i5.AppUser:
+        return _i5.AppUser.t;
+      case _i7.Badge:
+        return _i7.Badge.t;
+      case _i8.Book:
+        return _i8.Book.t;
+      case _i9.BookTranslation:
+        return _i9.BookTranslation.t;
+      case _i10.ChildBadge:
+        return _i10.ChildBadge.t;
+      case _i11.ChildProfile:
+        return _i11.ChildProfile.t;
+      case _i12.Devotional:
+        return _i12.Devotional.t;
+      case _i13.DevotionalTranslation:
+        return _i13.DevotionalTranslation.t;
+      case _i14.DownloadRecord:
+        return _i14.DownloadRecord.t;
+      case _i16.Page:
+        return _i16.Page.t;
+      case _i17.PageContent:
+        return _i17.PageContent.t;
+      case _i18.ReadingProgress:
+        return _i18.ReadingProgress.t;
     }
     return null;
   }
 
   @override
-  List<_isp.TableDefinition> getTargetTableDefinitions() =>
+  List<_i2.TableDefinition> getTargetTableDefinitions() =>
       targetTableDefinitions;
 
   @override
@@ -1354,10 +1347,10 @@ class Protocol extends _is.DatabaseSerializationManager {
       return null;
     }
     try {
-      return _iais.Protocol().mapRecordToJson(record);
+      return _i3.Protocol().mapRecordToJson(record);
     } catch (_) {}
     try {
-      return _iacs.Protocol().mapRecordToJson(record);
+      return _i4.Protocol().mapRecordToJson(record);
     } catch (_) {}
     throw Exception('Unsupported record type ${record.runtimeType}');
   }

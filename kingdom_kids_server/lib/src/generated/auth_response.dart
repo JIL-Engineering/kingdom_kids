@@ -10,10 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _is;
+import 'package:serverpod/serverpod.dart' as _i1;
 
 abstract class AuthResponse
-    implements _is.SerializableModel, _is.ProtocolSerialization {
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
   AuthResponse._();
 
   factory AuthResponse() = _AuthResponseImpl;
@@ -24,7 +24,7 @@ abstract class AuthResponse
 
   /// Returns a shallow copy of this [AuthResponse]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   AuthResponse copyWith();
   @override
   Map<String, dynamic> toJson() {
@@ -38,7 +38,7 @@ abstract class AuthResponse
 
   @override
   String toString() {
-    return _is.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -47,7 +47,7 @@ class _AuthResponseImpl extends AuthResponse {
 
   /// Returns a shallow copy of this [AuthResponse]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   @override
   AuthResponse copyWith() {
     return AuthResponse();

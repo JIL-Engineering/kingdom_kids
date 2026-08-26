@@ -10,10 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _is;
+import 'package:serverpod/serverpod.dart' as _i1;
 
 abstract class BookTranslation
-    implements _is.TableRow<int?>, _is.ProtocolSerialization {
+    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   BookTranslation._({
     this.id,
     required this.bookId,
@@ -51,11 +51,11 @@ abstract class BookTranslation
   String title;
 
   @override
-  _is.Table<int?> get table => t;
+  _i1.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [BookTranslation]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   BookTranslation copyWith({
     int? id,
     int? bookId,
@@ -89,11 +89,13 @@ abstract class BookTranslation
   }
 
   static BookTranslationIncludeList includeList({
-    _is.WhereExpressionBuilder<BookTranslationTable>? where,
+    _i1.WhereExpressionBuilder<BookTranslationTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<BookTranslationTable>? orderBy,
-    _is.OrderByListBuilder<BookTranslationTable>? orderByList,
+    _i1.OrderByBuilder<BookTranslationTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<BookTranslationTable>? orderByList,
     BookTranslationInclude? include,
   }) {
     return BookTranslationIncludeList._(
@@ -101,6 +103,8 @@ abstract class BookTranslation
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(BookTranslation.t),
+      orderDescending: // ignore: deprecated_member_use_from_same_package
+          orderDescending,
       orderByList: orderByList?.call(BookTranslation.t),
       include: include,
     );
@@ -108,7 +112,7 @@ abstract class BookTranslation
 
   @override
   String toString() {
-    return _is.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -129,7 +133,7 @@ class _BookTranslationImpl extends BookTranslation {
 
   /// Returns a shallow copy of this [BookTranslation]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   @override
   BookTranslation copyWith({
     Object? id = _Undefined,
@@ -146,38 +150,38 @@ class _BookTranslationImpl extends BookTranslation {
   }
 }
 
-class BookTranslationUpdateTable extends _is.UpdateTable<BookTranslationTable> {
+class BookTranslationUpdateTable extends _i1.UpdateTable<BookTranslationTable> {
   BookTranslationUpdateTable(super.table);
 
-  _is.ColumnValue<int, int> bookId(int value) => _is.ColumnValue(
+  _i1.ColumnValue<int, int> bookId(int value) => _i1.ColumnValue(
     table.bookId,
     value,
   );
 
-  _is.ColumnValue<String, String> language(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> language(String value) => _i1.ColumnValue(
     table.language,
     value,
   );
 
-  _is.ColumnValue<String, String> title(String value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> title(String value) => _i1.ColumnValue(
     table.title,
     value,
   );
 }
 
-class BookTranslationTable extends _is.Table<int?> {
+class BookTranslationTable extends _i1.Table<int?> {
   BookTranslationTable({super.tableRelation})
     : super(tableName: 'book_translations') {
     updateTable = BookTranslationUpdateTable(this);
-    bookId = _is.ColumnInt(
+    bookId = _i1.ColumnInt(
       'bookId',
       this,
     );
-    language = _is.ColumnString(
+    language = _i1.ColumnString(
       'language',
       this,
     );
-    title = _is.ColumnString(
+    title = _i1.ColumnString(
       'title',
       this,
     );
@@ -185,14 +189,14 @@ class BookTranslationTable extends _is.Table<int?> {
 
   late final BookTranslationUpdateTable updateTable;
 
-  late final _is.ColumnInt bookId;
+  late final _i1.ColumnInt bookId;
 
-  late final _is.ColumnString language;
+  late final _i1.ColumnString language;
 
-  late final _is.ColumnString title;
+  late final _i1.ColumnString title;
 
   @override
-  List<_is.Column> get columns => [
+  List<_i1.Column> get columns => [
     id,
     bookId,
     language,
@@ -200,22 +204,24 @@ class BookTranslationTable extends _is.Table<int?> {
   ];
 }
 
-class BookTranslationInclude extends _is.IncludeObject {
+class BookTranslationInclude extends _i1.IncludeObject {
   BookTranslationInclude._();
 
   @override
-  Map<String, _is.Include?> get includes => {};
+  Map<String, _i1.Include?> get includes => {};
 
   @override
-  _is.Table<int?> get table => BookTranslation.t;
+  _i1.Table<int?> get table => BookTranslation.t;
 }
 
-class BookTranslationIncludeList extends _is.IncludeList {
+class BookTranslationIncludeList extends _i1.IncludeList {
   BookTranslationIncludeList._({
-    _is.WhereExpressionBuilder<BookTranslationTable>? where,
+    _i1.WhereExpressionBuilder<BookTranslationTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -223,10 +229,10 @@ class BookTranslationIncludeList extends _is.IncludeList {
   }
 
   @override
-  Map<String, _is.Include?> get includes => include?.includes ?? {};
+  Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _is.Table<int?> get table => BookTranslation.t;
+  _i1.Table<int?> get table => BookTranslation.t;
 }
 
 class BookTranslationRepository {
@@ -255,20 +261,24 @@ class BookTranslationRepository {
   /// );
   /// ```
   Future<List<BookTranslation>> find(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<BookTranslationTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<BookTranslationTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<BookTranslationTable>? orderBy,
-    _is.OrderByListBuilder<BookTranslationTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<BookTranslationTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<BookTranslationTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<BookTranslation>(
       where: where?.call(BookTranslation.t),
       orderBy: orderBy?.call(BookTranslation.t),
       orderByList: orderByList?.call(BookTranslation.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -295,19 +305,23 @@ class BookTranslationRepository {
   /// );
   /// ```
   Future<BookTranslation?> findFirstRow(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<BookTranslationTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<BookTranslationTable>? where,
     int? offset,
-    _is.OrderByBuilder<BookTranslationTable>? orderBy,
-    _is.OrderByListBuilder<BookTranslationTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<BookTranslationTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<BookTranslationTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<BookTranslation>(
       where: where?.call(BookTranslation.t),
       orderBy: orderBy?.call(BookTranslation.t),
       orderByList: orderByList?.call(BookTranslation.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -317,11 +331,11 @@ class BookTranslationRepository {
 
   /// Finds a single [BookTranslation] by its [id] or null if no such row exists.
   Future<BookTranslation?> findById(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     int id, {
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<BookTranslation>(
       id,
@@ -346,9 +360,9 @@ class BookTranslationRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<BookTranslation>> insert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<BookTranslation> rows, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -364,9 +378,9 @@ class BookTranslationRepository {
   ///
   /// The returned [BookTranslation] will have its `id` field set.
   Future<BookTranslation> insertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     BookTranslation row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.insertRow<BookTranslation>(
       row,
@@ -395,12 +409,12 @@ class BookTranslationRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<BookTranslation>> upsert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<BookTranslation> rows, {
-    required _is.ColumnSelections<BookTranslationTable> conflictColumns,
-    _is.ColumnSelections<BookTranslationTable>? updateColumns,
-    _is.WhereExpressionBuilder<BookTranslationTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<BookTranslationTable> conflictColumns,
+    _i1.ColumnSelections<BookTranslationTable>? updateColumns,
+    _i1.WhereExpressionBuilder<BookTranslationTable>? updateWhere,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<BookTranslation>(
@@ -427,12 +441,12 @@ class BookTranslationRepository {
   ///
   /// The returned [BookTranslation] will have its `id` field set.
   Future<BookTranslation?> upsertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     BookTranslation row, {
-    required _is.ColumnSelections<BookTranslationTable> conflictColumns,
-    _is.ColumnSelections<BookTranslationTable>? updateColumns,
-    _is.WhereExpressionBuilder<BookTranslationTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<BookTranslationTable> conflictColumns,
+    _i1.ColumnSelections<BookTranslationTable>? updateColumns,
+    _i1.WhereExpressionBuilder<BookTranslationTable>? updateWhere,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.upsertRow<BookTranslation>(
       row,
@@ -453,10 +467,10 @@ class BookTranslationRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<BookTranslation>> update(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<BookTranslation> rows, {
-    _is.ColumnSelections<BookTranslationTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<BookTranslationTable>? columns,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<BookTranslation>(
@@ -471,10 +485,10 @@ class BookTranslationRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<BookTranslation> updateRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     BookTranslation row, {
-    _is.ColumnSelections<BookTranslationTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<BookTranslationTable>? columns,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateRow<BookTranslation>(
       row,
@@ -486,11 +500,11 @@ class BookTranslationRepository {
   /// Updates a single [BookTranslation] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<BookTranslation?> updateById(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     int id, {
-    required _is.ColumnValueListBuilder<BookTranslationUpdateTable>
+    required _i1.ColumnValueListBuilder<BookTranslationUpdateTable>
     columnValues,
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateById<BookTranslation>(
       id,
@@ -506,15 +520,17 @@ class BookTranslationRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<BookTranslation>> updateWhere(
-    _is.DatabaseSession session, {
-    required _is.ColumnValueListBuilder<BookTranslationUpdateTable>
+    _i1.DatabaseSession session, {
+    required _i1.ColumnValueListBuilder<BookTranslationUpdateTable>
     columnValues,
-    required _is.WhereExpressionBuilder<BookTranslationTable> where,
+    required _i1.WhereExpressionBuilder<BookTranslationTable> where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<BookTranslationTable>? orderBy,
-    _is.OrderByListBuilder<BookTranslationTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<BookTranslationTable>? orderBy,
+    _i1.OrderByListBuilder<BookTranslationTable>? orderByList,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<BookTranslation>(
@@ -524,6 +540,8 @@ class BookTranslationRepository {
       offset: offset,
       orderBy: orderBy?.call(BookTranslation.t),
       orderByList: orderByList?.call(BookTranslation.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -541,17 +559,21 @@ class BookTranslationRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<BookTranslation>> delete(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<BookTranslation> rows, {
-    _is.OrderByBuilder<BookTranslationTable>? orderBy,
-    _is.OrderByListBuilder<BookTranslationTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<BookTranslationTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<BookTranslationTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<BookTranslation>(
       rows,
       orderBy: orderBy?.call(BookTranslation.t),
       orderByList: orderByList?.call(BookTranslation.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -559,9 +581,9 @@ class BookTranslationRepository {
 
   /// Deletes a single [BookTranslation].
   Future<BookTranslation> deleteRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     BookTranslation row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.deleteRow<BookTranslation>(
       row,
@@ -578,17 +600,21 @@ class BookTranslationRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<BookTranslation>> deleteWhere(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<BookTranslationTable> where,
-    _is.OrderByBuilder<BookTranslationTable>? orderBy,
-    _is.OrderByListBuilder<BookTranslationTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<BookTranslationTable> where,
+    _i1.OrderByBuilder<BookTranslationTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<BookTranslationTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<BookTranslation>(
       where: where(BookTranslation.t),
       orderBy: orderBy?.call(BookTranslation.t),
       orderByList: orderByList?.call(BookTranslation.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -597,10 +623,10 @@ class BookTranslationRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<BookTranslationTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<BookTranslationTable>? where,
     int? limit,
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.count<BookTranslation>(
       where: where?.call(BookTranslation.t),
@@ -611,11 +637,11 @@ class BookTranslationRepository {
 
   /// Acquires row-level locks on [BookTranslation] rows matching the [where] expression.
   Future<void> lockRows(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<BookTranslationTable> where,
-    required _is.LockMode lockMode,
-    required _is.Transaction transaction,
-    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<BookTranslationTable> where,
+    required _i1.LockMode lockMode,
+    required _i1.Transaction transaction,
+    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
   }) async {
     return session.db.lockRows<BookTranslation>(
       where: where(BookTranslation.t),

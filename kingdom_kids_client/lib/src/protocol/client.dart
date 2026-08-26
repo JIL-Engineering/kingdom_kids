@@ -10,26 +10,25 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _ida;
-import 'package:http/http.dart' as _i85jenna;
-import 'package:kingdom_kids_client/src/protocol/app_user.dart' as _ipxjsvhn;
-import 'package:kingdom_kids_client/src/protocol/child_profile.dart'
-    as _iau7mj9f;
-import 'package:kingdom_kids_client/src/protocol/greetings/greeting.dart'
-    as _ipwyumbq;
-import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
-    as _iacc;
 import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
-    as _iaic;
-import 'package:serverpod_client/serverpod_client.dart' as _isc;
-import 'protocol.dart' as _il2as5qe;
+    as _i1;
+import 'package:serverpod_client/serverpod_client.dart' as _i2;
+import 'dart:async' as _i3;
+import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
+    as _i4;
+import 'package:kingdom_kids_client/src/protocol/app_user.dart' as _i5;
+import 'package:kingdom_kids_client/src/protocol/child_profile.dart' as _i6;
+import 'package:kingdom_kids_client/src/protocol/greetings/greeting.dart'
+    as _i7;
+import 'package:http/http.dart' as _i8;
+import 'protocol.dart' as _i9;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
 /// are made available on the server and enable the corresponding sign-in widget
 /// on the client.
 /// {@category Endpoint}
-class EndpointEmailIdp extends _iaic.EndpointEmailIdpBase {
-  EndpointEmailIdp(_isc.EndpointCaller caller) : super(caller);
+class EndpointEmailIdp extends _i1.EndpointEmailIdpBase {
+  EndpointEmailIdp(_i2.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'emailIdp';
@@ -44,10 +43,10 @@ class EndpointEmailIdp extends _iaic.EndpointEmailIdpBase {
   ///
   /// Throws an [AuthUserBlockedException] if the auth user is blocked.
   @override
-  _ida.Future<_iacc.AuthSuccess> login({
+  _i3.Future<_i4.AuthSuccess> login({
     required String email,
     required String password,
-  }) => caller.callServerEndpoint<_iacc.AuthSuccess>(
+  }) => caller.callServerEndpoint<_i4.AuthSuccess>(
     'emailIdp',
     'login',
     {
@@ -67,8 +66,8 @@ class EndpointEmailIdp extends _iaic.EndpointEmailIdpBase {
   /// registration. If the email is already registered, the returned ID will not
   /// be valid.
   @override
-  _ida.Future<_isc.UuidValue> startRegistration({required String email}) =>
-      caller.callServerEndpoint<_isc.UuidValue>(
+  _i3.Future<_i2.UuidValue> startRegistration({required String email}) =>
+      caller.callServerEndpoint<_i2.UuidValue>(
         'emailIdp',
         'startRegistration',
         {'email': email},
@@ -85,8 +84,8 @@ class EndpointEmailIdp extends _iaic.EndpointEmailIdpBase {
   /// - [EmailAccountRequestExceptionReason.invalid] if no request exists
   ///   for the given [accountRequestId] or [verificationCode] is invalid.
   @override
-  _ida.Future<String> verifyRegistrationCode({
-    required _isc.UuidValue accountRequestId,
+  _i3.Future<String> verifyRegistrationCode({
+    required _i2.UuidValue accountRequestId,
     required String verificationCode,
   }) => caller.callServerEndpoint<String>(
     'emailIdp',
@@ -112,10 +111,10 @@ class EndpointEmailIdp extends _iaic.EndpointEmailIdpBase {
   ///
   /// Returns a session for the newly created user.
   @override
-  _ida.Future<_iacc.AuthSuccess> finishRegistration({
+  _i3.Future<_i4.AuthSuccess> finishRegistration({
     required String registrationToken,
     required String password,
-  }) => caller.callServerEndpoint<_iacc.AuthSuccess>(
+  }) => caller.callServerEndpoint<_i4.AuthSuccess>(
     'emailIdp',
     'finishRegistration',
     {
@@ -138,8 +137,8 @@ class EndpointEmailIdp extends _iaic.EndpointEmailIdpBase {
   ///   made too many attempts trying to request a password reset.
   ///
   @override
-  _ida.Future<_isc.UuidValue> startPasswordReset({required String email}) =>
-      caller.callServerEndpoint<_isc.UuidValue>(
+  _i3.Future<_i2.UuidValue> startPasswordReset({required String email}) =>
+      caller.callServerEndpoint<_i2.UuidValue>(
         'emailIdp',
         'startPasswordReset',
         {'email': email},
@@ -160,8 +159,8 @@ class EndpointEmailIdp extends _iaic.EndpointEmailIdpBase {
   /// should be overridden to return credentials for the next step instead
   /// of the credentials for setting the password.
   @override
-  _ida.Future<String> verifyPasswordResetCode({
-    required _isc.UuidValue passwordResetRequestId,
+  _i3.Future<String> verifyPasswordResetCode({
+    required _i2.UuidValue passwordResetRequestId,
     required String verificationCode,
   }) => caller.callServerEndpoint<String>(
     'emailIdp',
@@ -187,7 +186,7 @@ class EndpointEmailIdp extends _iaic.EndpointEmailIdpBase {
   ///
   /// Throws an [AuthUserBlockedException] if the auth user is blocked.
   @override
-  _ida.Future<void> finishPasswordReset({
+  _i3.Future<void> finishPasswordReset({
     required String finishPasswordResetToken,
     required String newPassword,
   }) => caller.callServerEndpoint<void>(
@@ -200,7 +199,7 @@ class EndpointEmailIdp extends _iaic.EndpointEmailIdpBase {
   );
 
   @override
-  _ida.Future<bool> hasAccount() => caller.callServerEndpoint<bool>(
+  _i3.Future<bool> hasAccount() => caller.callServerEndpoint<bool>(
     'emailIdp',
     'hasAccount',
     {},
@@ -210,8 +209,8 @@ class EndpointEmailIdp extends _iaic.EndpointEmailIdpBase {
 /// By extending [RefreshJwtTokensEndpoint], the JWT token refresh endpoint
 /// is made available on the server and enables automatic token refresh on the client.
 /// {@category Endpoint}
-class EndpointJwtRefresh extends _iacc.EndpointRefreshJwtTokens {
-  EndpointJwtRefresh(_isc.EndpointCaller caller) : super(caller);
+class EndpointJwtRefresh extends _i4.EndpointRefreshJwtTokens {
+  EndpointJwtRefresh(_i2.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'jwtRefresh';
@@ -235,9 +234,9 @@ class EndpointJwtRefresh extends _iacc.EndpointRefreshJwtTokens {
   /// This endpoint is unauthenticated, meaning the client won't include any
   /// authentication information with the call.
   @override
-  _ida.Future<_iacc.AuthSuccess> refreshAccessToken({
+  _i3.Future<_i4.AuthSuccess> refreshAccessToken({
     required String refreshToken,
-  }) => caller.callServerEndpoint<_iacc.AuthSuccess>(
+  }) => caller.callServerEndpoint<_i4.AuthSuccess>(
     'jwtRefresh',
     'refreshAccessToken',
     {'refreshToken': refreshToken},
@@ -246,19 +245,19 @@ class EndpointJwtRefresh extends _iacc.EndpointRefreshJwtTokens {
 }
 
 /// {@category Endpoint}
-class EndpointAuth extends _isc.EndpointRef {
-  EndpointAuth(_isc.EndpointCaller caller) : super(caller);
+class EndpointAuth extends _i2.EndpointRef {
+  EndpointAuth(_i2.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'auth';
 
   /// Étape 3 du sprint : Méthode completeProfile appelée juste après l'inscription
-  _ida.Future<_ipxjsvhn.AppUser> completeProfile(
+  _i3.Future<_i5.AppUser> completeProfile(
     String country,
     String timezone,
     String preferredLanguage,
     bool consentAccepted,
-  ) => caller.callServerEndpoint<_ipxjsvhn.AppUser>(
+  ) => caller.callServerEndpoint<_i5.AppUser>(
     'auth',
     'completeProfile',
     {
@@ -271,27 +270,27 @@ class EndpointAuth extends _isc.EndpointRef {
 }
 
 /// {@category Endpoint}
-class EndpointChild extends _isc.EndpointRef {
-  EndpointChild(_isc.EndpointCaller caller) : super(caller);
+class EndpointChild extends _i2.EndpointRef {
+  EndpointChild(_i2.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'child';
 
   /// Liste uniquement les enfants du parent connecté
-  _ida.Future<List<_iau7mj9f.ChildProfile>> listChildren() =>
-      caller.callServerEndpoint<List<_iau7mj9f.ChildProfile>>(
+  _i3.Future<List<_i6.ChildProfile>> listChildren() =>
+      caller.callServerEndpoint<List<_i6.ChildProfile>>(
         'child',
         'listChildren',
         {},
       );
 
   /// Crée un enfant via le service sécurisé
-  _ida.Future<_iau7mj9f.ChildProfile> createChild(
+  _i3.Future<_i6.ChildProfile> createChild(
     String displayName,
     int birthYear,
     String preferredLanguage,
     String avatarId,
-  ) => caller.callServerEndpoint<_iau7mj9f.ChildProfile>(
+  ) => caller.callServerEndpoint<_i6.ChildProfile>(
     'child',
     'createChild',
     {
@@ -302,13 +301,13 @@ class EndpointChild extends _isc.EndpointRef {
     },
   );
 
-  _ida.Future<_iau7mj9f.ChildProfile> updateChild(
+  _i3.Future<_i6.ChildProfile> updateChild(
     int childId,
     String displayName,
     int birthYear,
     String preferredLanguage,
     String avatarId,
-  ) => caller.callServerEndpoint<_iau7mj9f.ChildProfile>(
+  ) => caller.callServerEndpoint<_i6.ChildProfile>(
     'child',
     'updateChild',
     {
@@ -324,15 +323,15 @@ class EndpointChild extends _isc.EndpointRef {
 /// This is an example endpoint that returns a greeting message through
 /// its [hello] method.
 /// {@category Endpoint}
-class EndpointGreeting extends _isc.EndpointRef {
-  EndpointGreeting(_isc.EndpointCaller caller) : super(caller);
+class EndpointGreeting extends _i2.EndpointRef {
+  EndpointGreeting(_i2.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'greeting';
 
   /// Returns a personalized greeting message: "Hello {name}".
-  _ida.Future<_ipwyumbq.Greeting> hello(String name) =>
-      caller.callServerEndpoint<_ipwyumbq.Greeting>(
+  _i3.Future<_i7.Greeting> hello(String name) =>
+      caller.callServerEndpoint<_i7.Greeting>(
         'greeting',
         'hello',
         {'name': name},
@@ -341,33 +340,37 @@ class EndpointGreeting extends _isc.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    serverpod_auth_idp = _iaic.Caller(client);
-    serverpod_auth_core = _iacc.Caller(client);
+    serverpod_auth_idp = _i1.Caller(client);
+    serverpod_auth_core = _i4.Caller(client);
   }
 
-  late final _iaic.Caller serverpod_auth_idp;
+  late final _i1.Caller serverpod_auth_idp;
 
-  late final _iacc.Caller serverpod_auth_core;
+  late final _i4.Caller serverpod_auth_core;
 }
 
-class Client extends _isc.ServerpodClientShared {
+class Client extends _i2.ServerpodClientShared {
   Client(
     String host, {
     dynamic securityContext,
+    @Deprecated(
+      'Use authKeyProvider instead. This will be removed in future releases.',
+    )
+    super.authenticationKeyManager,
     Duration? streamingConnectionTimeout,
     Duration? connectionTimeout,
     Function(
-      _isc.MethodCallContext,
+      _i2.MethodCallContext,
       Object,
       StackTrace,
     )?
     onFailedCall,
-    Function(_isc.MethodCallContext)? onSucceededCall,
+    Function(_i2.MethodCallContext)? onSucceededCall,
     bool? disconnectStreamsOnLostInternetConnection,
-    _i85jenna.Client? httpClientOverride,
+    _i8.Client? httpClientOverride,
   }) : super(
          host,
-         _il2as5qe.Protocol(),
+         _i9.Protocol(),
          securityContext: securityContext,
          streamingConnectionTimeout: streamingConnectionTimeout,
          connectionTimeout: connectionTimeout,
@@ -398,7 +401,7 @@ class Client extends _isc.ServerpodClientShared {
   late final Modules modules;
 
   @override
-  Map<String, _isc.EndpointRef> get endpointRefLookup => {
+  Map<String, _i2.EndpointRef> get endpointRefLookup => {
     'emailIdp': emailIdp,
     'jwtRefresh': jwtRefresh,
     'auth': auth,
@@ -407,7 +410,7 @@ class Client extends _isc.ServerpodClientShared {
   };
 
   @override
-  Map<String, _isc.ModuleEndpointCaller> get moduleLookup => {
+  Map<String, _i2.ModuleEndpointCaller> get moduleLookup => {
     'serverpod_auth_idp': modules.serverpod_auth_idp,
     'serverpod_auth_core': modules.serverpod_auth_core,
   };

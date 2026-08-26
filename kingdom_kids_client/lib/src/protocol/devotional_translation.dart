@@ -10,10 +10,9 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class DevotionalTranslation
-    implements _isc.SerializableModel, _isc.ProtocolSerialization {
+abstract class DevotionalTranslation implements _i1.SerializableModel {
   DevotionalTranslation._({
     this.id,
     required this.devotionalId,
@@ -67,7 +66,7 @@ abstract class DevotionalTranslation
 
   /// Returns a shallow copy of this [DevotionalTranslation]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   DevotionalTranslation copyWith({
     int? id,
     int? devotionalId,
@@ -92,22 +91,8 @@ abstract class DevotionalTranslation
   }
 
   @override
-  Map<String, dynamic> toJsonForProtocol() {
-    return {
-      '__className__': 'DevotionalTranslation',
-      if (id != null) 'id': id,
-      'devotionalId': devotionalId,
-      'language': language,
-      'verseReference': verseReference,
-      'verseText': verseText,
-      'thoughtText': thoughtText,
-      'prayerPrompt': prayerPrompt,
-    };
-  }
-
-  @override
   String toString() {
-    return _isc.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -134,7 +119,7 @@ class _DevotionalTranslationImpl extends DevotionalTranslation {
 
   /// Returns a shallow copy of this [DevotionalTranslation]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   @override
   DevotionalTranslation copyWith({
     Object? id = _Undefined,

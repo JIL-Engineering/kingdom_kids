@@ -10,20 +10,19 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class DownloadRecord
-    implements _isc.SerializableModel, _isc.ProtocolSerialization {
+abstract class DownloadRecord implements _i1.SerializableModel {
   DownloadRecord._({
-    _isc.UuidValue? id,
+    _i1.UuidValue? id,
     required this.childId,
     required this.bookId,
     required this.deviceId,
     required this.downloadedAt,
-  }) : id = id ?? const _isc.Uuid().v4obj();
+  }) : id = id ?? const _i1.Uuid().v4obj();
 
   factory DownloadRecord({
-    _isc.UuidValue? id,
+    _i1.UuidValue? id,
     required int childId,
     required int bookId,
     required String deviceId,
@@ -34,18 +33,18 @@ abstract class DownloadRecord
     return DownloadRecord(
       id: jsonSerialization['id'] == null
           ? null
-          : _isc.UuidValueJsonExtension.fromJson(jsonSerialization['id']),
+          : _i1.UuidValueJsonExtension.fromJson(jsonSerialization['id']),
       childId: jsonSerialization['childId'] as int,
       bookId: jsonSerialization['bookId'] as int,
       deviceId: jsonSerialization['deviceId'] as String,
-      downloadedAt: _isc.DateTimeJsonExtension.fromJson(
+      downloadedAt: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['downloadedAt'],
       ),
     );
   }
 
   /// The id of the object.
-  _isc.UuidValue id;
+  _i1.UuidValue id;
 
   int childId;
 
@@ -57,9 +56,9 @@ abstract class DownloadRecord
 
   /// Returns a shallow copy of this [DownloadRecord]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   DownloadRecord copyWith({
-    _isc.UuidValue? id,
+    _i1.UuidValue? id,
     int? childId,
     int? bookId,
     String? deviceId,
@@ -78,26 +77,14 @@ abstract class DownloadRecord
   }
 
   @override
-  Map<String, dynamic> toJsonForProtocol() {
-    return {
-      '__className__': 'DownloadRecord',
-      'id': id.toJson(),
-      'childId': childId,
-      'bookId': bookId,
-      'deviceId': deviceId,
-      'downloadedAt': downloadedAt.toJson(),
-    };
-  }
-
-  @override
   String toString() {
-    return _isc.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
 class _DownloadRecordImpl extends DownloadRecord {
   _DownloadRecordImpl({
-    _isc.UuidValue? id,
+    _i1.UuidValue? id,
     required int childId,
     required int bookId,
     required String deviceId,
@@ -112,10 +99,10 @@ class _DownloadRecordImpl extends DownloadRecord {
 
   /// Returns a shallow copy of this [DownloadRecord]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   @override
   DownloadRecord copyWith({
-    _isc.UuidValue? id,
+    _i1.UuidValue? id,
     int? childId,
     int? bookId,
     String? deviceId,

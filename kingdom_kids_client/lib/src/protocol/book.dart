@@ -10,10 +10,9 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class Book
-    implements _isc.SerializableModel, _isc.ProtocolSerialization {
+abstract class Book implements _i1.SerializableModel {
   Book._({
     this.id,
     required this.slug,
@@ -48,14 +47,14 @@ abstract class Book
       ageBracketMax: jsonSerialization['ageBracketMax'] as String,
       category: jsonSerialization['category'] as String,
       coverImageAsset: jsonSerialization['coverImageAsset'] as String?,
-      isPublished: _isc.BoolJsonExtension.fromJson(
+      isPublished: _i1.BoolJsonExtension.fromJson(
         jsonSerialization['isPublished'],
       ),
       contentVersion: jsonSerialization['contentVersion'] as int,
-      updatedAt: _isc.DateTimeJsonExtension.fromJson(
+      updatedAt: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['updatedAt'],
       ),
-      createdAt: _isc.DateTimeJsonExtension.fromJson(
+      createdAt: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['createdAt'],
       ),
     );
@@ -86,7 +85,7 @@ abstract class Book
 
   /// Returns a shallow copy of this [Book]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   Book copyWith({
     int? id,
     String? slug,
@@ -117,25 +116,8 @@ abstract class Book
   }
 
   @override
-  Map<String, dynamic> toJsonForProtocol() {
-    return {
-      '__className__': 'Book',
-      if (id != null) 'id': id,
-      'slug': slug,
-      'ageBracketMin': ageBracketMin,
-      'ageBracketMax': ageBracketMax,
-      'category': category,
-      if (coverImageAsset != null) 'coverImageAsset': coverImageAsset,
-      'isPublished': isPublished,
-      'contentVersion': contentVersion,
-      'updatedAt': updatedAt.toJson(),
-      'createdAt': createdAt.toJson(),
-    };
-  }
-
-  @override
   String toString() {
-    return _isc.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -168,7 +150,7 @@ class _BookImpl extends Book {
 
   /// Returns a shallow copy of this [Book]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   @override
   Book copyWith({
     Object? id = _Undefined,

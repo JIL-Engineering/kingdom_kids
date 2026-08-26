@@ -10,10 +10,9 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class ChildBadge
-    implements _isc.SerializableModel, _isc.ProtocolSerialization {
+abstract class ChildBadge implements _i1.SerializableModel {
   ChildBadge._({
     this.id,
     required this.childId,
@@ -33,7 +32,7 @@ abstract class ChildBadge
       id: jsonSerialization['id'] as int?,
       childId: jsonSerialization['childId'] as int,
       badgeId: jsonSerialization['badgeId'] as int,
-      earnedAt: _isc.DateTimeJsonExtension.fromJson(
+      earnedAt: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['earnedAt'],
       ),
     );
@@ -52,7 +51,7 @@ abstract class ChildBadge
 
   /// Returns a shallow copy of this [ChildBadge]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   ChildBadge copyWith({
     int? id,
     int? childId,
@@ -71,19 +70,8 @@ abstract class ChildBadge
   }
 
   @override
-  Map<String, dynamic> toJsonForProtocol() {
-    return {
-      '__className__': 'ChildBadge',
-      if (id != null) 'id': id,
-      'childId': childId,
-      'badgeId': badgeId,
-      'earnedAt': earnedAt.toJson(),
-    };
-  }
-
-  @override
   String toString() {
-    return _isc.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -104,7 +92,7 @@ class _ChildBadgeImpl extends ChildBadge {
 
   /// Returns a shallow copy of this [ChildBadge]
   /// with some or all fields replaced by the given arguments.
-  @_isc.useResult
+  @_i1.useResult
   @override
   ChildBadge copyWith({
     Object? id = _Undefined,

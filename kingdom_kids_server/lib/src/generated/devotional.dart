@@ -10,10 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _is;
+import 'package:serverpod/serverpod.dart' as _i1;
 
 abstract class Devotional
-    implements _is.TableRow<int?>, _is.ProtocolSerialization {
+    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   Devotional._({
     this.id,
     required this.date,
@@ -29,7 +29,7 @@ abstract class Devotional
   factory Devotional.fromJson(Map<String, dynamic> jsonSerialization) {
     return Devotional(
       id: jsonSerialization['id'] as int?,
-      date: _is.DateTimeJsonExtension.fromJson(jsonSerialization['date']),
+      date: _i1.DateTimeJsonExtension.fromJson(jsonSerialization['date']),
       category: jsonSerialization['category'] as String?,
     );
   }
@@ -46,11 +46,11 @@ abstract class Devotional
   String? category;
 
   @override
-  _is.Table<int?> get table => t;
+  _i1.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [Devotional]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   Devotional copyWith({
     int? id,
     DateTime? date,
@@ -81,11 +81,13 @@ abstract class Devotional
   }
 
   static DevotionalIncludeList includeList({
-    _is.WhereExpressionBuilder<DevotionalTable>? where,
+    _i1.WhereExpressionBuilder<DevotionalTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<DevotionalTable>? orderBy,
-    _is.OrderByListBuilder<DevotionalTable>? orderByList,
+    _i1.OrderByBuilder<DevotionalTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<DevotionalTable>? orderByList,
     DevotionalInclude? include,
   }) {
     return DevotionalIncludeList._(
@@ -93,6 +95,8 @@ abstract class Devotional
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(Devotional.t),
+      orderDescending: // ignore: deprecated_member_use_from_same_package
+          orderDescending,
       orderByList: orderByList?.call(Devotional.t),
       include: include,
     );
@@ -100,7 +104,7 @@ abstract class Devotional
 
   @override
   String toString() {
-    return _is.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
 
@@ -119,7 +123,7 @@ class _DevotionalImpl extends Devotional {
 
   /// Returns a shallow copy of this [Devotional]
   /// with some or all fields replaced by the given arguments.
-  @_is.useResult
+  @_i1.useResult
   @override
   Devotional copyWith({
     Object? id = _Undefined,
@@ -134,28 +138,28 @@ class _DevotionalImpl extends Devotional {
   }
 }
 
-class DevotionalUpdateTable extends _is.UpdateTable<DevotionalTable> {
+class DevotionalUpdateTable extends _i1.UpdateTable<DevotionalTable> {
   DevotionalUpdateTable(super.table);
 
-  _is.ColumnValue<DateTime, DateTime> date(DateTime value) => _is.ColumnValue(
+  _i1.ColumnValue<DateTime, DateTime> date(DateTime value) => _i1.ColumnValue(
     table.date,
     value,
   );
 
-  _is.ColumnValue<String, String> category(String? value) => _is.ColumnValue(
+  _i1.ColumnValue<String, String> category(String? value) => _i1.ColumnValue(
     table.category,
     value,
   );
 }
 
-class DevotionalTable extends _is.Table<int?> {
+class DevotionalTable extends _i1.Table<int?> {
   DevotionalTable({super.tableRelation}) : super(tableName: 'devotionals') {
     updateTable = DevotionalUpdateTable(this);
-    date = _is.ColumnDateTime(
+    date = _i1.ColumnDateTime(
       'date',
       this,
     );
-    category = _is.ColumnString(
+    category = _i1.ColumnString(
       'category',
       this,
     );
@@ -163,34 +167,36 @@ class DevotionalTable extends _is.Table<int?> {
 
   late final DevotionalUpdateTable updateTable;
 
-  late final _is.ColumnDateTime date;
+  late final _i1.ColumnDateTime date;
 
-  late final _is.ColumnString category;
+  late final _i1.ColumnString category;
 
   @override
-  List<_is.Column> get columns => [
+  List<_i1.Column> get columns => [
     id,
     date,
     category,
   ];
 }
 
-class DevotionalInclude extends _is.IncludeObject {
+class DevotionalInclude extends _i1.IncludeObject {
   DevotionalInclude._();
 
   @override
-  Map<String, _is.Include?> get includes => {};
+  Map<String, _i1.Include?> get includes => {};
 
   @override
-  _is.Table<int?> get table => Devotional.t;
+  _i1.Table<int?> get table => Devotional.t;
 }
 
-class DevotionalIncludeList extends _is.IncludeList {
+class DevotionalIncludeList extends _i1.IncludeList {
   DevotionalIncludeList._({
-    _is.WhereExpressionBuilder<DevotionalTable>? where,
+    _i1.WhereExpressionBuilder<DevotionalTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -198,10 +204,10 @@ class DevotionalIncludeList extends _is.IncludeList {
   }
 
   @override
-  Map<String, _is.Include?> get includes => include?.includes ?? {};
+  Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _is.Table<int?> get table => Devotional.t;
+  _i1.Table<int?> get table => Devotional.t;
 }
 
 class DevotionalRepository {
@@ -230,20 +236,24 @@ class DevotionalRepository {
   /// );
   /// ```
   Future<List<Devotional>> find(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<DevotionalTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<DevotionalTable>? where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<DevotionalTable>? orderBy,
-    _is.OrderByListBuilder<DevotionalTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<DevotionalTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<DevotionalTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<Devotional>(
       where: where?.call(Devotional.t),
       orderBy: orderBy?.call(Devotional.t),
       orderByList: orderByList?.call(Devotional.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -270,19 +280,23 @@ class DevotionalRepository {
   /// );
   /// ```
   Future<Devotional?> findFirstRow(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<DevotionalTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<DevotionalTable>? where,
     int? offset,
-    _is.OrderByBuilder<DevotionalTable>? orderBy,
-    _is.OrderByListBuilder<DevotionalTable>? orderByList,
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.OrderByBuilder<DevotionalTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<DevotionalTable>? orderByList,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<Devotional>(
       where: where?.call(Devotional.t),
       orderBy: orderBy?.call(Devotional.t),
       orderByList: orderByList?.call(Devotional.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -292,11 +306,11 @@ class DevotionalRepository {
 
   /// Finds a single [Devotional] by its [id] or null if no such row exists.
   Future<Devotional?> findById(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     int id, {
-    _is.Transaction? transaction,
-    _is.LockMode? lockMode,
-    _is.LockBehavior? lockBehavior,
+    _i1.Transaction? transaction,
+    _i1.LockMode? lockMode,
+    _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<Devotional>(
       id,
@@ -321,9 +335,9 @@ class DevotionalRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Devotional>> insert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<Devotional> rows, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -339,9 +353,9 @@ class DevotionalRepository {
   ///
   /// The returned [Devotional] will have its `id` field set.
   Future<Devotional> insertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     Devotional row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.insertRow<Devotional>(
       row,
@@ -370,12 +384,12 @@ class DevotionalRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Devotional>> upsert(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<Devotional> rows, {
-    required _is.ColumnSelections<DevotionalTable> conflictColumns,
-    _is.ColumnSelections<DevotionalTable>? updateColumns,
-    _is.WhereExpressionBuilder<DevotionalTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<DevotionalTable> conflictColumns,
+    _i1.ColumnSelections<DevotionalTable>? updateColumns,
+    _i1.WhereExpressionBuilder<DevotionalTable>? updateWhere,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<Devotional>(
@@ -402,12 +416,12 @@ class DevotionalRepository {
   ///
   /// The returned [Devotional] will have its `id` field set.
   Future<Devotional?> upsertRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     Devotional row, {
-    required _is.ColumnSelections<DevotionalTable> conflictColumns,
-    _is.ColumnSelections<DevotionalTable>? updateColumns,
-    _is.WhereExpressionBuilder<DevotionalTable>? updateWhere,
-    _is.Transaction? transaction,
+    required _i1.ColumnSelections<DevotionalTable> conflictColumns,
+    _i1.ColumnSelections<DevotionalTable>? updateColumns,
+    _i1.WhereExpressionBuilder<DevotionalTable>? updateWhere,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.upsertRow<Devotional>(
       row,
@@ -428,10 +442,10 @@ class DevotionalRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Devotional>> update(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<Devotional> rows, {
-    _is.ColumnSelections<DevotionalTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<DevotionalTable>? columns,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<Devotional>(
@@ -446,10 +460,10 @@ class DevotionalRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<Devotional> updateRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     Devotional row, {
-    _is.ColumnSelections<DevotionalTable>? columns,
-    _is.Transaction? transaction,
+    _i1.ColumnSelections<DevotionalTable>? columns,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateRow<Devotional>(
       row,
@@ -461,10 +475,10 @@ class DevotionalRepository {
   /// Updates a single [Devotional] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<Devotional?> updateById(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     int id, {
-    required _is.ColumnValueListBuilder<DevotionalUpdateTable> columnValues,
-    _is.Transaction? transaction,
+    required _i1.ColumnValueListBuilder<DevotionalUpdateTable> columnValues,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateById<Devotional>(
       id,
@@ -480,14 +494,16 @@ class DevotionalRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Devotional>> updateWhere(
-    _is.DatabaseSession session, {
-    required _is.ColumnValueListBuilder<DevotionalUpdateTable> columnValues,
-    required _is.WhereExpressionBuilder<DevotionalTable> where,
+    _i1.DatabaseSession session, {
+    required _i1.ColumnValueListBuilder<DevotionalUpdateTable> columnValues,
+    required _i1.WhereExpressionBuilder<DevotionalTable> where,
     int? limit,
     int? offset,
-    _is.OrderByBuilder<DevotionalTable>? orderBy,
-    _is.OrderByListBuilder<DevotionalTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<DevotionalTable>? orderBy,
+    _i1.OrderByListBuilder<DevotionalTable>? orderByList,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<Devotional>(
@@ -497,6 +513,8 @@ class DevotionalRepository {
       offset: offset,
       orderBy: orderBy?.call(Devotional.t),
       orderByList: orderByList?.call(Devotional.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -514,17 +532,21 @@ class DevotionalRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Devotional>> delete(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     List<Devotional> rows, {
-    _is.OrderByBuilder<DevotionalTable>? orderBy,
-    _is.OrderByListBuilder<DevotionalTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.OrderByBuilder<DevotionalTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<DevotionalTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<Devotional>(
       rows,
       orderBy: orderBy?.call(Devotional.t),
       orderByList: orderByList?.call(Devotional.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -532,9 +554,9 @@ class DevotionalRepository {
 
   /// Deletes a single [Devotional].
   Future<Devotional> deleteRow(
-    _is.DatabaseSession session,
+    _i1.DatabaseSession session,
     Devotional row, {
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.deleteRow<Devotional>(
       row,
@@ -551,17 +573,21 @@ class DevotionalRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<Devotional>> deleteWhere(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<DevotionalTable> where,
-    _is.OrderByBuilder<DevotionalTable>? orderBy,
-    _is.OrderByListBuilder<DevotionalTable>? orderByList,
-    _is.Transaction? transaction,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<DevotionalTable> where,
+    _i1.OrderByBuilder<DevotionalTable>? orderBy,
+    @Deprecated('Use desc() on the orderBy column instead.')
+    bool orderDescending = false,
+    _i1.OrderByListBuilder<DevotionalTable>? orderByList,
+    _i1.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<Devotional>(
       where: where(Devotional.t),
       orderBy: orderBy?.call(Devotional.t),
       orderByList: orderByList?.call(Devotional.t),
+      orderDescending: // ignore: deprecated_member_use
+          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -570,10 +596,10 @@ class DevotionalRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _is.DatabaseSession session, {
-    _is.WhereExpressionBuilder<DevotionalTable>? where,
+    _i1.DatabaseSession session, {
+    _i1.WhereExpressionBuilder<DevotionalTable>? where,
     int? limit,
-    _is.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.count<Devotional>(
       where: where?.call(Devotional.t),
@@ -584,11 +610,11 @@ class DevotionalRepository {
 
   /// Acquires row-level locks on [Devotional] rows matching the [where] expression.
   Future<void> lockRows(
-    _is.DatabaseSession session, {
-    required _is.WhereExpressionBuilder<DevotionalTable> where,
-    required _is.LockMode lockMode,
-    required _is.Transaction transaction,
-    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
+    _i1.DatabaseSession session, {
+    required _i1.WhereExpressionBuilder<DevotionalTable> where,
+    required _i1.LockMode lockMode,
+    required _i1.Transaction transaction,
+    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
   }) async {
     return session.db.lockRows<Devotional>(
       where: where(Devotional.t),
