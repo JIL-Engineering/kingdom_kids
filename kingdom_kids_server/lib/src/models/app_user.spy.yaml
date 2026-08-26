@@ -1,14 +1,13 @@
 class: AppUser
 table: users
 fields:
-  email: String
-  passwordHash: String
+  authUser: module:serverpod_auth_core:AuthUser?, relation(onDelete=Cascade)
   country: String?
   timezone: String
   preferredLanguage: String
   consentGivenAt: DateTime?
   createdAt: DateTime
 indexes:
-  users_email_idx:
-    fields: email
+  users_auth_user_idx:
+    fields: authUserId
     unique: true
