@@ -9,5 +9,11 @@ emailIdp:
   - hasAccount:
 jwtRefresh:
   - refreshAccessToken:
+appUser:
+  - completeProfile:
+child:
+  - listChildren:
+  - createChild:
+  - updateChild:
 greeting:
   - hello:

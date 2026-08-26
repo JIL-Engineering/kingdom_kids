@@ -13,11 +13,13 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../auth/email_idp_endpoint.dart' as _i2;
 import '../auth/jwt_refresh_endpoint.dart' as _i3;
-import '../greetings/greeting_endpoint.dart' as _i4;
+import '../endpoints/app_user_endpoint.dart' as _i4;
+import '../endpoints/child_endpoint.dart' as _i5;
+import '../greetings/greeting_endpoint.dart' as _i6;
 import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
-    as _i5;
+    as _i7;
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
-    as _i6;
+    as _i8;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -35,7 +37,19 @@ class Endpoints extends _i1.EndpointDispatch {
           'jwtRefresh',
           null,
         ),
-      'greeting': _i4.GreetingEndpoint()
+      'appUser': _i4.AppUserEndpoint()
+        ..initialize(
+          server,
+          'appUser',
+          null,
+        ),
+      'child': _i5.ChildEndpoint()
+        ..initialize(
+          server,
+          'child',
+          null,
+        ),
+      'greeting': _i6.GreetingEndpoint()
         ..initialize(
           server,
           'greeting',
@@ -246,6 +260,144 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
+    connectors['appUser'] = _i1.EndpointConnector(
+      name: 'appUser',
+      endpoint: endpoints['appUser']!,
+      methodConnectors: {
+        'completeProfile': _i1.MethodConnector(
+          name: 'completeProfile',
+          params: {
+            'country': _i1.ParameterDescription(
+              name: 'country',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+            'timezone': _i1.ParameterDescription(
+              name: 'timezone',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+            'preferredLanguage': _i1.ParameterDescription(
+              name: 'preferredLanguage',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+            'consentAccepted': _i1.ParameterDescription(
+              name: 'consentAccepted',
+              type: _i1.getType<bool>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['appUser'] as _i4.AppUserEndpoint).completeProfile(
+                    session,
+                    params['country'],
+                    params['timezone'],
+                    params['preferredLanguage'],
+                    params['consentAccepted'],
+                  ),
+        ),
+      },
+    );
+    connectors['child'] = _i1.EndpointConnector(
+      name: 'child',
+      endpoint: endpoints['child']!,
+      methodConnectors: {
+        'listChildren': _i1.MethodConnector(
+          name: 'listChildren',
+          params: {},
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['child'] as _i5.ChildEndpoint).listChildren(
+                session,
+              ),
+        ),
+        'createChild': _i1.MethodConnector(
+          name: 'createChild',
+          params: {
+            'displayName': _i1.ParameterDescription(
+              name: 'displayName',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+            'birthYear': _i1.ParameterDescription(
+              name: 'birthYear',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'preferredLanguage': _i1.ParameterDescription(
+              name: 'preferredLanguage',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+            'avatarId': _i1.ParameterDescription(
+              name: 'avatarId',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['child'] as _i5.ChildEndpoint).createChild(
+                session,
+                params['displayName'],
+                params['birthYear'],
+                params['preferredLanguage'],
+                params['avatarId'],
+              ),
+        ),
+        'updateChild': _i1.MethodConnector(
+          name: 'updateChild',
+          params: {
+            'childId': _i1.ParameterDescription(
+              name: 'childId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'displayName': _i1.ParameterDescription(
+              name: 'displayName',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+            'birthYear': _i1.ParameterDescription(
+              name: 'birthYear',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'preferredLanguage': _i1.ParameterDescription(
+              name: 'preferredLanguage',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+            'avatarId': _i1.ParameterDescription(
+              name: 'avatarId',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['child'] as _i5.ChildEndpoint).updateChild(
+                session,
+                params['childId'],
+                params['displayName'],
+                params['birthYear'],
+                params['preferredLanguage'],
+                params['avatarId'],
+              ),
+        ),
+      },
+    );
     connectors['greeting'] = _i1.EndpointConnector(
       name: 'greeting',
       endpoint: endpoints['greeting']!,
@@ -263,16 +415,16 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['greeting'] as _i4.GreetingEndpoint).hello(
+              ) async => (endpoints['greeting'] as _i6.GreetingEndpoint).hello(
                 session,
                 params['name'],
               ),
         ),
       },
     );
-    modules['serverpod_auth_idp'] = _i5.Endpoints()
+    modules['serverpod_auth_idp'] = _i7.Endpoints()
       ..initializeEndpoints(server);
-    modules['serverpod_auth_core'] = _i6.Endpoints()
+    modules['serverpod_auth_core'] = _i8.Endpoints()
       ..initializeEndpoints(server);
   }
 }

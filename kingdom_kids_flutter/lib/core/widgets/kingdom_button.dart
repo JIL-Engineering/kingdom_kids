@@ -60,9 +60,12 @@ class KingdomButton extends StatelessWidget {
                     icon!,
                     const SizedBox(width: 8),
                   ],
-                  Text(label, style: AppTextStyles.buttonLarge.copyWith(
-                    color: foregroundColor,
-                  )),
+                  Text(
+                    label,
+                    style: AppTextStyles.buttonLarge.copyWith(
+                      color: foregroundColor,
+                    ),
+                  ),
                 ],
               ),
       ),
