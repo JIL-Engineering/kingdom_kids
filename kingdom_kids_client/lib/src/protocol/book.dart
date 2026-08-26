@@ -10,9 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
-abstract class Book implements _i1.SerializableModel {
+abstract class Book
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   Book._({
     this.id,
     required this.slug,
@@ -47,14 +48,14 @@ abstract class Book implements _i1.SerializableModel {
       ageBracketMax: jsonSerialization['ageBracketMax'] as String,
       category: jsonSerialization['category'] as String,
       coverImageAsset: jsonSerialization['coverImageAsset'] as String?,
-      isPublished: _i1.BoolJsonExtension.fromJson(
+      isPublished: _isc.BoolJsonExtension.fromJson(
         jsonSerialization['isPublished'],
       ),
       contentVersion: jsonSerialization['contentVersion'] as int,
-      updatedAt: _i1.DateTimeJsonExtension.fromJson(
+      updatedAt: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['updatedAt'],
       ),
-      createdAt: _i1.DateTimeJsonExtension.fromJson(
+      createdAt: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['createdAt'],
       ),
     );
@@ -85,7 +86,7 @@ abstract class Book implements _i1.SerializableModel {
 
   /// Returns a shallow copy of this [Book]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   Book copyWith({
     int? id,
     String? slug,
@@ -116,8 +117,25 @@ abstract class Book implements _i1.SerializableModel {
   }
 
   @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'Book',
+      if (id != null) 'id': id,
+      'slug': slug,
+      'ageBracketMin': ageBracketMin,
+      'ageBracketMax': ageBracketMax,
+      'category': category,
+      if (coverImageAsset != null) 'coverImageAsset': coverImageAsset,
+      'isPublished': isPublished,
+      'contentVersion': contentVersion,
+      'updatedAt': updatedAt.toJson(),
+      'createdAt': createdAt.toJson(),
+    };
+  }
+
+  @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -150,7 +168,7 @@ class _BookImpl extends Book {
 
   /// Returns a shallow copy of this [Book]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   Book copyWith({
     Object? id = _Undefined,

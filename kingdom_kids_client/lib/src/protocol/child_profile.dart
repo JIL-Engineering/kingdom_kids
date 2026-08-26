@@ -10,9 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
-abstract class ChildProfile implements _i1.SerializableModel {
+abstract class ChildProfile
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   ChildProfile._({
     this.id,
     required this.parentId,
@@ -46,10 +47,10 @@ abstract class ChildProfile implements _i1.SerializableModel {
       ageBracket: jsonSerialization['ageBracket'] as String,
       preferredLanguage: jsonSerialization['preferredLanguage'] as String,
       avatarId: jsonSerialization['avatarId'] as String,
-      pinProtected: _i1.BoolJsonExtension.fromJson(
+      pinProtected: _isc.BoolJsonExtension.fromJson(
         jsonSerialization['pinProtected'],
       ),
-      createdAt: _i1.DateTimeJsonExtension.fromJson(
+      createdAt: _isc.DateTimeJsonExtension.fromJson(
         jsonSerialization['createdAt'],
       ),
     );
@@ -78,7 +79,7 @@ abstract class ChildProfile implements _i1.SerializableModel {
 
   /// Returns a shallow copy of this [ChildProfile]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   ChildProfile copyWith({
     int? id,
     int? parentId,
@@ -107,8 +108,24 @@ abstract class ChildProfile implements _i1.SerializableModel {
   }
 
   @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'ChildProfile',
+      if (id != null) 'id': id,
+      'parentId': parentId,
+      'displayName': displayName,
+      'birthYear': birthYear,
+      'ageBracket': ageBracket,
+      'preferredLanguage': preferredLanguage,
+      'avatarId': avatarId,
+      'pinProtected': pinProtected,
+      'createdAt': createdAt.toJson(),
+    };
+  }
+
+  @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -139,7 +156,7 @@ class _ChildProfileImpl extends ChildProfile {
 
   /// Returns a shallow copy of this [ChildProfile]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   ChildProfile copyWith({
     Object? id = _Undefined,

@@ -8,16 +8,20 @@
 // ignore_for_file: type_literal_in_constant_pattern
 // ignore_for_file: use_super_parameters
 // ignore_for_file: invalid_use_of_internal_member
+// ignore_for_file: dead_code, unnecessary_null_comparison
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
+import 'package:kingdom_kids_server/src/generated/protocol.dart' as _i8n4m1vh;
+import 'package:serverpod/serverpod.dart' as _is;
+import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
+    as _iacs;
 
 abstract class AppUser
-    implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
+    implements _is.TableRow<int?>, _is.ProtocolSerialization {
   AppUser._({
     this.id,
-    required this.email,
-    required this.passwordHash,
+    required this.authUserId,
+    this.authUser,
     this.country,
     required this.timezone,
     required this.preferredLanguage,
@@ -27,8 +31,8 @@ abstract class AppUser
 
   factory AppUser({
     int? id,
-    required String email,
-    required String passwordHash,
+    required _is.UuidValue authUserId,
+    _iacs.AuthUser? authUser,
     String? country,
     required String timezone,
     required String preferredLanguage,
@@ -39,17 +43,23 @@ abstract class AppUser
   factory AppUser.fromJson(Map<String, dynamic> jsonSerialization) {
     return AppUser(
       id: jsonSerialization['id'] as int?,
-      email: jsonSerialization['email'] as String,
-      passwordHash: jsonSerialization['passwordHash'] as String,
+      authUserId: _is.UuidValueJsonExtension.fromJson(
+        jsonSerialization['authUserId'],
+      ),
+      authUser: jsonSerialization['authUser'] == null
+          ? null
+          : _i8n4m1vh.Protocol().deserialize<_iacs.AuthUser>(
+              jsonSerialization['authUser'],
+            ),
       country: jsonSerialization['country'] as String?,
       timezone: jsonSerialization['timezone'] as String,
       preferredLanguage: jsonSerialization['preferredLanguage'] as String,
       consentGivenAt: jsonSerialization['consentGivenAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['consentGivenAt'],
             ),
-      createdAt: _i1.DateTimeJsonExtension.fromJson(
+      createdAt: _is.DateTimeJsonExtension.fromJson(
         jsonSerialization['createdAt'],
       ),
     );
@@ -62,9 +72,9 @@ abstract class AppUser
   @override
   int? id;
 
-  String email;
+  _is.UuidValue authUserId;
 
-  String passwordHash;
+  _iacs.AuthUser? authUser;
 
   String? country;
 
@@ -77,15 +87,15 @@ abstract class AppUser
   DateTime createdAt;
 
   @override
-  _i1.Table<int?> get table => t;
+  _is.Table<int?> get table => t;
 
   /// Returns a shallow copy of this [AppUser]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   AppUser copyWith({
     int? id,
-    String? email,
-    String? passwordHash,
+    _is.UuidValue? authUserId,
+    _iacs.AuthUser? authUser,
     String? country,
     String? timezone,
     String? preferredLanguage,
@@ -97,8 +107,8 @@ abstract class AppUser
     return {
       '__className__': 'AppUser',
       if (id != null) 'id': id,
-      'email': email,
-      'passwordHash': passwordHash,
+      'authUserId': authUserId.toJson(),
+      if (authUser != null) 'authUser': authUser?.toJson(),
       if (country != null) 'country': country,
       'timezone': timezone,
       'preferredLanguage': preferredLanguage,
@@ -112,8 +122,8 @@ abstract class AppUser
     return {
       '__className__': 'AppUser',
       if (id != null) 'id': id,
-      'email': email,
-      'passwordHash': passwordHash,
+      'authUserId': authUserId.toJson(),
+      if (authUser != null) 'authUser': authUser?.toJson(),
       if (country != null) 'country': country,
       'timezone': timezone,
       'preferredLanguage': preferredLanguage,
@@ -122,18 +132,16 @@ abstract class AppUser
     };
   }
 
-  static AppUserInclude include() {
-    return AppUserInclude._();
+  static AppUserInclude include({_iacs.AuthUserInclude? authUser}) {
+    return AppUserInclude._(authUser: authUser);
   }
 
   static AppUserIncludeList includeList({
-    _i1.WhereExpressionBuilder<AppUserTable>? where,
+    _is.WhereExpressionBuilder<AppUserTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AppUserTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.OrderByListBuilder<AppUserTable>? orderByList,
+    _is.OrderByBuilder<AppUserTable>? orderBy,
+    _is.OrderByListBuilder<AppUserTable>? orderByList,
     AppUserInclude? include,
   }) {
     return AppUserIncludeList._(
@@ -141,8 +149,6 @@ abstract class AppUser
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(AppUser.t),
-      orderDescending: // ignore: deprecated_member_use_from_same_package
-          orderDescending,
       orderByList: orderByList?.call(AppUser.t),
       include: include,
     );
@@ -150,7 +156,7 @@ abstract class AppUser
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -159,8 +165,8 @@ class _Undefined {}
 class _AppUserImpl extends AppUser {
   _AppUserImpl({
     int? id,
-    required String email,
-    required String passwordHash,
+    required _is.UuidValue authUserId,
+    _iacs.AuthUser? authUser,
     String? country,
     required String timezone,
     required String preferredLanguage,
@@ -168,8 +174,8 @@ class _AppUserImpl extends AppUser {
     required DateTime createdAt,
   }) : super._(
          id: id,
-         email: email,
-         passwordHash: passwordHash,
+         authUserId: authUserId,
+         authUser: authUser,
          country: country,
          timezone: timezone,
          preferredLanguage: preferredLanguage,
@@ -179,12 +185,12 @@ class _AppUserImpl extends AppUser {
 
   /// Returns a shallow copy of this [AppUser]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   AppUser copyWith({
     Object? id = _Undefined,
-    String? email,
-    String? passwordHash,
+    _is.UuidValue? authUserId,
+    Object? authUser = _Undefined,
     Object? country = _Undefined,
     String? timezone,
     String? preferredLanguage,
@@ -193,8 +199,10 @@ class _AppUserImpl extends AppUser {
   }) {
     return AppUser(
       id: id is int? ? id : this.id,
-      email: email ?? this.email,
-      passwordHash: passwordHash ?? this.passwordHash,
+      authUserId: authUserId ?? this.authUserId,
+      authUser: authUser is _iacs.AuthUser?
+          ? authUser
+          : this.authUser?.copyWith(),
       country: country is String? ? country : this.country,
       timezone: timezone ?? this.timezone,
       preferredLanguage: preferredLanguage ?? this.preferredLanguage,
@@ -206,76 +214,69 @@ class _AppUserImpl extends AppUser {
   }
 }
 
-class AppUserUpdateTable extends _i1.UpdateTable<AppUserTable> {
+class AppUserUpdateTable extends _is.UpdateTable<AppUserTable> {
   AppUserUpdateTable(super.table);
 
-  _i1.ColumnValue<String, String> email(String value) => _i1.ColumnValue(
-    table.email,
+  _is.ColumnValue<_is.UuidValue, _is.UuidValue> authUserId(
+    _is.UuidValue value,
+  ) => _is.ColumnValue(
+    table.authUserId,
     value,
   );
 
-  _i1.ColumnValue<String, String> passwordHash(String value) => _i1.ColumnValue(
-    table.passwordHash,
-    value,
-  );
-
-  _i1.ColumnValue<String, String> country(String? value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> country(String? value) => _is.ColumnValue(
     table.country,
     value,
   );
 
-  _i1.ColumnValue<String, String> timezone(String value) => _i1.ColumnValue(
+  _is.ColumnValue<String, String> timezone(String value) => _is.ColumnValue(
     table.timezone,
     value,
   );
 
-  _i1.ColumnValue<String, String> preferredLanguage(String value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<String, String> preferredLanguage(String value) =>
+      _is.ColumnValue(
         table.preferredLanguage,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> consentGivenAt(DateTime? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> consentGivenAt(DateTime? value) =>
+      _is.ColumnValue(
         table.consentGivenAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
+      _is.ColumnValue(
         table.createdAt,
         value,
       );
 }
 
-class AppUserTable extends _i1.Table<int?> {
+class AppUserTable extends _is.Table<int?> {
   AppUserTable({super.tableRelation}) : super(tableName: 'users') {
     updateTable = AppUserUpdateTable(this);
-    email = _i1.ColumnString(
-      'email',
+    authUserId = _is.ColumnUuid(
+      'authUserId',
       this,
     );
-    passwordHash = _i1.ColumnString(
-      'passwordHash',
-      this,
-    );
-    country = _i1.ColumnString(
+    country = _is.ColumnString(
       'country',
       this,
     );
-    timezone = _i1.ColumnString(
+    timezone = _is.ColumnString(
       'timezone',
       this,
     );
-    preferredLanguage = _i1.ColumnString(
+    preferredLanguage = _is.ColumnString(
       'preferredLanguage',
       this,
     );
-    consentGivenAt = _i1.ColumnDateTime(
+    consentGivenAt = _is.ColumnDateTime(
       'consentGivenAt',
       this,
     );
-    createdAt = _i1.ColumnDateTime(
+    createdAt = _is.ColumnDateTime(
       'createdAt',
       this,
     );
@@ -283,51 +284,73 @@ class AppUserTable extends _i1.Table<int?> {
 
   late final AppUserUpdateTable updateTable;
 
-  late final _i1.ColumnString email;
+  late final _is.ColumnUuid authUserId;
 
-  late final _i1.ColumnString passwordHash;
+  _iacs.AuthUserTable? _authUser;
 
-  late final _i1.ColumnString country;
+  late final _is.ColumnString country;
 
-  late final _i1.ColumnString timezone;
+  late final _is.ColumnString timezone;
 
-  late final _i1.ColumnString preferredLanguage;
+  late final _is.ColumnString preferredLanguage;
 
-  late final _i1.ColumnDateTime consentGivenAt;
+  late final _is.ColumnDateTime consentGivenAt;
 
-  late final _i1.ColumnDateTime createdAt;
+  late final _is.ColumnDateTime createdAt;
+
+  _iacs.AuthUserTable get authUser {
+    if (_authUser != null) return _authUser!;
+    _authUser = _is.createRelationTable(
+      relationFieldName: 'authUser',
+      field: AppUser.t.authUserId,
+      foreignField: _iacs.AuthUser.t.id,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _iacs.AuthUserTable(tableRelation: foreignTableRelation),
+    );
+    return _authUser!;
+  }
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
-    email,
-    passwordHash,
+    authUserId,
     country,
     timezone,
     preferredLanguage,
     consentGivenAt,
     createdAt,
   ];
-}
-
-class AppUserInclude extends _i1.IncludeObject {
-  AppUserInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
-
-  @override
-  _i1.Table<int?> get table => AppUser.t;
+  _is.Table? getRelationTable(String relationField) {
+    if (relationField == 'authUser') {
+      return authUser;
+    }
+    return null;
+  }
 }
 
-class AppUserIncludeList extends _i1.IncludeList {
+class AppUserInclude extends _is.IncludeObject {
+  AppUserInclude._({_iacs.AuthUserInclude? authUser}) {
+    _authUser = authUser;
+  }
+
+  _iacs.AuthUserInclude? _authUser;
+
+  @override
+  Map<String, _is.Include?> get includes => {'authUser': _authUser};
+
+  @override
+  _is.Table<int?> get table => AppUser.t;
+}
+
+class AppUserIncludeList extends _is.IncludeList {
   AppUserIncludeList._({
-    _i1.WhereExpressionBuilder<AppUserTable>? where,
+    _is.WhereExpressionBuilder<AppUserTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -335,14 +358,16 @@ class AppUserIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<int?> get table => AppUser.t;
+  _is.Table<int?> get table => AppUser.t;
 }
 
 class AppUserRepository {
   const AppUserRepository._();
+
+  final attachRow = const AppUserAttachRowRepository._();
 
   /// Returns a list of [AppUser]s matching the given query parameters.
   ///
@@ -367,27 +392,25 @@ class AppUserRepository {
   /// );
   /// ```
   Future<List<AppUser>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<AppUserTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<AppUserTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AppUserTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.OrderByListBuilder<AppUserTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<AppUserTable>? orderBy,
+    _is.OrderByListBuilder<AppUserTable>? orderByList,
+    _is.Transaction? transaction,
+    AppUserInclude? include,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<AppUser>(
       where: where?.call(AppUser.t),
       orderBy: orderBy?.call(AppUser.t),
       orderByList: orderByList?.call(AppUser.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
+      include: include,
       lockMode: lockMode,
       lockBehavior: lockBehavior,
     );
@@ -411,25 +434,23 @@ class AppUserRepository {
   /// );
   /// ```
   Future<AppUser?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<AppUserTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<AppUserTable>? where,
     int? offset,
-    _i1.OrderByBuilder<AppUserTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.OrderByListBuilder<AppUserTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<AppUserTable>? orderBy,
+    _is.OrderByListBuilder<AppUserTable>? orderByList,
+    _is.Transaction? transaction,
+    AppUserInclude? include,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<AppUser>(
       where: where?.call(AppUser.t),
       orderBy: orderBy?.call(AppUser.t),
       orderByList: orderByList?.call(AppUser.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       offset: offset,
       transaction: transaction,
+      include: include,
       lockMode: lockMode,
       lockBehavior: lockBehavior,
     );
@@ -437,15 +458,17 @@ class AppUserRepository {
 
   /// Finds a single [AppUser] by its [id] or null if no such row exists.
   Future<AppUser?> findById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.Transaction? transaction,
+    AppUserInclude? include,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<AppUser>(
       id,
       transaction: transaction,
+      include: include,
       lockMode: lockMode,
       lockBehavior: lockBehavior,
     );
@@ -466,9 +489,9 @@ class AppUserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AppUser>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AppUser> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -484,9 +507,9 @@ class AppUserRepository {
   ///
   /// The returned [AppUser] will have its `id` field set.
   Future<AppUser> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AppUser row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<AppUser>(
       row,
@@ -515,12 +538,12 @@ class AppUserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AppUser>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AppUser> rows, {
-    required _i1.ColumnSelections<AppUserTable> conflictColumns,
-    _i1.ColumnSelections<AppUserTable>? updateColumns,
-    _i1.WhereExpressionBuilder<AppUserTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<AppUserTable> conflictColumns,
+    _is.ColumnSelections<AppUserTable>? updateColumns,
+    _is.WhereExpressionBuilder<AppUserTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<AppUser>(
@@ -547,12 +570,12 @@ class AppUserRepository {
   ///
   /// The returned [AppUser] will have its `id` field set.
   Future<AppUser?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AppUser row, {
-    required _i1.ColumnSelections<AppUserTable> conflictColumns,
-    _i1.ColumnSelections<AppUserTable>? updateColumns,
-    _i1.WhereExpressionBuilder<AppUserTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<AppUserTable> conflictColumns,
+    _is.ColumnSelections<AppUserTable>? updateColumns,
+    _is.WhereExpressionBuilder<AppUserTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<AppUser>(
       row,
@@ -573,10 +596,10 @@ class AppUserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AppUser>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AppUser> rows, {
-    _i1.ColumnSelections<AppUserTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<AppUserTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<AppUser>(
@@ -591,10 +614,10 @@ class AppUserRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<AppUser> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AppUser row, {
-    _i1.ColumnSelections<AppUserTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<AppUserTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<AppUser>(
       row,
@@ -606,10 +629,10 @@ class AppUserRepository {
   /// Updates a single [AppUser] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<AppUser?> updateById(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     int id, {
-    required _i1.ColumnValueListBuilder<AppUserUpdateTable> columnValues,
-    _i1.Transaction? transaction,
+    required _is.ColumnValueListBuilder<AppUserUpdateTable> columnValues,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<AppUser>(
       id,
@@ -625,16 +648,14 @@ class AppUserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AppUser>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<AppUserUpdateTable> columnValues,
-    required _i1.WhereExpressionBuilder<AppUserTable> where,
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<AppUserUpdateTable> columnValues,
+    required _is.WhereExpressionBuilder<AppUserTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AppUserTable>? orderBy,
-    _i1.OrderByListBuilder<AppUserTable>? orderByList,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<AppUserTable>? orderBy,
+    _is.OrderByListBuilder<AppUserTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<AppUser>(
@@ -644,8 +665,6 @@ class AppUserRepository {
       offset: offset,
       orderBy: orderBy?.call(AppUser.t),
       orderByList: orderByList?.call(AppUser.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -663,21 +682,17 @@ class AppUserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AppUser>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<AppUser> rows, {
-    _i1.OrderByBuilder<AppUserTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.OrderByListBuilder<AppUserTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<AppUserTable>? orderBy,
+    _is.OrderByListBuilder<AppUserTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<AppUser>(
       rows,
       orderBy: orderBy?.call(AppUser.t),
       orderByList: orderByList?.call(AppUser.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -685,9 +700,9 @@ class AppUserRepository {
 
   /// Deletes a single [AppUser].
   Future<AppUser> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     AppUser row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<AppUser>(
       row,
@@ -704,21 +719,17 @@ class AppUserRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<AppUser>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<AppUserTable> where,
-    _i1.OrderByBuilder<AppUserTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.OrderByListBuilder<AppUserTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<AppUserTable> where,
+    _is.OrderByBuilder<AppUserTable>? orderBy,
+    _is.OrderByListBuilder<AppUserTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<AppUser>(
       where: where(AppUser.t),
       orderBy: orderBy?.call(AppUser.t),
       orderByList: orderByList?.call(AppUser.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -727,10 +738,10 @@ class AppUserRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<AppUserTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<AppUserTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<AppUser>(
       where: where?.call(AppUser.t),
@@ -741,16 +752,43 @@ class AppUserRepository {
 
   /// Acquires row-level locks on [AppUser] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<AppUserTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<AppUserTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<AppUser>(
       where: where(AppUser.t),
       lockMode: lockMode,
       lockBehavior: lockBehavior,
+      transaction: transaction,
+    );
+  }
+}
+
+class AppUserAttachRowRepository {
+  const AppUserAttachRowRepository._();
+
+  /// Creates a relation between the given [AppUser] and [AuthUser]
+  /// by setting the [AppUser]'s foreign key `authUserId` to refer to the [AuthUser].
+  Future<void> authUser(
+    _is.DatabaseSession session,
+    AppUser appUser,
+    _iacs.AuthUser authUser, {
+    _is.Transaction? transaction,
+  }) async {
+    if (appUser.id == null) {
+      throw ArgumentError.notNull('appUser.id');
+    }
+    if (authUser.id == null) {
+      throw ArgumentError.notNull('authUser.id');
+    }
+
+    var $appUser = appUser.copyWith(authUserId: authUser.id);
+    await session.db.updateRow<AppUser>(
+      $appUser,
+      columns: [AppUser.t.authUserId],
       transaction: transaction,
     );
   }

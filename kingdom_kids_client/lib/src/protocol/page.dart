@@ -10,9 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
-abstract class Page implements _i1.SerializableModel {
+abstract class Page
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   Page._({
     this.id,
     required this.bookId,
@@ -54,7 +55,7 @@ abstract class Page implements _i1.SerializableModel {
 
   /// Returns a shallow copy of this [Page]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   Page copyWith({
     int? id,
     int? bookId,
@@ -75,8 +76,20 @@ abstract class Page implements _i1.SerializableModel {
   }
 
   @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'Page',
+      if (id != null) 'id': id,
+      'bookId': bookId,
+      'pageNumber': pageNumber,
+      'illustrationAsset': illustrationAsset,
+      'layoutType': layoutType,
+    };
+  }
+
+  @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -99,7 +112,7 @@ class _PageImpl extends Page {
 
   /// Returns a shallow copy of this [Page]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   Page copyWith({
     Object? id = _Undefined,

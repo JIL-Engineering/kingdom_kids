@@ -10,12 +10,12 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
+import 'package:serverpod/serverpod.dart' as _is;
 
 abstract class ReadingProgress
-    implements _i1.TableRow<_i1.UuidValue>, _i1.ProtocolSerialization {
+    implements _is.TableRow<_is.UuidValue>, _is.ProtocolSerialization {
   ReadingProgress._({
-    _i1.UuidValue? id,
+    _is.UuidValue? id,
     required this.childId,
     required this.bookId,
     required this.currentPage,
@@ -24,10 +24,10 @@ abstract class ReadingProgress
     this.completedAt,
     required this.totalTimeSeconds,
     required this.syncedAt,
-  }) : id = id ?? const _i1.Uuid().v4obj();
+  }) : id = id ?? const _is.Uuid().v4obj();
 
   factory ReadingProgress({
-    _i1.UuidValue? id,
+    _is.UuidValue? id,
     required int childId,
     required int bookId,
     required int currentPage,
@@ -42,21 +42,21 @@ abstract class ReadingProgress
     return ReadingProgress(
       id: jsonSerialization['id'] == null
           ? null
-          : _i1.UuidValueJsonExtension.fromJson(jsonSerialization['id']),
+          : _is.UuidValueJsonExtension.fromJson(jsonSerialization['id']),
       childId: jsonSerialization['childId'] as int,
       bookId: jsonSerialization['bookId'] as int,
       currentPage: jsonSerialization['currentPage'] as int,
-      completed: _i1.BoolJsonExtension.fromJson(jsonSerialization['completed']),
-      startedAt: _i1.DateTimeJsonExtension.fromJson(
+      completed: _is.BoolJsonExtension.fromJson(jsonSerialization['completed']),
+      startedAt: _is.DateTimeJsonExtension.fromJson(
         jsonSerialization['startedAt'],
       ),
       completedAt: jsonSerialization['completedAt'] == null
           ? null
-          : _i1.DateTimeJsonExtension.fromJson(
+          : _is.DateTimeJsonExtension.fromJson(
               jsonSerialization['completedAt'],
             ),
       totalTimeSeconds: jsonSerialization['totalTimeSeconds'] as int,
-      syncedAt: _i1.DateTimeJsonExtension.fromJson(
+      syncedAt: _is.DateTimeJsonExtension.fromJson(
         jsonSerialization['syncedAt'],
       ),
     );
@@ -67,7 +67,7 @@ abstract class ReadingProgress
   static const db = ReadingProgressRepository._();
 
   @override
-  _i1.UuidValue id;
+  _is.UuidValue id;
 
   int childId;
 
@@ -86,13 +86,13 @@ abstract class ReadingProgress
   DateTime syncedAt;
 
   @override
-  _i1.Table<_i1.UuidValue> get table => t;
+  _is.Table<_is.UuidValue> get table => t;
 
   /// Returns a shallow copy of this [ReadingProgress]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   ReadingProgress copyWith({
-    _i1.UuidValue? id,
+    _is.UuidValue? id,
     int? childId,
     int? bookId,
     int? currentPage,
@@ -139,13 +139,11 @@ abstract class ReadingProgress
   }
 
   static ReadingProgressIncludeList includeList({
-    _i1.WhereExpressionBuilder<ReadingProgressTable>? where,
+    _is.WhereExpressionBuilder<ReadingProgressTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<ReadingProgressTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.OrderByListBuilder<ReadingProgressTable>? orderByList,
+    _is.OrderByBuilder<ReadingProgressTable>? orderBy,
+    _is.OrderByListBuilder<ReadingProgressTable>? orderByList,
     ReadingProgressInclude? include,
   }) {
     return ReadingProgressIncludeList._(
@@ -153,8 +151,6 @@ abstract class ReadingProgress
       limit: limit,
       offset: offset,
       orderBy: orderBy?.call(ReadingProgress.t),
-      orderDescending: // ignore: deprecated_member_use_from_same_package
-          orderDescending,
       orderByList: orderByList?.call(ReadingProgress.t),
       include: include,
     );
@@ -162,7 +158,7 @@ abstract class ReadingProgress
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _is.SerializationManager.encode(this);
   }
 }
 
@@ -170,7 +166,7 @@ class _Undefined {}
 
 class _ReadingProgressImpl extends ReadingProgress {
   _ReadingProgressImpl({
-    _i1.UuidValue? id,
+    _is.UuidValue? id,
     required int childId,
     required int bookId,
     required int currentPage,
@@ -193,10 +189,10 @@ class _ReadingProgressImpl extends ReadingProgress {
 
   /// Returns a shallow copy of this [ReadingProgress]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_is.useResult
   @override
   ReadingProgress copyWith({
-    _i1.UuidValue? id,
+    _is.UuidValue? id,
     int? childId,
     int? bookId,
     int? currentPage,
@@ -220,86 +216,86 @@ class _ReadingProgressImpl extends ReadingProgress {
   }
 }
 
-class ReadingProgressUpdateTable extends _i1.UpdateTable<ReadingProgressTable> {
+class ReadingProgressUpdateTable extends _is.UpdateTable<ReadingProgressTable> {
   ReadingProgressUpdateTable(super.table);
 
-  _i1.ColumnValue<int, int> childId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> childId(int value) => _is.ColumnValue(
     table.childId,
     value,
   );
 
-  _i1.ColumnValue<int, int> bookId(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> bookId(int value) => _is.ColumnValue(
     table.bookId,
     value,
   );
 
-  _i1.ColumnValue<int, int> currentPage(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> currentPage(int value) => _is.ColumnValue(
     table.currentPage,
     value,
   );
 
-  _i1.ColumnValue<bool, bool> completed(bool value) => _i1.ColumnValue(
+  _is.ColumnValue<bool, bool> completed(bool value) => _is.ColumnValue(
     table.completed,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> startedAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> startedAt(DateTime value) =>
+      _is.ColumnValue(
         table.startedAt,
         value,
       );
 
-  _i1.ColumnValue<DateTime, DateTime> completedAt(DateTime? value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> completedAt(DateTime? value) =>
+      _is.ColumnValue(
         table.completedAt,
         value,
       );
 
-  _i1.ColumnValue<int, int> totalTimeSeconds(int value) => _i1.ColumnValue(
+  _is.ColumnValue<int, int> totalTimeSeconds(int value) => _is.ColumnValue(
     table.totalTimeSeconds,
     value,
   );
 
-  _i1.ColumnValue<DateTime, DateTime> syncedAt(DateTime value) =>
-      _i1.ColumnValue(
+  _is.ColumnValue<DateTime, DateTime> syncedAt(DateTime value) =>
+      _is.ColumnValue(
         table.syncedAt,
         value,
       );
 }
 
-class ReadingProgressTable extends _i1.Table<_i1.UuidValue> {
+class ReadingProgressTable extends _is.Table<_is.UuidValue> {
   ReadingProgressTable({super.tableRelation})
     : super(tableName: 'reading_progress') {
     updateTable = ReadingProgressUpdateTable(this);
-    childId = _i1.ColumnInt(
+    childId = _is.ColumnInt(
       'childId',
       this,
     );
-    bookId = _i1.ColumnInt(
+    bookId = _is.ColumnInt(
       'bookId',
       this,
     );
-    currentPage = _i1.ColumnInt(
+    currentPage = _is.ColumnInt(
       'currentPage',
       this,
     );
-    completed = _i1.ColumnBool(
+    completed = _is.ColumnBool(
       'completed',
       this,
     );
-    startedAt = _i1.ColumnDateTime(
+    startedAt = _is.ColumnDateTime(
       'startedAt',
       this,
     );
-    completedAt = _i1.ColumnDateTime(
+    completedAt = _is.ColumnDateTime(
       'completedAt',
       this,
     );
-    totalTimeSeconds = _i1.ColumnInt(
+    totalTimeSeconds = _is.ColumnInt(
       'totalTimeSeconds',
       this,
     );
-    syncedAt = _i1.ColumnDateTime(
+    syncedAt = _is.ColumnDateTime(
       'syncedAt',
       this,
     );
@@ -307,24 +303,24 @@ class ReadingProgressTable extends _i1.Table<_i1.UuidValue> {
 
   late final ReadingProgressUpdateTable updateTable;
 
-  late final _i1.ColumnInt childId;
+  late final _is.ColumnInt childId;
 
-  late final _i1.ColumnInt bookId;
+  late final _is.ColumnInt bookId;
 
-  late final _i1.ColumnInt currentPage;
+  late final _is.ColumnInt currentPage;
 
-  late final _i1.ColumnBool completed;
+  late final _is.ColumnBool completed;
 
-  late final _i1.ColumnDateTime startedAt;
+  late final _is.ColumnDateTime startedAt;
 
-  late final _i1.ColumnDateTime completedAt;
+  late final _is.ColumnDateTime completedAt;
 
-  late final _i1.ColumnInt totalTimeSeconds;
+  late final _is.ColumnInt totalTimeSeconds;
 
-  late final _i1.ColumnDateTime syncedAt;
+  late final _is.ColumnDateTime syncedAt;
 
   @override
-  List<_i1.Column> get columns => [
+  List<_is.Column> get columns => [
     id,
     childId,
     bookId,
@@ -337,24 +333,22 @@ class ReadingProgressTable extends _i1.Table<_i1.UuidValue> {
   ];
 }
 
-class ReadingProgressInclude extends _i1.IncludeObject {
+class ReadingProgressInclude extends _is.IncludeObject {
   ReadingProgressInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _is.Include?> get includes => {};
 
   @override
-  _i1.Table<_i1.UuidValue> get table => ReadingProgress.t;
+  _is.Table<_is.UuidValue> get table => ReadingProgress.t;
 }
 
-class ReadingProgressIncludeList extends _i1.IncludeList {
+class ReadingProgressIncludeList extends _is.IncludeList {
   ReadingProgressIncludeList._({
-    _i1.WhereExpressionBuilder<ReadingProgressTable>? where,
+    _is.WhereExpressionBuilder<ReadingProgressTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    super.orderDescending,
     super.orderByList,
     super.include,
   }) {
@@ -362,10 +356,10 @@ class ReadingProgressIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _is.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table<_i1.UuidValue> get table => ReadingProgress.t;
+  _is.Table<_is.UuidValue> get table => ReadingProgress.t;
 }
 
 class ReadingProgressRepository {
@@ -394,24 +388,20 @@ class ReadingProgressRepository {
   /// );
   /// ```
   Future<List<ReadingProgress>> find(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<ReadingProgressTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<ReadingProgressTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<ReadingProgressTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.OrderByListBuilder<ReadingProgressTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<ReadingProgressTable>? orderBy,
+    _is.OrderByListBuilder<ReadingProgressTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.find<ReadingProgress>(
       where: where?.call(ReadingProgress.t),
       orderBy: orderBy?.call(ReadingProgress.t),
       orderByList: orderByList?.call(ReadingProgress.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       limit: limit,
       offset: offset,
       transaction: transaction,
@@ -438,23 +428,19 @@ class ReadingProgressRepository {
   /// );
   /// ```
   Future<ReadingProgress?> findFirstRow(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<ReadingProgressTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<ReadingProgressTable>? where,
     int? offset,
-    _i1.OrderByBuilder<ReadingProgressTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.OrderByListBuilder<ReadingProgressTable>? orderByList,
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.OrderByBuilder<ReadingProgressTable>? orderBy,
+    _is.OrderByListBuilder<ReadingProgressTable>? orderByList,
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findFirstRow<ReadingProgress>(
       where: where?.call(ReadingProgress.t),
       orderBy: orderBy?.call(ReadingProgress.t),
       orderByList: orderByList?.call(ReadingProgress.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       offset: offset,
       transaction: transaction,
       lockMode: lockMode,
@@ -464,11 +450,11 @@ class ReadingProgressRepository {
 
   /// Finds a single [ReadingProgress] by its [id] or null if no such row exists.
   Future<ReadingProgress?> findById(
-    _i1.DatabaseSession session,
-    _i1.UuidValue id, {
-    _i1.Transaction? transaction,
-    _i1.LockMode? lockMode,
-    _i1.LockBehavior? lockBehavior,
+    _is.DatabaseSession session,
+    _is.UuidValue id, {
+    _is.Transaction? transaction,
+    _is.LockMode? lockMode,
+    _is.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<ReadingProgress>(
       id,
@@ -493,9 +479,9 @@ class ReadingProgressRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ReadingProgress>> insert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<ReadingProgress> rows, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
     bool ignoreConflicts = false,
     bool noReturn = false,
   }) async {
@@ -511,9 +497,9 @@ class ReadingProgressRepository {
   ///
   /// The returned [ReadingProgress] will have its `id` field set.
   Future<ReadingProgress> insertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     ReadingProgress row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.insertRow<ReadingProgress>(
       row,
@@ -542,12 +528,12 @@ class ReadingProgressRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ReadingProgress>> upsert(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<ReadingProgress> rows, {
-    required _i1.ColumnSelections<ReadingProgressTable> conflictColumns,
-    _i1.ColumnSelections<ReadingProgressTable>? updateColumns,
-    _i1.WhereExpressionBuilder<ReadingProgressTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<ReadingProgressTable> conflictColumns,
+    _is.ColumnSelections<ReadingProgressTable>? updateColumns,
+    _is.WhereExpressionBuilder<ReadingProgressTable>? updateWhere,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.upsert<ReadingProgress>(
@@ -574,12 +560,12 @@ class ReadingProgressRepository {
   ///
   /// The returned [ReadingProgress] will have its `id` field set.
   Future<ReadingProgress?> upsertRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     ReadingProgress row, {
-    required _i1.ColumnSelections<ReadingProgressTable> conflictColumns,
-    _i1.ColumnSelections<ReadingProgressTable>? updateColumns,
-    _i1.WhereExpressionBuilder<ReadingProgressTable>? updateWhere,
-    _i1.Transaction? transaction,
+    required _is.ColumnSelections<ReadingProgressTable> conflictColumns,
+    _is.ColumnSelections<ReadingProgressTable>? updateColumns,
+    _is.WhereExpressionBuilder<ReadingProgressTable>? updateWhere,
+    _is.Transaction? transaction,
   }) async {
     return session.db.upsertRow<ReadingProgress>(
       row,
@@ -600,10 +586,10 @@ class ReadingProgressRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ReadingProgress>> update(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<ReadingProgress> rows, {
-    _i1.ColumnSelections<ReadingProgressTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<ReadingProgressTable>? columns,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.update<ReadingProgress>(
@@ -618,10 +604,10 @@ class ReadingProgressRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<ReadingProgress> updateRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     ReadingProgress row, {
-    _i1.ColumnSelections<ReadingProgressTable>? columns,
-    _i1.Transaction? transaction,
+    _is.ColumnSelections<ReadingProgressTable>? columns,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateRow<ReadingProgress>(
       row,
@@ -633,11 +619,11 @@ class ReadingProgressRepository {
   /// Updates a single [ReadingProgress] by its [id] with the specified [columnValues].
   /// Returns the updated row or null if no row with the given id exists.
   Future<ReadingProgress?> updateById(
-    _i1.DatabaseSession session,
-    _i1.UuidValue id, {
-    required _i1.ColumnValueListBuilder<ReadingProgressUpdateTable>
+    _is.DatabaseSession session,
+    _is.UuidValue id, {
+    required _is.ColumnValueListBuilder<ReadingProgressUpdateTable>
     columnValues,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.updateById<ReadingProgress>(
       id,
@@ -653,17 +639,15 @@ class ReadingProgressRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ReadingProgress>> updateWhere(
-    _i1.DatabaseSession session, {
-    required _i1.ColumnValueListBuilder<ReadingProgressUpdateTable>
+    _is.DatabaseSession session, {
+    required _is.ColumnValueListBuilder<ReadingProgressUpdateTable>
     columnValues,
-    required _i1.WhereExpressionBuilder<ReadingProgressTable> where,
+    required _is.WhereExpressionBuilder<ReadingProgressTable> where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<ReadingProgressTable>? orderBy,
-    _i1.OrderByListBuilder<ReadingProgressTable>? orderByList,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<ReadingProgressTable>? orderBy,
+    _is.OrderByListBuilder<ReadingProgressTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.updateWhere<ReadingProgress>(
@@ -673,8 +657,6 @@ class ReadingProgressRepository {
       offset: offset,
       orderBy: orderBy?.call(ReadingProgress.t),
       orderByList: orderByList?.call(ReadingProgress.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -692,21 +674,17 @@ class ReadingProgressRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ReadingProgress>> delete(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     List<ReadingProgress> rows, {
-    _i1.OrderByBuilder<ReadingProgressTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.OrderByListBuilder<ReadingProgressTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.OrderByBuilder<ReadingProgressTable>? orderBy,
+    _is.OrderByListBuilder<ReadingProgressTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.delete<ReadingProgress>(
       rows,
       orderBy: orderBy?.call(ReadingProgress.t),
       orderByList: orderByList?.call(ReadingProgress.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -714,9 +692,9 @@ class ReadingProgressRepository {
 
   /// Deletes a single [ReadingProgress].
   Future<ReadingProgress> deleteRow(
-    _i1.DatabaseSession session,
+    _is.DatabaseSession session,
     ReadingProgress row, {
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.deleteRow<ReadingProgress>(
       row,
@@ -733,21 +711,17 @@ class ReadingProgressRepository {
   /// the database and an empty list is returned. This avoids the overhead of
   /// transferring and deserializing the rows when the result is not needed.
   Future<List<ReadingProgress>> deleteWhere(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<ReadingProgressTable> where,
-    _i1.OrderByBuilder<ReadingProgressTable>? orderBy,
-    @Deprecated('Use desc() on the orderBy column instead.')
-    bool orderDescending = false,
-    _i1.OrderByListBuilder<ReadingProgressTable>? orderByList,
-    _i1.Transaction? transaction,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<ReadingProgressTable> where,
+    _is.OrderByBuilder<ReadingProgressTable>? orderBy,
+    _is.OrderByListBuilder<ReadingProgressTable>? orderByList,
+    _is.Transaction? transaction,
     bool noReturn = false,
   }) async {
     return session.db.deleteWhere<ReadingProgress>(
       where: where(ReadingProgress.t),
       orderBy: orderBy?.call(ReadingProgress.t),
       orderByList: orderByList?.call(ReadingProgress.t),
-      orderDescending: // ignore: deprecated_member_use
-          orderDescending,
       transaction: transaction,
       noReturn: noReturn,
     );
@@ -756,10 +730,10 @@ class ReadingProgressRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.DatabaseSession session, {
-    _i1.WhereExpressionBuilder<ReadingProgressTable>? where,
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<ReadingProgressTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _is.Transaction? transaction,
   }) async {
     return session.db.count<ReadingProgress>(
       where: where?.call(ReadingProgress.t),
@@ -770,11 +744,11 @@ class ReadingProgressRepository {
 
   /// Acquires row-level locks on [ReadingProgress] rows matching the [where] expression.
   Future<void> lockRows(
-    _i1.DatabaseSession session, {
-    required _i1.WhereExpressionBuilder<ReadingProgressTable> where,
-    required _i1.LockMode lockMode,
-    required _i1.Transaction transaction,
-    _i1.LockBehavior lockBehavior = _i1.LockBehavior.wait,
+    _is.DatabaseSession session, {
+    required _is.WhereExpressionBuilder<ReadingProgressTable> where,
+    required _is.LockMode lockMode,
+    required _is.Transaction transaction,
+    _is.LockBehavior lockBehavior = _is.LockBehavior.wait,
   }) async {
     return session.db.lockRows<ReadingProgress>(
       where: where(ReadingProgress.t),

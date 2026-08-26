@@ -10,9 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'package:serverpod_client/serverpod_client.dart' as _isc;
 
-abstract class Badge implements _i1.SerializableModel {
+abstract class Badge
+    implements _isc.SerializableModel, _isc.ProtocolSerialization {
   Badge._({
     this.id,
     required this.code,
@@ -59,7 +60,7 @@ abstract class Badge implements _i1.SerializableModel {
 
   /// Returns a shallow copy of this [Badge]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   Badge copyWith({
     int? id,
     String? code,
@@ -82,8 +83,21 @@ abstract class Badge implements _i1.SerializableModel {
   }
 
   @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'Badge',
+      if (id != null) 'id': id,
+      'code': code,
+      'name': name,
+      'description': description,
+      'iconAsset': iconAsset,
+      'triggerRule': triggerRule,
+    };
+  }
+
+  @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _isc.SerializationManager.encode(this);
   }
 }
 
@@ -108,7 +122,7 @@ class _BadgeImpl extends Badge {
 
   /// Returns a shallow copy of this [Badge]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_isc.useResult
   @override
   Badge copyWith({
     Object? id = _Undefined,
