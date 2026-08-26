@@ -148,7 +148,7 @@ class TestEndpoints {
 
   late final _JwtRefreshEndpoint jwtRefresh;
 
-  late final _AuthEndpoint auth;
+  late final _AppUserEndpoint appUser;
 
   late final _ChildEndpoint child;
 
@@ -170,7 +170,7 @@ class _InternalTestEndpoints extends TestEndpoints
       endpoints,
       serializationManager,
     );
-    auth = _AuthEndpoint(
+    appUser = _AppUserEndpoint(
       endpoints,
       serializationManager,
     );
@@ -503,8 +503,8 @@ class _JwtRefreshEndpoint {
   }
 }
 
-class _AuthEndpoint {
-  _AuthEndpoint(
+class _AppUserEndpoint {
+  _AppUserEndpoint(
     this._endpointDispatch,
     this._serializationManager,
   );
@@ -523,13 +523,13 @@ class _AuthEndpoint {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
           (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
-            endpoint: 'auth',
+            endpoint: 'appUser',
             method: 'completeProfile',
           );
       try {
         var _localCallContext = await _endpointDispatch.getMethodCallContext(
           createSessionCallback: (_) => _localUniqueSession,
-          endpointPath: 'auth',
+          endpointPath: 'appUser',
           methodName: 'completeProfile',
           parameters: _i1.testObjectToJson({
             'country': country,

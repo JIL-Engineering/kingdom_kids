@@ -13,7 +13,7 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../auth/email_idp_endpoint.dart' as _i2;
 import '../auth/jwt_refresh_endpoint.dart' as _i3;
-import '../endpoints/auth_endpoint.dart' as _i4;
+import '../endpoints/app_user_endpoint.dart' as _i4;
 import '../endpoints/child_endpoint.dart' as _i5;
 import '../greetings/greeting_endpoint.dart' as _i6;
 import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
@@ -37,10 +37,10 @@ class Endpoints extends _i1.EndpointDispatch {
           'jwtRefresh',
           null,
         ),
-      'auth': _i4.AuthEndpoint()
+      'appUser': _i4.AppUserEndpoint()
         ..initialize(
           server,
-          'auth',
+          'appUser',
           null,
         ),
       'child': _i5.ChildEndpoint()
@@ -260,9 +260,9 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
-    connectors['auth'] = _i1.EndpointConnector(
-      name: 'auth',
-      endpoint: endpoints['auth']!,
+    connectors['appUser'] = _i1.EndpointConnector(
+      name: 'appUser',
+      endpoint: endpoints['appUser']!,
       methodConnectors: {
         'completeProfile': _i1.MethodConnector(
           name: 'completeProfile',
@@ -293,7 +293,7 @@ class Endpoints extends _i1.EndpointDispatch {
                 _i1.Session session,
                 Map<String, dynamic> params,
               ) async =>
-                  (endpoints['auth'] as _i4.AuthEndpoint).completeProfile(
+                  (endpoints['appUser'] as _i4.AppUserEndpoint).completeProfile(
                     session,
                     params['country'],
                     params['timezone'],

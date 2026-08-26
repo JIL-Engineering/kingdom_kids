@@ -2,7 +2,7 @@ import 'package:serverpod/serverpod.dart';
 import '../generated/protocol.dart';
 import '../business/auth_service.dart';
 
-class AuthEndpoint extends Endpoint {
+class AppUserEndpoint extends Endpoint {
   /// Étape 3 du sprint : Méthode completeProfile appelée juste après l'inscription
   Future<AppUser> completeProfile(
     Session session,

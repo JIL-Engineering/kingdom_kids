@@ -245,11 +245,11 @@ class EndpointJwtRefresh extends _i4.EndpointRefreshJwtTokens {
 }
 
 /// {@category Endpoint}
-class EndpointAuth extends _i2.EndpointRef {
-  EndpointAuth(_i2.EndpointCaller caller) : super(caller);
+class EndpointAppUser extends _i2.EndpointRef {
+  EndpointAppUser(_i2.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'auth';
+  String get name => 'appUser';
 
   /// Étape 3 du sprint : Méthode completeProfile appelée juste après l'inscription
   _i3.Future<_i5.AppUser> completeProfile(
@@ -258,7 +258,7 @@ class EndpointAuth extends _i2.EndpointRef {
     String preferredLanguage,
     bool consentAccepted,
   ) => caller.callServerEndpoint<_i5.AppUser>(
-    'auth',
+    'appUser',
     'completeProfile',
     {
       'country': country,
@@ -382,7 +382,7 @@ class Client extends _i2.ServerpodClientShared {
        ) {
     emailIdp = EndpointEmailIdp(this);
     jwtRefresh = EndpointJwtRefresh(this);
-    auth = EndpointAuth(this);
+    appUser = EndpointAppUser(this);
     child = EndpointChild(this);
     greeting = EndpointGreeting(this);
     modules = Modules(this);
@@ -392,7 +392,7 @@ class Client extends _i2.ServerpodClientShared {
 
   late final EndpointJwtRefresh jwtRefresh;
 
-  late final EndpointAuth auth;
+  late final EndpointAppUser appUser;
 
   late final EndpointChild child;
 
@@ -404,7 +404,7 @@ class Client extends _i2.ServerpodClientShared {
   Map<String, _i2.EndpointRef> get endpointRefLookup => {
     'emailIdp': emailIdp,
     'jwtRefresh': jwtRefresh,
-    'auth': auth,
+    'appUser': appUser,
     'child': child,
     'greeting': greeting,
   };

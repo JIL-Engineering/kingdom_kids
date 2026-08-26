@@ -9,7 +9,7 @@ emailIdp:
   - hasAccount:
 jwtRefresh:
   - refreshAccessToken:
-auth:
+appUser:
   - completeProfile:
 child:
   - listChildren:
