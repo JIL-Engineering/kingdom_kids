@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:serverpod/serverpod.dart';
+import 'package:serverpod_auth_idp_server/core.dart';
 import 'package:kingdom_kids_server/src/generated/protocol.dart';
 import 'package:kingdom_kids_server/src/business/child_profile_service.dart';
 
@@ -11,16 +11,19 @@ void main() {
     _,
   ) {
     final session = sessionBuilder.build();
-    final mockParentUuid = UuidValue.fromString(
-      '11111111-2222-3333-4444-555555555555',
-    );
 
     test(
       '🛑 Doit REFUSER la création d un enfant si le consentement parent est nul',
       () async {
+        // 0. Création d'un vrai AuthUser : authUserId a une contrainte de clé
+        // étrangère vers serverpod_auth_core_user, un UUID inventé ne suffit pas.
+        final authUser = await AuthServices.instance.authUsers.create(
+          session,
+        );
+
         // 1. Création d'un parent SANS date de consentement (consentGivenAt = null)
         final parentSansConsentement = AppUser(
-          authUserId: mockParentUuid,
+          authUserId: authUser.id,
           timezone: 'UTC',
           preferredLanguage: 'fr',
           createdAt: DateTime.now().toUtc(),
@@ -32,7 +35,7 @@ void main() {
         await expectLater(
           ChildProfileService.createChildProfile(
             session,
-            mockParentUuid,
+            authUser.id,
             'Mon Enfant Test',
             2020,
             'fr',
