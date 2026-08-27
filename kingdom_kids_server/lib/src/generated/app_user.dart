@@ -8,16 +8,20 @@
 // ignore_for_file: type_literal_in_constant_pattern
 // ignore_for_file: use_super_parameters
 // ignore_for_file: invalid_use_of_internal_member
+// ignore_for_file: dead_code, unnecessary_null_comparison
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
+import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
+    as _i2;
+import 'package:kingdom_kids_server/src/generated/protocol.dart' as _i3;
 
 abstract class AppUser
     implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   AppUser._({
     this.id,
-    required this.email,
-    required this.passwordHash,
+    required this.authUserId,
+    this.authUser,
     this.country,
     required this.timezone,
     required this.preferredLanguage,
@@ -27,8 +31,8 @@ abstract class AppUser
 
   factory AppUser({
     int? id,
-    required String email,
-    required String passwordHash,
+    required _i1.UuidValue authUserId,
+    _i2.AuthUser? authUser,
     String? country,
     required String timezone,
     required String preferredLanguage,
@@ -39,8 +43,14 @@ abstract class AppUser
   factory AppUser.fromJson(Map<String, dynamic> jsonSerialization) {
     return AppUser(
       id: jsonSerialization['id'] as int?,
-      email: jsonSerialization['email'] as String,
-      passwordHash: jsonSerialization['passwordHash'] as String,
+      authUserId: _i1.UuidValueJsonExtension.fromJson(
+        jsonSerialization['authUserId'],
+      ),
+      authUser: jsonSerialization['authUser'] == null
+          ? null
+          : _i3.Protocol().deserialize<_i2.AuthUser>(
+              jsonSerialization['authUser'],
+            ),
       country: jsonSerialization['country'] as String?,
       timezone: jsonSerialization['timezone'] as String,
       preferredLanguage: jsonSerialization['preferredLanguage'] as String,
@@ -62,9 +72,9 @@ abstract class AppUser
   @override
   int? id;
 
-  String email;
+  _i1.UuidValue authUserId;
 
-  String passwordHash;
+  _i2.AuthUser? authUser;
 
   String? country;
 
@@ -84,8 +94,8 @@ abstract class AppUser
   @_i1.useResult
   AppUser copyWith({
     int? id,
-    String? email,
-    String? passwordHash,
+    _i1.UuidValue? authUserId,
+    _i2.AuthUser? authUser,
     String? country,
     String? timezone,
     String? preferredLanguage,
@@ -97,8 +107,8 @@ abstract class AppUser
     return {
       '__className__': 'AppUser',
       if (id != null) 'id': id,
-      'email': email,
-      'passwordHash': passwordHash,
+      'authUserId': authUserId.toJson(),
+      if (authUser != null) 'authUser': authUser?.toJson(),
       if (country != null) 'country': country,
       'timezone': timezone,
       'preferredLanguage': preferredLanguage,
@@ -112,8 +122,8 @@ abstract class AppUser
     return {
       '__className__': 'AppUser',
       if (id != null) 'id': id,
-      'email': email,
-      'passwordHash': passwordHash,
+      'authUserId': authUserId.toJson(),
+      if (authUser != null) 'authUser': authUser?.toJsonForProtocol(),
       if (country != null) 'country': country,
       'timezone': timezone,
       'preferredLanguage': preferredLanguage,
@@ -122,8 +132,8 @@ abstract class AppUser
     };
   }
 
-  static AppUserInclude include() {
-    return AppUserInclude._();
+  static AppUserInclude include({_i2.AuthUserInclude? authUser}) {
+    return AppUserInclude._(authUser: authUser);
   }
 
   static AppUserIncludeList includeList({
@@ -159,8 +169,8 @@ class _Undefined {}
 class _AppUserImpl extends AppUser {
   _AppUserImpl({
     int? id,
-    required String email,
-    required String passwordHash,
+    required _i1.UuidValue authUserId,
+    _i2.AuthUser? authUser,
     String? country,
     required String timezone,
     required String preferredLanguage,
@@ -168,8 +178,8 @@ class _AppUserImpl extends AppUser {
     required DateTime createdAt,
   }) : super._(
          id: id,
-         email: email,
-         passwordHash: passwordHash,
+         authUserId: authUserId,
+         authUser: authUser,
          country: country,
          timezone: timezone,
          preferredLanguage: preferredLanguage,
@@ -183,8 +193,8 @@ class _AppUserImpl extends AppUser {
   @override
   AppUser copyWith({
     Object? id = _Undefined,
-    String? email,
-    String? passwordHash,
+    _i1.UuidValue? authUserId,
+    Object? authUser = _Undefined,
     Object? country = _Undefined,
     String? timezone,
     String? preferredLanguage,
@@ -193,8 +203,10 @@ class _AppUserImpl extends AppUser {
   }) {
     return AppUser(
       id: id is int? ? id : this.id,
-      email: email ?? this.email,
-      passwordHash: passwordHash ?? this.passwordHash,
+      authUserId: authUserId ?? this.authUserId,
+      authUser: authUser is _i2.AuthUser?
+          ? authUser
+          : this.authUser?.copyWith(),
       country: country is String? ? country : this.country,
       timezone: timezone ?? this.timezone,
       preferredLanguage: preferredLanguage ?? this.preferredLanguage,
@@ -209,13 +221,10 @@ class _AppUserImpl extends AppUser {
 class AppUserUpdateTable extends _i1.UpdateTable<AppUserTable> {
   AppUserUpdateTable(super.table);
 
-  _i1.ColumnValue<String, String> email(String value) => _i1.ColumnValue(
-    table.email,
-    value,
-  );
-
-  _i1.ColumnValue<String, String> passwordHash(String value) => _i1.ColumnValue(
-    table.passwordHash,
+  _i1.ColumnValue<_i1.UuidValue, _i1.UuidValue> authUserId(
+    _i1.UuidValue value,
+  ) => _i1.ColumnValue(
+    table.authUserId,
     value,
   );
 
@@ -251,12 +260,8 @@ class AppUserUpdateTable extends _i1.UpdateTable<AppUserTable> {
 class AppUserTable extends _i1.Table<int?> {
   AppUserTable({super.tableRelation}) : super(tableName: 'users') {
     updateTable = AppUserUpdateTable(this);
-    email = _i1.ColumnString(
-      'email',
-      this,
-    );
-    passwordHash = _i1.ColumnString(
-      'passwordHash',
+    authUserId = _i1.ColumnUuid(
+      'authUserId',
       this,
     );
     country = _i1.ColumnString(
@@ -283,9 +288,9 @@ class AppUserTable extends _i1.Table<int?> {
 
   late final AppUserUpdateTable updateTable;
 
-  late final _i1.ColumnString email;
+  late final _i1.ColumnUuid authUserId;
 
-  late final _i1.ColumnString passwordHash;
+  _i2.AuthUserTable? _authUser;
 
   late final _i1.ColumnString country;
 
@@ -297,24 +302,48 @@ class AppUserTable extends _i1.Table<int?> {
 
   late final _i1.ColumnDateTime createdAt;
 
+  _i2.AuthUserTable get authUser {
+    if (_authUser != null) return _authUser!;
+    _authUser = _i1.createRelationTable(
+      relationFieldName: 'authUser',
+      field: AppUser.t.authUserId,
+      foreignField: _i2.AuthUser.t.id,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.AuthUserTable(tableRelation: foreignTableRelation),
+    );
+    return _authUser!;
+  }
+
   @override
   List<_i1.Column> get columns => [
     id,
-    email,
-    passwordHash,
+    authUserId,
     country,
     timezone,
     preferredLanguage,
     consentGivenAt,
     createdAt,
   ];
+
+  @override
+  _i1.Table? getRelationTable(String relationField) {
+    if (relationField == 'authUser') {
+      return authUser;
+    }
+    return null;
+  }
 }
 
 class AppUserInclude extends _i1.IncludeObject {
-  AppUserInclude._();
+  AppUserInclude._({_i2.AuthUserInclude? authUser}) {
+    _authUser = authUser;
+  }
+
+  _i2.AuthUserInclude? _authUser;
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _i1.Include?> get includes => {'authUser': _authUser};
 
   @override
   _i1.Table<int?> get table => AppUser.t;
@@ -343,6 +372,8 @@ class AppUserIncludeList extends _i1.IncludeList {
 
 class AppUserRepository {
   const AppUserRepository._();
+
+  final attachRow = const AppUserAttachRowRepository._();
 
   /// Returns a list of [AppUser]s matching the given query parameters.
   ///
@@ -376,6 +407,7 @@ class AppUserRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<AppUserTable>? orderByList,
     _i1.Transaction? transaction,
+    AppUserInclude? include,
     _i1.LockMode? lockMode,
     _i1.LockBehavior? lockBehavior,
   }) async {
@@ -388,6 +420,7 @@ class AppUserRepository {
       limit: limit,
       offset: offset,
       transaction: transaction,
+      include: include,
       lockMode: lockMode,
       lockBehavior: lockBehavior,
     );
@@ -419,6 +452,7 @@ class AppUserRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<AppUserTable>? orderByList,
     _i1.Transaction? transaction,
+    AppUserInclude? include,
     _i1.LockMode? lockMode,
     _i1.LockBehavior? lockBehavior,
   }) async {
@@ -430,6 +464,7 @@ class AppUserRepository {
           orderDescending,
       offset: offset,
       transaction: transaction,
+      include: include,
       lockMode: lockMode,
       lockBehavior: lockBehavior,
     );
@@ -440,12 +475,14 @@ class AppUserRepository {
     _i1.DatabaseSession session,
     int id, {
     _i1.Transaction? transaction,
+    AppUserInclude? include,
     _i1.LockMode? lockMode,
     _i1.LockBehavior? lockBehavior,
   }) async {
     return session.db.findById<AppUser>(
       id,
       transaction: transaction,
+      include: include,
       lockMode: lockMode,
       lockBehavior: lockBehavior,
     );
@@ -751,6 +788,33 @@ class AppUserRepository {
       where: where(AppUser.t),
       lockMode: lockMode,
       lockBehavior: lockBehavior,
+      transaction: transaction,
+    );
+  }
+}
+
+class AppUserAttachRowRepository {
+  const AppUserAttachRowRepository._();
+
+  /// Creates a relation between the given [AppUser] and [AuthUser]
+  /// by setting the [AppUser]'s foreign key `authUserId` to refer to the [AuthUser].
+  Future<void> authUser(
+    _i1.DatabaseSession session,
+    AppUser appUser,
+    _i2.AuthUser authUser, {
+    _i1.Transaction? transaction,
+  }) async {
+    if (appUser.id == null) {
+      throw ArgumentError.notNull('appUser.id');
+    }
+    if (authUser.id == null) {
+      throw ArgumentError.notNull('authUser.id');
+    }
+
+    var $appUser = appUser.copyWith(authUserId: authUser.id);
+    await session.db.updateRow<AppUser>(
+      $appUser,
+      columns: [AppUser.t.authUserId],
       transaction: transaction,
     );
   }

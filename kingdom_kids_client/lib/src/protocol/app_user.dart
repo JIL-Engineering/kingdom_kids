@@ -11,12 +11,15 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
+    as _i2;
+import 'package:kingdom_kids_client/src/protocol/protocol.dart' as _i3;
 
 abstract class AppUser implements _i1.SerializableModel {
   AppUser._({
     this.id,
-    required this.email,
-    required this.passwordHash,
+    required this.authUserId,
+    this.authUser,
     this.country,
     required this.timezone,
     required this.preferredLanguage,
@@ -26,8 +29,8 @@ abstract class AppUser implements _i1.SerializableModel {
 
   factory AppUser({
     int? id,
-    required String email,
-    required String passwordHash,
+    required _i1.UuidValue authUserId,
+    _i2.AuthUser? authUser,
     String? country,
     required String timezone,
     required String preferredLanguage,
@@ -38,8 +41,14 @@ abstract class AppUser implements _i1.SerializableModel {
   factory AppUser.fromJson(Map<String, dynamic> jsonSerialization) {
     return AppUser(
       id: jsonSerialization['id'] as int?,
-      email: jsonSerialization['email'] as String,
-      passwordHash: jsonSerialization['passwordHash'] as String,
+      authUserId: _i1.UuidValueJsonExtension.fromJson(
+        jsonSerialization['authUserId'],
+      ),
+      authUser: jsonSerialization['authUser'] == null
+          ? null
+          : _i3.Protocol().deserialize<_i2.AuthUser>(
+              jsonSerialization['authUser'],
+            ),
       country: jsonSerialization['country'] as String?,
       timezone: jsonSerialization['timezone'] as String,
       preferredLanguage: jsonSerialization['preferredLanguage'] as String,
@@ -59,9 +68,9 @@ abstract class AppUser implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  String email;
+  _i1.UuidValue authUserId;
 
-  String passwordHash;
+  _i2.AuthUser? authUser;
 
   String? country;
 
@@ -78,8 +87,8 @@ abstract class AppUser implements _i1.SerializableModel {
   @_i1.useResult
   AppUser copyWith({
     int? id,
-    String? email,
-    String? passwordHash,
+    _i1.UuidValue? authUserId,
+    _i2.AuthUser? authUser,
     String? country,
     String? timezone,
     String? preferredLanguage,
@@ -91,8 +100,8 @@ abstract class AppUser implements _i1.SerializableModel {
     return {
       '__className__': 'AppUser',
       if (id != null) 'id': id,
-      'email': email,
-      'passwordHash': passwordHash,
+      'authUserId': authUserId.toJson(),
+      if (authUser != null) 'authUser': authUser?.toJson(),
       if (country != null) 'country': country,
       'timezone': timezone,
       'preferredLanguage': preferredLanguage,
@@ -112,8 +121,8 @@ class _Undefined {}
 class _AppUserImpl extends AppUser {
   _AppUserImpl({
     int? id,
-    required String email,
-    required String passwordHash,
+    required _i1.UuidValue authUserId,
+    _i2.AuthUser? authUser,
     String? country,
     required String timezone,
     required String preferredLanguage,
@@ -121,8 +130,8 @@ class _AppUserImpl extends AppUser {
     required DateTime createdAt,
   }) : super._(
          id: id,
-         email: email,
-         passwordHash: passwordHash,
+         authUserId: authUserId,
+         authUser: authUser,
          country: country,
          timezone: timezone,
          preferredLanguage: preferredLanguage,
@@ -136,8 +145,8 @@ class _AppUserImpl extends AppUser {
   @override
   AppUser copyWith({
     Object? id = _Undefined,
-    String? email,
-    String? passwordHash,
+    _i1.UuidValue? authUserId,
+    Object? authUser = _Undefined,
     Object? country = _Undefined,
     String? timezone,
     String? preferredLanguage,
@@ -146,8 +155,10 @@ class _AppUserImpl extends AppUser {
   }) {
     return AppUser(
       id: id is int? ? id : this.id,
-      email: email ?? this.email,
-      passwordHash: passwordHash ?? this.passwordHash,
+      authUserId: authUserId ?? this.authUserId,
+      authUser: authUser is _i2.AuthUser?
+          ? authUser
+          : this.authUser?.copyWith(),
       country: country is String? ? country : this.country,
       timezone: timezone ?? this.timezone,
       preferredLanguage: preferredLanguage ?? this.preferredLanguage,
