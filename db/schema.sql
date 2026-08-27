@@ -100,7 +100,10 @@ CREATE TABLE badges (
     name           TEXT NOT NULL,
     description    TEXT NOT NULL,
     icon_asset     TEXT NOT NULL,
-    trigger_rule   JSONB NOT NULL
+    -- TEXT, not JSONB: Serverpod's model system has no native JSON scalar
+    -- (see docs/03_technical_spec.md) -- this column stores JSON-encoded text,
+    -- decoded/encoded at the application layer.
+    trigger_rule   TEXT NOT NULL
 );
 
 CREATE TABLE child_badges (
@@ -117,7 +120,9 @@ CREATE TABLE child_badges (
 
 CREATE TABLE devotionals (
     id        BIGSERIAL PRIMARY KEY,
-    date      DATE NOT NULL UNIQUE,
+    -- TIMESTAMPTZ, not DATE: Serverpod has no date-only scalar, only DateTime
+    -- (see docs/03_technical_spec.md) -- always midnight UTC for a given day.
+    date      TIMESTAMPTZ NOT NULL UNIQUE,
     category  TEXT
 );
 
