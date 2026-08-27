@@ -144,10 +144,24 @@ Implication pratique : si un écran a besoin d'une nouvelle donnée, la demande 
 **Mise en préparation des changements :** utilise `git add <fichiers précis>`, pas `git add .` ni `git add -A`. Il est facile de mettre en préparation par accident un fichier généré, une config locale, ou quelque chose contenant un mot de passe. Vérifie `git status` avant chaque commit.
 
 **La CI, en clair** (`.github/workflows/ci.yml` et `format.yml`) :
-- *« Serverpod codegen is stale »* — quelqu'un a modifié un modèle `.spy.yaml` mais n'a pas lancé `serverpod generate` (ou l'a lancé sans committer le résultat). Solution : régénérer et committer `lib/src/generated/` et `kingdom_kids_client/lib/src/protocol/` en même temps que le changement de modèle.
+- *« Serverpod codegen is stale »* — la cause la plus probable n'est pas d'avoir oublié de lancer `serverpod generate`, c'est d'avoir une version de la CLI `serverpod_cli` installée localement qui ne correspond pas à la version épinglée dans `kingdom_kids_server/pubspec.yaml` (et dans `SERVERPOD_CLI_VERSION` de `ci.yml`). Deux versions différentes de la CLI génèrent un code légèrement différent pour les mêmes modèles — donc regénérer avec la mauvaise version produit un diff qui ne collera jamais avec ce que la CI regénère de son côté. Vérifie avec `serverpod --version` avant de régénérer quoi que ce soit.
 - *`dart test` du serveur qui échoue* — un vrai test backend est cassé ; lis le message d'échec, il nomme le test.
 - *`flutter analyze` / `flutter test` qui échoue* — un échec statique ou de test côté Flutter.
 - *`dart format --set-exit-if-changed`* — le formatage ne correspond pas ; lance `dart format .` en local et committe le résultat.
+
+### Avant de pousser : la check-list qui évite les allers-retours
+
+Ce qui suit vient d'un vrai cas vécu (PR de Daniel, Sprint 1) : plusieurs allers-retours de correction auraient été évités en vérifiant tout ça *avant* de pousser, plutôt qu'en découvrant les erreurs une par une via la CI. La CI ne fait rien de magique — elle lance exactement les mêmes commandes que celles ci-dessous. Si elles passent toutes chez toi, elles passeront sur GitHub.
+
+1. `serverpod --version` correspond exactement à la version dans `kingdom_kids_server/pubspec.yaml` ? Sinon : `dart pub global activate serverpod_cli <version>`.
+2. `dart pub get` depuis la racine du repo (pas dans un sous-dossier).
+3. Si tu as touché un `.spy.yaml` : `serverpod generate`, et confirme que `git status` montre bien un changement propre (pas de fichiers generes a moitie regeneres, pas de melange entre deux versions).
+4. `dart format --set-exit-if-changed .` et `dart analyze` dans `kingdom_kids_server/`.
+5. `flutter analyze` et `flutter test` dans `kingdom_kids_flutter/`.
+6. `dart test` dans `kingdom_kids_server/`.
+7. `git status` une derniere fois : verifie qu'il n'y a que tes fichiers reels (pas de `.vscode/settings.json` personnel, pas de fichier vide cree par accident, pas de dossier duplique).
+
+Si les 7 points sont propres, pousse et ouvre la PR — elle devrait passer la CI du premier coup.
 
 ---
 
