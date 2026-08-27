@@ -16,10 +16,12 @@ import 'package:serverpod_client/serverpod_client.dart' as _i2;
 import 'dart:async' as _i3;
 import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
     as _i4;
+import 'package:kingdom_kids_client/src/protocol/app_user.dart' as _i5;
+import 'package:kingdom_kids_client/src/protocol/child_profile.dart' as _i6;
 import 'package:kingdom_kids_client/src/protocol/greetings/greeting.dart'
-    as _i5;
-import 'package:http/http.dart' as _i6;
-import 'protocol.dart' as _i7;
+    as _i7;
+import 'package:http/http.dart' as _i8;
+import 'protocol.dart' as _i9;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
 /// are made available on the server and enable the corresponding sign-in widget
@@ -242,6 +244,82 @@ class EndpointJwtRefresh extends _i4.EndpointRefreshJwtTokens {
   );
 }
 
+/// {@category Endpoint}
+class EndpointAppUser extends _i2.EndpointRef {
+  EndpointAppUser(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'appUser';
+
+  /// Étape 3 du sprint : Méthode completeProfile appelée juste après l'inscription
+  _i3.Future<_i5.AppUser> completeProfile(
+    String country,
+    String timezone,
+    String preferredLanguage,
+    bool consentAccepted,
+  ) => caller.callServerEndpoint<_i5.AppUser>(
+    'appUser',
+    'completeProfile',
+    {
+      'country': country,
+      'timezone': timezone,
+      'preferredLanguage': preferredLanguage,
+      'consentAccepted': consentAccepted,
+    },
+  );
+}
+
+/// {@category Endpoint}
+class EndpointChild extends _i2.EndpointRef {
+  EndpointChild(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'child';
+
+  /// Liste uniquement les enfants du parent connecté
+  _i3.Future<List<_i6.ChildProfile>> listChildren() =>
+      caller.callServerEndpoint<List<_i6.ChildProfile>>(
+        'child',
+        'listChildren',
+        {},
+      );
+
+  /// Crée un enfant via le service sécurisé
+  _i3.Future<_i6.ChildProfile> createChild(
+    String displayName,
+    int birthYear,
+    String preferredLanguage,
+    String avatarId,
+  ) => caller.callServerEndpoint<_i6.ChildProfile>(
+    'child',
+    'createChild',
+    {
+      'displayName': displayName,
+      'birthYear': birthYear,
+      'preferredLanguage': preferredLanguage,
+      'avatarId': avatarId,
+    },
+  );
+
+  _i3.Future<_i6.ChildProfile> updateChild(
+    int childId,
+    String displayName,
+    int birthYear,
+    String preferredLanguage,
+    String avatarId,
+  ) => caller.callServerEndpoint<_i6.ChildProfile>(
+    'child',
+    'updateChild',
+    {
+      'childId': childId,
+      'displayName': displayName,
+      'birthYear': birthYear,
+      'preferredLanguage': preferredLanguage,
+      'avatarId': avatarId,
+    },
+  );
+}
+
 /// This is an example endpoint that returns a greeting message through
 /// its [hello] method.
 /// {@category Endpoint}
@@ -252,8 +330,8 @@ class EndpointGreeting extends _i2.EndpointRef {
   String get name => 'greeting';
 
   /// Returns a personalized greeting message: "Hello {name}".
-  _i3.Future<_i5.Greeting> hello(String name) =>
-      caller.callServerEndpoint<_i5.Greeting>(
+  _i3.Future<_i7.Greeting> hello(String name) =>
+      caller.callServerEndpoint<_i7.Greeting>(
         'greeting',
         'hello',
         {'name': name},
@@ -289,10 +367,10 @@ class Client extends _i2.ServerpodClientShared {
     onFailedCall,
     Function(_i2.MethodCallContext)? onSucceededCall,
     bool? disconnectStreamsOnLostInternetConnection,
-    _i6.Client? httpClientOverride,
+    _i8.Client? httpClientOverride,
   }) : super(
          host,
-         _i7.Protocol(),
+         _i9.Protocol(),
          securityContext: securityContext,
          streamingConnectionTimeout: streamingConnectionTimeout,
          connectionTimeout: connectionTimeout,
@@ -304,6 +382,8 @@ class Client extends _i2.ServerpodClientShared {
        ) {
     emailIdp = EndpointEmailIdp(this);
     jwtRefresh = EndpointJwtRefresh(this);
+    appUser = EndpointAppUser(this);
+    child = EndpointChild(this);
     greeting = EndpointGreeting(this);
     modules = Modules(this);
   }
@@ -311,6 +391,10 @@ class Client extends _i2.ServerpodClientShared {
   late final EndpointEmailIdp emailIdp;
 
   late final EndpointJwtRefresh jwtRefresh;
+
+  late final EndpointAppUser appUser;
+
+  late final EndpointChild child;
 
   late final EndpointGreeting greeting;
 
@@ -320,6 +404,8 @@ class Client extends _i2.ServerpodClientShared {
   Map<String, _i2.EndpointRef> get endpointRefLookup => {
     'emailIdp': emailIdp,
     'jwtRefresh': jwtRefresh,
+    'appUser': appUser,
+    'child': child,
     'greeting': greeting,
   };
 
