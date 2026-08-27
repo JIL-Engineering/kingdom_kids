@@ -1,6 +1,6 @@
 # Kingdom Kids — Guide de l'équipe
 
-*Une référence vivante pour toute l'équipe : les commandes, comment chaque partie de la stack fonctionne, et comment on travaille ensemble sur GitHub. Ce fichier ne change pas à chaque sprint — pour « qu'est-ce que je construis en ce moment », voir `08_sprint1_assignments.md`.*
+*Une référence vivante pour toute l'équipe : les commandes, comment chaque partie de la stack fonctionne, et comment on travaille ensemble sur GitHub. Ce fichier ne change pas à chaque sprint — pour « qu'est-ce que je construis en ce moment », voir `09_sprint2_plan.md` (le sprint précédent reste dans `08_sprint1_assignments.md`).*
 
 Équipe :
 
@@ -173,4 +173,4 @@ Si les 7 points sont propres, pousse et ouvre la PR — elle devrait passer la C
 | Le modèle de données / contrat d'API complet ? | `docs/03_technical_spec.md` |
 | Pourquoi Serverpod plutôt que Django ? | `docs/02_backend_decision.md` |
 | À quoi cet écran doit-il vraiment ressembler ? | `kingdomkidsdesignmockupui/images/` (ignorer `screen8.png` — un placeholder qui ne correspond pas) |
-| Qu'est-ce que je construis personnellement en ce moment ? | `docs/08_sprint1_assignments.md` |
+| Qu'est-ce que je construis personnellement en ce moment ? | `docs/09_sprint2_plan.md` (le sprint précédent est dans `docs/08_sprint1_assignments.md`) |
