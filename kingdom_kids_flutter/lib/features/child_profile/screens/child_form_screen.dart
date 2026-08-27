@@ -1,28 +1,82 @@
 import 'package:flutter/material.dart';
+import 'package:kingdom_kids_client/kingdom_kids_client.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/kingdom_button.dart';
 import '../../../main.dart';
 
-const _avatarChoices = ['avatar_1', 'avatar_2', 'avatar_3', 'avatar_4'];
+/// (icon, color) pairs used as placeholder avatars. No illustrated-character
+/// art pipeline exists yet (Sprint 2 content pipeline) -- this is a
+/// deliberately distinct icon set, not just numbered circles, so profiles
+/// stay visually recognizable until real artwork replaces them.
+const _avatarChoices = <String, (IconData, Color)>{
+  'avatar_star': (Icons.star_rounded, Color(0xFFF5A623)),
+  'avatar_sun': (Icons.wb_sunny_rounded, Color(0xFFFCBF1E)),
+  'avatar_leaf': (Icons.eco_rounded, Color(0xFF10B981)),
+  'avatar_moon': (Icons.nightlight_round, Color(0xFF6B7280)),
+  'avatar_heart': (Icons.favorite_rounded, Color(0xFFEF4444)),
+  'avatar_crown': (Icons.emoji_events_rounded, Color(0xFF1A1F36)),
+};
 
-/// No avatar art pipeline exists yet (Sprint 2 content pipeline) -- avatars
-/// are just numbered placeholder circles until real illustrations exist.
-class AddChildScreen extends StatefulWidget {
-  const AddChildScreen({super.key});
+/// Renders a child avatar (used here and from the profile picker) so both
+/// places stay in sync as the placeholder set changes.
+class ChildAvatarIcon extends StatelessWidget {
+  const ChildAvatarIcon({super.key, required this.avatarId, this.size = 56});
+
+  final String avatarId;
+  final double size;
 
   @override
-  State<AddChildScreen> createState() => _AddChildScreenState();
+  Widget build(BuildContext context) {
+    final (icon, color) =
+        _avatarChoices[avatarId] ?? _avatarChoices.values.first;
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: color.withValues(alpha: 0.18),
+      ),
+      alignment: Alignment.center,
+      child: Icon(icon, color: color, size: size * 0.5),
+    );
+  }
 }
 
-class _AddChildScreenState extends State<AddChildScreen> {
+/// Create or edit a child profile. Pass [existingChild] to edit; omit it to
+/// create a new one. Matches kingdomkidsdesignmockupui/images/screen12.png's
+/// "Add Child" flow.
+class ChildFormScreen extends StatefulWidget {
+  const ChildFormScreen({super.key, this.existingChild});
+
+  final ChildProfile? existingChild;
+
+  @override
+  State<ChildFormScreen> createState() => _ChildFormScreenState();
+}
+
+class _ChildFormScreenState extends State<ChildFormScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   int? _birthYear;
   String _preferredLanguage = 'en';
-  String _avatarId = _avatarChoices.first;
+  String _avatarId = _avatarChoices.keys.first;
   bool _isSubmitting = false;
+
+  bool get _isEditing => widget.existingChild != null;
+
+  @override
+  void initState() {
+    super.initState();
+    final existing = widget.existingChild;
+    if (existing != null) {
+      _nameController.text = existing.displayName;
+      _birthYear = existing.birthYear;
+      _preferredLanguage = existing.preferredLanguage;
+      _avatarId = existing.avatarId;
+    }
+  }
 
   @override
   void dispose() {
@@ -35,17 +89,33 @@ class _AddChildScreenState extends State<AddChildScreen> {
 
     setState(() => _isSubmitting = true);
     try {
-      await client.child.createChild(
-        _nameController.text.trim(),
-        _birthYear!,
-        _preferredLanguage,
-        _avatarId,
-      );
+      if (_isEditing) {
+        await client.child.updateChild(
+          widget.existingChild!.id!,
+          _nameController.text.trim(),
+          _birthYear!,
+          _preferredLanguage,
+          _avatarId,
+        );
+      } else {
+        await client.child.createChild(
+          _nameController.text.trim(),
+          _birthYear!,
+          _preferredLanguage,
+          _avatarId,
+        );
+      }
       if (mounted) Navigator.of(context).pop();
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Could not add child: $e')),
+          SnackBar(
+            content: Text(
+              _isEditing
+                  ? 'Could not save changes: $e'
+                  : 'Could not add child: $e',
+            ),
+          ),
         );
       }
     } finally {
@@ -64,7 +134,10 @@ class _AddChildScreenState extends State<AddChildScreen> {
       backgroundColor: AppColors.cream,
       appBar: AppBar(
         backgroundColor: AppColors.cream,
-        title: Text('Add Child', style: AppTextStyles.headingMedium),
+        title: Text(
+          _isEditing ? 'Edit Child' : 'Add Child',
+          style: AppTextStyles.headingMedium,
+        ),
       ),
       body: SafeArea(
         child: Form(
@@ -111,8 +184,9 @@ class _AddChildScreenState extends State<AddChildScreen> {
               const SizedBox(height: 8),
               Wrap(
                 spacing: 12,
+                runSpacing: 12,
                 children: [
-                  for (final avatarId in _avatarChoices)
+                  for (final avatarId in _avatarChoices.keys)
                     _AvatarChoice(
                       avatarId: avatarId,
                       selected: avatarId == _avatarId,
@@ -122,7 +196,7 @@ class _AddChildScreenState extends State<AddChildScreen> {
               ),
               const SizedBox(height: 32),
               KingdomButton(
-                label: 'Add Child',
+                label: _isEditing ? 'Save Changes' : 'Add Child',
                 isLoading: _isSubmitting,
                 onPressed: _submit,
               ),
@@ -147,23 +221,19 @@ class _AvatarChoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final index = _avatarChoices.indexOf(avatarId) + 1;
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(28),
       child: Container(
-        width: 56,
-        height: 56,
+        padding: const EdgeInsets.all(3),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: AppColors.amberPale,
           border: Border.all(
             color: selected ? AppColors.avatarRingActive : Colors.transparent,
             width: 3,
           ),
         ),
-        alignment: Alignment.center,
-        child: Text('$index', style: AppTextStyles.headingMedium),
+        child: ChildAvatarIcon(avatarId: avatarId),
       ),
     );
   }

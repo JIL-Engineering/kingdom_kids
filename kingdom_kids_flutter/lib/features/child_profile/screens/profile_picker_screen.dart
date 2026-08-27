@@ -5,11 +5,11 @@ import 'package:kingdom_kids_client/kingdom_kids_client.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../main.dart';
+import 'child_form_screen.dart';
 
 /// Matches kingdomkidsdesignmockupui/images/screen12.png ("Who is reading
-/// today?"). No avatar art pipeline exists yet (Sprint 2 content pipeline),
-/// so avatars are simple initials circles instead of the mockup's
-/// illustrated characters.
+/// today?"). Tap a child to edit their profile; the gear icon is the entry
+/// point to the PIN-gated parent Settings.
 class ProfilePickerScreen extends StatefulWidget {
   const ProfilePickerScreen({super.key});
 
@@ -65,9 +65,18 @@ class _ProfilePickerScreenState extends State<ProfilePickerScreen> {
               return ListView(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
-                  vertical: 40,
+                  vertical: 16,
                 ),
                 children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                      icon: const Icon(Icons.settings_outlined),
+                      color: AppColors.textSecondary,
+                      onPressed: () => context.push('/settings/pin-gate'),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
                   Text(
                     'Who is reading today?',
                     textAlign: TextAlign.center,
@@ -85,7 +94,17 @@ class _ProfilePickerScreenState extends State<ProfilePickerScreen> {
                     spacing: 24,
                     runSpacing: 24,
                     children: [
-                      for (final child in children) _ChildAvatar(child: child),
+                      for (final child in children)
+                        _ChildTile(
+                          child: child,
+                          onTap: () async {
+                            await context.push(
+                              '/profiles/edit',
+                              extra: child,
+                            );
+                            if (mounted) _refresh();
+                          },
+                        ),
                       _AddChildTile(
                         onTap: () async {
                           await context.push('/profiles/add');
@@ -104,44 +123,39 @@ class _ProfilePickerScreenState extends State<ProfilePickerScreen> {
   }
 }
 
-class _ChildAvatar extends StatelessWidget {
-  const _ChildAvatar({required this.child});
+class _ChildTile extends StatelessWidget {
+  const _ChildTile({required this.child, required this.onTap});
 
   final ChildProfile child;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final initial = child.displayName.isNotEmpty
-        ? child.displayName[0].toUpperCase()
-        : '?';
-
-    return SizedBox(
-      width: 96,
-      child: Column(
-        children: [
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.amberPale,
-              border: Border.all(color: AppColors.avatarRingActive, width: 3),
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              initial,
-              style: AppTextStyles.displayMedium.copyWith(
-                color: AppColors.textPrimary,
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(48),
+      child: SizedBox(
+        width: 96,
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(3),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.fromBorderSide(
+                  BorderSide(color: AppColors.avatarRingActive, width: 3),
+                ),
               ),
+              child: ChildAvatarIcon(avatarId: child.avatarId, size: 74),
             ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            child.displayName,
-            style: AppTextStyles.headingSmall,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
+            const SizedBox(height: 8),
+            Text(
+              child.displayName,
+              style: AppTextStyles.headingSmall,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -166,11 +180,7 @@ class _AddChildTile extends StatelessWidget {
               height: 80,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: AppColors.border,
-                  width: 2,
-                  style: BorderStyle.solid,
-                ),
+                border: Border.all(color: AppColors.border, width: 2),
               ),
               alignment: Alignment.center,
               child: const Icon(

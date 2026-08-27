@@ -42,8 +42,8 @@ Rationale recap: Serverpod gives one Dart codebase across app and server, with t
 
 ## 3. Core Data Model
 
-**User** (parent account)
-- id, email, password_hash, country, timezone, preferred_language, consent_given_at *(records parental consent acceptance — required before any child profile can be created)*, created_at
+**User / AppUser** (parent account)
+- id, auth_user_id (FK to `serverpod_auth_idp`'s own user/email/password tables — this app never stores email or password_hash directly), country, timezone, preferred_language, consent_given_at *(records parental consent acceptance — required before any child profile can be created)*, parent_pin_hash *(bcrypt, gates parent-only Settings actions)*, created_at
 
 **ChildProfile**
 - id, parent (FK User), display_name, birth_year *(year only — no full DOB stored)*, age_bracket (auto-derived: 3-5 / 6-8 / 9-12), preferred_language, avatar_id, pin_protected (bool), created_at
@@ -86,13 +86,26 @@ This schema is deliberately Phase-2-ready: `Book.category` already includes `sun
 Serverpod doesn't use hand-written REST routes — Dart `Endpoint` classes are defined on the server, and Serverpod's code generator produces a matching type-safe client the Flutter app calls like a local method. The contract below is written as endpoint methods, not URLs, to match what will actually be implemented:
 
 ```
-AuthEndpoint
-  register(email, password, country, timezone, preferredLanguage, consentAccepted) -> AuthResponse
-     (consentAccepted must be true — parental consent is a required, explicit step, not implied by signup)
-  login(email, password) -> AuthResponse (session token)
+AppUserEndpoint
+     (register/login themselves are handled by serverpod_auth_idp's own
+     email endpoint — SignInWidget on the client — not reimplemented here;
+     this endpoint only covers the app-specific fields that module doesn't
+     know about)
+  getMyProfile() -> AppUser?
+     (null if the signed-in user hasn't completed their profile yet, i.e.
+     no consent given — lets the client skip onboarding/consent for a
+     returning user without re-prompting)
+  completeProfile(country, timezone, preferredLanguage, consentAccepted) -> AppUser
+     (consentAccepted must be true — parental consent is a required, explicit step, not implied by signup;
+     calling this again after consent was already given updates country/timezone/language
+     but never overwrites the original consent_given_at)
+  hasParentPin() -> bool
+  setParentPin(pin) -> void (4-6 digits, stored as a bcrypt hash, never plaintext)
+  verifyParentPin(pin) -> bool (throws if no PIN has been configured yet)
 
 ChildEndpoint
   listChildren() -> List<ChildProfile>
+     (scoped to the signed-in parent only — never returns another parent's children)
   createChild(displayName, birthYear, preferredLanguage, avatarId) -> ChildProfile
   updateChild(childId, ...) -> ChildProfile
 

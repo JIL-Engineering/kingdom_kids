@@ -1,35 +1,56 @@
 import 'package:go_router/go_router.dart';
-import 'package:serverpod_auth_idp_flutter/serverpod_auth_idp_flutter.dart';
+import 'package:kingdom_kids_client/kingdom_kids_client.dart';
 
 import '../../features/auth/screens/auth_screen.dart';
 import '../../features/auth/screens/consent_screen.dart';
 import '../../features/auth/screens/onboarding_screen.dart';
-import '../../features/child_profile/screens/add_child_screen.dart';
+import '../../features/auth/screens/splash_screen.dart';
+import '../../features/child_profile/screens/child_form_screen.dart';
 import '../../features/child_profile/screens/profile_picker_screen.dart';
-import '../../main.dart';
+import '../../features/settings/screens/pin_gate_screen.dart';
+import '../../features/settings/screens/settings_screen.dart';
+import '../auth/session_state.dart';
 
 const _preAuthRoutes = {'/onboarding', '/auth'};
 
-/// Sprint 1 routes only: onboarding -> auth -> consent -> profile picker.
-/// Home/Library screens don't exist yet (Sprint 3-4) so the flow ends at the
-/// profile picker for now.
+/// Sprint 1 routes: splash -> onboarding -> auth -> consent -> profile
+/// picker, plus the Settings/PIN gate. Home/Library screens don't exist yet
+/// (Sprint 3-4) so the main flow ends at the profile picker for now.
 ///
-/// There's no "is my profile already complete" check yet (no such endpoint
-/// exists), so a signed-in user always lands on the profile picker directly,
-/// skipping onboarding/auth but not re-prompting for consent either -- a
-/// known simplification, see docs/08_sprint1_assignments.md.
+/// Redirect logic is driven by [sessionState], which caches whether the
+/// signed-in user has completed their profile (given consent) so this
+/// doesn't hit the network on every navigation:
+/// - not authenticated -> onboarding/auth only
+/// - authenticated, profile not loaded yet -> splash
+/// - authenticated, no consent yet -> consent
+/// - authenticated, consent given -> profile picker (skips onboarding/consent)
 final appRouter = GoRouter(
-  initialLocation: '/onboarding',
-  refreshListenable: client.auth.authInfoListenable,
+  initialLocation: '/splash',
+  refreshListenable: sessionState,
   redirect: (context, state) {
-    final isAuthenticated = client.auth.isAuthenticated;
-    final isOnPreAuthRoute = _preAuthRoutes.contains(state.matchedLocation);
+    final loc = state.matchedLocation;
 
-    if (!isAuthenticated && !isOnPreAuthRoute) return '/onboarding';
-    if (isAuthenticated && isOnPreAuthRoute) return '/profiles';
-    return null;
+    if (!sessionState.isAuthenticated) {
+      return _preAuthRoutes.contains(loc) ? null : '/onboarding';
+    }
+
+    if (sessionState.isLoadingProfile) {
+      return loc == '/splash' ? null : '/splash';
+    }
+
+    if (!sessionState.hasCompletedProfile) {
+      return loc == '/consent' ? null : '/consent';
+    }
+
+    final shouldLeave =
+        _preAuthRoutes.contains(loc) || loc == '/consent' || loc == '/splash';
+    return shouldLeave ? '/profiles' : null;
   },
   routes: [
+    GoRoute(
+      path: '/splash',
+      builder: (context, state) => const SplashScreen(),
+    ),
     GoRoute(
       path: '/onboarding',
       builder: (context, state) => const OnboardingScreen(),
@@ -48,7 +69,24 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/profiles/add',
-      builder: (context, state) => const AddChildScreen(),
+      builder: (context, state) => const ChildFormScreen(),
+    ),
+    GoRoute(
+      path: '/profiles/edit',
+      builder: (context, state) =>
+          ChildFormScreen(existingChild: state.extra as ChildProfile),
+    ),
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => const SettingsScreen(),
+    ),
+    GoRoute(
+      path: '/settings/pin-gate',
+      builder: (context, state) => PinGateScreen(
+        mode: state.uri.queryParameters['change'] == 'true'
+            ? PinGateMode.change
+            : PinGateMode.initial,
+      ),
     ),
   ],
 );

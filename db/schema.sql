@@ -7,14 +7,20 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";  -- for gen_random_uuid()
 -- USERS & CHILD PROFILES
 -- =========================================================
 
+-- Email/password are owned by the serverpod_auth_idp module (its own
+-- serverpod_auth_idp_email_account table), not this table -- auth_user_id
+-- references the module's serverpod_auth_core_user(id). This table only
+-- holds the app-specific fields the auth module doesn't know about.
 CREATE TABLE users (
     id                  BIGSERIAL PRIMARY KEY,
-    email               TEXT NOT NULL UNIQUE,
-    password_hash       TEXT NOT NULL,
+    auth_user_id        UUID NOT NULL UNIQUE REFERENCES serverpod_auth_core_user(id) ON DELETE CASCADE,
     country             TEXT,
     timezone            TEXT NOT NULL,
     preferred_language  TEXT NOT NULL DEFAULT 'en' CHECK (preferred_language IN ('en','fr')),
     consent_given_at    TIMESTAMPTZ,
+    -- Hashed (bcrypt), never plaintext. Gates parent-only actions
+    -- (Settings) -- see docs/03_technical_spec.md and PinGateScreen.
+    parent_pin_hash     TEXT,
     created_at          TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
