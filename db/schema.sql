@@ -7,14 +7,20 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";  -- for gen_random_uuid()
 -- USERS & CHILD PROFILES
 -- =========================================================
 
+-- Email/password are owned by the serverpod_auth_idp module (its own
+-- serverpod_auth_idp_email_account table), not this table -- auth_user_id
+-- references the module's serverpod_auth_core_user(id). This table only
+-- holds the app-specific fields the auth module doesn't know about.
 CREATE TABLE users (
     id                  BIGSERIAL PRIMARY KEY,
-    email               TEXT NOT NULL UNIQUE,
-    password_hash       TEXT NOT NULL,
+    auth_user_id        UUID NOT NULL UNIQUE REFERENCES serverpod_auth_core_user(id) ON DELETE CASCADE,
     country             TEXT,
     timezone            TEXT NOT NULL,
     preferred_language  TEXT NOT NULL DEFAULT 'en' CHECK (preferred_language IN ('en','fr')),
     consent_given_at    TIMESTAMPTZ,
+    -- Hashed (bcrypt), never plaintext. Gates parent-only actions
+    -- (Settings) -- see docs/03_technical_spec.md and PinGateScreen.
+    parent_pin_hash     TEXT,
     created_at          TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
@@ -100,7 +106,10 @@ CREATE TABLE badges (
     name           TEXT NOT NULL,
     description    TEXT NOT NULL,
     icon_asset     TEXT NOT NULL,
-    trigger_rule   JSONB NOT NULL
+    -- TEXT, not JSONB: Serverpod's model system has no native JSON scalar
+    -- (see docs/03_technical_spec.md) -- this column stores JSON-encoded text,
+    -- decoded/encoded at the application layer.
+    trigger_rule   TEXT NOT NULL
 );
 
 CREATE TABLE child_badges (
@@ -117,7 +126,9 @@ CREATE TABLE child_badges (
 
 CREATE TABLE devotionals (
     id        BIGSERIAL PRIMARY KEY,
-    date      DATE NOT NULL UNIQUE,
+    -- TIMESTAMPTZ, not DATE: Serverpod has no date-only scalar, only DateTime
+    -- (see docs/03_technical_spec.md) -- always midnight UTC for a given day.
+    date      TIMESTAMPTZ NOT NULL UNIQUE,
     category  TEXT
 );
 
