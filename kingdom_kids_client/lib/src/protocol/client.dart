@@ -18,10 +18,12 @@ import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
     as _i4;
 import 'package:kingdom_kids_client/src/protocol/app_user.dart' as _i5;
 import 'package:kingdom_kids_client/src/protocol/child_profile.dart' as _i6;
+import 'package:kingdom_kids_client/src/protocol/book_summary.dart' as _i7;
+import 'package:kingdom_kids_client/src/protocol/book_detail.dart' as _i8;
 import 'package:kingdom_kids_client/src/protocol/greetings/greeting.dart'
-    as _i7;
-import 'package:http/http.dart' as _i8;
-import 'protocol.dart' as _i9;
+    as _i9;
+import 'package:http/http.dart' as _i10;
+import 'protocol.dart' as _i11;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
 /// are made available on the server and enable the corresponding sign-in widget
@@ -320,6 +322,54 @@ class EndpointChild extends _i2.EndpointRef {
   );
 }
 
+/// {@category Endpoint}
+class EndpointLibrary extends _i2.EndpointRef {
+  EndpointLibrary(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'library';
+
+  _i3.Future<List<_i7.BookSummary>> browseBooks({
+    int? ageBracket,
+    String? language,
+    String? category,
+  }) => caller.callServerEndpoint<List<_i7.BookSummary>>(
+    'library',
+    'browseBooks',
+    {
+      'ageBracket': ageBracket,
+      'language': language,
+      'category': category,
+    },
+  );
+
+  _i3.Future<_i8.BookDetail> getBook(
+    int bookId,
+    String language,
+  ) => caller.callServerEndpoint<_i8.BookDetail>(
+    'library',
+    'getBook',
+    {
+      'bookId': bookId,
+      'language': language,
+    },
+  );
+}
+
+/// {@category Endpoint}
+class EndpointStorageTest extends _i2.EndpointRef {
+  EndpointStorageTest(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'storageTest';
+
+  _i3.Future<String> testUpload() => caller.callServerEndpoint<String>(
+    'storageTest',
+    'testUpload',
+    {},
+  );
+}
+
 /// This is an example endpoint that returns a greeting message through
 /// its [hello] method.
 /// {@category Endpoint}
@@ -330,8 +380,8 @@ class EndpointGreeting extends _i2.EndpointRef {
   String get name => 'greeting';
 
   /// Returns a personalized greeting message: "Hello {name}".
-  _i3.Future<_i7.Greeting> hello(String name) =>
-      caller.callServerEndpoint<_i7.Greeting>(
+  _i3.Future<_i9.Greeting> hello(String name) =>
+      caller.callServerEndpoint<_i9.Greeting>(
         'greeting',
         'hello',
         {'name': name},
@@ -367,10 +417,10 @@ class Client extends _i2.ServerpodClientShared {
     onFailedCall,
     Function(_i2.MethodCallContext)? onSucceededCall,
     bool? disconnectStreamsOnLostInternetConnection,
-    _i8.Client? httpClientOverride,
+    _i10.Client? httpClientOverride,
   }) : super(
          host,
-         _i9.Protocol(),
+         _i11.Protocol(),
          securityContext: securityContext,
          streamingConnectionTimeout: streamingConnectionTimeout,
          connectionTimeout: connectionTimeout,
@@ -384,6 +434,8 @@ class Client extends _i2.ServerpodClientShared {
     jwtRefresh = EndpointJwtRefresh(this);
     appUser = EndpointAppUser(this);
     child = EndpointChild(this);
+    library = EndpointLibrary(this);
+    storageTest = EndpointStorageTest(this);
     greeting = EndpointGreeting(this);
     modules = Modules(this);
   }
@@ -396,6 +448,10 @@ class Client extends _i2.ServerpodClientShared {
 
   late final EndpointChild child;
 
+  late final EndpointLibrary library;
+
+  late final EndpointStorageTest storageTest;
+
   late final EndpointGreeting greeting;
 
   late final Modules modules;
@@ -406,6 +462,8 @@ class Client extends _i2.ServerpodClientShared {
     'jwtRefresh': jwtRefresh,
     'appUser': appUser,
     'child': child,
+    'library': library,
+    'storageTest': storageTest,
     'greeting': greeting,
   };
 
