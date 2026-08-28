@@ -1,0 +1,8 @@
+class: BookSummary
+fields:
+  id: int
+  slug: String
+  ageBracketMin: String
+  ageBracketMax: String
+  category: String
+  coverImageAsset: String?

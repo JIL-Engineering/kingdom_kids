@@ -20,21 +20,28 @@ import 'app_user.dart' as _i5;
 import 'auth_response.dart' as _i6;
 import 'badge.dart' as _i7;
 import 'book.dart' as _i8;
-import 'book_translation.dart' as _i9;
-import 'child_badge.dart' as _i10;
-import 'child_profile.dart' as _i11;
-import 'devotional.dart' as _i12;
-import 'devotional_translation.dart' as _i13;
-import 'download_record.dart' as _i14;
-import 'greetings/greeting.dart' as _i15;
-import 'page.dart' as _i16;
-import 'page_content.dart' as _i17;
-import 'reading_progress.dart' as _i18;
-import 'package:kingdom_kids_server/src/generated/child_profile.dart' as _i19;
+import 'book_detail.dart' as _i9;
+import 'book_page.dart' as _i10;
+import 'book_summary.dart' as _i11;
+import 'book_translation.dart' as _i12;
+import 'child_badge.dart' as _i13;
+import 'child_profile.dart' as _i14;
+import 'devotional.dart' as _i15;
+import 'devotional_translation.dart' as _i16;
+import 'download_record.dart' as _i17;
+import 'greetings/greeting.dart' as _i18;
+import 'page.dart' as _i19;
+import 'page_content.dart' as _i20;
+import 'reading_progress.dart' as _i21;
+import 'package:kingdom_kids_server/src/generated/book_summary.dart' as _i22;
+import 'package:kingdom_kids_server/src/generated/child_profile.dart' as _i23;
 export 'app_user.dart';
 export 'auth_response.dart';
 export 'badge.dart';
 export 'book.dart';
+export 'book_detail.dart';
+export 'book_page.dart';
+export 'book_summary.dart';
 export 'book_translation.dart';
 export 'child_badge.dart';
 export 'child_profile.dart';
@@ -1041,35 +1048,44 @@ class Protocol extends _i1.DatabaseSerializationManager {
     if (t == _i8.Book) {
       return _i8.Book.fromJson(data) as T;
     }
-    if (t == _i9.BookTranslation) {
-      return _i9.BookTranslation.fromJson(data) as T;
+    if (t == _i9.BookDetail) {
+      return _i9.BookDetail.fromJson(data) as T;
     }
-    if (t == _i10.ChildBadge) {
-      return _i10.ChildBadge.fromJson(data) as T;
+    if (t == _i10.BookPage) {
+      return _i10.BookPage.fromJson(data) as T;
     }
-    if (t == _i11.ChildProfile) {
-      return _i11.ChildProfile.fromJson(data) as T;
+    if (t == _i11.BookSummary) {
+      return _i11.BookSummary.fromJson(data) as T;
     }
-    if (t == _i12.Devotional) {
-      return _i12.Devotional.fromJson(data) as T;
+    if (t == _i12.BookTranslation) {
+      return _i12.BookTranslation.fromJson(data) as T;
     }
-    if (t == _i13.DevotionalTranslation) {
-      return _i13.DevotionalTranslation.fromJson(data) as T;
+    if (t == _i13.ChildBadge) {
+      return _i13.ChildBadge.fromJson(data) as T;
     }
-    if (t == _i14.DownloadRecord) {
-      return _i14.DownloadRecord.fromJson(data) as T;
+    if (t == _i14.ChildProfile) {
+      return _i14.ChildProfile.fromJson(data) as T;
     }
-    if (t == _i15.Greeting) {
-      return _i15.Greeting.fromJson(data) as T;
+    if (t == _i15.Devotional) {
+      return _i15.Devotional.fromJson(data) as T;
     }
-    if (t == _i16.Page) {
-      return _i16.Page.fromJson(data) as T;
+    if (t == _i16.DevotionalTranslation) {
+      return _i16.DevotionalTranslation.fromJson(data) as T;
     }
-    if (t == _i17.PageContent) {
-      return _i17.PageContent.fromJson(data) as T;
+    if (t == _i17.DownloadRecord) {
+      return _i17.DownloadRecord.fromJson(data) as T;
     }
-    if (t == _i18.ReadingProgress) {
-      return _i18.ReadingProgress.fromJson(data) as T;
+    if (t == _i18.Greeting) {
+      return _i18.Greeting.fromJson(data) as T;
+    }
+    if (t == _i19.Page) {
+      return _i19.Page.fromJson(data) as T;
+    }
+    if (t == _i20.PageContent) {
+      return _i20.PageContent.fromJson(data) as T;
+    }
+    if (t == _i21.ReadingProgress) {
+      return _i21.ReadingProgress.fromJson(data) as T;
     }
     if (t == _i1.getType<_i5.AppUser?>()) {
       return (data != null ? _i5.AppUser.fromJson(data) : null) as T;
@@ -1083,40 +1099,59 @@ class Protocol extends _i1.DatabaseSerializationManager {
     if (t == _i1.getType<_i8.Book?>()) {
       return (data != null ? _i8.Book.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.BookTranslation?>()) {
-      return (data != null ? _i9.BookTranslation.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i9.BookDetail?>()) {
+      return (data != null ? _i9.BookDetail.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i10.ChildBadge?>()) {
-      return (data != null ? _i10.ChildBadge.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i10.BookPage?>()) {
+      return (data != null ? _i10.BookPage.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i11.ChildProfile?>()) {
-      return (data != null ? _i11.ChildProfile.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i11.BookSummary?>()) {
+      return (data != null ? _i11.BookSummary.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i12.Devotional?>()) {
-      return (data != null ? _i12.Devotional.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i12.BookTranslation?>()) {
+      return (data != null ? _i12.BookTranslation.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i13.DevotionalTranslation?>()) {
-      return (data != null ? _i13.DevotionalTranslation.fromJson(data) : null)
+    if (t == _i1.getType<_i13.ChildBadge?>()) {
+      return (data != null ? _i13.ChildBadge.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i14.ChildProfile?>()) {
+      return (data != null ? _i14.ChildProfile.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i15.Devotional?>()) {
+      return (data != null ? _i15.Devotional.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i16.DevotionalTranslation?>()) {
+      return (data != null ? _i16.DevotionalTranslation.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i14.DownloadRecord?>()) {
-      return (data != null ? _i14.DownloadRecord.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i17.DownloadRecord?>()) {
+      return (data != null ? _i17.DownloadRecord.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i15.Greeting?>()) {
-      return (data != null ? _i15.Greeting.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i18.Greeting?>()) {
+      return (data != null ? _i18.Greeting.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i16.Page?>()) {
-      return (data != null ? _i16.Page.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i19.Page?>()) {
+      return (data != null ? _i19.Page.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i17.PageContent?>()) {
-      return (data != null ? _i17.PageContent.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i20.PageContent?>()) {
+      return (data != null ? _i20.PageContent.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i18.ReadingProgress?>()) {
-      return (data != null ? _i18.ReadingProgress.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i21.ReadingProgress?>()) {
+      return (data != null ? _i21.ReadingProgress.fromJson(data) : null) as T;
     }
-    if (t == List<_i19.ChildProfile>) {
+    if (t == List<_i10.BookPage>) {
+      return (data as List).map((e) => deserialize<_i10.BookPage>(e)).toList()
+          as T;
+    }
+    if (t == List<_i22.BookSummary>) {
       return (data as List)
-              .map((e) => deserialize<_i19.ChildProfile>(e))
+              .map((e) => deserialize<_i22.BookSummary>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_i23.ChildProfile>) {
+      return (data as List)
+              .map((e) => deserialize<_i23.ChildProfile>(e))
               .toList()
           as T;
     }
@@ -1138,16 +1173,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
       _i6.AuthResponse => 'AuthResponse',
       _i7.Badge => 'Badge',
       _i8.Book => 'Book',
-      _i9.BookTranslation => 'BookTranslation',
-      _i10.ChildBadge => 'ChildBadge',
-      _i11.ChildProfile => 'ChildProfile',
-      _i12.Devotional => 'Devotional',
-      _i13.DevotionalTranslation => 'DevotionalTranslation',
-      _i14.DownloadRecord => 'DownloadRecord',
-      _i15.Greeting => 'Greeting',
-      _i16.Page => 'Page',
-      _i17.PageContent => 'PageContent',
-      _i18.ReadingProgress => 'ReadingProgress',
+      _i9.BookDetail => 'BookDetail',
+      _i10.BookPage => 'BookPage',
+      _i11.BookSummary => 'BookSummary',
+      _i12.BookTranslation => 'BookTranslation',
+      _i13.ChildBadge => 'ChildBadge',
+      _i14.ChildProfile => 'ChildProfile',
+      _i15.Devotional => 'Devotional',
+      _i16.DevotionalTranslation => 'DevotionalTranslation',
+      _i17.DownloadRecord => 'DownloadRecord',
+      _i18.Greeting => 'Greeting',
+      _i19.Page => 'Page',
+      _i20.PageContent => 'PageContent',
+      _i21.ReadingProgress => 'ReadingProgress',
       _ => null,
     };
   }
@@ -1173,25 +1211,31 @@ class Protocol extends _i1.DatabaseSerializationManager {
         return 'Badge';
       case _i8.Book():
         return 'Book';
-      case _i9.BookTranslation():
+      case _i9.BookDetail():
+        return 'BookDetail';
+      case _i10.BookPage():
+        return 'BookPage';
+      case _i11.BookSummary():
+        return 'BookSummary';
+      case _i12.BookTranslation():
         return 'BookTranslation';
-      case _i10.ChildBadge():
+      case _i13.ChildBadge():
         return 'ChildBadge';
-      case _i11.ChildProfile():
+      case _i14.ChildProfile():
         return 'ChildProfile';
-      case _i12.Devotional():
+      case _i15.Devotional():
         return 'Devotional';
-      case _i13.DevotionalTranslation():
+      case _i16.DevotionalTranslation():
         return 'DevotionalTranslation';
-      case _i14.DownloadRecord():
+      case _i17.DownloadRecord():
         return 'DownloadRecord';
-      case _i15.Greeting():
+      case _i18.Greeting():
         return 'Greeting';
-      case _i16.Page():
+      case _i19.Page():
         return 'Page';
-      case _i17.PageContent():
+      case _i20.PageContent():
         return 'PageContent';
-      case _i18.ReadingProgress():
+      case _i21.ReadingProgress():
         return 'ReadingProgress';
     }
     className = _i3.Protocol().getClassNameForObject(data);
@@ -1231,35 +1275,44 @@ class Protocol extends _i1.DatabaseSerializationManager {
     if (dataClassName == 'Book') {
       return deserialize<_i8.Book>(data['data']);
     }
+    if (dataClassName == 'BookDetail') {
+      return deserialize<_i9.BookDetail>(data['data']);
+    }
+    if (dataClassName == 'BookPage') {
+      return deserialize<_i10.BookPage>(data['data']);
+    }
+    if (dataClassName == 'BookSummary') {
+      return deserialize<_i11.BookSummary>(data['data']);
+    }
     if (dataClassName == 'BookTranslation') {
-      return deserialize<_i9.BookTranslation>(data['data']);
+      return deserialize<_i12.BookTranslation>(data['data']);
     }
     if (dataClassName == 'ChildBadge') {
-      return deserialize<_i10.ChildBadge>(data['data']);
+      return deserialize<_i13.ChildBadge>(data['data']);
     }
     if (dataClassName == 'ChildProfile') {
-      return deserialize<_i11.ChildProfile>(data['data']);
+      return deserialize<_i14.ChildProfile>(data['data']);
     }
     if (dataClassName == 'Devotional') {
-      return deserialize<_i12.Devotional>(data['data']);
+      return deserialize<_i15.Devotional>(data['data']);
     }
     if (dataClassName == 'DevotionalTranslation') {
-      return deserialize<_i13.DevotionalTranslation>(data['data']);
+      return deserialize<_i16.DevotionalTranslation>(data['data']);
     }
     if (dataClassName == 'DownloadRecord') {
-      return deserialize<_i14.DownloadRecord>(data['data']);
+      return deserialize<_i17.DownloadRecord>(data['data']);
     }
     if (dataClassName == 'Greeting') {
-      return deserialize<_i15.Greeting>(data['data']);
+      return deserialize<_i18.Greeting>(data['data']);
     }
     if (dataClassName == 'Page') {
-      return deserialize<_i16.Page>(data['data']);
+      return deserialize<_i19.Page>(data['data']);
     }
     if (dataClassName == 'PageContent') {
-      return deserialize<_i17.PageContent>(data['data']);
+      return deserialize<_i20.PageContent>(data['data']);
     }
     if (dataClassName == 'ReadingProgress') {
-      return deserialize<_i18.ReadingProgress>(data['data']);
+      return deserialize<_i21.ReadingProgress>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);
@@ -1308,24 +1361,24 @@ class Protocol extends _i1.DatabaseSerializationManager {
         return _i7.Badge.t;
       case _i8.Book:
         return _i8.Book.t;
-      case _i9.BookTranslation:
-        return _i9.BookTranslation.t;
-      case _i10.ChildBadge:
-        return _i10.ChildBadge.t;
-      case _i11.ChildProfile:
-        return _i11.ChildProfile.t;
-      case _i12.Devotional:
-        return _i12.Devotional.t;
-      case _i13.DevotionalTranslation:
-        return _i13.DevotionalTranslation.t;
-      case _i14.DownloadRecord:
-        return _i14.DownloadRecord.t;
-      case _i16.Page:
-        return _i16.Page.t;
-      case _i17.PageContent:
-        return _i17.PageContent.t;
-      case _i18.ReadingProgress:
-        return _i18.ReadingProgress.t;
+      case _i12.BookTranslation:
+        return _i12.BookTranslation.t;
+      case _i13.ChildBadge:
+        return _i13.ChildBadge.t;
+      case _i14.ChildProfile:
+        return _i14.ChildProfile.t;
+      case _i15.Devotional:
+        return _i15.Devotional.t;
+      case _i16.DevotionalTranslation:
+        return _i16.DevotionalTranslation.t;
+      case _i17.DownloadRecord:
+        return _i17.DownloadRecord.t;
+      case _i19.Page:
+        return _i19.Page.t;
+      case _i20.PageContent:
+        return _i20.PageContent.t;
+      case _i21.ReadingProgress:
+        return _i21.ReadingProgress.t;
     }
     return null;
   }

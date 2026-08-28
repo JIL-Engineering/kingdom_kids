@@ -1,0 +1,9 @@
+class: BookDetail
+fields:
+  id: int
+  slug: String
+  ageBracketMin: String
+  ageBracketMax: String
+  category: String
+  coverImageAsset: String?
+  pages: List<BookPage>
