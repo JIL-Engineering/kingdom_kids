@@ -95,44 +95,67 @@ class LibraryEndpoint extends Endpoint {
         )
         .toList(); // Le Map<> est "lazy", .toList() force le calcul et fige le résultat
   }
-   // getBook : renvoie le détail complet d'un livre pour une langue donnée (toutes ses pages + textes traduits)
+
+  // getBook : renvoie le détail complet d'un livre pour une langue donnée (toutes ses pages + textes traduits)
   Future<BookDetail> getBook(
     Session session,
-    int bookId,                                            // Id du livre demandé (paramètre obligatoire)
-    String language,                                        // Langue demandée (obligatoire, pas de fallback ici)
+    int bookId, // Id du livre demandé (paramètre obligatoire)
+    String language, // Langue demandée (obligatoire, pas de fallback ici)
   ) async {
-    final book = await Book.db.findById(session, bookId);   // Recherche directe par clé primaire (plus rapide qu'un find + where)
-    if (book == null) {                                      // findById renvoie null si l'id n'existe pas
-      throw Exception('Book not found: $bookId');             // On stoppe l'exécution avec une erreur explicite
+    final book = await Book.db.findById(
+      session,
+      bookId,
+    ); // Recherche directe par clé primaire (plus rapide qu'un find + where)
+    if (book == null) {
+      // findById renvoie null si l'id n'existe pas
+      throw Exception(
+        'Book not found: $bookId',
+      ); // On stoppe l'exécution avec une erreur explicite
     }
 
-    final pages = await Page.db.find(                       // Récupère toutes les pages du livre
+    final pages = await Page.db.find(
+      // Récupère toutes les pages du livre
       session,
       where: (t) => t.bookId.equals(bookId),
-      orderBy: (t) => t.pageNumber,                          // Tri par numéro de page pour garder l'ordre de lecture
+      orderBy: (t) =>
+          t.pageNumber, // Tri par numéro de page pour garder l'ordre de lecture
     );
 
     final pageIds = pages.map((p) => p.id!).toSet();
-    final contents = await PageContent.db.find(              // Récupère les traductions correspondant à ces pages ET cette langue
+    final contents = await PageContent.db.find(
+      // Récupère les traductions correspondant à ces pages ET cette langue
       session,
       where: (t) => t.pageId.inSet(pageIds) & t.language.equals(language),
     );
-    final contentByPageId = {for (var c in contents) c.pageId: c};  // Transforme la liste en Map pageId -> contenu pour un accès O(1)
+    final contentByPageId = {
+      for (var c in contents) c.pageId: c,
+    }; // Transforme la liste en Map pageId -> contenu pour un accès O(1)
 
-    final bookPages = <BookPage>[];                          // Liste finale qui combinera Page (structure) + PageContent (texte/audio)
-    for (final page in pages) {                              // On boucle sur les pages dans l'ordre déjà trié
-      final content = contentByPageId[page.id];               // On cherche si une traduction existe pour cette page
-      if (content == null) continue;                          // Pas de traduction dans cette langue -> on saute cette page
-      bookPages.add(BookPage(                                 // Sinon on construit l'objet combiné page+contenu
-        pageNumber: page.pageNumber,
-        illustrationAsset: page.illustrationAsset,
-        layoutType: page.layoutType,
-        text: content.text,
-        audioAsset: content.audioAsset,
-      ));
+    final bookPages =
+        <
+          BookPage
+        >[]; // Liste finale qui combinera Page (structure) + PageContent (texte/audio)
+    for (final page in pages) {
+      // On boucle sur les pages dans l'ordre déjà trié
+      final content =
+          contentByPageId[page
+              .id]; // On cherche si une traduction existe pour cette page
+      if (content == null)
+        continue; // Pas de traduction dans cette langue -> on saute cette page
+      bookPages.add(
+        BookPage(
+          // Sinon on construit l'objet combiné page+contenu
+          pageNumber: page.pageNumber,
+          illustrationAsset: page.illustrationAsset,
+          layoutType: page.layoutType,
+          text: content.text,
+          audioAsset: content.audioAsset,
+        ),
+      );
     }
 
-    return BookDetail(                                       // Construction de l'objet final renvoyé au client
+    return BookDetail(
+      // Construction de l'objet final renvoyé au client
       id: book.id!,
       slug: book.slug,
       ageBracketMin: book.ageBracketMin,

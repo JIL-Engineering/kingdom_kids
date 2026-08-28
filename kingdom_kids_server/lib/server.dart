@@ -5,7 +5,6 @@ import 'package:serverpod_auth_idp_server/core.dart';
 import 'package:serverpod_auth_idp_server/providers/email.dart';
 import 'package:serverpod_cloud_storage_r2/serverpod_cloud_storage_r2.dart';
 
-
 import 'src/generated/endpoints.dart';
 import 'src/generated/protocol.dart';
 import 'src/web/routes/app_config_route.dart';
@@ -94,7 +93,6 @@ void run(List<String> args) async {
   pod.addCloudStorage(r2Storage);
 
   await pod.start();
-
 
   // Start the server.
   await pod.start();
