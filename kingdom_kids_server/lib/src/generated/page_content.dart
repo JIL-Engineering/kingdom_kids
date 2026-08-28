@@ -11,6 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
+import 'app_language.dart' as _i2;
 
 abstract class PageContent
     implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
@@ -25,7 +26,7 @@ abstract class PageContent
   factory PageContent({
     int? id,
     required int pageId,
-    required String language,
+    required _i2.AppLanguage language,
     required String text,
     required String audioAsset,
   }) = _PageContentImpl;
@@ -34,7 +35,9 @@ abstract class PageContent
     return PageContent(
       id: jsonSerialization['id'] as int?,
       pageId: jsonSerialization['pageId'] as int,
-      language: jsonSerialization['language'] as String,
+      language: _i2.AppLanguage.fromJson(
+        (jsonSerialization['language'] as int),
+      ),
       text: jsonSerialization['text'] as String,
       audioAsset: jsonSerialization['audioAsset'] as String,
     );
@@ -49,7 +52,7 @@ abstract class PageContent
 
   int pageId;
 
-  String language;
+  _i2.AppLanguage language;
 
   String text;
 
@@ -64,7 +67,7 @@ abstract class PageContent
   PageContent copyWith({
     int? id,
     int? pageId,
-    String? language,
+    _i2.AppLanguage? language,
     String? text,
     String? audioAsset,
   });
@@ -74,7 +77,7 @@ abstract class PageContent
       '__className__': 'PageContent',
       if (id != null) 'id': id,
       'pageId': pageId,
-      'language': language,
+      'language': language.toJson(),
       'text': text,
       'audioAsset': audioAsset,
     };
@@ -86,7 +89,7 @@ abstract class PageContent
       '__className__': 'PageContent',
       if (id != null) 'id': id,
       'pageId': pageId,
-      'language': language,
+      'language': language.toJson(),
       'text': text,
       'audioAsset': audioAsset,
     };
@@ -130,7 +133,7 @@ class _PageContentImpl extends PageContent {
   _PageContentImpl({
     int? id,
     required int pageId,
-    required String language,
+    required _i2.AppLanguage language,
     required String text,
     required String audioAsset,
   }) : super._(
@@ -148,7 +151,7 @@ class _PageContentImpl extends PageContent {
   PageContent copyWith({
     Object? id = _Undefined,
     int? pageId,
-    String? language,
+    _i2.AppLanguage? language,
     String? text,
     String? audioAsset,
   }) {
@@ -170,7 +173,9 @@ class PageContentUpdateTable extends _i1.UpdateTable<PageContentTable> {
     value,
   );
 
-  _i1.ColumnValue<String, String> language(String value) => _i1.ColumnValue(
+  _i1.ColumnValue<_i2.AppLanguage, _i2.AppLanguage> language(
+    _i2.AppLanguage value,
+  ) => _i1.ColumnValue(
     table.language,
     value,
   );
@@ -193,9 +198,10 @@ class PageContentTable extends _i1.Table<int?> {
       'pageId',
       this,
     );
-    language = _i1.ColumnString(
+    language = _i1.ColumnEnum(
       'language',
       this,
+      _i1.EnumSerialization.byIndex,
     );
     text = _i1.ColumnString(
       'text',
@@ -211,7 +217,7 @@ class PageContentTable extends _i1.Table<int?> {
 
   late final _i1.ColumnInt pageId;
 
-  late final _i1.ColumnString language;
+  late final _i1.ColumnEnum<_i2.AppLanguage> language;
 
   late final _i1.ColumnString text;
 

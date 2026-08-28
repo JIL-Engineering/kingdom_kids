@@ -11,6 +11,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
+import 'age_bracket.dart' as _i2;
+import 'book_category.dart' as _i3;
 
 abstract class Book implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   Book._({
@@ -29,9 +31,9 @@ abstract class Book implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   factory Book({
     int? id,
     required String slug,
-    required String ageBracketMin,
-    required String ageBracketMax,
-    required String category,
+    required _i2.AgeBracket ageBracketMin,
+    required _i2.AgeBracket ageBracketMax,
+    required _i3.BookCategory category,
     String? coverImageAsset,
     required bool isPublished,
     required int contentVersion,
@@ -43,9 +45,15 @@ abstract class Book implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
     return Book(
       id: jsonSerialization['id'] as int?,
       slug: jsonSerialization['slug'] as String,
-      ageBracketMin: jsonSerialization['ageBracketMin'] as String,
-      ageBracketMax: jsonSerialization['ageBracketMax'] as String,
-      category: jsonSerialization['category'] as String,
+      ageBracketMin: _i2.AgeBracket.fromJson(
+        (jsonSerialization['ageBracketMin'] as int),
+      ),
+      ageBracketMax: _i2.AgeBracket.fromJson(
+        (jsonSerialization['ageBracketMax'] as int),
+      ),
+      category: _i3.BookCategory.fromJson(
+        (jsonSerialization['category'] as int),
+      ),
       coverImageAsset: jsonSerialization['coverImageAsset'] as String?,
       isPublished: _i1.BoolJsonExtension.fromJson(
         jsonSerialization['isPublished'],
@@ -69,11 +77,11 @@ abstract class Book implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
 
   String slug;
 
-  String ageBracketMin;
+  _i2.AgeBracket ageBracketMin;
 
-  String ageBracketMax;
+  _i2.AgeBracket ageBracketMax;
 
-  String category;
+  _i3.BookCategory category;
 
   String? coverImageAsset;
 
@@ -94,9 +102,9 @@ abstract class Book implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   Book copyWith({
     int? id,
     String? slug,
-    String? ageBracketMin,
-    String? ageBracketMax,
-    String? category,
+    _i2.AgeBracket? ageBracketMin,
+    _i2.AgeBracket? ageBracketMax,
+    _i3.BookCategory? category,
     String? coverImageAsset,
     bool? isPublished,
     int? contentVersion,
@@ -109,9 +117,9 @@ abstract class Book implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       '__className__': 'Book',
       if (id != null) 'id': id,
       'slug': slug,
-      'ageBracketMin': ageBracketMin,
-      'ageBracketMax': ageBracketMax,
-      'category': category,
+      'ageBracketMin': ageBracketMin.toJson(),
+      'ageBracketMax': ageBracketMax.toJson(),
+      'category': category.toJson(),
       if (coverImageAsset != null) 'coverImageAsset': coverImageAsset,
       'isPublished': isPublished,
       'contentVersion': contentVersion,
@@ -126,9 +134,9 @@ abstract class Book implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       '__className__': 'Book',
       if (id != null) 'id': id,
       'slug': slug,
-      'ageBracketMin': ageBracketMin,
-      'ageBracketMax': ageBracketMax,
-      'category': category,
+      'ageBracketMin': ageBracketMin.toJson(),
+      'ageBracketMax': ageBracketMax.toJson(),
+      'category': category.toJson(),
       if (coverImageAsset != null) 'coverImageAsset': coverImageAsset,
       'isPublished': isPublished,
       'contentVersion': contentVersion,
@@ -175,9 +183,9 @@ class _BookImpl extends Book {
   _BookImpl({
     int? id,
     required String slug,
-    required String ageBracketMin,
-    required String ageBracketMax,
-    required String category,
+    required _i2.AgeBracket ageBracketMin,
+    required _i2.AgeBracket ageBracketMax,
+    required _i3.BookCategory category,
     String? coverImageAsset,
     required bool isPublished,
     required int contentVersion,
@@ -203,9 +211,9 @@ class _BookImpl extends Book {
   Book copyWith({
     Object? id = _Undefined,
     String? slug,
-    String? ageBracketMin,
-    String? ageBracketMax,
-    String? category,
+    _i2.AgeBracket? ageBracketMin,
+    _i2.AgeBracket? ageBracketMax,
+    _i3.BookCategory? category,
     Object? coverImageAsset = _Undefined,
     bool? isPublished,
     int? contentVersion,
@@ -237,19 +245,23 @@ class BookUpdateTable extends _i1.UpdateTable<BookTable> {
     value,
   );
 
-  _i1.ColumnValue<String, String> ageBracketMin(String value) =>
-      _i1.ColumnValue(
-        table.ageBracketMin,
-        value,
-      );
+  _i1.ColumnValue<_i2.AgeBracket, _i2.AgeBracket> ageBracketMin(
+    _i2.AgeBracket value,
+  ) => _i1.ColumnValue(
+    table.ageBracketMin,
+    value,
+  );
 
-  _i1.ColumnValue<String, String> ageBracketMax(String value) =>
-      _i1.ColumnValue(
-        table.ageBracketMax,
-        value,
-      );
+  _i1.ColumnValue<_i2.AgeBracket, _i2.AgeBracket> ageBracketMax(
+    _i2.AgeBracket value,
+  ) => _i1.ColumnValue(
+    table.ageBracketMax,
+    value,
+  );
 
-  _i1.ColumnValue<String, String> category(String value) => _i1.ColumnValue(
+  _i1.ColumnValue<_i3.BookCategory, _i3.BookCategory> category(
+    _i3.BookCategory value,
+  ) => _i1.ColumnValue(
     table.category,
     value,
   );
@@ -290,17 +302,20 @@ class BookTable extends _i1.Table<int?> {
       'slug',
       this,
     );
-    ageBracketMin = _i1.ColumnString(
+    ageBracketMin = _i1.ColumnEnum(
       'ageBracketMin',
       this,
+      _i1.EnumSerialization.byIndex,
     );
-    ageBracketMax = _i1.ColumnString(
+    ageBracketMax = _i1.ColumnEnum(
       'ageBracketMax',
       this,
+      _i1.EnumSerialization.byIndex,
     );
-    category = _i1.ColumnString(
+    category = _i1.ColumnEnum(
       'category',
       this,
+      _i1.EnumSerialization.byIndex,
     );
     coverImageAsset = _i1.ColumnString(
       'coverImageAsset',
@@ -328,11 +343,11 @@ class BookTable extends _i1.Table<int?> {
 
   late final _i1.ColumnString slug;
 
-  late final _i1.ColumnString ageBracketMin;
+  late final _i1.ColumnEnum<_i2.AgeBracket> ageBracketMin;
 
-  late final _i1.ColumnString ageBracketMax;
+  late final _i1.ColumnEnum<_i2.AgeBracket> ageBracketMax;
 
-  late final _i1.ColumnString category;
+  late final _i1.ColumnEnum<_i3.BookCategory> category;
 
   late final _i1.ColumnString coverImageAsset;
 

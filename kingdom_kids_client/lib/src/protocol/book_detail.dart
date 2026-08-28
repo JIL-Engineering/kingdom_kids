@@ -11,8 +11,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import 'book_page.dart' as _i2;
-import 'package:kingdom_kids_client/src/protocol/protocol.dart' as _i3;
+import 'age_bracket.dart' as _i2;
+import 'book_category.dart' as _i3;
+import 'book_page.dart' as _i4;
+import 'package:kingdom_kids_client/src/protocol/protocol.dart' as _i5;
 
 abstract class BookDetail implements _i1.SerializableModel {
   BookDetail._({
@@ -28,22 +30,28 @@ abstract class BookDetail implements _i1.SerializableModel {
   factory BookDetail({
     required int id,
     required String slug,
-    required String ageBracketMin,
-    required String ageBracketMax,
-    required String category,
+    required _i2.AgeBracket ageBracketMin,
+    required _i2.AgeBracket ageBracketMax,
+    required _i3.BookCategory category,
     String? coverImageAsset,
-    required List<_i2.BookPage> pages,
+    required List<_i4.BookPage> pages,
   }) = _BookDetailImpl;
 
   factory BookDetail.fromJson(Map<String, dynamic> jsonSerialization) {
     return BookDetail(
       id: jsonSerialization['id'] as int,
       slug: jsonSerialization['slug'] as String,
-      ageBracketMin: jsonSerialization['ageBracketMin'] as String,
-      ageBracketMax: jsonSerialization['ageBracketMax'] as String,
-      category: jsonSerialization['category'] as String,
+      ageBracketMin: _i2.AgeBracket.fromJson(
+        (jsonSerialization['ageBracketMin'] as int),
+      ),
+      ageBracketMax: _i2.AgeBracket.fromJson(
+        (jsonSerialization['ageBracketMax'] as int),
+      ),
+      category: _i3.BookCategory.fromJson(
+        (jsonSerialization['category'] as int),
+      ),
       coverImageAsset: jsonSerialization['coverImageAsset'] as String?,
-      pages: _i3.Protocol().deserialize<List<_i2.BookPage>>(
+      pages: _i5.Protocol().deserialize<List<_i4.BookPage>>(
         jsonSerialization['pages'],
       ),
     );
@@ -53,15 +61,15 @@ abstract class BookDetail implements _i1.SerializableModel {
 
   String slug;
 
-  String ageBracketMin;
+  _i2.AgeBracket ageBracketMin;
 
-  String ageBracketMax;
+  _i2.AgeBracket ageBracketMax;
 
-  String category;
+  _i3.BookCategory category;
 
   String? coverImageAsset;
 
-  List<_i2.BookPage> pages;
+  List<_i4.BookPage> pages;
 
   /// Returns a shallow copy of this [BookDetail]
   /// with some or all fields replaced by the given arguments.
@@ -69,11 +77,11 @@ abstract class BookDetail implements _i1.SerializableModel {
   BookDetail copyWith({
     int? id,
     String? slug,
-    String? ageBracketMin,
-    String? ageBracketMax,
-    String? category,
+    _i2.AgeBracket? ageBracketMin,
+    _i2.AgeBracket? ageBracketMax,
+    _i3.BookCategory? category,
     String? coverImageAsset,
-    List<_i2.BookPage>? pages,
+    List<_i4.BookPage>? pages,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -81,9 +89,9 @@ abstract class BookDetail implements _i1.SerializableModel {
       '__className__': 'BookDetail',
       'id': id,
       'slug': slug,
-      'ageBracketMin': ageBracketMin,
-      'ageBracketMax': ageBracketMax,
-      'category': category,
+      'ageBracketMin': ageBracketMin.toJson(),
+      'ageBracketMax': ageBracketMax.toJson(),
+      'category': category.toJson(),
       if (coverImageAsset != null) 'coverImageAsset': coverImageAsset,
       'pages': pages.toJson(valueToJson: (v) => v.toJson()),
     };
@@ -101,11 +109,11 @@ class _BookDetailImpl extends BookDetail {
   _BookDetailImpl({
     required int id,
     required String slug,
-    required String ageBracketMin,
-    required String ageBracketMax,
-    required String category,
+    required _i2.AgeBracket ageBracketMin,
+    required _i2.AgeBracket ageBracketMax,
+    required _i3.BookCategory category,
     String? coverImageAsset,
-    required List<_i2.BookPage> pages,
+    required List<_i4.BookPage> pages,
   }) : super._(
          id: id,
          slug: slug,
@@ -123,11 +131,11 @@ class _BookDetailImpl extends BookDetail {
   BookDetail copyWith({
     int? id,
     String? slug,
-    String? ageBracketMin,
-    String? ageBracketMax,
-    String? category,
+    _i2.AgeBracket? ageBracketMin,
+    _i2.AgeBracket? ageBracketMax,
+    _i3.BookCategory? category,
     Object? coverImageAsset = _Undefined,
-    List<_i2.BookPage>? pages,
+    List<_i4.BookPage>? pages,
   }) {
     return BookDetail(
       id: id ?? this.id,

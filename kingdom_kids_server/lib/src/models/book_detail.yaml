@@ -2,8 +2,8 @@ class: BookDetail
 fields:
   id: int
   slug: String
-  ageBracketMin: String
-  ageBracketMax: String
-  category: String
+  ageBracketMin: AgeBracket
+  ageBracketMax: AgeBracket
+  category: BookCategory
   coverImageAsset: String?
   pages: List<BookPage>

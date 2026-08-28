@@ -16,29 +16,35 @@ import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
     as _i3;
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
     as _i4;
-import 'app_user.dart' as _i5;
-import 'auth_response.dart' as _i6;
-import 'badge.dart' as _i7;
-import 'book.dart' as _i8;
-import 'book_detail.dart' as _i9;
-import 'book_page.dart' as _i10;
-import 'book_summary.dart' as _i11;
-import 'book_translation.dart' as _i12;
-import 'child_badge.dart' as _i13;
-import 'child_profile.dart' as _i14;
-import 'devotional.dart' as _i15;
-import 'devotional_translation.dart' as _i16;
-import 'download_record.dart' as _i17;
-import 'greetings/greeting.dart' as _i18;
-import 'page.dart' as _i19;
-import 'page_content.dart' as _i20;
-import 'reading_progress.dart' as _i21;
-import 'package:kingdom_kids_server/src/generated/child_profile.dart' as _i22;
-import 'package:kingdom_kids_server/src/generated/book_summary.dart' as _i23;
+import 'age_bracket.dart' as _i5;
+import 'app_language.dart' as _i6;
+import 'app_user.dart' as _i7;
+import 'auth_response.dart' as _i8;
+import 'badge.dart' as _i9;
+import 'book.dart' as _i10;
+import 'book_category.dart' as _i11;
+import 'book_detail.dart' as _i12;
+import 'book_page.dart' as _i13;
+import 'book_summary.dart' as _i14;
+import 'book_translation.dart' as _i15;
+import 'child_badge.dart' as _i16;
+import 'child_profile.dart' as _i17;
+import 'devotional.dart' as _i18;
+import 'devotional_translation.dart' as _i19;
+import 'download_record.dart' as _i20;
+import 'greetings/greeting.dart' as _i21;
+import 'page.dart' as _i22;
+import 'page_content.dart' as _i23;
+import 'reading_progress.dart' as _i24;
+import 'package:kingdom_kids_server/src/generated/child_profile.dart' as _i25;
+import 'package:kingdom_kids_server/src/generated/book_summary.dart' as _i26;
+export 'age_bracket.dart';
+export 'app_language.dart';
 export 'app_user.dart';
 export 'auth_response.dart';
 export 'badge.dart';
 export 'book.dart';
+export 'book_category.dart';
 export 'book_detail.dart';
 export 'book_page.dart';
 export 'book_summary.dart';
@@ -209,21 +215,21 @@ class Protocol extends _i1.DatabaseSerializationManager {
         ),
         _i2.ColumnDefinition(
           name: 'ageBracketMin',
-          columnType: _i2.ColumnType.text,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
-          dartType: 'String',
+          dartType: 'protocol:AgeBracket',
         ),
         _i2.ColumnDefinition(
           name: 'ageBracketMax',
-          columnType: _i2.ColumnType.text,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
-          dartType: 'String',
+          dartType: 'protocol:AgeBracket',
         ),
         _i2.ColumnDefinition(
           name: 'category',
-          columnType: _i2.ColumnType.text,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
-          dartType: 'String',
+          dartType: 'protocol:BookCategory',
         ),
         _i2.ColumnDefinition(
           name: 'coverImageAsset',
@@ -382,9 +388,9 @@ class Protocol extends _i1.DatabaseSerializationManager {
         ),
         _i2.ColumnDefinition(
           name: 'ageBracket',
-          columnType: _i2.ColumnType.text,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
-          dartType: 'String',
+          dartType: 'protocol:AgeBracket',
         ),
         _i2.ColumnDefinition(
           name: 'preferredLanguage',
@@ -669,9 +675,9 @@ class Protocol extends _i1.DatabaseSerializationManager {
         ),
         _i2.ColumnDefinition(
           name: 'language',
-          columnType: _i2.ColumnType.text,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
-          dartType: 'String',
+          dartType: 'protocol:AppLanguage',
         ),
         _i2.ColumnDefinition(
           name: 'text',
@@ -1036,122 +1042,140 @@ class Protocol extends _i1.DatabaseSerializationManager {
       }
     }
 
-    if (t == _i5.AppUser) {
-      return _i5.AppUser.fromJson(data) as T;
+    if (t == _i5.AgeBracket) {
+      return _i5.AgeBracket.fromJson(data) as T;
     }
-    if (t == _i6.AuthResponse) {
-      return _i6.AuthResponse.fromJson(data) as T;
+    if (t == _i6.AppLanguage) {
+      return _i6.AppLanguage.fromJson(data) as T;
     }
-    if (t == _i7.Badge) {
-      return _i7.Badge.fromJson(data) as T;
+    if (t == _i7.AppUser) {
+      return _i7.AppUser.fromJson(data) as T;
     }
-    if (t == _i8.Book) {
-      return _i8.Book.fromJson(data) as T;
+    if (t == _i8.AuthResponse) {
+      return _i8.AuthResponse.fromJson(data) as T;
     }
-    if (t == _i9.BookDetail) {
-      return _i9.BookDetail.fromJson(data) as T;
+    if (t == _i9.Badge) {
+      return _i9.Badge.fromJson(data) as T;
     }
-    if (t == _i10.BookPage) {
-      return _i10.BookPage.fromJson(data) as T;
+    if (t == _i10.Book) {
+      return _i10.Book.fromJson(data) as T;
     }
-    if (t == _i11.BookSummary) {
-      return _i11.BookSummary.fromJson(data) as T;
+    if (t == _i11.BookCategory) {
+      return _i11.BookCategory.fromJson(data) as T;
     }
-    if (t == _i12.BookTranslation) {
-      return _i12.BookTranslation.fromJson(data) as T;
+    if (t == _i12.BookDetail) {
+      return _i12.BookDetail.fromJson(data) as T;
     }
-    if (t == _i13.ChildBadge) {
-      return _i13.ChildBadge.fromJson(data) as T;
+    if (t == _i13.BookPage) {
+      return _i13.BookPage.fromJson(data) as T;
     }
-    if (t == _i14.ChildProfile) {
-      return _i14.ChildProfile.fromJson(data) as T;
+    if (t == _i14.BookSummary) {
+      return _i14.BookSummary.fromJson(data) as T;
     }
-    if (t == _i15.Devotional) {
-      return _i15.Devotional.fromJson(data) as T;
+    if (t == _i15.BookTranslation) {
+      return _i15.BookTranslation.fromJson(data) as T;
     }
-    if (t == _i16.DevotionalTranslation) {
-      return _i16.DevotionalTranslation.fromJson(data) as T;
+    if (t == _i16.ChildBadge) {
+      return _i16.ChildBadge.fromJson(data) as T;
     }
-    if (t == _i17.DownloadRecord) {
-      return _i17.DownloadRecord.fromJson(data) as T;
+    if (t == _i17.ChildProfile) {
+      return _i17.ChildProfile.fromJson(data) as T;
     }
-    if (t == _i18.Greeting) {
-      return _i18.Greeting.fromJson(data) as T;
+    if (t == _i18.Devotional) {
+      return _i18.Devotional.fromJson(data) as T;
     }
-    if (t == _i19.Page) {
-      return _i19.Page.fromJson(data) as T;
+    if (t == _i19.DevotionalTranslation) {
+      return _i19.DevotionalTranslation.fromJson(data) as T;
     }
-    if (t == _i20.PageContent) {
-      return _i20.PageContent.fromJson(data) as T;
+    if (t == _i20.DownloadRecord) {
+      return _i20.DownloadRecord.fromJson(data) as T;
     }
-    if (t == _i21.ReadingProgress) {
-      return _i21.ReadingProgress.fromJson(data) as T;
+    if (t == _i21.Greeting) {
+      return _i21.Greeting.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i5.AppUser?>()) {
-      return (data != null ? _i5.AppUser.fromJson(data) : null) as T;
+    if (t == _i22.Page) {
+      return _i22.Page.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i6.AuthResponse?>()) {
-      return (data != null ? _i6.AuthResponse.fromJson(data) : null) as T;
+    if (t == _i23.PageContent) {
+      return _i23.PageContent.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i7.Badge?>()) {
-      return (data != null ? _i7.Badge.fromJson(data) : null) as T;
+    if (t == _i24.ReadingProgress) {
+      return _i24.ReadingProgress.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i8.Book?>()) {
-      return (data != null ? _i8.Book.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i5.AgeBracket?>()) {
+      return (data != null ? _i5.AgeBracket.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.BookDetail?>()) {
-      return (data != null ? _i9.BookDetail.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i6.AppLanguage?>()) {
+      return (data != null ? _i6.AppLanguage.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i10.BookPage?>()) {
-      return (data != null ? _i10.BookPage.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i7.AppUser?>()) {
+      return (data != null ? _i7.AppUser.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i11.BookSummary?>()) {
-      return (data != null ? _i11.BookSummary.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i8.AuthResponse?>()) {
+      return (data != null ? _i8.AuthResponse.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i12.BookTranslation?>()) {
-      return (data != null ? _i12.BookTranslation.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i9.Badge?>()) {
+      return (data != null ? _i9.Badge.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i13.ChildBadge?>()) {
-      return (data != null ? _i13.ChildBadge.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i10.Book?>()) {
+      return (data != null ? _i10.Book.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i14.ChildProfile?>()) {
-      return (data != null ? _i14.ChildProfile.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i11.BookCategory?>()) {
+      return (data != null ? _i11.BookCategory.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i15.Devotional?>()) {
-      return (data != null ? _i15.Devotional.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i12.BookDetail?>()) {
+      return (data != null ? _i12.BookDetail.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i16.DevotionalTranslation?>()) {
-      return (data != null ? _i16.DevotionalTranslation.fromJson(data) : null)
+    if (t == _i1.getType<_i13.BookPage?>()) {
+      return (data != null ? _i13.BookPage.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i14.BookSummary?>()) {
+      return (data != null ? _i14.BookSummary.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i15.BookTranslation?>()) {
+      return (data != null ? _i15.BookTranslation.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i16.ChildBadge?>()) {
+      return (data != null ? _i16.ChildBadge.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i17.ChildProfile?>()) {
+      return (data != null ? _i17.ChildProfile.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i18.Devotional?>()) {
+      return (data != null ? _i18.Devotional.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i19.DevotionalTranslation?>()) {
+      return (data != null ? _i19.DevotionalTranslation.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i17.DownloadRecord?>()) {
-      return (data != null ? _i17.DownloadRecord.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i20.DownloadRecord?>()) {
+      return (data != null ? _i20.DownloadRecord.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i18.Greeting?>()) {
-      return (data != null ? _i18.Greeting.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i21.Greeting?>()) {
+      return (data != null ? _i21.Greeting.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i19.Page?>()) {
-      return (data != null ? _i19.Page.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i22.Page?>()) {
+      return (data != null ? _i22.Page.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i20.PageContent?>()) {
-      return (data != null ? _i20.PageContent.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i23.PageContent?>()) {
+      return (data != null ? _i23.PageContent.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i21.ReadingProgress?>()) {
-      return (data != null ? _i21.ReadingProgress.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i24.ReadingProgress?>()) {
+      return (data != null ? _i24.ReadingProgress.fromJson(data) : null) as T;
     }
-    if (t == List<_i10.BookPage>) {
-      return (data as List).map((e) => deserialize<_i10.BookPage>(e)).toList()
+    if (t == List<_i13.BookPage>) {
+      return (data as List).map((e) => deserialize<_i13.BookPage>(e)).toList()
           as T;
     }
-    if (t == List<_i22.ChildProfile>) {
+    if (t == List<_i25.ChildProfile>) {
       return (data as List)
-              .map((e) => deserialize<_i22.ChildProfile>(e))
+              .map((e) => deserialize<_i25.ChildProfile>(e))
               .toList()
           as T;
     }
-    if (t == List<_i23.BookSummary>) {
+    if (t == List<_i26.BookSummary>) {
       return (data as List)
-              .map((e) => deserialize<_i23.BookSummary>(e))
+              .map((e) => deserialize<_i26.BookSummary>(e))
               .toList()
           as T;
     }
@@ -1169,23 +1193,26 @@ class Protocol extends _i1.DatabaseSerializationManager {
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
-      _i5.AppUser => 'AppUser',
-      _i6.AuthResponse => 'AuthResponse',
-      _i7.Badge => 'Badge',
-      _i8.Book => 'Book',
-      _i9.BookDetail => 'BookDetail',
-      _i10.BookPage => 'BookPage',
-      _i11.BookSummary => 'BookSummary',
-      _i12.BookTranslation => 'BookTranslation',
-      _i13.ChildBadge => 'ChildBadge',
-      _i14.ChildProfile => 'ChildProfile',
-      _i15.Devotional => 'Devotional',
-      _i16.DevotionalTranslation => 'DevotionalTranslation',
-      _i17.DownloadRecord => 'DownloadRecord',
-      _i18.Greeting => 'Greeting',
-      _i19.Page => 'Page',
-      _i20.PageContent => 'PageContent',
-      _i21.ReadingProgress => 'ReadingProgress',
+      _i5.AgeBracket => 'AgeBracket',
+      _i6.AppLanguage => 'AppLanguage',
+      _i7.AppUser => 'AppUser',
+      _i8.AuthResponse => 'AuthResponse',
+      _i9.Badge => 'Badge',
+      _i10.Book => 'Book',
+      _i11.BookCategory => 'BookCategory',
+      _i12.BookDetail => 'BookDetail',
+      _i13.BookPage => 'BookPage',
+      _i14.BookSummary => 'BookSummary',
+      _i15.BookTranslation => 'BookTranslation',
+      _i16.ChildBadge => 'ChildBadge',
+      _i17.ChildProfile => 'ChildProfile',
+      _i18.Devotional => 'Devotional',
+      _i19.DevotionalTranslation => 'DevotionalTranslation',
+      _i20.DownloadRecord => 'DownloadRecord',
+      _i21.Greeting => 'Greeting',
+      _i22.Page => 'Page',
+      _i23.PageContent => 'PageContent',
+      _i24.ReadingProgress => 'ReadingProgress',
       _ => null,
     };
   }
@@ -1203,39 +1230,45 @@ class Protocol extends _i1.DatabaseSerializationManager {
     }
 
     switch (data) {
-      case _i5.AppUser():
+      case _i5.AgeBracket():
+        return 'AgeBracket';
+      case _i6.AppLanguage():
+        return 'AppLanguage';
+      case _i7.AppUser():
         return 'AppUser';
-      case _i6.AuthResponse():
+      case _i8.AuthResponse():
         return 'AuthResponse';
-      case _i7.Badge():
+      case _i9.Badge():
         return 'Badge';
-      case _i8.Book():
+      case _i10.Book():
         return 'Book';
-      case _i9.BookDetail():
+      case _i11.BookCategory():
+        return 'BookCategory';
+      case _i12.BookDetail():
         return 'BookDetail';
-      case _i10.BookPage():
+      case _i13.BookPage():
         return 'BookPage';
-      case _i11.BookSummary():
+      case _i14.BookSummary():
         return 'BookSummary';
-      case _i12.BookTranslation():
+      case _i15.BookTranslation():
         return 'BookTranslation';
-      case _i13.ChildBadge():
+      case _i16.ChildBadge():
         return 'ChildBadge';
-      case _i14.ChildProfile():
+      case _i17.ChildProfile():
         return 'ChildProfile';
-      case _i15.Devotional():
+      case _i18.Devotional():
         return 'Devotional';
-      case _i16.DevotionalTranslation():
+      case _i19.DevotionalTranslation():
         return 'DevotionalTranslation';
-      case _i17.DownloadRecord():
+      case _i20.DownloadRecord():
         return 'DownloadRecord';
-      case _i18.Greeting():
+      case _i21.Greeting():
         return 'Greeting';
-      case _i19.Page():
+      case _i22.Page():
         return 'Page';
-      case _i20.PageContent():
+      case _i23.PageContent():
         return 'PageContent';
-      case _i21.ReadingProgress():
+      case _i24.ReadingProgress():
         return 'ReadingProgress';
     }
     className = _i3.Protocol().getClassNameForObject(data);
@@ -1263,56 +1296,65 @@ class Protocol extends _i1.DatabaseSerializationManager {
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
     }
+    if (dataClassName == 'AgeBracket') {
+      return deserialize<_i5.AgeBracket>(data['data']);
+    }
+    if (dataClassName == 'AppLanguage') {
+      return deserialize<_i6.AppLanguage>(data['data']);
+    }
     if (dataClassName == 'AppUser') {
-      return deserialize<_i5.AppUser>(data['data']);
+      return deserialize<_i7.AppUser>(data['data']);
     }
     if (dataClassName == 'AuthResponse') {
-      return deserialize<_i6.AuthResponse>(data['data']);
+      return deserialize<_i8.AuthResponse>(data['data']);
     }
     if (dataClassName == 'Badge') {
-      return deserialize<_i7.Badge>(data['data']);
+      return deserialize<_i9.Badge>(data['data']);
     }
     if (dataClassName == 'Book') {
-      return deserialize<_i8.Book>(data['data']);
+      return deserialize<_i10.Book>(data['data']);
+    }
+    if (dataClassName == 'BookCategory') {
+      return deserialize<_i11.BookCategory>(data['data']);
     }
     if (dataClassName == 'BookDetail') {
-      return deserialize<_i9.BookDetail>(data['data']);
+      return deserialize<_i12.BookDetail>(data['data']);
     }
     if (dataClassName == 'BookPage') {
-      return deserialize<_i10.BookPage>(data['data']);
+      return deserialize<_i13.BookPage>(data['data']);
     }
     if (dataClassName == 'BookSummary') {
-      return deserialize<_i11.BookSummary>(data['data']);
+      return deserialize<_i14.BookSummary>(data['data']);
     }
     if (dataClassName == 'BookTranslation') {
-      return deserialize<_i12.BookTranslation>(data['data']);
+      return deserialize<_i15.BookTranslation>(data['data']);
     }
     if (dataClassName == 'ChildBadge') {
-      return deserialize<_i13.ChildBadge>(data['data']);
+      return deserialize<_i16.ChildBadge>(data['data']);
     }
     if (dataClassName == 'ChildProfile') {
-      return deserialize<_i14.ChildProfile>(data['data']);
+      return deserialize<_i17.ChildProfile>(data['data']);
     }
     if (dataClassName == 'Devotional') {
-      return deserialize<_i15.Devotional>(data['data']);
+      return deserialize<_i18.Devotional>(data['data']);
     }
     if (dataClassName == 'DevotionalTranslation') {
-      return deserialize<_i16.DevotionalTranslation>(data['data']);
+      return deserialize<_i19.DevotionalTranslation>(data['data']);
     }
     if (dataClassName == 'DownloadRecord') {
-      return deserialize<_i17.DownloadRecord>(data['data']);
+      return deserialize<_i20.DownloadRecord>(data['data']);
     }
     if (dataClassName == 'Greeting') {
-      return deserialize<_i18.Greeting>(data['data']);
+      return deserialize<_i21.Greeting>(data['data']);
     }
     if (dataClassName == 'Page') {
-      return deserialize<_i19.Page>(data['data']);
+      return deserialize<_i22.Page>(data['data']);
     }
     if (dataClassName == 'PageContent') {
-      return deserialize<_i20.PageContent>(data['data']);
+      return deserialize<_i23.PageContent>(data['data']);
     }
     if (dataClassName == 'ReadingProgress') {
-      return deserialize<_i21.ReadingProgress>(data['data']);
+      return deserialize<_i24.ReadingProgress>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);
@@ -1355,30 +1397,30 @@ class Protocol extends _i1.DatabaseSerializationManager {
       }
     }
     switch (t) {
-      case _i5.AppUser:
-        return _i5.AppUser.t;
-      case _i7.Badge:
-        return _i7.Badge.t;
-      case _i8.Book:
-        return _i8.Book.t;
-      case _i12.BookTranslation:
-        return _i12.BookTranslation.t;
-      case _i13.ChildBadge:
-        return _i13.ChildBadge.t;
-      case _i14.ChildProfile:
-        return _i14.ChildProfile.t;
-      case _i15.Devotional:
-        return _i15.Devotional.t;
-      case _i16.DevotionalTranslation:
-        return _i16.DevotionalTranslation.t;
-      case _i17.DownloadRecord:
-        return _i17.DownloadRecord.t;
-      case _i19.Page:
-        return _i19.Page.t;
-      case _i20.PageContent:
-        return _i20.PageContent.t;
-      case _i21.ReadingProgress:
-        return _i21.ReadingProgress.t;
+      case _i7.AppUser:
+        return _i7.AppUser.t;
+      case _i9.Badge:
+        return _i9.Badge.t;
+      case _i10.Book:
+        return _i10.Book.t;
+      case _i15.BookTranslation:
+        return _i15.BookTranslation.t;
+      case _i16.ChildBadge:
+        return _i16.ChildBadge.t;
+      case _i17.ChildProfile:
+        return _i17.ChildProfile.t;
+      case _i18.Devotional:
+        return _i18.Devotional.t;
+      case _i19.DevotionalTranslation:
+        return _i19.DevotionalTranslation.t;
+      case _i20.DownloadRecord:
+        return _i20.DownloadRecord.t;
+      case _i22.Page:
+        return _i22.Page.t;
+      case _i23.PageContent:
+        return _i23.PageContent.t;
+      case _i24.ReadingProgress:
+        return _i24.ReadingProgress.t;
     }
     return null;
   }

@@ -18,10 +18,13 @@ import '../endpoints/child_endpoint.dart' as _i5;
 import '../endpoints/library_endpoint.dart' as _i6;
 import '../endpoints/storage_test_endpoint.dart' as _i7;
 import '../greetings/greeting_endpoint.dart' as _i8;
+import 'package:kingdom_kids_server/src/generated/age_bracket.dart' as _i9;
+import 'package:kingdom_kids_server/src/generated/app_language.dart' as _i10;
+import 'package:kingdom_kids_server/src/generated/book_category.dart' as _i11;
 import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
-    as _i9;
+    as _i12;
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
-    as _i10;
+    as _i13;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -421,17 +424,17 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'ageBracket': _i1.ParameterDescription(
               name: 'ageBracket',
-              type: _i1.getType<int?>(),
+              type: _i1.getType<_i9.AgeBracket?>(),
               nullable: true,
             ),
             'language': _i1.ParameterDescription(
               name: 'language',
-              type: _i1.getType<String?>(),
+              type: _i1.getType<_i10.AppLanguage?>(),
               nullable: true,
             ),
             'category': _i1.ParameterDescription(
               name: 'category',
-              type: _i1.getType<String?>(),
+              type: _i1.getType<_i11.BookCategory?>(),
               nullable: true,
             ),
           },
@@ -457,7 +460,7 @@ class Endpoints extends _i1.EndpointDispatch {
             ),
             'language': _i1.ParameterDescription(
               name: 'language',
-              type: _i1.getType<String>(),
+              type: _i1.getType<_i10.AppLanguage>(),
               nullable: false,
             ),
           },
@@ -513,9 +516,9 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
-    modules['serverpod_auth_idp'] = _i9.Endpoints()
+    modules['serverpod_auth_idp'] = _i12.Endpoints()
       ..initializeEndpoints(server);
-    modules['serverpod_auth_core'] = _i10.Endpoints()
+    modules['serverpod_auth_core'] = _i13.Endpoints()
       ..initializeEndpoints(server);
   }
 }

@@ -20,9 +20,12 @@ import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
 import 'package:kingdom_kids_server/src/generated/app_user.dart' as _i6;
 import 'package:kingdom_kids_server/src/generated/child_profile.dart' as _i7;
 import 'package:kingdom_kids_server/src/generated/book_summary.dart' as _i8;
-import 'package:kingdom_kids_server/src/generated/book_detail.dart' as _i9;
+import 'package:kingdom_kids_server/src/generated/age_bracket.dart' as _i9;
+import 'package:kingdom_kids_server/src/generated/app_language.dart' as _i10;
+import 'package:kingdom_kids_server/src/generated/book_category.dart' as _i11;
+import 'package:kingdom_kids_server/src/generated/book_detail.dart' as _i12;
 import 'package:kingdom_kids_server/src/generated/greetings/greeting.dart'
-    as _i10;
+    as _i13;
 import 'package:kingdom_kids_server/src/generated/protocol.dart';
 import 'package:kingdom_kids_server/src/generated/endpoints.dart';
 export 'package:serverpod_test/serverpod_test_public_exports.dart';
@@ -700,9 +703,9 @@ class _LibraryEndpoint {
 
   _i4.Future<List<_i8.BookSummary>> browseBooks(
     _i1.TestSessionBuilder sessionBuilder, {
-    int? ageBracket,
-    String? language,
-    String? category,
+    _i9.AgeBracket? ageBracket,
+    _i10.AppLanguage? language,
+    _i11.BookCategory? category,
   }) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
@@ -735,10 +738,10 @@ class _LibraryEndpoint {
     });
   }
 
-  _i4.Future<_i9.BookDetail> getBook(
+  _i4.Future<_i12.BookDetail> getBook(
     _i1.TestSessionBuilder sessionBuilder,
     int bookId,
-    String language,
+    _i10.AppLanguage language,
   ) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
@@ -762,7 +765,7 @@ class _LibraryEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i9.BookDetail>);
+                as _i4.Future<_i12.BookDetail>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -820,7 +823,7 @@ class _GreetingEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i4.Future<_i10.Greeting> hello(
+  _i4.Future<_i13.Greeting> hello(
     _i1.TestSessionBuilder sessionBuilder,
     String name,
   ) async {
@@ -843,7 +846,7 @@ class _GreetingEndpoint {
                   _localUniqueSession,
                   _localCallContext.arguments,
                 )
-                as _i4.Future<_i10.Greeting>);
+                as _i4.Future<_i13.Greeting>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();

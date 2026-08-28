@@ -1,16 +1,15 @@
 import 'package:serverpod/serverpod.dart'; // Classes de base Serverpod (Endpoint, Session, etc.)
 import '../generated/protocol.dart'; // Import des classes générées : Book, Page, PageContent, BookSummary, BookDetail, BookPage
+import '../services/asset_url_service.dart';
 
 class LibraryEndpoint extends Endpoint {
   // browseBooks : renvoie une liste résumée de livres filtrés par tranche d'âge / langue / catégorie
   Future<List<BookSummary>> browseBooks(
     Session
     session, { // Session : contexte Serverpod (accès DB, auth, etc.), toujours 1er paramètre
-    int?
-    ageBracket, // Âge de l'enfant (optionnel) pour filtrer les livres adaptés
-    String?
-    language, // Langue souhaitée (optionnel) pour ne garder que les livres traduits
-    String? category, // Catégorie du livre (optionnel)
+    AgeBracket? ageBracket,
+    AppLanguage? language,
+    BookCategory? category,
   }) async {
     Set<int>?
     allowedBookIds; // Sera rempli seulement si `language` est fourni ; null = "pas de filtre langue"
@@ -65,24 +64,17 @@ class LibraryEndpoint extends Endpoint {
       if (allowedBookIds != null && !allowedBookIds.contains(book.id)) {
         return false; // Si un filtre langue existe et que ce livre n'en fait pas partie -> exclu
       }
-      if (ageBracket != null) {
-        // Si un âge est fourni, on vérifie qu'il tombe dans la tranche du livre
-        final min = int.tryParse(
-          book.ageBracketMin,
-        ); // Conversion String -> int (renvoie null si non convertible)
-        final max = int.tryParse(book.ageBracketMax);
-        if (min != null && max != null) {
-          // On ne peut comparer que si les deux valeurs sont bien numériques
-          if (ageBracket < min || ageBracket > max)
-            return false; // Hors tranche -> exclu
-        }
+      if (ageBracket != null &&
+          (ageBracket.index < book.ageBracketMin.index ||
+              ageBracket.index > book.ageBracketMax.index)) {
+        return false;
       }
       return true; // Le livre passe tous les filtres -> inclus
     });
 
-    return filtered
-        .map(
-          (book) => BookSummary(
+    return await Future.wait(
+      filtered.map(
+        (book) async => BookSummary(
             // Transformation Book (modèle DB complet) -> BookSummary (modèle allégé exposé au client)
             id: book
                 .id!, // `!` : on affirme que id n'est pas null (un livre lu en DB en a toujours un)
@@ -90,17 +82,20 @@ class LibraryEndpoint extends Endpoint {
             ageBracketMin: book.ageBracketMin,
             ageBracketMax: book.ageBracketMax,
             category: book.category,
-            coverImageAsset: book.coverImageAsset,
+            coverImageAsset: await AssetUrlService.nullablePublicUrl(
+              session,
+              book.coverImageAsset,
+            ),
           ),
-        )
-        .toList(); // Le Map<> est "lazy", .toList() force le calcul et fige le résultat
+        ),
+    );
   }
 
   // getBook : renvoie le détail complet d'un livre pour une langue donnée (toutes ses pages + textes traduits)
   Future<BookDetail> getBook(
     Session session,
     int bookId, // Id du livre demandé (paramètre obligatoire)
-    String language, // Langue demandée (obligatoire, pas de fallback ici)
+    AppLanguage language,
   ) async {
     final book = await Book.db.findById(
       session,
@@ -140,16 +135,23 @@ class LibraryEndpoint extends Endpoint {
       final content =
           contentByPageId[page
               .id]; // On cherche si une traduction existe pour cette page
-      if (content == null)
+      if (content == null) {
         continue; // Pas de traduction dans cette langue -> on saute cette page
+      }
       bookPages.add(
         BookPage(
           // Sinon on construit l'objet combiné page+contenu
           pageNumber: page.pageNumber,
-          illustrationAsset: page.illustrationAsset,
+          illustrationAsset: await AssetUrlService.publicUrl(
+            session,
+            page.illustrationAsset,
+          ),
           layoutType: page.layoutType,
           text: content.text,
-          audioAsset: content.audioAsset,
+          audioAsset: await AssetUrlService.publicUrl(
+            session,
+            content.audioAsset,
+          ),
         ),
       );
     }
@@ -161,7 +163,10 @@ class LibraryEndpoint extends Endpoint {
       ageBracketMin: book.ageBracketMin,
       ageBracketMax: book.ageBracketMax,
       category: book.category,
-      coverImageAsset: book.coverImageAsset,
+      coverImageAsset: await AssetUrlService.nullablePublicUrl(
+        session,
+        book.coverImageAsset,
+      ),
       pages: bookPages,
     );
   }

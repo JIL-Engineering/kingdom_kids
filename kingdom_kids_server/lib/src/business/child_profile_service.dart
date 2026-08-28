@@ -3,14 +3,14 @@ import '../generated/protocol.dart';
 
 class ChildProfileService {
   /// Calcule la tranche d'âge selon l'année en cours (2026)
-  static String _calculateAgeBracket(int birthYear) {
+  static AgeBracket _calculateAgeBracket(int birthYear) {
     final currentYear = DateTime.now().year; // Sera 2026
     final age = currentYear - birthYear;
 
-    if (age <= 2) return 'toddler'; // 0-2 ans
-    if (age <= 5) return 'preschool'; // 3-5 ans
-    if (age <= 8) return 'early_elementary'; // 6-8 ans
-    return 'preteen'; // 9+ ans
+    if (age <= 2) return AgeBracket.toddler;
+    if (age <= 5) return AgeBracket.preschool;
+    if (age <= 8) return AgeBracket.early_elementary;
+    return AgeBracket.preteen;
   }
 
   /// Crée un profil enfant sécurisé lié à son parent

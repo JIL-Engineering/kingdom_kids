@@ -11,6 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'age_bracket.dart' as _i2;
 
 abstract class ChildProfile implements _i1.SerializableModel {
   ChildProfile._({
@@ -30,7 +31,7 @@ abstract class ChildProfile implements _i1.SerializableModel {
     required int parentId,
     required String displayName,
     required int birthYear,
-    required String ageBracket,
+    required _i2.AgeBracket ageBracket,
     required String preferredLanguage,
     required String avatarId,
     required bool pinProtected,
@@ -43,7 +44,9 @@ abstract class ChildProfile implements _i1.SerializableModel {
       parentId: jsonSerialization['parentId'] as int,
       displayName: jsonSerialization['displayName'] as String,
       birthYear: jsonSerialization['birthYear'] as int,
-      ageBracket: jsonSerialization['ageBracket'] as String,
+      ageBracket: _i2.AgeBracket.fromJson(
+        (jsonSerialization['ageBracket'] as int),
+      ),
       preferredLanguage: jsonSerialization['preferredLanguage'] as String,
       avatarId: jsonSerialization['avatarId'] as String,
       pinProtected: _i1.BoolJsonExtension.fromJson(
@@ -66,7 +69,7 @@ abstract class ChildProfile implements _i1.SerializableModel {
 
   int birthYear;
 
-  String ageBracket;
+  _i2.AgeBracket ageBracket;
 
   String preferredLanguage;
 
@@ -84,7 +87,7 @@ abstract class ChildProfile implements _i1.SerializableModel {
     int? parentId,
     String? displayName,
     int? birthYear,
-    String? ageBracket,
+    _i2.AgeBracket? ageBracket,
     String? preferredLanguage,
     String? avatarId,
     bool? pinProtected,
@@ -98,7 +101,7 @@ abstract class ChildProfile implements _i1.SerializableModel {
       'parentId': parentId,
       'displayName': displayName,
       'birthYear': birthYear,
-      'ageBracket': ageBracket,
+      'ageBracket': ageBracket.toJson(),
       'preferredLanguage': preferredLanguage,
       'avatarId': avatarId,
       'pinProtected': pinProtected,
@@ -120,7 +123,7 @@ class _ChildProfileImpl extends ChildProfile {
     required int parentId,
     required String displayName,
     required int birthYear,
-    required String ageBracket,
+    required _i2.AgeBracket ageBracket,
     required String preferredLanguage,
     required String avatarId,
     required bool pinProtected,
@@ -146,7 +149,7 @@ class _ChildProfileImpl extends ChildProfile {
     int? parentId,
     String? displayName,
     int? birthYear,
-    String? ageBracket,
+    _i2.AgeBracket? ageBracket,
     String? preferredLanguage,
     String? avatarId,
     bool? pinProtected,

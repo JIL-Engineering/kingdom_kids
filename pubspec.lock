@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "103.0.0"
+  amazon_cognito_identity_dart_2:
+    dependency: transitive
+    description:
+      name: amazon_cognito_identity_dart_2
+      sha256: ff3d493eb94d9dc624bd8f0a92bf49754e67d39717e6a52ff0c7dd14e5c0e20b
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.8.2"
   analyzer:
     dependency: transitive
     description:
@@ -639,6 +647,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  js:
+    dependency: transitive
+    description:
+      name: js
+      sha256: "53385261521cc4a0c4658fd0ad07a7d14591cf8fc33abbceae306ddb974888dc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.2"
   json_annotation:
     dependency: transitive
     description:
@@ -1084,6 +1100,22 @@ packages:
     description:
       name: serverpod_client
       sha256: c021e1503b4c011a41a0006404d4729f8b54298b2b8cd49667f424f762d9da14
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0-beta.0"
+  serverpod_cloud_storage_r2:
+    dependency: transitive
+    description:
+      name: serverpod_cloud_storage_r2
+      sha256: "94f365cc4397d3bcd96744f7fe6f43ff12c9955946a45ed7dcfd215a35e3063a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0-beta.0"
+  serverpod_cloud_storage_s3_compat:
+    dependency: transitive
+    description:
+      name: serverpod_cloud_storage_s3_compat
+      sha256: "40911e89207610fdeb21a4980f0f7cdbd2d123febaab0b7971c2585db254534d"
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0-beta.0"

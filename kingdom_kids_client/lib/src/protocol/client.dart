@@ -19,11 +19,14 @@ import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
 import 'package:kingdom_kids_client/src/protocol/app_user.dart' as _i5;
 import 'package:kingdom_kids_client/src/protocol/child_profile.dart' as _i6;
 import 'package:kingdom_kids_client/src/protocol/book_summary.dart' as _i7;
-import 'package:kingdom_kids_client/src/protocol/book_detail.dart' as _i8;
+import 'package:kingdom_kids_client/src/protocol/age_bracket.dart' as _i8;
+import 'package:kingdom_kids_client/src/protocol/app_language.dart' as _i9;
+import 'package:kingdom_kids_client/src/protocol/book_category.dart' as _i10;
+import 'package:kingdom_kids_client/src/protocol/book_detail.dart' as _i11;
 import 'package:kingdom_kids_client/src/protocol/greetings/greeting.dart'
-    as _i9;
-import 'package:http/http.dart' as _i10;
-import 'protocol.dart' as _i11;
+    as _i12;
+import 'package:http/http.dart' as _i13;
+import 'protocol.dart' as _i14;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
 /// are made available on the server and enable the corresponding sign-in widget
@@ -330,9 +333,9 @@ class EndpointLibrary extends _i2.EndpointRef {
   String get name => 'library';
 
   _i3.Future<List<_i7.BookSummary>> browseBooks({
-    int? ageBracket,
-    String? language,
-    String? category,
+    _i8.AgeBracket? ageBracket,
+    _i9.AppLanguage? language,
+    _i10.BookCategory? category,
   }) => caller.callServerEndpoint<List<_i7.BookSummary>>(
     'library',
     'browseBooks',
@@ -343,10 +346,10 @@ class EndpointLibrary extends _i2.EndpointRef {
     },
   );
 
-  _i3.Future<_i8.BookDetail> getBook(
+  _i3.Future<_i11.BookDetail> getBook(
     int bookId,
-    String language,
-  ) => caller.callServerEndpoint<_i8.BookDetail>(
+    _i9.AppLanguage language,
+  ) => caller.callServerEndpoint<_i11.BookDetail>(
     'library',
     'getBook',
     {
@@ -380,8 +383,8 @@ class EndpointGreeting extends _i2.EndpointRef {
   String get name => 'greeting';
 
   /// Returns a personalized greeting message: "Hello {name}".
-  _i3.Future<_i9.Greeting> hello(String name) =>
-      caller.callServerEndpoint<_i9.Greeting>(
+  _i3.Future<_i12.Greeting> hello(String name) =>
+      caller.callServerEndpoint<_i12.Greeting>(
         'greeting',
         'hello',
         {'name': name},
@@ -417,10 +420,10 @@ class Client extends _i2.ServerpodClientShared {
     onFailedCall,
     Function(_i2.MethodCallContext)? onSucceededCall,
     bool? disconnectStreamsOnLostInternetConnection,
-    _i10.Client? httpClientOverride,
+    _i13.Client? httpClientOverride,
   }) : super(
          host,
-         _i11.Protocol(),
+         _i14.Protocol(),
          securityContext: securityContext,
          streamingConnectionTimeout: streamingConnectionTimeout,
          connectionTimeout: connectionTimeout,

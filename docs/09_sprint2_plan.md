@@ -34,7 +34,7 @@ C'est le cœur technique du sprint. Référence complète : `docs/05_content_pip
 
 **Étape 4 :** teste avec 1-2 livres factices d'abord (contenu bidon, pas besoin d'attendre le vrai contenu CMFI) pour valider que le pipeline entier fonctionne, avant de brancher les vrais livres une fois qu'ils arrivent.
 
----
+--- 
 
 ## Daniel — Backend
 
@@ -53,6 +53,8 @@ LibraryEndpoint
 ```
 
 Pas besoin de `getRecommended`/`getDownloadBundle`/`checkForUpdates` maintenant — ça vient avec le Sprint 4 (Library & Offline). L'objectif ici est de vérifier le pipeline, pas de livrer la fonctionnalité bibliothèque complète.
+
+**Dette technique R2 :** pendant ce sprint, `LibraryEndpoint` renvoie des URLs publiques R2 pour les couvertures, illustrations et fichiers audio. Elles ne sont ni signées ni expirantes. Le package `serverpod_cloud_storage_r2`, via `s3_compat`, ne fournit pas nativement de presigned download URL ; une implémentation SigV4 devra donc être écrite manuellement dans un sprint ultérieur, puis le stockage pourra être repassé en privé.
 
 ---
 

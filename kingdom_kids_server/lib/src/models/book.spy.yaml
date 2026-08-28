@@ -2,9 +2,9 @@ class: Book
 table: books
 fields:
   slug: String
-  ageBracketMin: String
-  ageBracketMax: String
-  category: String
+  ageBracketMin: AgeBracket
+  ageBracketMax: AgeBracket
+  category: BookCategory
   coverImageAsset: String?
   isPublished: bool
   contentVersion: int
