@@ -33,8 +33,8 @@ import 'greetings/greeting.dart' as _i18;
 import 'page.dart' as _i19;
 import 'page_content.dart' as _i20;
 import 'reading_progress.dart' as _i21;
-import 'package:kingdom_kids_server/src/generated/book_summary.dart' as _i22;
-import 'package:kingdom_kids_server/src/generated/child_profile.dart' as _i23;
+import 'package:kingdom_kids_server/src/generated/child_profile.dart' as _i22;
+import 'package:kingdom_kids_server/src/generated/book_summary.dart' as _i23;
 export 'app_user.dart';
 export 'auth_response.dart';
 export 'badge.dart';
@@ -1143,15 +1143,15 @@ class Protocol extends _i1.DatabaseSerializationManager {
       return (data as List).map((e) => deserialize<_i10.BookPage>(e)).toList()
           as T;
     }
-    if (t == List<_i22.BookSummary>) {
+    if (t == List<_i22.ChildProfile>) {
       return (data as List)
-              .map((e) => deserialize<_i22.BookSummary>(e))
+              .map((e) => deserialize<_i22.ChildProfile>(e))
               .toList()
           as T;
     }
-    if (t == List<_i23.ChildProfile>) {
+    if (t == List<_i23.BookSummary>) {
       return (data as List)
-              .map((e) => deserialize<_i23.ChildProfile>(e))
+              .map((e) => deserialize<_i23.BookSummary>(e))
               .toList()
           as T;
     }

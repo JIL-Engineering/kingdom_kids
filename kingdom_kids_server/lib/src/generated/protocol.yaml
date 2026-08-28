@@ -9,15 +9,15 @@ emailIdp:
   - hasAccount:
 jwtRefresh:
   - refreshAccessToken:
-library:
-  - browseBooks:
-  - getBook:
 appUser:
   - completeProfile:
 child:
   - listChildren:
   - createChild:
   - updateChild:
+library:
+  - browseBooks:
+  - getBook:
 storageTest:
   - testUpload:
 greeting:

@@ -13,9 +13,9 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../auth/email_idp_endpoint.dart' as _i2;
 import '../auth/jwt_refresh_endpoint.dart' as _i3;
-import '../endpoints/Library_endpoint.dart' as _i4;
-import '../endpoints/app_user_endpoint.dart' as _i5;
-import '../endpoints/child_endpoint.dart' as _i6;
+import '../endpoints/app_user_endpoint.dart' as _i4;
+import '../endpoints/child_endpoint.dart' as _i5;
+import '../endpoints/library_endpoint.dart' as _i6;
 import '../endpoints/storage_test_endpoint.dart' as _i7;
 import '../greetings/greeting_endpoint.dart' as _i8;
 import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
@@ -39,22 +39,22 @@ class Endpoints extends _i1.EndpointDispatch {
           'jwtRefresh',
           null,
         ),
-      'library': _i4.LibraryEndpoint()
-        ..initialize(
-          server,
-          'library',
-          null,
-        ),
-      'appUser': _i5.AppUserEndpoint()
+      'appUser': _i4.AppUserEndpoint()
         ..initialize(
           server,
           'appUser',
           null,
         ),
-      'child': _i6.ChildEndpoint()
+      'child': _i5.ChildEndpoint()
         ..initialize(
           server,
           'child',
+          null,
+        ),
+      'library': _i6.LibraryEndpoint()
+        ..initialize(
+          server,
+          'library',
           null,
         ),
       'storageTest': _i7.StorageTestEndpoint()
@@ -274,67 +274,6 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
-    connectors['library'] = _i1.EndpointConnector(
-      name: 'library',
-      endpoint: endpoints['library']!,
-      methodConnectors: {
-        'browseBooks': _i1.MethodConnector(
-          name: 'browseBooks',
-          params: {
-            'ageBracket': _i1.ParameterDescription(
-              name: 'ageBracket',
-              type: _i1.getType<int?>(),
-              nullable: true,
-            ),
-            'language': _i1.ParameterDescription(
-              name: 'language',
-              type: _i1.getType<String?>(),
-              nullable: true,
-            ),
-            'category': _i1.ParameterDescription(
-              name: 'category',
-              type: _i1.getType<String?>(),
-              nullable: true,
-            ),
-          },
-          call:
-              (
-                _i1.Session session,
-                Map<String, dynamic> params,
-              ) async =>
-                  (endpoints['library'] as _i4.LibraryEndpoint).browseBooks(
-                    session,
-                    ageBracket: params['ageBracket'],
-                    language: params['language'],
-                    category: params['category'],
-                  ),
-        ),
-        'getBook': _i1.MethodConnector(
-          name: 'getBook',
-          params: {
-            'bookId': _i1.ParameterDescription(
-              name: 'bookId',
-              type: _i1.getType<int>(),
-              nullable: false,
-            ),
-            'language': _i1.ParameterDescription(
-              name: 'language',
-              type: _i1.getType<String>(),
-              nullable: false,
-            ),
-          },
-          call:
-              (
-                _i1.Session session,
-                Map<String, dynamic> params,
-              ) async => (endpoints['library'] as _i4.LibraryEndpoint).getBook(
-                session,
-                params['bookId'],
-                params['language'],
-              ),
-        ),
-      },
-    );
     connectors['appUser'] = _i1.EndpointConnector(
       name: 'appUser',
       endpoint: endpoints['appUser']!,
@@ -368,7 +307,7 @@ class Endpoints extends _i1.EndpointDispatch {
                 _i1.Session session,
                 Map<String, dynamic> params,
               ) async =>
-                  (endpoints['appUser'] as _i5.AppUserEndpoint).completeProfile(
+                  (endpoints['appUser'] as _i4.AppUserEndpoint).completeProfile(
                     session,
                     params['country'],
                     params['timezone'],
@@ -389,7 +328,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['child'] as _i6.ChildEndpoint).listChildren(
+              ) async => (endpoints['child'] as _i5.ChildEndpoint).listChildren(
                 session,
               ),
         ),
@@ -421,7 +360,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['child'] as _i6.ChildEndpoint).createChild(
+              ) async => (endpoints['child'] as _i5.ChildEndpoint).createChild(
                 session,
                 params['displayName'],
                 params['birthYear'],
@@ -462,13 +401,74 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['child'] as _i6.ChildEndpoint).updateChild(
+              ) async => (endpoints['child'] as _i5.ChildEndpoint).updateChild(
                 session,
                 params['childId'],
                 params['displayName'],
                 params['birthYear'],
                 params['preferredLanguage'],
                 params['avatarId'],
+              ),
+        ),
+      },
+    );
+    connectors['library'] = _i1.EndpointConnector(
+      name: 'library',
+      endpoint: endpoints['library']!,
+      methodConnectors: {
+        'browseBooks': _i1.MethodConnector(
+          name: 'browseBooks',
+          params: {
+            'ageBracket': _i1.ParameterDescription(
+              name: 'ageBracket',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'language': _i1.ParameterDescription(
+              name: 'language',
+              type: _i1.getType<String?>(),
+              nullable: true,
+            ),
+            'category': _i1.ParameterDescription(
+              name: 'category',
+              type: _i1.getType<String?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['library'] as _i6.LibraryEndpoint).browseBooks(
+                    session,
+                    ageBracket: params['ageBracket'],
+                    language: params['language'],
+                    category: params['category'],
+                  ),
+        ),
+        'getBook': _i1.MethodConnector(
+          name: 'getBook',
+          params: {
+            'bookId': _i1.ParameterDescription(
+              name: 'bookId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'language': _i1.ParameterDescription(
+              name: 'language',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['library'] as _i6.LibraryEndpoint).getBook(
+                session,
+                params['bookId'],
+                params['language'],
               ),
         ),
       },
