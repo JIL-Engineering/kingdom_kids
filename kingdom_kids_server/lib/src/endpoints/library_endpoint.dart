@@ -158,7 +158,9 @@ class LibraryEndpoint extends Endpoint {
           contentByPageId[page
               .id]; // On cherche si une traduction existe pour cette page
       if (content == null) {
-        continue; // Pas de traduction dans cette langue -> on saute cette page
+        throw StateError(
+          'Page translation not found for language ${language.name}: ${page.id}',
+        );
       }
       bookPages.add(
         BookPage(
