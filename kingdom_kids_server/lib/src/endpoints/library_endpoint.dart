@@ -58,6 +58,16 @@ class LibraryEndpoint extends Endpoint {
         return condition; // On renvoie la condition finale au générateur de requête
       },
     );
+    final translations = await BookTranslation.db.find(
+      session,
+      where: language == null
+          ? null
+          : (t) => t.language.equals(language.name),
+    );
+    final titleByBookId = {
+      for (final translation in translations)
+        translation.bookId: translation.title,
+    };
 
     final filtered = books.where((book) {
       // Filtrage en mémoire (Dart) sur les résultats déjà récupérés de la DB
@@ -79,6 +89,10 @@ class LibraryEndpoint extends Endpoint {
             id: book
                 .id!, // `!` : on affirme que id n'est pas null (un livre lu en DB en a toujours un)
             slug: book.slug,
+            title: titleByBookId[book.id!] ??
+                (throw StateError(
+                  'Book translation not found: ${book.id}',
+                )),
             ageBracketMin: book.ageBracketMin,
             ageBracketMax: book.ageBracketMax,
             category: book.category,
@@ -106,6 +120,16 @@ class LibraryEndpoint extends Endpoint {
       throw Exception(
         'Book not found: $bookId',
       ); // On stoppe l'exécution avec une erreur explicite
+    }
+    final translation = await BookTranslation.db.findFirstRow(
+      session,
+      where: (t) =>
+          t.bookId.equals(bookId) & t.language.equals(language.name),
+    );
+    if (translation == null) {
+      throw StateError(
+        'Book translation not found for language ${language.name}: $bookId',
+      );
     }
 
     final pages = await Page.db.find(
@@ -160,6 +184,7 @@ class LibraryEndpoint extends Endpoint {
       // Construction de l'objet final renvoyé au client
       id: book.id!,
       slug: book.slug,
+      title: translation.title,
       ageBracketMin: book.ageBracketMin,
       ageBracketMax: book.ageBracketMax,
       category: book.category,

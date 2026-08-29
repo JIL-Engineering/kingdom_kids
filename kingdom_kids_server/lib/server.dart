@@ -92,8 +92,6 @@ void run(List<String> args) async {
 
   pod.addCloudStorage(r2Storage);
 
-  await pod.start();
-
   // Start the server.
   await pod.start();
 }

@@ -2,6 +2,7 @@ class: BookDetail
 fields:
   id: int
   slug: String
+  title: String
   ageBracketMin: AgeBracket
   ageBracketMax: AgeBracket
   category: BookCategory

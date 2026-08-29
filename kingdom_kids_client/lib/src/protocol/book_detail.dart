@@ -20,6 +20,7 @@ abstract class BookDetail implements _i1.SerializableModel {
   BookDetail._({
     required this.id,
     required this.slug,
+    required this.title,
     required this.ageBracketMin,
     required this.ageBracketMax,
     required this.category,
@@ -30,6 +31,7 @@ abstract class BookDetail implements _i1.SerializableModel {
   factory BookDetail({
     required int id,
     required String slug,
+    required String title,
     required _i2.AgeBracket ageBracketMin,
     required _i2.AgeBracket ageBracketMax,
     required _i3.BookCategory category,
@@ -41,6 +43,7 @@ abstract class BookDetail implements _i1.SerializableModel {
     return BookDetail(
       id: jsonSerialization['id'] as int,
       slug: jsonSerialization['slug'] as String,
+      title: jsonSerialization['title'] as String,
       ageBracketMin: _i2.AgeBracket.fromJson(
         (jsonSerialization['ageBracketMin'] as int),
       ),
@@ -61,6 +64,8 @@ abstract class BookDetail implements _i1.SerializableModel {
 
   String slug;
 
+  String title;
+
   _i2.AgeBracket ageBracketMin;
 
   _i2.AgeBracket ageBracketMax;
@@ -77,6 +82,7 @@ abstract class BookDetail implements _i1.SerializableModel {
   BookDetail copyWith({
     int? id,
     String? slug,
+    String? title,
     _i2.AgeBracket? ageBracketMin,
     _i2.AgeBracket? ageBracketMax,
     _i3.BookCategory? category,
@@ -89,6 +95,7 @@ abstract class BookDetail implements _i1.SerializableModel {
       '__className__': 'BookDetail',
       'id': id,
       'slug': slug,
+      'title': title,
       'ageBracketMin': ageBracketMin.toJson(),
       'ageBracketMax': ageBracketMax.toJson(),
       'category': category.toJson(),
@@ -109,6 +116,7 @@ class _BookDetailImpl extends BookDetail {
   _BookDetailImpl({
     required int id,
     required String slug,
+    required String title,
     required _i2.AgeBracket ageBracketMin,
     required _i2.AgeBracket ageBracketMax,
     required _i3.BookCategory category,
@@ -117,6 +125,7 @@ class _BookDetailImpl extends BookDetail {
   }) : super._(
          id: id,
          slug: slug,
+         title: title,
          ageBracketMin: ageBracketMin,
          ageBracketMax: ageBracketMax,
          category: category,
@@ -131,6 +140,7 @@ class _BookDetailImpl extends BookDetail {
   BookDetail copyWith({
     int? id,
     String? slug,
+    String? title,
     _i2.AgeBracket? ageBracketMin,
     _i2.AgeBracket? ageBracketMax,
     _i3.BookCategory? category,
@@ -140,6 +150,7 @@ class _BookDetailImpl extends BookDetail {
     return BookDetail(
       id: id ?? this.id,
       slug: slug ?? this.slug,
+      title: title ?? this.title,
       ageBracketMin: ageBracketMin ?? this.ageBracketMin,
       ageBracketMax: ageBracketMax ?? this.ageBracketMax,
       category: category ?? this.category,
