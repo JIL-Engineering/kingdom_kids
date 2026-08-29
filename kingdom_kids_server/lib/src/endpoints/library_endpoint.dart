@@ -60,9 +60,7 @@ class LibraryEndpoint extends Endpoint {
     );
     final translations = await BookTranslation.db.find(
       session,
-      where: language == null
-          ? null
-          : (t) => t.language.equals(language.name),
+      where: language == null ? null : (t) => t.language.equals(language.name),
     );
     final titleByBookId = {
       for (final translation in translations)
@@ -85,23 +83,24 @@ class LibraryEndpoint extends Endpoint {
     return await Future.wait(
       filtered.map(
         (book) async => BookSummary(
-            // Transformation Book (modèle DB complet) -> BookSummary (modèle allégé exposé au client)
-            id: book
-                .id!, // `!` : on affirme que id n'est pas null (un livre lu en DB en a toujours un)
-            slug: book.slug,
-            title: titleByBookId[book.id!] ??
-                (throw StateError(
-                  'Book translation not found: ${book.id}',
-                )),
-            ageBracketMin: book.ageBracketMin,
-            ageBracketMax: book.ageBracketMax,
-            category: book.category,
-            coverImageAsset: await AssetUrlService.nullablePublicUrl(
-              session,
-              book.coverImageAsset,
-            ),
+          // Transformation Book (modèle DB complet) -> BookSummary (modèle allégé exposé au client)
+          id: book
+              .id!, // `!` : on affirme que id n'est pas null (un livre lu en DB en a toujours un)
+          slug: book.slug,
+          title:
+              titleByBookId[book.id!] ??
+              (throw StateError(
+                'Book translation not found: ${book.id}',
+              )),
+          ageBracketMin: book.ageBracketMin,
+          ageBracketMax: book.ageBracketMax,
+          category: book.category,
+          coverImageAsset: await AssetUrlService.nullablePublicUrl(
+            session,
+            book.coverImageAsset,
           ),
         ),
+      ),
     );
   }
 
@@ -123,8 +122,7 @@ class LibraryEndpoint extends Endpoint {
     }
     final translation = await BookTranslation.db.findFirstRow(
       session,
-      where: (t) =>
-          t.bookId.equals(bookId) & t.language.equals(language.name),
+      where: (t) => t.bookId.equals(bookId) & t.language.equals(language.name),
     );
     if (translation == null) {
       throw StateError(
