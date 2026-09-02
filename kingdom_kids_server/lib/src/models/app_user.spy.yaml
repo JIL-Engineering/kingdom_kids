@@ -6,6 +6,7 @@ fields:
   timezone: String
   preferredLanguage: String
   consentGivenAt: DateTime?
+  parentPinHash: String?, scope=serverOnly
   createdAt: DateTime
 indexes:
   users_auth_user_idx:

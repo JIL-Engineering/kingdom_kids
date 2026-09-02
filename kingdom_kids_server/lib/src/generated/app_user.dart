@@ -8,9 +8,9 @@
 // ignore_for_file: type_literal_in_constant_pattern
 // ignore_for_file: use_super_parameters
 // ignore_for_file: invalid_use_of_internal_member
-// ignore_for_file: dead_code, unnecessary_null_comparison
+// ignore_for_file: dead_code, no_leading_underscores_for_library_prefixes
+// ignore_for_file: unnecessary_null_comparison
 
-// ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
     as _i2;
@@ -26,6 +26,7 @@ abstract class AppUser
     required this.timezone,
     required this.preferredLanguage,
     this.consentGivenAt,
+    this.parentPinHash,
     required this.createdAt,
   });
 
@@ -37,6 +38,7 @@ abstract class AppUser
     required String timezone,
     required String preferredLanguage,
     DateTime? consentGivenAt,
+    String? parentPinHash,
     required DateTime createdAt,
   }) = _AppUserImpl;
 
@@ -59,6 +61,7 @@ abstract class AppUser
           : _i1.DateTimeJsonExtension.fromJson(
               jsonSerialization['consentGivenAt'],
             ),
+      parentPinHash: jsonSerialization['parentPinHash'] as String?,
       createdAt: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['createdAt'],
       ),
@@ -84,6 +87,8 @@ abstract class AppUser
 
   DateTime? consentGivenAt;
 
+  String? parentPinHash;
+
   DateTime createdAt;
 
   @override
@@ -100,6 +105,7 @@ abstract class AppUser
     String? timezone,
     String? preferredLanguage,
     DateTime? consentGivenAt,
+    String? parentPinHash,
     DateTime? createdAt,
   });
   @override
@@ -113,6 +119,7 @@ abstract class AppUser
       'timezone': timezone,
       'preferredLanguage': preferredLanguage,
       if (consentGivenAt != null) 'consentGivenAt': consentGivenAt?.toJson(),
+      if (parentPinHash != null) 'parentPinHash': parentPinHash,
       'createdAt': createdAt.toJson(),
     };
   }
@@ -175,6 +182,7 @@ class _AppUserImpl extends AppUser {
     required String timezone,
     required String preferredLanguage,
     DateTime? consentGivenAt,
+    String? parentPinHash,
     required DateTime createdAt,
   }) : super._(
          id: id,
@@ -184,6 +192,7 @@ class _AppUserImpl extends AppUser {
          timezone: timezone,
          preferredLanguage: preferredLanguage,
          consentGivenAt: consentGivenAt,
+         parentPinHash: parentPinHash,
          createdAt: createdAt,
        );
 
@@ -199,6 +208,7 @@ class _AppUserImpl extends AppUser {
     String? timezone,
     String? preferredLanguage,
     Object? consentGivenAt = _Undefined,
+    Object? parentPinHash = _Undefined,
     DateTime? createdAt,
   }) {
     return AppUser(
@@ -213,6 +223,9 @@ class _AppUserImpl extends AppUser {
       consentGivenAt: consentGivenAt is DateTime?
           ? consentGivenAt
           : this.consentGivenAt,
+      parentPinHash: parentPinHash is String?
+          ? parentPinHash
+          : this.parentPinHash,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -250,6 +263,12 @@ class AppUserUpdateTable extends _i1.UpdateTable<AppUserTable> {
         value,
       );
 
+  _i1.ColumnValue<String, String> parentPinHash(String? value) =>
+      _i1.ColumnValue(
+        table.parentPinHash,
+        value,
+      );
+
   _i1.ColumnValue<DateTime, DateTime> createdAt(DateTime value) =>
       _i1.ColumnValue(
         table.createdAt,
@@ -280,6 +299,10 @@ class AppUserTable extends _i1.Table<int?> {
       'consentGivenAt',
       this,
     );
+    parentPinHash = _i1.ColumnString(
+      'parentPinHash',
+      this,
+    );
     createdAt = _i1.ColumnDateTime(
       'createdAt',
       this,
@@ -299,6 +322,8 @@ class AppUserTable extends _i1.Table<int?> {
   late final _i1.ColumnString preferredLanguage;
 
   late final _i1.ColumnDateTime consentGivenAt;
+
+  late final _i1.ColumnString parentPinHash;
 
   late final _i1.ColumnDateTime createdAt;
 
@@ -323,6 +348,7 @@ class AppUserTable extends _i1.Table<int?> {
     timezone,
     preferredLanguage,
     consentGivenAt,
+    parentPinHash,
     createdAt,
   ];
 
