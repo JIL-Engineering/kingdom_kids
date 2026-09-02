@@ -60,7 +60,7 @@ class LibraryEndpoint extends Endpoint {
     );
     final translations = await BookTranslation.db.find(
       session,
-      where: language == null ? null : (t) => t.language.equals(language.name),
+      where: language == null ? null : (t) => t.language.equals(language),
     );
     final titleByBookId = {
       for (final translation in translations)
@@ -122,7 +122,7 @@ class LibraryEndpoint extends Endpoint {
     }
     final translation = await BookTranslation.db.findFirstRow(
       session,
-      where: (t) => t.bookId.equals(bookId) & t.language.equals(language.name),
+      where: (t) => t.bookId.equals(bookId) & t.language.equals(language),
     );
     if (translation == null) {
       throw StateError(
