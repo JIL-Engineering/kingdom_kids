@@ -26,8 +26,7 @@ import 'package:kingdom_kids_client/src/protocol/book_category.dart' as _i10;
 import 'package:kingdom_kids_client/src/protocol/book_detail.dart' as _i11;
 import 'package:kingdom_kids_client/src/protocol/greetings/greeting.dart'
     as _i12;
-import 'package:http/http.dart' as _i13;
-import 'protocol.dart' as _i14;
+import 'protocol.dart' as _i13;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
 /// are made available on the server and enable the corresponding sign-in widget
@@ -421,10 +420,9 @@ class Client extends _i2.ServerpodClientShared {
     onFailedCall,
     Function(_i2.MethodCallContext)? onSucceededCall,
     bool? disconnectStreamsOnLostInternetConnection,
-    _i13.Client? httpClientOverride,
   }) : super(
          host,
-         _i14.Protocol(),
+         _i13.Protocol(),
          securityContext: securityContext,
          streamingConnectionTimeout: streamingConnectionTimeout,
          connectionTimeout: connectionTimeout,
@@ -432,7 +430,6 @@ class Client extends _i2.ServerpodClientShared {
          onSucceededCall: onSucceededCall,
          disconnectStreamsOnLostInternetConnection:
              disconnectStreamsOnLostInternetConnection,
-         httpClientOverride: httpClientOverride,
        ) {
     emailIdp = EndpointEmailIdp(this);
     jwtRefresh = EndpointJwtRefresh(this);

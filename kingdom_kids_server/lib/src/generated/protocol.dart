@@ -60,12 +60,12 @@ export 'page.dart';
 export 'page_content.dart';
 export 'reading_progress.dart';
 
-class Protocol extends _i1.DatabaseSerializationManager {
+class Protocol extends _i1.SerializationManagerServer {
   Protocol._();
 
   factory Protocol() => _instance;
 
-  static final Protocol _instance = Protocol._().._registerHostProtocols();
+  static final Protocol _instance = Protocol._();
 
   static final List<_i2.TableDefinition> targetTableDefinitions = [
     _i2.TableDefinition(
@@ -79,7 +79,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'serial',
+          columnDefault: 'nextval(\'badges_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
           name: 'code',
@@ -115,6 +115,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
       foreignKeys: [],
       indexes: [
         _i2.IndexDefinition(
+          indexName: 'badges_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
           indexName: 'badges_code_idx',
           tableSpace: null,
           elements: [
@@ -141,7 +154,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'serial',
+          columnDefault: 'nextval(\'book_translations_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
           name: 'bookId',
@@ -176,6 +189,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       indexes: [
         _i2.IndexDefinition(
+          indexName: 'book_translations_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
           indexName: 'book_translations_book_language_idx',
           tableSpace: null,
           elements: [
@@ -206,7 +232,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'serial',
+          columnDefault: 'nextval(\'books_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
           name: 'slug',
@@ -266,6 +292,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
       foreignKeys: [],
       indexes: [
         _i2.IndexDefinition(
+          indexName: 'books_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
           indexName: 'books_slug_idx',
           tableSpace: null,
           elements: [
@@ -292,7 +331,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'serial',
+          columnDefault: 'nextval(\'child_badges_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
           name: 'childId',
@@ -337,6 +376,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       indexes: [
         _i2.IndexDefinition(
+          indexName: 'child_badges_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
           indexName: 'child_badges_child_badge_idx',
           tableSpace: null,
           elements: [
@@ -367,7 +419,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'serial',
+          columnDefault: 'nextval(\'child_profiles_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
           name: 'parentId',
@@ -432,6 +484,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       indexes: [
         _i2.IndexDefinition(
+          indexName: 'child_profiles_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
           indexName: 'idx_child_profiles_parent',
           tableSpace: null,
           elements: [
@@ -458,7 +523,8 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'serial',
+          columnDefault:
+              'nextval(\'devotional_translations_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
           name: 'devotionalId',
@@ -511,6 +577,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       indexes: [
         _i2.IndexDefinition(
+          indexName: 'devotional_translations_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
           indexName: 'devotional_translations_devotional_language_idx',
           tableSpace: null,
           elements: [
@@ -541,7 +620,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'serial',
+          columnDefault: 'nextval(\'devotionals_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
           name: 'date',
@@ -558,6 +637,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       foreignKeys: [],
       indexes: [
+        _i2.IndexDefinition(
+          indexName: 'devotionals_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
         _i2.IndexDefinition(
           indexName: 'devotionals_date_idx',
           tableSpace: null,
@@ -585,7 +677,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnType: _i2.ColumnType.uuid,
           isNullable: false,
           dartType: 'UuidValue',
-          columnDefault: 'random',
+          columnDefault: 'gen_random_uuid()',
         ),
         _i2.ColumnDefinition(
           name: 'childId',
@@ -636,6 +728,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       indexes: [
         _i2.IndexDefinition(
+          indexName: 'download_records_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
           indexName: 'idx_downloads_child_book',
           tableSpace: null,
           elements: [
@@ -666,7 +771,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'serial',
+          columnDefault: 'nextval(\'page_contents_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
           name: 'pageId',
@@ -707,6 +812,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       indexes: [
         _i2.IndexDefinition(
+          indexName: 'page_contents_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
           indexName: 'page_contents_page_language_idx',
           tableSpace: null,
           elements: [
@@ -737,7 +855,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'serial',
+          columnDefault: 'nextval(\'pages_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
           name: 'bookId',
@@ -777,6 +895,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
         ),
       ],
       indexes: [
+        _i2.IndexDefinition(
+          indexName: 'pages_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
         _i2.IndexDefinition(
           indexName: 'idx_pages_book',
           tableSpace: null,
@@ -821,7 +952,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnType: _i2.ColumnType.uuid,
           isNullable: false,
           dartType: 'UuidValue',
-          columnDefault: 'random',
+          columnDefault: 'gen_random_uuid()',
         ),
         _i2.ColumnDefinition(
           name: 'childId',
@@ -896,6 +1027,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
       ],
       indexes: [
         _i2.IndexDefinition(
+          indexName: 'reading_progress_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
           indexName: 'idx_progress_child_book',
           tableSpace: null,
           elements: [
@@ -943,7 +1087,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'serial',
+          columnDefault: 'nextval(\'users_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
           name: 'authUserId',
@@ -995,6 +1139,19 @@ class Protocol extends _i1.DatabaseSerializationManager {
         ),
       ],
       indexes: [
+        _i2.IndexDefinition(
+          indexName: 'users_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
         _i2.IndexDefinition(
           indexName: 'users_auth_user_idx',
           tableSpace: null,
@@ -1272,21 +1429,17 @@ class Protocol extends _i1.DatabaseSerializationManager {
       case _i24.ReadingProgress():
         return 'ReadingProgress';
     }
+    className = _i2.Protocol().getClassNameForObject(data);
+    if (className != null) {
+      return 'serverpod.$className';
+    }
     className = _i3.Protocol().getClassNameForObject(data);
     if (className != null) {
-      return className.contains('.')
-          ? className
-          : 'serverpod_auth_idp.$className';
+      return 'serverpod_auth_idp.$className';
     }
     className = _i4.Protocol().getClassNameForObject(data);
     if (className != null) {
-      return className.contains('.')
-          ? className
-          : 'serverpod_auth_core.$className';
-    }
-    className = _i2.Protocol().getClassNameForObject(data);
-    if (className != null) {
-      return className.contains('.') ? className : 'serverpod.$className';
+      return 'serverpod_auth_core.$className';
     }
     return null;
   }
@@ -1357,6 +1510,10 @@ class Protocol extends _i1.DatabaseSerializationManager {
     if (dataClassName == 'ReadingProgress') {
       return deserialize<_i24.ReadingProgress>(data['data']);
     }
+    if (dataClassName.startsWith('serverpod.')) {
+      data['className'] = dataClassName.substring(10);
+      return _i2.Protocol().deserializeByClassName(data);
+    }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);
       return _i3.Protocol().deserializeByClassName(data);
@@ -1365,16 +1522,7 @@ class Protocol extends _i1.DatabaseSerializationManager {
       data['className'] = dataClassName.substring(20);
       return _i4.Protocol().deserializeByClassName(data);
     }
-    if (dataClassName.startsWith('serverpod.')) {
-      data['className'] = dataClassName.substring(10);
-      return _i2.Protocol().deserializeByClassName(data);
-    }
     return super.deserializeByClassName(data);
-  }
-
-  void _registerHostProtocols() {
-    _i3.Protocol().registerHostProtocol('kingdom_kids', this);
-    _i4.Protocol().registerHostProtocol('kingdom_kids', this);
   }
 
   @override
