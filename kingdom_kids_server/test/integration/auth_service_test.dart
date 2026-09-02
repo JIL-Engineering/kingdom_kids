@@ -31,7 +31,7 @@ void main() {
             true,
           );
 
-          expect(
+          await expectLater(
             AuthService.verifyParentPin(session, authUserId, '1234'),
             throwsA(isA<StateError>()),
           );
@@ -99,7 +99,7 @@ void main() {
             true,
           );
 
-          expect(
+          await expectLater(
             AuthService.setParentPin(session, authUserId, '123'),
             throwsA(isA<ArgumentError>()),
           );

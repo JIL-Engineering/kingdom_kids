@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/auth/session_state.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/kingdom_button.dart';
@@ -36,6 +37,10 @@ class _PinGateScreenState extends State<PinGateScreen> {
   @override
   void initState() {
     super.initState();
+    _loadInitialStep();
+  }
+
+  void _loadInitialStep() {
     _initialStepFuture = widget.mode == PinGateMode.change
         ? Future.value(_PinStep.verify)
         : client.appUser.hasParentPin().then(
@@ -52,6 +57,29 @@ class _PinGateScreenState extends State<PinGateScreen> {
         child: FutureBuilder<_PinStep>(
           future: _initialStepFuture,
           builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Could not check your PIN status. '
+                        'Check your connection and try again.',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.bodyMedium,
+                      ),
+                      const SizedBox(height: 16),
+                      KingdomButton(
+                        label: 'Retry',
+                        onPressed: () => setState(_loadInitialStep),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             }
@@ -133,6 +161,7 @@ class _PinFlowState extends State<_PinFlow> {
       if (widget.gateMode == PinGateMode.change) {
         Navigator.of(context).pop();
       } else {
+        sessionState.unlockParentMode();
         context.pushReplacement('/settings');
       }
     } catch (e) {

@@ -44,7 +44,17 @@ final appRouter = GoRouter(
 
     final shouldLeave =
         _preAuthRoutes.contains(loc) || loc == '/consent' || loc == '/splash';
-    return shouldLeave ? '/profiles' : null;
+    if (shouldLeave) return '/profiles';
+
+    // /settings is parent-only. This is the actual enforcement -- reaching
+    // it any other way than through a successful PinGateScreen (deep link,
+    // restored navigation state, a future button that goes straight there)
+    // must not bypass the PIN.
+    if (loc == '/settings' && !sessionState.isParentModeUnlocked) {
+      return '/settings/pin-gate';
+    }
+
+    return null;
   },
   routes: [
     GoRoute(

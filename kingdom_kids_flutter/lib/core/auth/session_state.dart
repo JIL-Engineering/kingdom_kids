@@ -19,16 +19,43 @@ class SessionState extends ChangeNotifier {
 
   bool _isLoadingProfile = true;
   AppUser? _profile;
+  bool _isParentModeUnlocked = false;
+
+  /// null until the first auth check completes; used only to detect a real
+  /// sign-in/out transition below.
+  bool? _lastIsAuthenticated;
 
   bool get isAuthenticated => client.auth.isAuthenticated;
   bool get isLoadingProfile => _isLoadingProfile;
   bool get hasCompletedProfile => _profile?.consentGivenAt != null;
   AppUser? get profile => _profile;
 
+  /// Whether the parent has passed the PIN gate this session. Checked by
+  /// app_router.dart to guard /settings -- reset on sign-out.
+  bool get isParentModeUnlocked => _isParentModeUnlocked;
+
+  /// Called by PinGateScreen after a successful create/verify. This is the
+  /// only way /settings becomes reachable.
+  void unlockParentMode() {
+    _isParentModeUnlocked = true;
+    notifyListeners();
+  }
+
   Future<void> _onAuthChanged() async {
-    if (!isAuthenticated) {
+    final authenticated = isAuthenticated;
+
+    // authInfoListenable also fires on silent background token refresh, not
+    // just real sign-in/out -- without this guard, every refresh re-enters
+    // the loading branch below and app_router.dart force-redirects to
+    // /splash mid-navigation. Only react when the authenticated state
+    // actually flips.
+    if (_lastIsAuthenticated == authenticated) return;
+    _lastIsAuthenticated = authenticated;
+
+    if (!authenticated) {
       _profile = null;
       _isLoadingProfile = false;
+      _isParentModeUnlocked = false;
       notifyListeners();
       return;
     }
