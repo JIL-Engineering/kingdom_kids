@@ -15,7 +15,8 @@ import 'package:serverpod/serverpod.dart' as _i1;
 
 enum AppLanguage implements _i1.SerializableModel {
   en,
-  fr;
+  fr
+  ;
 
   static AppLanguage fromJson(int index) {
     switch (index) {
