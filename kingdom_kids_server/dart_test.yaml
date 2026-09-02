@@ -1,2 +1,9 @@
 tags:
   integration: {}
+
+# Each withServerpod(...) group boots its own Serverpod test instance on a
+# fixed port -- running integration test files concurrently (dart test's
+# default) makes them race for it. See docs/07_team_playbook.md and the
+# serverpod-testing skill: "With many concurrent tests, DB connections can
+# exceed limits." Force sequential execution instead.
+concurrency: 1

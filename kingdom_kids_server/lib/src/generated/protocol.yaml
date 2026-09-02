@@ -10,7 +10,11 @@ emailIdp:
 jwtRefresh:
   - refreshAccessToken:
 appUser:
+  - getMyProfile:
   - completeProfile:
+  - hasParentPin:
+  - setParentPin:
+  - verifyParentPin:
 child:
   - listChildren:
   - createChild:

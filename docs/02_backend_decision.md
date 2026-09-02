@@ -29,3 +29,10 @@ This gets stack consistency now and defers the CMS investment to exactly the poi
 ## Long-term consideration
 
 Serverpod's ecosystem and hiring pool are smaller than Django's. This is the right call for the current team's skill set; if JIL Engineering later needs to hire multiple additional backend developers, factor that hiring-pool trade-off back into the decision.
+
+## Version & stability risk (added after the Sprint 2 architecture review)
+
+`serverpod`, `serverpod_auth_idp_server`, and the R2 storage integration are all pinned to `4.0.0-beta.0` — every load-bearing server package is pre-1.0. That's an acceptable trade for a team this size right now (Serverpod's Dart-everywhere model is still the right call), but it's a real, live risk that shouldn't sit undocumented: beta releases can carry breaking changes between versions, and the newer integrations (like the R2 storage package) are less battle-tested than the core framework. In practice:
+
+- Treat any `serverpod`/`serverpod_*` version bump as its own reviewed PR with the changelog read first — never a drive-by `pub upgrade` bundled into unrelated work.
+- Re-check this decision once Serverpod reaches a stable 1.0, or once JIL Engineering is relying on it for anything handling live donor/church data at meaningfully larger scale than the pilot.

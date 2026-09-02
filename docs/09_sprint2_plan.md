@@ -17,6 +17,31 @@
 
 ---
 
+## Corrections requises avant de continuer (revue d'architecture + revue de la PR #39)
+
+Une revue de la PR #39 (Daniel, R2 + `LibraryEndpoint`) et une relecture complète des docs de spec (`02`, `03`, `04`) ont fait remonter des problèmes concrets — certains déjà corrigés directement dans les docs, d'autres à corriger dans le code de chacun avant de continuer. `03_technical_spec.md` §3 et §4, `04_technical_primer.md` §8, et `02_backend_decision.md` viennent d'être mis à jour : lis les sections modifiées avant de commencer les tâches ci-dessous, certaines annulent une hypothèse que tu avais peut-être déjà en tête.
+
+Le changement le plus important : `AgeBracket`, `AppLanguage`, et `BookCategory` sont maintenant des enums Serverpod définies dans la spec, pas du texte libre. La spec disait `ChildProfile.age_bracket` comme une étiquette (« 3-5 »/« 6-8 »/« 9-12 ») mais ne précisait jamais le format de `Book.age_bracket_min/max` — et dans la PR #39, `browseBooks` fait un `int.tryParse` dessus, ce qui échoue silencieusement pour un livre sur toutes les lignes réelles si le format est une étiquette plutôt qu'un entier. Ce n'est pas la faute de qui que ce soit en particulier — la spec ne tranchait juste pas. C'est tranché maintenant : une seule enum, partagée par les deux modèles.
+
+### Sterelle
+
+- Avant de finaliser le gabarit Google Sheet (issue #6) : relis `03_technical_spec.md` §3 (« Typed domain values ») et fais en sorte que les colonnes `age_bracket_min`/`age_bracket_max`/`category` du gabarit utilisent les valeurs d'enum exactes (`threeToFive`/`sixToEight`/`nineToTwelve`, `bibleStory`/`characterBuilding`/`prayer`/`devotional`/`sundaySchool`), pas du texte libre inventé au fil de l'eau. C'est le genre de détail qui coûte cher à corriger une fois que le script d'import et 15-25 lignes de contenu existent déjà.
+- **Bloquant, à faire cette semaine :** applique la migration de réparation de l'issue #24 (`badges.trigger_rule`, `devotionals.date`). Ce n'est plus juste un reliquat du Sprint 1 — tant qu'elle n'est pas appliquée, un `serverpod create-migration` lancé par erreur par n'importe qui peut générer un `ALTER` destructeur sur ces deux colonnes. Coordonne avec Emmanuel pour lancer `serverpod start` ensemble — c'est une action sur la vraie base de données, jamais en solo.
+- Pendant l'audit de la Tâche 2 de `08_sprint1_assignments.md` (comparer chaque `.spy.yaml` à `db/schema.sql`), vérifie aussi qu'aucun autre champ n'est modélisé en `String` alors qu'il représente en réalité un ensemble fixe de valeurs. C'est maintenant la deuxième fois que ce pattern précis cause un bug réel dans ce projet (badges/devotionals, puis age_bracket/category/language) — ça vaut la peine d'être vigilant partout, pas juste sur ce qui a déjà été trouvé.
+
+### Daniel
+
+- Corrige d'abord les points de la review déjà postée sur la PR #39 (bloquants : double `pod.start()`, titre du livre jamais renvoyé ; à corriger : endpoint de test sans auth, extension `.spy.yaml`) avant de redemander une relecture.
+- En plus de ça, deux changements liés à la mise à jour de la spec :
+  - Remplace le `int.tryParse(book.ageBracketMin)` de `browseBooks` par une comparaison sur l'enum `AgeBracket` maintenant définie dans `03_technical_spec.md` §3 — ça règle en même temps le filtre d'âge qui ne s'appliquait en pratique à aucun livre.
+  - `browseBooks`/`getBook`/`getRecommended` doivent renvoyer des URLs signées R2 (courte durée) pour chaque champ asset (`coverImageAsset`, `illustrationAsset`, `audioAsset`), pas les noms de fichiers bruts actuels — voir la note ajoutée dans `03_technical_spec.md` §4. Ça veut dire retirer `public: true` de `R2CloudStorage` dans `server.dart` : le bucket doit rester privé. (Vérification faite côté Cloudflare : l'accès public r2.dev est de toute façon désactivé sur le bucket réel en ce moment, donc `public: true` ne fonctionnait déjà pas — juste pas pour la bonne raison. Le corriger proprement avec des URLs signées règle les deux problèmes en même temps.)
+
+### Josué
+
+- Rien de nouveau à corriger sorti de cette revue. Rappel simple : la question de design du PIN (Tâche 2, déjà notée dans `08_sprint1_assignments.md` et `09_sprint2_plan.md`) reste à trancher avec Emmanuel avant de coder cet écran — ça n'a pas changé.
+
+---
+
 ## Sterelle — Base de données & traitement des données
 
 ### Tâche : gabarit Google Sheet + script d'import (issue [#6](../../issues/6))

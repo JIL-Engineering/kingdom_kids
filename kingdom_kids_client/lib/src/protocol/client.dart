@@ -257,6 +257,16 @@ class EndpointAppUser extends _i2.EndpointRef {
   @override
   String get name => 'appUser';
 
+  /// Profil de l'utilisateur connecté, ou null si pas encore complété
+  /// (avant le premier consentement) -- permet au client de sauter
+  /// l'onboarding/consentement pour un utilisateur qui revient.
+  _i3.Future<_i5.AppUser?> getMyProfile() =>
+      caller.callServerEndpoint<_i5.AppUser?>(
+        'appUser',
+        'getMyProfile',
+        {},
+      );
+
   /// Étape 3 du sprint : Méthode completeProfile appelée juste après l'inscription
   _i3.Future<_i5.AppUser> completeProfile(
     String country,
@@ -273,6 +283,29 @@ class EndpointAppUser extends _i2.EndpointRef {
       'consentAccepted': consentAccepted,
     },
   );
+
+  /// Indique si un PIN parental a déjà été configuré.
+  _i3.Future<bool> hasParentPin() => caller.callServerEndpoint<bool>(
+    'appUser',
+    'hasParentPin',
+    {},
+  );
+
+  /// Définit ou change le PIN qui protège le Mode Parent.
+  _i3.Future<void> setParentPin(String pin) => caller.callServerEndpoint<void>(
+    'appUser',
+    'setParentPin',
+    {'pin': pin},
+  );
+
+  /// Vérifie le PIN parental. Lève une exception si aucun PIN n'a encore
+  /// été configuré -- l'appelant doit alors proposer d'en créer un.
+  _i3.Future<bool> verifyParentPin(String pin) =>
+      caller.callServerEndpoint<bool>(
+        'appUser',
+        'verifyParentPin',
+        {'pin': pin},
+      );
 }
 
 /// {@category Endpoint}
