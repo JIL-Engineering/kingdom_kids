@@ -151,9 +151,9 @@ class Protocol extends _i1.DatabaseSerializationManager {
         ),
         _i2.ColumnDefinition(
           name: 'language',
-          columnType: _i2.ColumnType.text,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
-          dartType: 'String',
+          dartType: 'protocol:AppLanguage',
         ),
         _i2.ColumnDefinition(
           name: 'title',
