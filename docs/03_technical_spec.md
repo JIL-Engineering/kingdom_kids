@@ -42,25 +42,31 @@ Rationale recap: Serverpod gives one Dart codebase across app and server, with t
 
 ## 3. Core Data Model
 
+**Typed domain values (added after the Sprint 2 architecture review — read before modeling any of the fields below):** `AgeBracket` and `AppLanguage` and `BookCategory` are Serverpod `enum:` types, not free-text `String` fields, anywhere they appear in this spec. This replaces an earlier ambiguity where `ChildProfile.age_bracket` was documented as one of three discrete labels while `Book.age_bracket_min/max` had no format specified at all — an import script and an endpoint each guessed a different shape (bracket label vs. raw integer) for the same conceptual value, and the mismatch made age filtering silently do nothing. One enum, defined once, closes that off at the type-checker level instead of by convention:
+
+- **AgeBracket**: `threeToFive` / `sixToEight` / `nineToTwelve`, compared by declared order (index), never parsed from a string or number.
+- **AppLanguage**: `en` / `fr`.
+- **BookCategory**: `bibleStory` / `characterBuilding` / `prayer` / `devotional` / `sundaySchool`.
+
 **User / AppUser** (parent account)
-- id, auth_user_id (FK to `serverpod_auth_idp`'s own user/email/password tables — this app never stores email or password_hash directly), country, timezone, preferred_language, consent_given_at *(records parental consent acceptance — required before any child profile can be created)*, parent_pin_hash *(bcrypt, gates parent-only Settings actions)*, created_at
+- id, auth_user_id (FK to `serverpod_auth_idp`'s own user/email/password tables — this app never stores email or password_hash directly), country, timezone, preferred_language (AppLanguage), consent_given_at *(records parental consent acceptance — required before any child profile can be created)*, parent_pin_hash *(bcrypt, gates parent-only Settings actions)*, created_at
 
 **ChildProfile**
-- id, parent (FK User), display_name, birth_year *(year only — no full DOB stored)*, age_bracket (auto-derived: 3-5 / 6-8 / 9-12), preferred_language, avatar_id, pin_protected (bool), created_at
+- id, parent (FK User), display_name, birth_year *(year only — no full DOB stored)*, age_bracket (AgeBracket, computed server-side from birth_year — never trust a client-supplied value, and never hand-authored per row), preferred_language (AppLanguage), avatar_id, pin_protected (bool), created_at
 - *Streaks and "daily" logic (devotionals, streak resets) are computed using the parent's `timezone`, not server time — otherwise a family's streak can reset at the wrong local hour.*
 
 **Book**
-- id, slug, title, age_bracket_min, age_bracket_max, category (bible_story / character_building / prayer / devotional / sunday_school), cover_image, is_published, content_version (int), updated_at, created_at
+- id, slug, title, age_bracket_min (AgeBracket), age_bracket_max (AgeBracket) *(the inclusive range of brackets this book targets — e.g. min=`threeToFive`, max=`sixToEight` covers two brackets; a requested bracket matches if it falls within `[min, max]` by enum order)*, category (BookCategory), cover_image_asset *(a storage key/path, not a URL — see the note on asset fields under §4)*, is_published, content_version (int), updated_at, created_at
 - *`content_version` increments whenever a published book's text, audio, or images change. The app compares its locally cached version against the server's on each sync check and re-downloads only when stale — without this, a family with an offline book never learns a typo fix or re-translation shipped.*
 
 **BookTranslation**
-- id, book (FK Book), language (en/fr), title_localized
+- id, book (FK Book), language (AppLanguage), title_localized
 
 **Page**
-- id, book (FK Book), page_number, illustration_asset, layout_type
+- id, book (FK Book), page_number, illustration_asset *(storage key/path, not a URL)*, layout_type
 
 **PageContent**
-- id, page (FK Page), language, text, audio_asset — *this row is what makes a book bilingual: same Page, two PageContent rows.*
+- id, page (FK Page), language (AppLanguage), text, audio_asset *(storage key/path, not a URL)* — *this row is what makes a book bilingual: same Page, two PageContent rows.*
 
 **ReadingProgress**
 - id, child (FK ChildProfile), book (FK Book), current_page, completed (bool), started_at, completed_at, total_time_seconds
@@ -119,6 +125,17 @@ LibraryEndpoint
   getDownloadBundle(bookId) -> signed R2 asset URLs for offline caching
   checkForUpdates(childId) -> List<{bookId, contentVersion}>
      (compares locally cached versions against current; app re-downloads only stale books)
+
+  Note on asset fields (added after the Sprint 2 architecture review): every field the
+  database calls an "asset" (cover_image_asset, illustration_asset, audio_asset) stores a
+  storage key/path, never a URL. browseBooks, getRecommended, and getBook all resolve
+  those keys into short-lived signed GET URLs before returning — the exact same signing
+  mechanism getDownloadBundle already uses, just issued per-request instead of per-bundle.
+  This is the one and only way an asset ever reaches the client. The R2 bucket backing
+  this storage stays private with no public/r2.dev access and no custom public domain —
+  there is deliberately no code path where the app is handed a bare filename and expected
+  to guess a public URL for it. See docs/04_technical_primer.md §8 for why (traceability,
+  no permanent public links).
 
 ProgressEndpoint
   logProgress(childId, bookId, currentPage, completed) -> ProgressResult
