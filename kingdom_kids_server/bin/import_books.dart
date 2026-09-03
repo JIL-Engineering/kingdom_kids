@@ -191,5 +191,7 @@ Future<void> main(List<String> args) async {
 
   await connection.close();
   // ignore: avoid_print
-  print('Imported $bookCount book(s), $pageCount page(s) from ${csvFile.path}.');
+  print(
+    'Imported $bookCount book(s), $pageCount page(s) from ${csvFile.path}.',
+  );
 }
