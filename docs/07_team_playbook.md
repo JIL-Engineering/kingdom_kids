@@ -2,7 +2,7 @@
 
 *Une référence vivante pour toute l'équipe : les commandes, comment chaque partie de la stack fonctionne, et comment on travaille ensemble sur GitHub. Ce fichier ne change pas à chaque sprint — pour « qu'est-ce que je construis en ce moment », voir `09_sprint2_plan.md` (le sprint précédent reste dans `08_sprint1_assignments.md`).*
 
-Équipe :
+Équipe : 
 
 | Personne | Rôle | GitHub |
 |---|---|---|

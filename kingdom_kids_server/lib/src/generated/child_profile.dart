@@ -12,6 +12,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:serverpod/serverpod.dart' as _i1;
+import 'age_bracket.dart' as _i2;
 
 abstract class ChildProfile
     implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
@@ -32,7 +33,7 @@ abstract class ChildProfile
     required int parentId,
     required String displayName,
     required int birthYear,
-    required String ageBracket,
+    required _i2.AgeBracket ageBracket,
     required String preferredLanguage,
     required String avatarId,
     required bool pinProtected,
@@ -45,7 +46,9 @@ abstract class ChildProfile
       parentId: jsonSerialization['parentId'] as int,
       displayName: jsonSerialization['displayName'] as String,
       birthYear: jsonSerialization['birthYear'] as int,
-      ageBracket: jsonSerialization['ageBracket'] as String,
+      ageBracket: _i2.AgeBracket.fromJson(
+        (jsonSerialization['ageBracket'] as int),
+      ),
       preferredLanguage: jsonSerialization['preferredLanguage'] as String,
       avatarId: jsonSerialization['avatarId'] as String,
       pinProtected: _i1.BoolJsonExtension.fromJson(
@@ -70,7 +73,7 @@ abstract class ChildProfile
 
   int birthYear;
 
-  String ageBracket;
+  _i2.AgeBracket ageBracket;
 
   String preferredLanguage;
 
@@ -91,7 +94,7 @@ abstract class ChildProfile
     int? parentId,
     String? displayName,
     int? birthYear,
-    String? ageBracket,
+    _i2.AgeBracket? ageBracket,
     String? preferredLanguage,
     String? avatarId,
     bool? pinProtected,
@@ -105,7 +108,7 @@ abstract class ChildProfile
       'parentId': parentId,
       'displayName': displayName,
       'birthYear': birthYear,
-      'ageBracket': ageBracket,
+      'ageBracket': ageBracket.toJson(),
       'preferredLanguage': preferredLanguage,
       'avatarId': avatarId,
       'pinProtected': pinProtected,
@@ -121,7 +124,7 @@ abstract class ChildProfile
       'parentId': parentId,
       'displayName': displayName,
       'birthYear': birthYear,
-      'ageBracket': ageBracket,
+      'ageBracket': ageBracket.toJson(),
       'preferredLanguage': preferredLanguage,
       'avatarId': avatarId,
       'pinProtected': pinProtected,
@@ -169,7 +172,7 @@ class _ChildProfileImpl extends ChildProfile {
     required int parentId,
     required String displayName,
     required int birthYear,
-    required String ageBracket,
+    required _i2.AgeBracket ageBracket,
     required String preferredLanguage,
     required String avatarId,
     required bool pinProtected,
@@ -195,7 +198,7 @@ class _ChildProfileImpl extends ChildProfile {
     int? parentId,
     String? displayName,
     int? birthYear,
-    String? ageBracket,
+    _i2.AgeBracket? ageBracket,
     String? preferredLanguage,
     String? avatarId,
     bool? pinProtected,
@@ -233,7 +236,9 @@ class ChildProfileUpdateTable extends _i1.UpdateTable<ChildProfileTable> {
     value,
   );
 
-  _i1.ColumnValue<String, String> ageBracket(String value) => _i1.ColumnValue(
+  _i1.ColumnValue<_i2.AgeBracket, _i2.AgeBracket> ageBracket(
+    _i2.AgeBracket value,
+  ) => _i1.ColumnValue(
     table.ageBracket,
     value,
   );
@@ -277,9 +282,10 @@ class ChildProfileTable extends _i1.Table<int?> {
       'birthYear',
       this,
     );
-    ageBracket = _i1.ColumnString(
+    ageBracket = _i1.ColumnEnum(
       'ageBracket',
       this,
+      _i1.EnumSerialization.byIndex,
     );
     preferredLanguage = _i1.ColumnString(
       'preferredLanguage',
@@ -307,7 +313,7 @@ class ChildProfileTable extends _i1.Table<int?> {
 
   late final _i1.ColumnInt birthYear;
 
-  late final _i1.ColumnString ageBracket;
+  late final _i1.ColumnEnum<_i2.AgeBracket> ageBracket;
 
   late final _i1.ColumnString preferredLanguage;
 

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_idp_server/core.dart';
 import 'package:serverpod_auth_idp_server/providers/email.dart';
+import 'package:serverpod_cloud_storage_r2/serverpod_cloud_storage_r2.dart';
 
 import 'src/generated/endpoints.dart';
 import 'src/generated/protocol.dart';
@@ -81,6 +82,15 @@ void run(List<String> args) async {
       '/**',
     );
   }
+  final r2Storage = R2CloudStorage(
+    serverpod: pod,
+    storageId: 'public',
+    accountId: 'abff51f216ea7c6ef4f4459feeb868db',
+    bucket: 'kingdom-kids-assets',
+    public: true,
+  );
+
+  pod.addCloudStorage(r2Storage);
 
   // Start the server.
   await pod.start();

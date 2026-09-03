@@ -16,11 +16,16 @@ import '../auth/email_idp_endpoint.dart' as _i2;
 import '../auth/jwt_refresh_endpoint.dart' as _i3;
 import '../endpoints/app_user_endpoint.dart' as _i4;
 import '../endpoints/child_endpoint.dart' as _i5;
-import '../greetings/greeting_endpoint.dart' as _i6;
+import '../endpoints/library_endpoint.dart' as _i6;
+import '../endpoints/storage_test_endpoint.dart' as _i7;
+import '../greetings/greeting_endpoint.dart' as _i8;
+import 'package:kingdom_kids_server/src/generated/age_bracket.dart' as _i9;
+import 'package:kingdom_kids_server/src/generated/app_language.dart' as _i10;
+import 'package:kingdom_kids_server/src/generated/book_category.dart' as _i11;
 import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
-    as _i7;
+    as _i12;
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
-    as _i8;
+    as _i13;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -50,7 +55,19 @@ class Endpoints extends _i1.EndpointDispatch {
           'child',
           null,
         ),
-      'greeting': _i6.GreetingEndpoint()
+      'library': _i6.LibraryEndpoint()
+        ..initialize(
+          server,
+          'library',
+          null,
+        ),
+      'storageTest': _i7.StorageTestEndpoint()
+        ..initialize(
+          server,
+          'storageTest',
+          null,
+        ),
+      'greeting': _i8.GreetingEndpoint()
         ..initialize(
           server,
           'greeting',
@@ -457,6 +474,83 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
+    connectors['library'] = _i1.EndpointConnector(
+      name: 'library',
+      endpoint: endpoints['library']!,
+      methodConnectors: {
+        'browseBooks': _i1.MethodConnector(
+          name: 'browseBooks',
+          params: {
+            'ageBracket': _i1.ParameterDescription(
+              name: 'ageBracket',
+              type: _i1.getType<_i9.AgeBracket?>(),
+              nullable: true,
+            ),
+            'language': _i1.ParameterDescription(
+              name: 'language',
+              type: _i1.getType<_i10.AppLanguage?>(),
+              nullable: true,
+            ),
+            'category': _i1.ParameterDescription(
+              name: 'category',
+              type: _i1.getType<_i11.BookCategory?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['library'] as _i6.LibraryEndpoint).browseBooks(
+                    session,
+                    ageBracket: params['ageBracket'],
+                    language: params['language'],
+                    category: params['category'],
+                  ),
+        ),
+        'getBook': _i1.MethodConnector(
+          name: 'getBook',
+          params: {
+            'bookId': _i1.ParameterDescription(
+              name: 'bookId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'language': _i1.ParameterDescription(
+              name: 'language',
+              type: _i1.getType<_i10.AppLanguage>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['library'] as _i6.LibraryEndpoint).getBook(
+                session,
+                params['bookId'],
+                params['language'],
+              ),
+        ),
+      },
+    );
+    connectors['storageTest'] = _i1.EndpointConnector(
+      name: 'storageTest',
+      endpoint: endpoints['storageTest']!,
+      methodConnectors: {
+        'testUpload': _i1.MethodConnector(
+          name: 'testUpload',
+          params: {},
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['storageTest'] as _i7.StorageTestEndpoint)
+                  .testUpload(session),
+        ),
+      },
+    );
     connectors['greeting'] = _i1.EndpointConnector(
       name: 'greeting',
       endpoint: endpoints['greeting']!,
@@ -474,16 +568,16 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['greeting'] as _i6.GreetingEndpoint).hello(
+              ) async => (endpoints['greeting'] as _i8.GreetingEndpoint).hello(
                 session,
                 params['name'],
               ),
         ),
       },
     );
-    modules['serverpod_auth_idp'] = _i7.Endpoints()
+    modules['serverpod_auth_idp'] = _i12.Endpoints()
       ..initializeEndpoints(server);
-    modules['serverpod_auth_core'] = _i8.Endpoints()
+    modules['serverpod_auth_core'] = _i13.Endpoints()
       ..initializeEndpoints(server);
   }
 }

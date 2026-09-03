@@ -1,0 +1,8 @@
+class: BookPage
+fields:
+  pageNumber: int
+  illustrationAsset: String
+  layoutType: String
+  text: String
+  audioAsset: String
+
