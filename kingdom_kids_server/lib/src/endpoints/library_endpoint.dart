@@ -170,11 +170,15 @@ class LibraryEndpoint extends Endpoint {
     );
   }
 
-  // getDownloadBundle — NOUVEAU
+  // getDownloadBundle
   // NOTE: utilise pour l'instant AssetUrlService.publicUrl (URLs publiques, non expirantes),
   // car AssetUrlService.signedUrl n'existe pas encore — voir le TODO dans asset_url_service.dart
   // (SigV4 R2 à implémenter séparément, probablement lié à la tâche R2 de Sterelle).
   // À remplacer par de vraies URLs signées temporaires une fois cette infra prête.
+  //
+  // CORRECTION REVIEW : même traitement que getBook (PR #39) pour une page sans
+  // traduction dans la langue demandée — erreur explicite plutôt que de sauter
+  // silencieusement l'audio, sinon une famille télécharge un livre avec des pages muettes.
   Future<DownloadBundle> getDownloadBundle(
     Session session,
     int bookId,
@@ -210,20 +214,23 @@ class LibraryEndpoint extends Endpoint {
 
     for (final page in pages) {
       final content = contentByPageId[page.id];
+      if (content == null) {
+        throw StateError(
+          'Page translation not found for language ${language.name}: ${page.id}',
+        );
+      }
       assets.add(
         DownloadAsset(
           assetKey: page.illustrationAsset,
           url: await AssetUrlService.publicUrl(session, page.illustrationAsset),
         ),
       );
-      if (content != null) {
-        assets.add(
-          DownloadAsset(
-            assetKey: content.audioAsset,
-            url: await AssetUrlService.publicUrl(session, content.audioAsset),
-          ),
-        );
-      }
+      assets.add(
+        DownloadAsset(
+          assetKey: content.audioAsset,
+          url: await AssetUrlService.publicUrl(session, content.audioAsset),
+        ),
+      );
     }
 
     return DownloadBundle(
@@ -233,10 +240,14 @@ class LibraryEndpoint extends Endpoint {
     );
   }
 
-  // getRecommended — NOUVEAU
-  // Logique MVP simple : livres publiés, dans la tranche d'âge de l'enfant,
-  // que l'enfant n'a pas encore commencés, triés par date de création (plus récents en premier).
-  // Pas de scoring/ML pour le MVP — à faire évoluer plus tard si besoin.
+  // getRecommended
+  // Implémente la règle de 03_technical_spec.md §4 : même catégorie que le dernier
+  // livre terminé par l'enfant, tranche d'âge correspondante, pas encore lu.
+  //
+  // FALLBACK NON SPÉCIFIÉ : si l'enfant n'a encore terminé aucun livre, la spec ne
+  // précise pas de comportement — ici on retombe sur "pas encore commencé + tranche
+  // d'âge" sans filtre de catégorie, plutôt que de retourner une liste vide. À valider
+  // avec le tech lead si c'est le bon choix pour un nouvel utilisateur.
   //
   // NOTE: ChildProfile.preferredLanguage est un String (pas un AppLanguage comme
   // PageContent.language / BookTranslation.language) — incohérence de schéma à signaler
@@ -256,11 +267,25 @@ class LibraryEndpoint extends Endpoint {
       orElse: () => AppLanguage.en,
     );
 
-    final startedProgress = await ReadingProgress.db.find(
+    final allProgress = await ReadingProgress.db.find(
       session,
       where: (t) => t.childId.equals(childId),
     );
-    final startedBookIds = startedProgress.map((p) => p.bookId).toSet();
+    final startedBookIds = allProgress.map((p) => p.bookId).toSet();
+
+    // Dernier livre terminé par l'enfant, par date d'achèvement décroissante
+    final completedProgress =
+        allProgress.where((p) => p.completed && p.completedAt != null).toList()
+          ..sort((a, b) => b.completedAt!.compareTo(a.completedAt!));
+
+    BookCategory? targetCategory;
+    if (completedProgress.isNotEmpty) {
+      final lastCompletedBook = await Book.db.findById(
+        session,
+        completedProgress.first.bookId,
+      );
+      targetCategory = lastCompletedBook?.category;
+    }
 
     final books = await Book.db.find(
       session,
@@ -279,6 +304,9 @@ class LibraryEndpoint extends Endpoint {
             );
         if (startedBookIds.isNotEmpty) {
           condition = condition & t.id.notInSet(startedBookIds);
+        }
+        if (targetCategory != null) {
+          condition = condition & t.category.equals(targetCategory);
         }
         return condition;
       },
@@ -317,7 +345,7 @@ class LibraryEndpoint extends Endpoint {
     );
   }
 
-  // checkForUpdates — NOUVEAU
+  // checkForUpdates
   // Retourne les livres créés OU modifiés depuis lastSyncedAt, pour que le client
   // sache quoi re-télécharger sans devoir tout recomparer lui-même.
   //
