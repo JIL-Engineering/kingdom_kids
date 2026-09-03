@@ -46,7 +46,8 @@ class LibraryEndpoint extends Endpoint {
         // Filtre ageBracket désormais en SQL : le livre doit couvrir la tranche demandée
         // (ageBracketMin <= ageBracket <= ageBracketMax)
         if (ageBracket != null) {
-          condition = condition &
+          condition =
+              condition &
               t.ageBracketMin.inSet(
                 AgeBracket.values
                     .where((a) => a.index <= ageBracket.index)
@@ -65,8 +66,11 @@ class LibraryEndpoint extends Endpoint {
     final bookIds = books.map((b) => b.id!).toSet();
     final translations = await BookTranslation.db.find(
       session,
-      where: (t) => t.bookId.inSet(bookIds) &
-          (language == null ? Constant.bool(true) : t.language.equals(language)),
+      where: (t) =>
+          t.bookId.inSet(bookIds) &
+          (language == null
+              ? Constant.bool(true)
+              : t.language.equals(language)),
     );
     final titleByBookId = {
       for (final translation in translations)
@@ -78,7 +82,8 @@ class LibraryEndpoint extends Endpoint {
         (book) async => BookSummary(
           id: book.id!,
           slug: book.slug,
-          title: titleByBookId[book.id!] ??
+          title:
+              titleByBookId[book.id!] ??
               (throw StateError('Book translation not found: ${book.id}')),
           ageBracketMin: book.ageBracketMin,
           ageBracketMax: book.ageBracketMax,
@@ -260,7 +265,8 @@ class LibraryEndpoint extends Endpoint {
     final books = await Book.db.find(
       session,
       where: (t) {
-        var condition = t.isPublished.equals(true) &
+        var condition =
+            t.isPublished.equals(true) &
             t.ageBracketMin.inSet(
               AgeBracket.values
                   .where((a) => a.index <= child.ageBracket.index)
@@ -284,8 +290,7 @@ class LibraryEndpoint extends Endpoint {
     final bookIds = books.map((b) => b.id!).toSet();
     final translations = await BookTranslation.db.find(
       session,
-      where: (t) =>
-          t.bookId.inSet(bookIds) & t.language.equals(childLanguage),
+      where: (t) => t.bookId.inSet(bookIds) & t.language.equals(childLanguage),
     );
     final titleByBookId = {
       for (final translation in translations)
@@ -297,7 +302,8 @@ class LibraryEndpoint extends Endpoint {
         (book) async => BookSummary(
           id: book.id!,
           slug: book.slug,
-          title: titleByBookId[book.id!] ??
+          title:
+              titleByBookId[book.id!] ??
               (throw StateError('Book translation not found: ${book.id}')),
           ageBracketMin: book.ageBracketMin,
           ageBracketMax: book.ageBracketMax,
@@ -324,8 +330,7 @@ class LibraryEndpoint extends Endpoint {
   ) async {
     final books = await Book.db.find(
       session,
-      where: (t) =>
-          t.isPublished.equals(true) & (t.updatedAt > lastSyncedAt),
+      where: (t) => t.isPublished.equals(true) & (t.updatedAt > lastSyncedAt),
       orderBy: (t) => t.updatedAt,
     );
 
@@ -344,7 +349,8 @@ class LibraryEndpoint extends Endpoint {
         (book) async => BookSummary(
           id: book.id!,
           slug: book.slug,
-          title: titleByBookId[book.id!] ??
+          title:
+              titleByBookId[book.id!] ??
               (throw StateError('Book translation not found: ${book.id}')),
           ageBracketMin: book.ageBracketMin,
           ageBracketMax: book.ageBracketMax,
