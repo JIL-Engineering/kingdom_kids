@@ -44,9 +44,9 @@ Rationale recap: Serverpod gives one Dart codebase across app and server, with t
 
 **Typed domain values (added after the Sprint 2 architecture review — read before modeling any of the fields below):** `AgeBracket` and `AppLanguage` and `BookCategory` are Serverpod `enum:` types, not free-text `String` fields, anywhere they appear in this spec. This replaces an earlier ambiguity where `ChildProfile.age_bracket` was documented as one of three discrete labels while `Book.age_bracket_min/max` had no format specified at all — an import script and an endpoint each guessed a different shape (bracket label vs. raw integer) for the same conceptual value, and the mismatch made age filtering silently do nothing. One enum, defined once, closes that off at the type-checker level instead of by convention:
 
-- **AgeBracket**: `threeToFive` / `sixToEight` / `nineToTwelve`, compared by declared order (index), never parsed from a string or number.
+- **AgeBracket**: `toddler` / `preschool` / `early_elementary` / `preteen`, compared by declared order (index), never parsed from a string or number. *(Corrected to match the actual implementation in PR #39 — this section originally proposed `threeToFive`/`sixToEight`/`nineToTwelve`, three brackets; what shipped is four, named as above. The names shipped first; this doc was the one that was wrong.)*
 - **AppLanguage**: `en` / `fr`.
-- **BookCategory**: `bibleStory` / `characterBuilding` / `prayer` / `devotional` / `sundaySchool`.
+- **BookCategory**: `bible_story` / `character_building` / `prayer` / `devotional` / `sunday_school`.
 
 **User / AppUser** (parent account)
 - id, auth_user_id (FK to `serverpod_auth_idp`'s own user/email/password tables — this app never stores email or password_hash directly), country, timezone, preferred_language (AppLanguage), consent_given_at *(records parental consent acceptance — required before any child profile can be created)*, parent_pin_hash *(bcrypt, gates parent-only Settings actions)*, created_at
@@ -56,7 +56,7 @@ Rationale recap: Serverpod gives one Dart codebase across app and server, with t
 - *Streaks and "daily" logic (devotionals, streak resets) are computed using the parent's `timezone`, not server time — otherwise a family's streak can reset at the wrong local hour.*
 
 **Book**
-- id, slug, title, age_bracket_min (AgeBracket), age_bracket_max (AgeBracket) *(the inclusive range of brackets this book targets — e.g. min=`threeToFive`, max=`sixToEight` covers two brackets; a requested bracket matches if it falls within `[min, max]` by enum order)*, category (BookCategory), cover_image_asset *(a storage key/path, not a URL — see the note on asset fields under §4)*, is_published, content_version (int), updated_at, created_at
+- id, slug, title, age_bracket_min (AgeBracket), age_bracket_max (AgeBracket) *(the inclusive range of brackets this book targets — e.g. min=`toddler`, max=`preschool` covers two brackets; a requested bracket matches if it falls within `[min, max]` by enum order)*, category (BookCategory), cover_image_asset *(a storage key/path, not a raw filename — see the note on asset fields under §4)*, is_published, content_version (int), updated_at, created_at
 - *`content_version` increments whenever a published book's text, audio, or images change. The app compares its locally cached version against the server's on each sync check and re-downloads only when stale — without this, a family with an offline book never learns a typo fix or re-translation shipped.*
 
 **BookTranslation**
@@ -128,14 +128,23 @@ LibraryEndpoint
 
   Note on asset fields (added after the Sprint 2 architecture review): every field the
   database calls an "asset" (cover_image_asset, illustration_asset, audio_asset) stores a
-  storage key/path, never a URL. browseBooks, getRecommended, and getBook all resolve
-  those keys into short-lived signed GET URLs before returning — the exact same signing
-  mechanism getDownloadBundle already uses, just issued per-request instead of per-bundle.
-  This is the one and only way an asset ever reaches the client. The R2 bucket backing
-  this storage stays private with no public/r2.dev access and no custom public domain —
-  there is deliberately no code path where the app is handed a bare filename and expected
-  to guess a public URL for it. See docs/04_technical_primer.md §8 for why (traceability,
-  no permanent public links).
+  storage key/path, never a raw filename with no host. browseBooks, getRecommended, and
+  getBook all resolve those keys into full URLs before returning, via AssetUrlService.
+
+  **Sprint 2 reality, revisit before Sprint 4 (getDownloadBundle):** the short-lived
+  signed-URL design below is the target, not what's built. Serverpod 4.0.0-beta.0 (the
+  version this project is pinned to) has no presigned/temporary-download-URL capability
+  at all — `CloudStorage.getPublicUrl` is the only way to get a URL out of R2, and it
+  requires the bucket to be public. Confirmed directly against the installed package
+  source, not assumed. So for now: the R2 bucket is public, `AssetUrlService` calls
+  `getPublicUrl`, and every asset URL is a permanent public link — the opposite of the
+  no-permanent-links design this section originally specified. This is a deliberate,
+  temporary trade-off, not an unnoticed regression. Revisit once either (a) Serverpod is
+  upgraded past the version that adds a temporary/presigned download URL method (exists
+  on Serverpod's own main branch already, not yet in a version this project has adopted),
+  or (b) assets are relayed through a private server-side endpoint instead of a direct
+  URL — see docs/04_technical_primer.md §8 for the traceability/no-permanent-links
+  reasoning this trade-off is temporarily setting aside.
 
 ProgressEndpoint
   logProgress(childId, bookId, currentPage, completed) -> ProgressResult
