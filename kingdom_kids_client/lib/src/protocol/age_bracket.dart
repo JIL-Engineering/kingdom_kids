@@ -17,7 +17,8 @@ enum AgeBracket implements _i1.SerializableModel {
   toddler,
   preschool,
   early_elementary,
-  preteen;
+  preteen
+  ;
 
   static AgeBracket fromJson(int index) {
     switch (index) {

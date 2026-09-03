@@ -27,17 +27,19 @@ import 'child_badge.dart' as _i13;
 import 'child_profile.dart' as _i14;
 import 'devotional.dart' as _i15;
 import 'devotional_translation.dart' as _i16;
-import 'download_record.dart' as _i17;
-import 'greetings/greeting.dart' as _i18;
-import 'page.dart' as _i19;
-import 'page_content.dart' as _i20;
-import 'reading_progress.dart' as _i21;
-import 'package:kingdom_kids_client/src/protocol/child_profile.dart' as _i22;
-import 'package:kingdom_kids_client/src/protocol/book_summary.dart' as _i23;
+import 'download_asset.dart' as _i17;
+import 'download_bundle.dart' as _i18;
+import 'download_record.dart' as _i19;
+import 'greetings/greeting.dart' as _i20;
+import 'page.dart' as _i21;
+import 'page_content.dart' as _i22;
+import 'reading_progress.dart' as _i23;
+import 'package:kingdom_kids_client/src/protocol/child_profile.dart' as _i24;
+import 'package:kingdom_kids_client/src/protocol/book_summary.dart' as _i25;
 import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
-    as _i24;
+    as _i26;
 import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
-    as _i25;
+    as _i27;
 export 'age_bracket.dart';
 export 'app_language.dart';
 export 'app_user.dart';
@@ -53,6 +55,8 @@ export 'child_badge.dart';
 export 'child_profile.dart';
 export 'devotional.dart';
 export 'devotional_translation.dart';
+export 'download_asset.dart';
+export 'download_bundle.dart';
 export 'download_record.dart';
 export 'greetings/greeting.dart';
 export 'page.dart';
@@ -139,20 +143,26 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i16.DevotionalTranslation) {
       return _i16.DevotionalTranslation.fromJson(data) as T;
     }
-    if (t == _i17.DownloadRecord) {
-      return _i17.DownloadRecord.fromJson(data) as T;
+    if (t == _i17.DownloadAsset) {
+      return _i17.DownloadAsset.fromJson(data) as T;
     }
-    if (t == _i18.Greeting) {
-      return _i18.Greeting.fromJson(data) as T;
+    if (t == _i18.DownloadBundle) {
+      return _i18.DownloadBundle.fromJson(data) as T;
     }
-    if (t == _i19.Page) {
-      return _i19.Page.fromJson(data) as T;
+    if (t == _i19.DownloadRecord) {
+      return _i19.DownloadRecord.fromJson(data) as T;
     }
-    if (t == _i20.PageContent) {
-      return _i20.PageContent.fromJson(data) as T;
+    if (t == _i20.Greeting) {
+      return _i20.Greeting.fromJson(data) as T;
     }
-    if (t == _i21.ReadingProgress) {
-      return _i21.ReadingProgress.fromJson(data) as T;
+    if (t == _i21.Page) {
+      return _i21.Page.fromJson(data) as T;
+    }
+    if (t == _i22.PageContent) {
+      return _i22.PageContent.fromJson(data) as T;
+    }
+    if (t == _i23.ReadingProgress) {
+      return _i23.ReadingProgress.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.AgeBracket?>()) {
       return (data != null ? _i2.AgeBracket.fromJson(data) : null) as T;
@@ -200,42 +210,54 @@ class Protocol extends _i1.SerializationManager {
       return (data != null ? _i16.DevotionalTranslation.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i17.DownloadRecord?>()) {
-      return (data != null ? _i17.DownloadRecord.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i17.DownloadAsset?>()) {
+      return (data != null ? _i17.DownloadAsset.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i18.Greeting?>()) {
-      return (data != null ? _i18.Greeting.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i18.DownloadBundle?>()) {
+      return (data != null ? _i18.DownloadBundle.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i19.Page?>()) {
-      return (data != null ? _i19.Page.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i19.DownloadRecord?>()) {
+      return (data != null ? _i19.DownloadRecord.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i20.PageContent?>()) {
-      return (data != null ? _i20.PageContent.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i20.Greeting?>()) {
+      return (data != null ? _i20.Greeting.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i21.ReadingProgress?>()) {
-      return (data != null ? _i21.ReadingProgress.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i21.Page?>()) {
+      return (data != null ? _i21.Page.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i22.PageContent?>()) {
+      return (data != null ? _i22.PageContent.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i23.ReadingProgress?>()) {
+      return (data != null ? _i23.ReadingProgress.fromJson(data) : null) as T;
     }
     if (t == List<_i10.BookPage>) {
       return (data as List).map((e) => deserialize<_i10.BookPage>(e)).toList()
           as T;
     }
-    if (t == List<_i22.ChildProfile>) {
+    if (t == List<_i17.DownloadAsset>) {
       return (data as List)
-              .map((e) => deserialize<_i22.ChildProfile>(e))
+              .map((e) => deserialize<_i17.DownloadAsset>(e))
               .toList()
           as T;
     }
-    if (t == List<_i23.BookSummary>) {
+    if (t == List<_i24.ChildProfile>) {
       return (data as List)
-              .map((e) => deserialize<_i23.BookSummary>(e))
+              .map((e) => deserialize<_i24.ChildProfile>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_i25.BookSummary>) {
+      return (data as List)
+              .map((e) => deserialize<_i25.BookSummary>(e))
               .toList()
           as T;
     }
     try {
-      return _i24.Protocol().deserialize<T>(data, t);
+      return _i26.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     try {
-      return _i25.Protocol().deserialize<T>(data, t);
+      return _i27.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -257,11 +279,13 @@ class Protocol extends _i1.SerializationManager {
       _i14.ChildProfile => 'ChildProfile',
       _i15.Devotional => 'Devotional',
       _i16.DevotionalTranslation => 'DevotionalTranslation',
-      _i17.DownloadRecord => 'DownloadRecord',
-      _i18.Greeting => 'Greeting',
-      _i19.Page => 'Page',
-      _i20.PageContent => 'PageContent',
-      _i21.ReadingProgress => 'ReadingProgress',
+      _i17.DownloadAsset => 'DownloadAsset',
+      _i18.DownloadBundle => 'DownloadBundle',
+      _i19.DownloadRecord => 'DownloadRecord',
+      _i20.Greeting => 'Greeting',
+      _i21.Page => 'Page',
+      _i22.PageContent => 'PageContent',
+      _i23.ReadingProgress => 'ReadingProgress',
       _ => null,
     };
   }
@@ -309,24 +333,28 @@ class Protocol extends _i1.SerializationManager {
         return 'Devotional';
       case _i16.DevotionalTranslation():
         return 'DevotionalTranslation';
-      case _i17.DownloadRecord():
+      case _i17.DownloadAsset():
+        return 'DownloadAsset';
+      case _i18.DownloadBundle():
+        return 'DownloadBundle';
+      case _i19.DownloadRecord():
         return 'DownloadRecord';
-      case _i18.Greeting():
+      case _i20.Greeting():
         return 'Greeting';
-      case _i19.Page():
+      case _i21.Page():
         return 'Page';
-      case _i20.PageContent():
+      case _i22.PageContent():
         return 'PageContent';
-      case _i21.ReadingProgress():
+      case _i23.ReadingProgress():
         return 'ReadingProgress';
     }
-    className = _i24.Protocol().getClassNameForObject(data);
+    className = _i26.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
           : 'serverpod_auth_idp.$className';
     }
-    className = _i25.Protocol().getClassNameForObject(data);
+    className = _i27.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.')
           ? className
@@ -386,35 +414,41 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'DevotionalTranslation') {
       return deserialize<_i16.DevotionalTranslation>(data['data']);
     }
+    if (dataClassName == 'DownloadAsset') {
+      return deserialize<_i17.DownloadAsset>(data['data']);
+    }
+    if (dataClassName == 'DownloadBundle') {
+      return deserialize<_i18.DownloadBundle>(data['data']);
+    }
     if (dataClassName == 'DownloadRecord') {
-      return deserialize<_i17.DownloadRecord>(data['data']);
+      return deserialize<_i19.DownloadRecord>(data['data']);
     }
     if (dataClassName == 'Greeting') {
-      return deserialize<_i18.Greeting>(data['data']);
+      return deserialize<_i20.Greeting>(data['data']);
     }
     if (dataClassName == 'Page') {
-      return deserialize<_i19.Page>(data['data']);
+      return deserialize<_i21.Page>(data['data']);
     }
     if (dataClassName == 'PageContent') {
-      return deserialize<_i20.PageContent>(data['data']);
+      return deserialize<_i22.PageContent>(data['data']);
     }
     if (dataClassName == 'ReadingProgress') {
-      return deserialize<_i21.ReadingProgress>(data['data']);
+      return deserialize<_i23.ReadingProgress>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);
-      return _i24.Protocol().deserializeByClassName(data);
+      return _i26.Protocol().deserializeByClassName(data);
     }
     if (dataClassName.startsWith('serverpod_auth_core.')) {
       data['className'] = dataClassName.substring(20);
-      return _i25.Protocol().deserializeByClassName(data);
+      return _i27.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }
 
   void _registerHostProtocols() {
-    _i24.Protocol().registerHostProtocol('kingdom_kids', this);
-    _i25.Protocol().registerHostProtocol('kingdom_kids', this);
+    _i26.Protocol().registerHostProtocol('kingdom_kids', this);
+    _i27.Protocol().registerHostProtocol('kingdom_kids', this);
   }
 
   @override
@@ -430,10 +464,10 @@ class Protocol extends _i1.SerializationManager {
       return null;
     }
     try {
-      return _i24.Protocol().mapRecordToJson(record);
+      return _i26.Protocol().mapRecordToJson(record);
     } catch (_) {}
     try {
-      return _i25.Protocol().mapRecordToJson(record);
+      return _i27.Protocol().mapRecordToJson(record);
     } catch (_) {}
     throw Exception('Unsupported record type ${record.runtimeType}');
   }

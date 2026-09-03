@@ -1,0 +1,4 @@
+class: DownloadAsset
+fields:
+  assetKey: String
+  url: String
