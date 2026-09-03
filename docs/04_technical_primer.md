@@ -18,7 +18,7 @@ Normally, a mobile app and its backend are written in two different languages (e
 Serverpod removes that risk: a data model (say, `ChildProfile`) is defined **once**, in one file. Serverpod's code generator then produces matching Dart classes for both the server and the Flutter app, plus the network code to move that data between them. There's no "fetch JSON, hope the keys match" — the Flutter side calls `client.child.createChild(...)` like a local function, fully type-checked at compile time. This is the core practical reason this stack fits the team's existing skill set.
 
 ## 3. What "The Database" Actually Holds
-
+ 
 PostgreSQL (Postgres) is the one source of truth. Everything in the app is really just a view onto rows in this database: which books exist, what page 4 of "David and Goliath" says in French, which badges a child has earned, what today's devotional is. The full table list is in the technical spec — the concept to hold onto is that **content and app logic are separate**: adding a new book is a data operation (a row in the database), never a code change or app store release.
 
 ## 4. Where Images and Audio Actually Live

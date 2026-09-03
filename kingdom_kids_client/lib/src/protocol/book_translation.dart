@@ -12,6 +12,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'app_language.dart' as _i2;
 
 abstract class BookTranslation implements _i1.SerializableModel {
   BookTranslation._({
@@ -24,7 +25,7 @@ abstract class BookTranslation implements _i1.SerializableModel {
   factory BookTranslation({
     int? id,
     required int bookId,
-    required String language,
+    required _i2.AppLanguage language,
     required String title,
   }) = _BookTranslationImpl;
 
@@ -32,7 +33,9 @@ abstract class BookTranslation implements _i1.SerializableModel {
     return BookTranslation(
       id: jsonSerialization['id'] as int?,
       bookId: jsonSerialization['bookId'] as int,
-      language: jsonSerialization['language'] as String,
+      language: _i2.AppLanguage.fromJson(
+        (jsonSerialization['language'] as int),
+      ),
       title: jsonSerialization['title'] as String,
     );
   }
@@ -44,7 +47,7 @@ abstract class BookTranslation implements _i1.SerializableModel {
 
   int bookId;
 
-  String language;
+  _i2.AppLanguage language;
 
   String title;
 
@@ -54,7 +57,7 @@ abstract class BookTranslation implements _i1.SerializableModel {
   BookTranslation copyWith({
     int? id,
     int? bookId,
-    String? language,
+    _i2.AppLanguage? language,
     String? title,
   });
   @override
@@ -63,7 +66,7 @@ abstract class BookTranslation implements _i1.SerializableModel {
       '__className__': 'BookTranslation',
       if (id != null) 'id': id,
       'bookId': bookId,
-      'language': language,
+      'language': language.toJson(),
       'title': title,
     };
   }
@@ -80,7 +83,7 @@ class _BookTranslationImpl extends BookTranslation {
   _BookTranslationImpl({
     int? id,
     required int bookId,
-    required String language,
+    required _i2.AppLanguage language,
     required String title,
   }) : super._(
          id: id,
@@ -96,7 +99,7 @@ class _BookTranslationImpl extends BookTranslation {
   BookTranslation copyWith({
     Object? id = _Undefined,
     int? bookId,
-    String? language,
+    _i2.AppLanguage? language,
     String? title,
   }) {
     return BookTranslation(

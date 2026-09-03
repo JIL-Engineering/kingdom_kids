@@ -12,6 +12,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:serverpod/serverpod.dart' as _i1;
+import 'app_language.dart' as _i2;
 
 abstract class BookTranslation
     implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
@@ -25,7 +26,7 @@ abstract class BookTranslation
   factory BookTranslation({
     int? id,
     required int bookId,
-    required String language,
+    required _i2.AppLanguage language,
     required String title,
   }) = _BookTranslationImpl;
 
@@ -33,7 +34,9 @@ abstract class BookTranslation
     return BookTranslation(
       id: jsonSerialization['id'] as int?,
       bookId: jsonSerialization['bookId'] as int,
-      language: jsonSerialization['language'] as String,
+      language: _i2.AppLanguage.fromJson(
+        (jsonSerialization['language'] as int),
+      ),
       title: jsonSerialization['title'] as String,
     );
   }
@@ -47,7 +50,7 @@ abstract class BookTranslation
 
   int bookId;
 
-  String language;
+  _i2.AppLanguage language;
 
   String title;
 
@@ -60,7 +63,7 @@ abstract class BookTranslation
   BookTranslation copyWith({
     int? id,
     int? bookId,
-    String? language,
+    _i2.AppLanguage? language,
     String? title,
   });
   @override
@@ -69,7 +72,7 @@ abstract class BookTranslation
       '__className__': 'BookTranslation',
       if (id != null) 'id': id,
       'bookId': bookId,
-      'language': language,
+      'language': language.toJson(),
       'title': title,
     };
   }
@@ -80,7 +83,7 @@ abstract class BookTranslation
       '__className__': 'BookTranslation',
       if (id != null) 'id': id,
       'bookId': bookId,
-      'language': language,
+      'language': language.toJson(),
       'title': title,
     };
   }
@@ -123,7 +126,7 @@ class _BookTranslationImpl extends BookTranslation {
   _BookTranslationImpl({
     int? id,
     required int bookId,
-    required String language,
+    required _i2.AppLanguage language,
     required String title,
   }) : super._(
          id: id,
@@ -139,7 +142,7 @@ class _BookTranslationImpl extends BookTranslation {
   BookTranslation copyWith({
     Object? id = _Undefined,
     int? bookId,
-    String? language,
+    _i2.AppLanguage? language,
     String? title,
   }) {
     return BookTranslation(
@@ -159,7 +162,9 @@ class BookTranslationUpdateTable extends _i1.UpdateTable<BookTranslationTable> {
     value,
   );
 
-  _i1.ColumnValue<String, String> language(String value) => _i1.ColumnValue(
+  _i1.ColumnValue<_i2.AppLanguage, _i2.AppLanguage> language(
+    _i2.AppLanguage value,
+  ) => _i1.ColumnValue(
     table.language,
     value,
   );
@@ -178,9 +183,10 @@ class BookTranslationTable extends _i1.Table<int?> {
       'bookId',
       this,
     );
-    language = _i1.ColumnString(
+    language = _i1.ColumnEnum(
       'language',
       this,
+      _i1.EnumSerialization.byIndex,
     );
     title = _i1.ColumnString(
       'title',
@@ -192,7 +198,7 @@ class BookTranslationTable extends _i1.Table<int?> {
 
   late final _i1.ColumnInt bookId;
 
-  late final _i1.ColumnString language;
+  late final _i1.ColumnEnum<_i2.AppLanguage> language;
 
   late final _i1.ColumnString title;
 

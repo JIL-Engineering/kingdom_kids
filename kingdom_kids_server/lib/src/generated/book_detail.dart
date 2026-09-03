@@ -11,41 +11,41 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'package:serverpod/serverpod.dart' as _i1;
 import 'age_bracket.dart' as _i2;
 import 'book_category.dart' as _i3;
+import 'book_page.dart' as _i4;
+import 'package:kingdom_kids_server/src/generated/protocol.dart' as _i5;
 
-abstract class Book implements _i1.SerializableModel {
-  Book._({
-    this.id,
+abstract class BookDetail
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+  BookDetail._({
+    required this.id,
     required this.slug,
+    required this.title,
     required this.ageBracketMin,
     required this.ageBracketMax,
     required this.category,
     this.coverImageAsset,
-    required this.isPublished,
-    required this.contentVersion,
-    required this.updatedAt,
-    required this.createdAt,
+    required this.pages,
   });
 
-  factory Book({
-    int? id,
+  factory BookDetail({
+    required int id,
     required String slug,
+    required String title,
     required _i2.AgeBracket ageBracketMin,
     required _i2.AgeBracket ageBracketMax,
     required _i3.BookCategory category,
     String? coverImageAsset,
-    required bool isPublished,
-    required int contentVersion,
-    required DateTime updatedAt,
-    required DateTime createdAt,
-  }) = _BookImpl;
+    required List<_i4.BookPage> pages,
+  }) = _BookDetailImpl;
 
-  factory Book.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Book(
-      id: jsonSerialization['id'] as int?,
+  factory BookDetail.fromJson(Map<String, dynamic> jsonSerialization) {
+    return BookDetail(
+      id: jsonSerialization['id'] as int,
       slug: jsonSerialization['slug'] as String,
+      title: jsonSerialization['title'] as String,
       ageBracketMin: _i2.AgeBracket.fromJson(
         (jsonSerialization['ageBracketMin'] as int),
       ),
@@ -56,25 +56,17 @@ abstract class Book implements _i1.SerializableModel {
         (jsonSerialization['category'] as int),
       ),
       coverImageAsset: jsonSerialization['coverImageAsset'] as String?,
-      isPublished: _i1.BoolJsonExtension.fromJson(
-        jsonSerialization['isPublished'],
-      ),
-      contentVersion: jsonSerialization['contentVersion'] as int,
-      updatedAt: _i1.DateTimeJsonExtension.fromJson(
-        jsonSerialization['updatedAt'],
-      ),
-      createdAt: _i1.DateTimeJsonExtension.fromJson(
-        jsonSerialization['createdAt'],
+      pages: _i5.Protocol().deserialize<List<_i4.BookPage>>(
+        jsonSerialization['pages'],
       ),
     );
   }
 
-  /// The database id, set if the object has been inserted into the
-  /// database or if it has been fetched from the database. Otherwise,
-  /// the id will be null.
-  int? id;
+  int id;
 
   String slug;
+
+  String title;
 
   _i2.AgeBracket ageBracketMin;
 
@@ -84,43 +76,48 @@ abstract class Book implements _i1.SerializableModel {
 
   String? coverImageAsset;
 
-  bool isPublished;
+  List<_i4.BookPage> pages;
 
-  int contentVersion;
-
-  DateTime updatedAt;
-
-  DateTime createdAt;
-
-  /// Returns a shallow copy of this [Book]
+  /// Returns a shallow copy of this [BookDetail]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
-  Book copyWith({
+  BookDetail copyWith({
     int? id,
     String? slug,
+    String? title,
     _i2.AgeBracket? ageBracketMin,
     _i2.AgeBracket? ageBracketMax,
     _i3.BookCategory? category,
     String? coverImageAsset,
-    bool? isPublished,
-    int? contentVersion,
-    DateTime? updatedAt,
-    DateTime? createdAt,
+    List<_i4.BookPage>? pages,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
-      '__className__': 'Book',
-      if (id != null) 'id': id,
+      '__className__': 'BookDetail',
+      'id': id,
       'slug': slug,
+      'title': title,
       'ageBracketMin': ageBracketMin.toJson(),
       'ageBracketMax': ageBracketMax.toJson(),
       'category': category.toJson(),
       if (coverImageAsset != null) 'coverImageAsset': coverImageAsset,
-      'isPublished': isPublished,
-      'contentVersion': contentVersion,
-      'updatedAt': updatedAt.toJson(),
-      'createdAt': createdAt.toJson(),
+      'pages': pages.toJson(valueToJson: (v) => v.toJson()),
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'BookDetail',
+      'id': id,
+      'slug': slug,
+      'title': title,
+      'ageBracketMin': ageBracketMin.toJson(),
+      'ageBracketMax': ageBracketMax.toJson(),
+      'category': category.toJson(),
+      if (coverImageAsset != null) 'coverImageAsset': coverImageAsset,
+      'pages': pages.toJson(valueToJson: (v) => v.toJsonForProtocol()),
     };
   }
 
@@ -132,60 +129,52 @@ abstract class Book implements _i1.SerializableModel {
 
 class _Undefined {}
 
-class _BookImpl extends Book {
-  _BookImpl({
-    int? id,
+class _BookDetailImpl extends BookDetail {
+  _BookDetailImpl({
+    required int id,
     required String slug,
+    required String title,
     required _i2.AgeBracket ageBracketMin,
     required _i2.AgeBracket ageBracketMax,
     required _i3.BookCategory category,
     String? coverImageAsset,
-    required bool isPublished,
-    required int contentVersion,
-    required DateTime updatedAt,
-    required DateTime createdAt,
+    required List<_i4.BookPage> pages,
   }) : super._(
          id: id,
          slug: slug,
+         title: title,
          ageBracketMin: ageBracketMin,
          ageBracketMax: ageBracketMax,
          category: category,
          coverImageAsset: coverImageAsset,
-         isPublished: isPublished,
-         contentVersion: contentVersion,
-         updatedAt: updatedAt,
-         createdAt: createdAt,
+         pages: pages,
        );
 
-  /// Returns a shallow copy of this [Book]
+  /// Returns a shallow copy of this [BookDetail]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   @override
-  Book copyWith({
-    Object? id = _Undefined,
+  BookDetail copyWith({
+    int? id,
     String? slug,
+    String? title,
     _i2.AgeBracket? ageBracketMin,
     _i2.AgeBracket? ageBracketMax,
     _i3.BookCategory? category,
     Object? coverImageAsset = _Undefined,
-    bool? isPublished,
-    int? contentVersion,
-    DateTime? updatedAt,
-    DateTime? createdAt,
+    List<_i4.BookPage>? pages,
   }) {
-    return Book(
-      id: id is int? ? id : this.id,
+    return BookDetail(
+      id: id ?? this.id,
       slug: slug ?? this.slug,
+      title: title ?? this.title,
       ageBracketMin: ageBracketMin ?? this.ageBracketMin,
       ageBracketMax: ageBracketMax ?? this.ageBracketMax,
       category: category ?? this.category,
       coverImageAsset: coverImageAsset is String?
           ? coverImageAsset
           : this.coverImageAsset,
-      isPublished: isPublished ?? this.isPublished,
-      contentVersion: contentVersion ?? this.contentVersion,
-      updatedAt: updatedAt ?? this.updatedAt,
-      createdAt: createdAt ?? this.createdAt,
+      pages: pages ?? this.pages.map((e0) => e0.copyWith()).toList(),
     );
   }
 }

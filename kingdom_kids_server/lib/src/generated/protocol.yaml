@@ -19,5 +19,10 @@ child:
   - listChildren:
   - createChild:
   - updateChild:
+library:
+  - browseBooks:
+  - getBook:
+storageTest:
+  - testUpload:
 greeting:
   - hello:

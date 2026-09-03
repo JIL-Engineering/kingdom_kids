@@ -2,7 +2,7 @@ class: PageContent
 table: page_contents
 fields:
   pageId: int, relation(parent=pages, onDelete=Cascade)
-  language: String
+  language: AppLanguage
   text: String
   audioAsset: String
 indexes:

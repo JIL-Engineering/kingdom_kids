@@ -4,7 +4,7 @@ fields:
   parentId: int, relation(parent=users, onDelete=Cascade)
   displayName: String
   birthYear: int
-  ageBracket: String
+  ageBracket: AgeBracket
   preferredLanguage: String
   avatarId: String
   pinProtected: bool

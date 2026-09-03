@@ -1,0 +1,7 @@
+enum: AgeBracket
+serialized: byIndex
+values:
+  - toddler
+  - preschool
+  - early_elementary
+  - preteen

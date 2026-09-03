@@ -24,6 +24,7 @@ jobs:
           flutter pub get
           dart pub global activate serverpod_cli $SERVERPOD_CLI_VERSION
           serverpod generate
+          dart format lib/src/generated ../kingdom_kids_client/lib/src/protocol
           git diff --exit-code -- ../kingdom_kids_server/lib/src/generated ../kingdom_kids_client/lib/src/protocol \
             || (echo "Generated code is stale — run 'serverpod generate' and commit the result" && exit 1)
       - name: Run server tests

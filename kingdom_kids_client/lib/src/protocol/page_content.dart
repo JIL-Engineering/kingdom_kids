@@ -12,6 +12,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'app_language.dart' as _i2;
 
 abstract class PageContent implements _i1.SerializableModel {
   PageContent._({
@@ -25,7 +26,7 @@ abstract class PageContent implements _i1.SerializableModel {
   factory PageContent({
     int? id,
     required int pageId,
-    required String language,
+    required _i2.AppLanguage language,
     required String text,
     required String audioAsset,
   }) = _PageContentImpl;
@@ -34,7 +35,9 @@ abstract class PageContent implements _i1.SerializableModel {
     return PageContent(
       id: jsonSerialization['id'] as int?,
       pageId: jsonSerialization['pageId'] as int,
-      language: jsonSerialization['language'] as String,
+      language: _i2.AppLanguage.fromJson(
+        (jsonSerialization['language'] as int),
+      ),
       text: jsonSerialization['text'] as String,
       audioAsset: jsonSerialization['audioAsset'] as String,
     );
@@ -47,7 +50,7 @@ abstract class PageContent implements _i1.SerializableModel {
 
   int pageId;
 
-  String language;
+  _i2.AppLanguage language;
 
   String text;
 
@@ -59,7 +62,7 @@ abstract class PageContent implements _i1.SerializableModel {
   PageContent copyWith({
     int? id,
     int? pageId,
-    String? language,
+    _i2.AppLanguage? language,
     String? text,
     String? audioAsset,
   });
@@ -69,7 +72,7 @@ abstract class PageContent implements _i1.SerializableModel {
       '__className__': 'PageContent',
       if (id != null) 'id': id,
       'pageId': pageId,
-      'language': language,
+      'language': language.toJson(),
       'text': text,
       'audioAsset': audioAsset,
     };
@@ -87,7 +90,7 @@ class _PageContentImpl extends PageContent {
   _PageContentImpl({
     int? id,
     required int pageId,
-    required String language,
+    required _i2.AppLanguage language,
     required String text,
     required String audioAsset,
   }) : super._(
@@ -105,7 +108,7 @@ class _PageContentImpl extends PageContent {
   PageContent copyWith({
     Object? id = _Undefined,
     int? pageId,
-    String? language,
+    _i2.AppLanguage? language,
     String? text,
     String? audioAsset,
   }) {
