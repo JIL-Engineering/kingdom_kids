@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/auth/session_state.dart';
@@ -95,17 +96,17 @@ enum _PinStep { create, verify }
 
 /// Handles the create/verify form and, for [PinGateMode.change], the
 /// verify -> create transition, without navigating away in between.
-class _PinFlow extends StatefulWidget {
+class _PinFlow extends ConsumerStatefulWidget {
   const _PinFlow({required this.gateMode, required this.initialStep});
 
   final PinGateMode gateMode;
   final _PinStep initialStep;
 
   @override
-  State<_PinFlow> createState() => _PinFlowState();
+  ConsumerState<_PinFlow> createState() => _PinFlowState();
 }
 
-class _PinFlowState extends State<_PinFlow> {
+class _PinFlowState extends ConsumerState<_PinFlow> {
   late _PinStep _step = widget.initialStep;
   final _pinController = TextEditingController();
   final _confirmController = TextEditingController();
@@ -161,7 +162,7 @@ class _PinFlowState extends State<_PinFlow> {
       if (widget.gateMode == PinGateMode.change) {
         Navigator.of(context).pop();
       } else {
-        sessionState.unlockParentMode();
+        ref.read(sessionProvider.notifier).unlockParentMode();
         context.pushReplacement('/settings');
       }
     } catch (e) {
