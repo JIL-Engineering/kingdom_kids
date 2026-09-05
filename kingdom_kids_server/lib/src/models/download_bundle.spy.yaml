@@ -1,0 +1,5 @@
+class: DownloadBundle
+fields:
+  bookId: int
+  contentVersion: int
+  assets: List<DownloadAsset>
