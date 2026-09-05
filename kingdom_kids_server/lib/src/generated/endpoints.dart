@@ -533,6 +533,81 @@ class Endpoints extends _i1.EndpointDispatch {
                 params['language'],
               ),
         ),
+        'getDownloadBundle': _i1.MethodConnector(
+          name: 'getDownloadBundle',
+          params: {
+            'bookId': _i1.ParameterDescription(
+              name: 'bookId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'language': _i1.ParameterDescription(
+              name: 'language',
+              type: _i1.getType<_i10.AppLanguage>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['library'] as _i6.LibraryEndpoint)
+                  .getDownloadBundle(
+                    session,
+                    params['bookId'],
+                    params['language'],
+                  ),
+        ),
+        'getRecommended': _i1.MethodConnector(
+          name: 'getRecommended',
+          params: {
+            'childId': _i1.ParameterDescription(
+              name: 'childId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'limit': _i1.ParameterDescription(
+              name: 'limit',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['library'] as _i6.LibraryEndpoint).getRecommended(
+                    session,
+                    params['childId'],
+                    limit: params['limit'],
+                  ),
+        ),
+        'checkForUpdates': _i1.MethodConnector(
+          name: 'checkForUpdates',
+          params: {
+            'lastSyncedAt': _i1.ParameterDescription(
+              name: 'lastSyncedAt',
+              type: _i1.getType<DateTime>(),
+              nullable: false,
+            ),
+            'language': _i1.ParameterDescription(
+              name: 'language',
+              type: _i1.getType<_i10.AppLanguage>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['library'] as _i6.LibraryEndpoint).checkForUpdates(
+                    session,
+                    params['lastSyncedAt'],
+                    params['language'],
+                  ),
+        ),
       },
     );
     connectors['storageTest'] = _i1.EndpointConnector(
