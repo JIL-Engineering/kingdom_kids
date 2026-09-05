@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kingdom_kids_client/kingdom_kids_client.dart';
 import 'package:serverpod_auth_idp_flutter/serverpod_auth_idp_flutter.dart';
@@ -11,7 +12,9 @@ void main() {
     client = Client('http://localhost:8080/')
       ..authSessionManager = FlutterAuthSessionManager();
 
-    await tester.pumpWidget(const MyApp());
+    // MyApp reads Riverpod providers (goRouterProvider -> sessionProvider),
+    // so it needs a ProviderScope ancestor here too, same as in main().
+    await tester.pumpWidget(const ProviderScope(child: MyApp()));
     await tester.pumpAndSettle();
 
     expect(find.text('Kingdom Kids'), findsOneWidget);
