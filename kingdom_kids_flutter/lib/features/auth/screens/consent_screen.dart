@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,14 +13,14 @@ import '../../../main.dart';
 ///
 /// Required before any child profile can be created (docs/03_technical_spec.md
 /// §6) — consentAccepted must be explicitly true, not implied by signup.
-class ConsentScreen extends StatefulWidget {
+class ConsentScreen extends ConsumerStatefulWidget {
   const ConsentScreen({super.key});
 
   @override
-  State<ConsentScreen> createState() => _ConsentScreenState();
+  ConsumerState<ConsentScreen> createState() => _ConsentScreenState();
 }
 
-class _ConsentScreenState extends State<ConsentScreen> {
+class _ConsentScreenState extends ConsumerState<ConsentScreen> {
   bool _isSubmitting = false;
 
   Future<void> _acceptAndContinue() async {
@@ -39,7 +40,7 @@ class _ConsentScreenState extends State<ConsentScreen> {
         preferredLanguage,
         true,
       );
-      sessionState.markProfileComplete(profile);
+      ref.read(sessionProvider.notifier).markProfileComplete(profile);
       if (mounted) context.go('/profiles');
     } catch (e) {
       if (mounted) {

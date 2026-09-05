@@ -1,5 +1,6 @@
 import 'package:kingdom_kids_client/kingdom_kids_client.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 import 'package:serverpod_auth_idp_flutter/serverpod_auth_idp_flutter.dart';
 
@@ -23,18 +24,18 @@ void main() async {
 
   await client.auth.initialize();
 
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       title: 'Kingdom Kids',
       theme: AppTheme.light,
-      routerConfig: appRouter,
+      routerConfig: ref.watch(goRouterProvider),
     );
   }
 }
