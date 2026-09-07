@@ -14,8 +14,15 @@ abstract final class AppColors {
 
   // ── Backgrounds ───────────────────────────────────────────────────────────
   /// Warm cream — main app background.
-  static const Color cream = Color(0xFFFAF6EF);
-  static const Color creamDeep = Color(0xFFF5F0E8);
+  static const Color cream = Color(0xFFFDF9EE);
+  static const Color creamDeep = Color(0xFFFDEFCC);
+  static const Gradient deepcreamGradient = SweepGradient(colors: [
+    AppColors.creamDeep,
+    AppColors.cream,
+  ],
+  startAngle: 60.0,
+  endAngle: 240.0,
+  center:AlignmentGeometry.topRight);
 
   /// Warm yellow — Daily Seed card background.
   static const Color seedCardBg = Color(0xFFFFF8DC);
