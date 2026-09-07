@@ -22,6 +22,9 @@ child:
 library:
   - browseBooks:
   - getBook:
+  - getDownloadBundle:
+  - getRecommended:
+  - checkForUpdates:
 storageTest:
   - testUpload:
 greeting:
