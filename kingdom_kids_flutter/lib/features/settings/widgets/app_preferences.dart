@@ -3,11 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/preferences/app_preferences_providers.dart';
 
+/// Affiche les préférences locales et écoute leur état via Riverpod.
+/// Les changements sont visibles immédiatement dans ce widget et dans tout
+/// autre widget qui écoute les mêmes providers.
 class AppPreferences extends ConsumerWidget {
   const AppPreferences({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // watch permet de reconstruire l'interface lorsque l'utilisateur change
+    // la langue ou le mode d'affichage.
     final language = ref.watch(appLanguageProvider);
     final isFrench = language == 'fr';
     final isDarkMode = ref.watch(appDarkModeProvider);
@@ -54,6 +59,7 @@ class AppPreferences extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   GestureDetector(
+                    // read modifie le provider sans créer un abonnement ici.
                     onTap: () => ref
                         .read(appLanguageProvider.notifier)
                         .setLanguage('en'),
@@ -78,6 +84,7 @@ class AppPreferences extends ConsumerWidget {
                     ),
                   ),
                   GestureDetector(
+                    // La sélection FR met à jour l'état partagé de la langue.
                     onTap: () => ref
                         .read(appLanguageProvider.notifier)
                         .setLanguage('fr'),
@@ -120,6 +127,8 @@ class AppPreferences extends ConsumerWidget {
             trailing: Switch(
               value: isDarkMode,
               onChanged: (value) {
+                // Le changement du Switch est conservé dans Riverpod pendant
+                // la session et met à jour l'icône ainsi que le libellé.
                 ref.read(appDarkModeProvider.notifier).setDarkMode(value);
               },
             ),
