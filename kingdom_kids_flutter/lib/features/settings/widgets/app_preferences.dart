@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AppPreferences extends StatefulWidget {
+import '../../../core/preferences/app_preferences_providers.dart';
+
+class AppPreferences extends ConsumerWidget {
   const AppPreferences({super.key});
 
   @override
-  State<AppPreferences> createState() => _AppPreferencesState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final language = ref.watch(appLanguageProvider);
+    final isFrench = language == 'fr';
+    final isDarkMode = ref.watch(appDarkModeProvider);
 
-class _AppPreferencesState extends State<AppPreferences> {
-  bool isFrench = false;
-  bool isDarkMode = false;
-
-  @override
-  Widget build(BuildContext context) {
     // Liste de nos préférences
     final preferences = [
       {
@@ -55,11 +54,18 @@ class _AppPreferencesState extends State<AppPreferences> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   GestureDetector(
-                    onTap: () => setState(() => isFrench = false),
+                    onTap: () => ref
+                        .read(appLanguageProvider.notifier)
+                        .setLanguage('en'),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
-                        color: !isFrench ? const Color(0xFF0F172A) : Colors.transparent,
+                        color: !isFrench
+                            ? const Color(0xFF0F172A)
+                            : Colors.transparent,
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Text(
@@ -72,11 +78,18 @@ class _AppPreferencesState extends State<AppPreferences> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => setState(() => isFrench = true),
+                    onTap: () => ref
+                        .read(appLanguageProvider.notifier)
+                        .setLanguage('fr'),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
-                        color: isFrench ? const Color(0xFF0F172A) : Colors.transparent,
+                        color: isFrench
+                            ? const Color(0xFF0F172A)
+                            : Colors.transparent,
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Text(
@@ -107,9 +120,7 @@ class _AppPreferencesState extends State<AppPreferences> {
             trailing: Switch(
               value: isDarkMode,
               onChanged: (value) {
-                setState(() {
-                  isDarkMode = value;
-                });
+                ref.read(appDarkModeProvider.notifier).setDarkMode(value);
               },
             ),
           );
