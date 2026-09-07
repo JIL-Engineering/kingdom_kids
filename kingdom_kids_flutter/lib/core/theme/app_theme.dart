@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
+import 'app_text_styles.dart';
 
 /// Kingdom Kids full ThemeData — matches the warm, cream-background,
 /// navy-CTA aesthetic from the design mockups.
+///
+/// Text styles reference [AppTextStyles] wherever an exact size/weight/color
+/// match exists, instead of keeping a second independent copy of "which font
+/// for which role" here — that duplication is exactly how this file drifted
+/// onto the wrong font families (Nunito/DM Sans) even after [AppTextStyles]
+/// itself was corrected to match the design source (Quicksand/Plus Jakarta
+/// Sans). Where no exact match exists (different size, weight, or color —
+/// e.g. `displayMedium` at 28px has no equivalent role), the font family is
+/// still corrected in place, just not extracted into a shared getter.
+///
+/// Gradients (see [AppGradients]) can't be configured here — [ThemeData] and
+/// [ButtonStyle] only accept a flat [Color] for backgrounds, never a
+/// [Gradient]. Anything needing the gradient CTA treatment needs an actual
+/// widget that paints it (e.g. a `GradientButton` in `core/widgets/`), not a
+/// theme setting.
 abstract final class AppTheme {
   static ThemeData get light {
     final base = ThemeData(
@@ -42,55 +58,44 @@ abstract final class AppTheme {
     );
 
     return base.copyWith(
-      textTheme: GoogleFonts.dmSansTextTheme(base.textTheme).copyWith(
-        displayLarge: GoogleFonts.nunito(
-          fontSize: 32,
-          fontWeight: FontWeight.w800,
-          color: AppColors.textPrimary,
-        ),
-        displayMedium: GoogleFonts.nunito(
+      // Base font family fallback for any TextTheme role not explicitly
+      // overridden below -- keeps stray Material text on Plus Jakarta Sans
+      // (the design source's `font-sans` default) instead of Flutter's
+      // system font.
+      textTheme: GoogleFonts.plusJakartaSansTextTheme(base.textTheme).copyWith(
+        // Roles with an exact size/weight/color match in AppTextStyles
+        // reference it directly, so there's one source of truth instead of
+        // two copies that can drift out of sync (as nunito/dmSans did here
+        // before).
+        displayLarge: AppTextStyles.displayLarge,
+        headlineMedium: AppTextStyles.headingLarge,
+        titleLarge: AppTextStyles.headingMedium,
+        bodyLarge: AppTextStyles.bodyLarge,
+        bodyMedium: AppTextStyles.bodyMedium,
+        bodySmall: AppTextStyles.bodySmall,
+        // No matching AppTextStyles role at these exact sizes -- corrected
+        // to the right font family (Quicksand, per font-display) in place.
+        displayMedium: GoogleFonts.quicksand(
           fontSize: 28,
           fontWeight: FontWeight.w800,
           color: AppColors.textPrimary,
         ),
-        displaySmall: GoogleFonts.nunito(
+        displaySmall: GoogleFonts.quicksand(
           fontSize: 24,
           fontWeight: FontWeight.w700,
           color: AppColors.textPrimary,
         ),
-        headlineLarge: GoogleFonts.nunito(
+        headlineLarge: GoogleFonts.quicksand(
           fontSize: 22,
           fontWeight: FontWeight.w700,
           color: AppColors.textPrimary,
         ),
-        headlineMedium: GoogleFonts.nunito(
-          fontSize: 20,
-          fontWeight: FontWeight.w700,
-          color: AppColors.textPrimary,
-        ),
-        headlineSmall: GoogleFonts.nunito(
+        headlineSmall: GoogleFonts.quicksand(
           fontSize: 18,
           fontWeight: FontWeight.w700,
           color: AppColors.textPrimary,
         ),
-        titleLarge: GoogleFonts.nunito(
-          fontSize: 16,
-          fontWeight: FontWeight.w700,
-          color: AppColors.textPrimary,
-        ),
-        bodyLarge: GoogleFonts.dmSans(
-          fontSize: 16,
-          color: AppColors.textPrimary,
-        ),
-        bodyMedium: GoogleFonts.dmSans(
-          fontSize: 14,
-          color: AppColors.textSecondary,
-        ),
-        bodySmall: GoogleFonts.dmSans(
-          fontSize: 12,
-          color: AppColors.textMuted,
-        ),
-        labelLarge: GoogleFonts.dmSans(
+        labelLarge: GoogleFonts.plusJakartaSans(
           fontSize: 14,
           fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,
@@ -103,7 +108,7 @@ abstract final class AppTheme {
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
         scrolledUnderElevation: 0,
-        titleTextStyle: GoogleFonts.nunito(
+        titleTextStyle: GoogleFonts.quicksand(
           fontSize: 18,
           fontWeight: FontWeight.w800,
           color: AppColors.textPrimary,
@@ -132,10 +137,9 @@ abstract final class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
           ),
-          textStyle: GoogleFonts.dmSans(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+          // buttonLarge is 16/w600/textOnDark -- matches this button's
+          // white-on-navy foreground exactly, safe to reference directly.
+          textStyle: AppTextStyles.buttonLarge,
           minimumSize: const Size(double.infinity, 54),
         ),
       ),
@@ -149,7 +153,10 @@ abstract final class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
           ),
-          textStyle: GoogleFonts.dmSans(
+          // Not AppTextStyles.buttonLarge here -- its color is hardcoded to
+          // textOnDark (white), wrong for a bordered button on a light
+          // background. No color, so it inherits foregroundColor above.
+          textStyle: GoogleFonts.plusJakartaSans(
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
@@ -161,7 +168,7 @@ abstract final class AppTheme {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AppColors.textPrimary,
-          textStyle: GoogleFonts.dmSans(
+          textStyle: GoogleFonts.plusJakartaSans(
             fontSize: 14,
             fontWeight: FontWeight.w600,
           ),
@@ -192,14 +199,12 @@ abstract final class AppTheme {
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: AppColors.error),
         ),
-        hintStyle: GoogleFonts.dmSans(
+        hintStyle: GoogleFonts.plusJakartaSans(
           color: AppColors.textMuted,
           fontSize: 14,
         ),
-        labelStyle: GoogleFonts.dmSans(
-          color: AppColors.textSecondary,
-          fontSize: 14,
-        ),
+        // bodyMedium is 14/w400/textSecondary -- exact match.
+        labelStyle: AppTextStyles.bodyMedium,
       ),
 
       // ── Bottom Navigation Bar ─────────────────────────────────────────────
@@ -209,14 +214,8 @@ abstract final class AppTheme {
         unselectedItemColor: AppColors.navInactive,
         type: BottomNavigationBarType.fixed,
         elevation: 0,
-        selectedLabelStyle: GoogleFonts.dmSans(
-          fontSize: 11,
-          fontWeight: FontWeight.w700,
-        ),
-        unselectedLabelStyle: GoogleFonts.dmSans(
-          fontSize: 11,
-          fontWeight: FontWeight.w400,
-        ),
+        selectedLabelStyle: AppTextStyles.navLabelActive,
+        unselectedLabelStyle: AppTextStyles.navLabel,
       ),
 
       // ── NavigationBar (M3) ────────────────────────────────────────────────
@@ -232,17 +231,9 @@ abstract final class AppTheme {
         }),
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
-            return GoogleFonts.dmSans(
-              fontSize: 11,
-              fontWeight: FontWeight.w700,
-              color: AppColors.amber,
-            );
+            return AppTextStyles.navLabelActive;
           }
-          return GoogleFonts.dmSans(
-            fontSize: 11,
-            fontWeight: FontWeight.w400,
-            color: AppColors.navInactive,
-          );
+          return AppTextStyles.navLabel;
         }),
       ),
 
@@ -255,7 +246,10 @@ abstract final class AppTheme {
       // ── Chip ──────────────────────────────────────────────────────────────
       chipTheme: ChipThemeData(
         backgroundColor: AppColors.amberPale,
-        labelStyle: GoogleFonts.dmSans(
+        // Not AppTextStyles.chipLabel -- that's the specific 11px/amber
+        // "STORY OF THE DAY"-style badge style, a different role than a
+        // generic Material Chip's label at 13px/textPrimary.
+        labelStyle: GoogleFonts.plusJakartaSans(
           fontSize: 13,
           fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,
