@@ -6,6 +6,7 @@ import '../../../core/auth/session_state.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/kingdom_button.dart';
+import '../providers/pin_flow_provider.dart';
 import '../../../main.dart';
 
 /// How the gate reached the screen, and what should happen when the PIN
@@ -33,29 +34,32 @@ class PinGateScreen extends StatefulWidget {
 }
 
 class _PinGateScreenState extends State<PinGateScreen> {
-  late Future<_PinStep> _initialStepFuture;
+  late Future<PinFlowStep> _initialStepFuture;
 
+  /// Lance le contrôle initial nécessaire pour connaître l'étape du PIN.
   @override
   void initState() {
     super.initState();
     _loadInitialStep();
   }
 
+  /// Recharge le statut du PIN après une erreur réseau.
   void _loadInitialStep() {
     _initialStepFuture = widget.mode == PinGateMode.change
-        ? Future.value(_PinStep.verify)
+        ? Future.value(PinFlowStep.verify)
         : client.appUser.hasParentPin().then(
-            (hasPin) => hasPin ? _PinStep.verify : _PinStep.create,
+            (hasPin) => hasPin ? PinFlowStep.verify : PinFlowStep.create,
           );
   }
 
+  /// Affiche le chargement, l'erreur ou le formulaire PIN selon le résultat.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.cream,
       appBar: AppBar(backgroundColor: AppColors.cream),
       body: SafeArea(
-        child: FutureBuilder<_PinStep>(
+        child: FutureBuilder<PinFlowStep>(
           future: _initialStepFuture,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
@@ -92,27 +96,30 @@ class _PinGateScreenState extends State<PinGateScreen> {
   }
 }
 
-enum _PinStep { create, verify }
-
 /// Handles the create/verify form and, for [PinGateMode.change], the
 /// verify -> create transition, without navigating away in between.
 class _PinFlow extends ConsumerStatefulWidget {
   const _PinFlow({required this.gateMode, required this.initialStep});
 
   final PinGateMode gateMode;
-  final _PinStep initialStep;
+  final PinFlowStep initialStep;
 
   @override
   ConsumerState<_PinFlow> createState() => _PinFlowState();
 }
 
 class _PinFlowState extends ConsumerState<_PinFlow> {
-  late _PinStep _step = widget.initialStep;
   final _pinController = TextEditingController();
   final _confirmController = TextEditingController();
-  bool _isSubmitting = false;
-  String? _errorText;
 
+  /// Initialise l'étape Riverpod après le contrôle initial du PIN.
+  @override
+  void initState() {
+    super.initState();
+    ref.read(pinFlowProvider.notifier).initialize(widget.initialStep);
+  }
+
+  /// Libère les deux contrôleurs qui contiennent temporairement le PIN.
   @override
   void dispose() {
     _pinController.dispose();
@@ -120,38 +127,34 @@ class _PinFlowState extends ConsumerState<_PinFlow> {
     super.dispose();
   }
 
+  /// Valide le PIN et lance la vérification ou la création correspondante.
   Future<void> _submit() async {
+    final flow = ref.read(pinFlowProvider);
+    final isCreate = flow.step == PinFlowStep.create;
     final pin = _pinController.text.trim();
     if (!RegExp(r'^\d{4,6}$').hasMatch(pin)) {
-      setState(() => _errorText = 'Enter a 4 to 6 digit PIN.');
+      ref.read(pinFlowProvider.notifier).showError('Enter a 4 to 6 digit PIN.');
       return;
     }
-    if (_step == _PinStep.create && pin != _confirmController.text.trim()) {
-      setState(() => _errorText = 'PINs do not match.');
+    if (isCreate && pin != _confirmController.text.trim()) {
+      ref.read(pinFlowProvider.notifier).showError('PINs do not match.');
       return;
     }
 
-    setState(() {
-      _isSubmitting = true;
-      _errorText = null;
-    });
+    ref.read(pinFlowProvider.notifier).setSubmitting(true);
+    ref.read(pinFlowProvider.notifier).clearError();
     try {
-      if (_step == _PinStep.verify) {
+      if (!isCreate) {
         final isCorrect = await client.appUser.verifyParentPin(pin);
         if (!isCorrect) {
-          setState(() {
-            _errorText = 'Incorrect PIN.';
-            _isSubmitting = false;
-          });
+          ref.read(pinFlowProvider.notifier).showError('Incorrect PIN.');
+          ref.read(pinFlowProvider.notifier).setSubmitting(false);
           return;
         }
         if (widget.gateMode == PinGateMode.change) {
-          // Verified the old PIN -- now prompt for the new one.
+          // L'ancien PIN est validé : on demande maintenant le nouveau.
           _pinController.clear();
-          setState(() {
-            _step = _PinStep.create;
-            _isSubmitting = false;
-          });
+          ref.read(pinFlowProvider.notifier).startCreating();
           return;
         }
       } else {
@@ -166,17 +169,20 @@ class _PinFlowState extends ConsumerState<_PinFlow> {
         context.pushReplacement('/settings');
       }
     } catch (e) {
-      setState(() => _errorText = 'Something went wrong: $e');
+      ref.read(pinFlowProvider.notifier).showError('Something went wrong: $e');
     } finally {
-      if (mounted) setState(() => _isSubmitting = false);
+      if (mounted) ref.read(pinFlowProvider.notifier).setSubmitting(false);
     }
   }
 
+  /// Reconstruit le formulaire selon l'étape et l'état Riverpod actuels.
   @override
   Widget build(BuildContext context) {
-    final isCreate = _step == _PinStep.create;
+    final flow = ref.watch(pinFlowProvider);
+    final isCreate = flow.step == PinFlowStep.create;
     final isChangingPin =
-        widget.gateMode == PinGateMode.change && _step == _PinStep.create;
+        widget.gateMode == PinGateMode.change &&
+        flow.step == PinFlowStep.create;
 
     return Padding(
       padding: const EdgeInsets.all(24),
@@ -206,7 +212,7 @@ class _PinFlowState extends ConsumerState<_PinFlow> {
           ),
           const SizedBox(height: 24),
           TextField(
-            key: ValueKey(_step),
+            key: ValueKey(flow.step),
             controller: _pinController,
             keyboardType: TextInputType.number,
             obscureText: true,
@@ -230,17 +236,17 @@ class _PinFlowState extends ConsumerState<_PinFlow> {
               ),
             ),
           ],
-          if (_errorText != null) ...[
+          if (flow.errorText != null) ...[
             const SizedBox(height: 12),
             Text(
-              _errorText!,
+              flow.errorText!,
               style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
             ),
           ],
           const SizedBox(height: 24),
           KingdomButton(
             label: isCreate ? 'Create PIN' : 'Unlock',
-            isLoading: _isSubmitting,
+            isLoading: flow.isSubmitting,
             onPressed: _submit,
           ),
         ],

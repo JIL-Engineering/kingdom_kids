@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kingdom_kids_client/kingdom_kids_client.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/kingdom_button.dart';
+import '../providers/child_form_provider.dart';
 import '../../../main.dart';
 
 /// (icon, color) pairs used as placeholder avatars. No illustrated-character
@@ -27,6 +29,7 @@ class ChildAvatarIcon extends StatelessWidget {
   final String avatarId;
   final double size;
 
+  /// Construit l'avatar correspondant à l'identifiant choisi.
   @override
   Widget build(BuildContext context) {
     final (icon, color) =
@@ -47,62 +50,63 @@ class ChildAvatarIcon extends StatelessWidget {
 /// Create or edit a child profile. Pass [existingChild] to edit; omit it to
 /// create a new one. Matches kingdomkidsdesignmockupui/images/screen12.png's
 /// "Add Child" flow.
-class ChildFormScreen extends StatefulWidget {
+class ChildFormScreen extends ConsumerStatefulWidget {
   const ChildFormScreen({super.key, this.existingChild});
 
   final ChildProfile? existingChild;
 
+  /// Crée l'état Riverpod du formulaire enfant.
   @override
-  State<ChildFormScreen> createState() => _ChildFormScreenState();
+  ConsumerState<ChildFormScreen> createState() => _ChildFormScreenState();
 }
 
-class _ChildFormScreenState extends State<ChildFormScreen> {
+class _ChildFormScreenState extends ConsumerState<ChildFormScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  int? _birthYear;
-  String _preferredLanguage = 'en';
-  String _avatarId = _avatarChoices.keys.first;
-  bool _isSubmitting = false;
 
   bool get _isEditing => widget.existingChild != null;
 
+  /// Initialise les contrôleurs et les valeurs Riverpod du formulaire.
   @override
   void initState() {
     super.initState();
     final existing = widget.existingChild;
+    ref.read(childFormProvider.notifier).initialize(existing);
     if (existing != null) {
       _nameController.text = existing.displayName;
-      _birthYear = existing.birthYear;
-      _preferredLanguage = existing.preferredLanguage;
-      _avatarId = existing.avatarId;
     }
   }
 
+  /// Libère le contrôleur de texte lorsque l'écran est retiré.
   @override
   void dispose() {
     _nameController.dispose();
     super.dispose();
   }
 
+  /// Valide les champs puis déclenche la création ou la mise à jour du profil.
   Future<void> _submit() async {
-    if (!_formKey.currentState!.validate() || _birthYear == null) return;
+    final formState = ref.read(childFormProvider);
+    if (!_formKey.currentState!.validate() || formState.birthYear == null) {
+      return;
+    }
 
-    setState(() => _isSubmitting = true);
+    ref.read(childFormProvider.notifier).setSubmitting(true);
     try {
       if (_isEditing) {
         await client.child.updateChild(
           widget.existingChild!.id!,
           _nameController.text.trim(),
-          _birthYear!,
-          _preferredLanguage,
-          _avatarId,
+          formState.birthYear!,
+          formState.preferredLanguage,
+          formState.avatarId,
         );
       } else {
         await client.child.createChild(
           _nameController.text.trim(),
-          _birthYear!,
-          _preferredLanguage,
-          _avatarId,
+          formState.birthYear!,
+          formState.preferredLanguage,
+          formState.avatarId,
         );
       }
       if (mounted) Navigator.of(context).pop();
@@ -119,12 +123,16 @@ class _ChildFormScreenState extends State<ChildFormScreen> {
         );
       }
     } finally {
-      if (mounted) setState(() => _isSubmitting = false);
+      if (mounted) {
+        ref.read(childFormProvider.notifier).setSubmitting(false);
+      }
     }
   }
 
+  /// Observe l'état Riverpod et reconstruit l'interface avec les valeurs à jour.
   @override
   Widget build(BuildContext context) {
+    final formState = ref.watch(childFormProvider);
     final currentYear = DateTime.now().year;
     final birthYearChoices = [
       for (var year = currentYear; year >= currentYear - 12; year--) year,
@@ -158,13 +166,14 @@ class _ChildFormScreenState extends State<ChildFormScreen> {
               Text('BIRTH YEAR', style: AppTextStyles.fieldLabel),
               const SizedBox(height: 8),
               DropdownButtonFormField<int>(
-                initialValue: _birthYear,
+                initialValue: formState.birthYear,
                 decoration: const InputDecoration(hintText: 'Select a year'),
                 items: [
                   for (final year in birthYearChoices)
                     DropdownMenuItem(value: year, child: Text('$year')),
                 ],
-                onChanged: (value) => setState(() => _birthYear = value),
+                onChanged: (value) =>
+                    ref.read(childFormProvider.notifier).setBirthYear(value),
                 validator: (value) => value == null ? 'Select a year' : null,
               ),
               const SizedBox(height: 20),
@@ -175,9 +184,10 @@ class _ChildFormScreenState extends State<ChildFormScreen> {
                   ButtonSegment(value: 'en', label: Text('EN')),
                   ButtonSegment(value: 'fr', label: Text('FR')),
                 ],
-                selected: {_preferredLanguage},
-                onSelectionChanged: (selection) =>
-                    setState(() => _preferredLanguage = selection.first),
+                selected: {formState.preferredLanguage},
+                onSelectionChanged: (selection) => ref
+                    .read(childFormProvider.notifier)
+                    .setPreferredLanguage(selection.first),
               ),
               const SizedBox(height: 20),
               Text('AVATAR', style: AppTextStyles.fieldLabel),
@@ -189,15 +199,17 @@ class _ChildFormScreenState extends State<ChildFormScreen> {
                   for (final avatarId in _avatarChoices.keys)
                     _AvatarChoice(
                       avatarId: avatarId,
-                      selected: avatarId == _avatarId,
-                      onTap: () => setState(() => _avatarId = avatarId),
+                      selected: avatarId == formState.avatarId,
+                      onTap: () => ref
+                          .read(childFormProvider.notifier)
+                          .setAvatar(avatarId),
                     ),
                 ],
               ),
               const SizedBox(height: 32),
               KingdomButton(
                 label: _isEditing ? 'Save Changes' : 'Add Child',
-                isLoading: _isSubmitting,
+                isLoading: formState.isSubmitting,
                 onPressed: _submit,
               ),
             ],
@@ -219,6 +231,7 @@ class _AvatarChoice extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
+  /// Affiche un avatar et son état de sélection.
   @override
   Widget build(BuildContext context) {
     return InkWell(
