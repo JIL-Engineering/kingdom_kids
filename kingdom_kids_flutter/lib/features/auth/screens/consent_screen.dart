@@ -7,7 +7,6 @@ import '../../../core/auth/session_state.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/kingdom_button.dart';
-import '../providers/consent_provider.dart';
 import '../../../main.dart';
 
 /// Matches kingdomkidsdesignmockupui/images/screen11.png.
@@ -22,14 +21,16 @@ class ConsentScreen extends ConsumerStatefulWidget {
 }
 
 class _ConsentScreenState extends ConsumerState<ConsentScreen> {
-  /// Enregistre le consentement et met à jour le profil de session.
+  bool _isSubmitting = false;
+
   Future<void> _acceptAndContinue() async {
-    // Riverpod contrôle uniquement le chargement visuel de cet écran.
-    ref.read(consentProvider.notifier).startSubmitting();
+    setState(() => _isSubmitting = true);
     try {
       final locale = Localizations.localeOf(context);
       final preferredLanguage = locale.languageCode == 'fr' ? 'fr' : 'en';
-      // Utilise un identifiant IANA réel pour les calculs liés au fuseau horaire.
+      // Real IANA identifier (e.g. "America/New_York"), required for the
+      // spec's timezone-aware streak/daily-reset calculations to actually
+      // work (docs/03_technical_spec.md) -- not just a display name.
       final timezone = await FlutterTimezone.getLocalTimezone();
       final country = locale.countryCode ?? '';
 
@@ -48,14 +49,12 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
         );
       }
     } finally {
-      if (mounted) ref.read(consentProvider.notifier).stopSubmitting();
+      if (mounted) setState(() => _isSubmitting = false);
     }
   }
 
-  /// Construit l'écran de consentement en observant son état de chargement.
   @override
   Widget build(BuildContext context) {
-    final isSubmitting = ref.watch(consentProvider);
     return Scaffold(
       backgroundColor: AppColors.creamDeep,
       appBar: AppBar(
@@ -134,7 +133,7 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                 const SizedBox(height: 16),
                 KingdomButton(
                   label: 'I Consent and Continue',
-                  isLoading: isSubmitting,
+                  isLoading: _isSubmitting,
                   onPressed: _acceptAndContinue,
                 ),
                 const SizedBox(height: 12),
