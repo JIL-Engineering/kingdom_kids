@@ -18,8 +18,7 @@ enum BookCategory implements _i1.SerializableModel {
   character_building,
   prayer,
   devotional,
-  sunday_school
-  ;
+  sunday_school;
 
   static BookCategory fromJson(int index) {
     switch (index) {
