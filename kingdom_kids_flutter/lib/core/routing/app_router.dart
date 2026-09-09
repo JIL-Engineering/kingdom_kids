@@ -12,6 +12,7 @@ import '../../features/child_profile/screens/profile_picker_screen.dart';
 import '../../features/settings/screens/pin_gate_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
 import '../auth/session_state.dart';
+import 'package:kingdom_kids_flutter/features/child_profile/screens/add_child_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -117,6 +118,10 @@ GoRouter goRouter(Ref ref) {
               ? PinGateMode.change
               : PinGateMode.initial,
         ),
+      ),
+      GoRoute(
+        path: '/add-child',
+        builder: (context, state) => const AddChildScreen(),
       ),
     ],
   );

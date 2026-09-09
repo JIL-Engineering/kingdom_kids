@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
-/// Kingdom Kids text styles — matched to the design mockups.
+/// Kingdom Kids text styles — matched to the Stitch design export
+/// (`kingdomkidsdesignmockupui/stitch_remix_of_kingdom_kids_discipleship_platform/`).
 ///
-/// Font roles:
-/// - **Nunito** (ExtraBold/Bold) — app name, screen headings, section titles
+/// Font roles, confirmed against the export's literal CSS (`font-display` vs
+/// `font-sans` classes), not guessed from mockup screenshots:
+/// - **Quicksand** (`font-display`) — app name, screen/section headings,
+///   streak/stat numbers, chip labels — anything bold/emphasized
 /// - **Playfair Display** (Italic) — scripture verse quotes
-/// - **DM Sans** (Regular/SemiBold) — body text, subtitles, labels, buttons
+/// - **Plus Jakarta Sans** (`font-sans`, the export's default) — body text,
+///   form fields, buttons, nav labels — everything else
 abstract final class AppTextStyles {
   // ── App Name / Display ────────────────────────────────────────────────────
-  /// "Kingdom Kids" in nav bar / splash — large, bold Nunito
-  static TextStyle get appName => GoogleFonts.nunito(
+  /// "Kingdom Kids" in nav bar / splash — large, bold Quicksand
+  static TextStyle get appName => GoogleFonts.quicksand(
     fontSize: 22,
     fontWeight: FontWeight.w800,
     color: AppColors.textPrimary,
@@ -20,7 +24,7 @@ abstract final class AppTextStyles {
 
   // ── Screen Headings ───────────────────────────────────────────────────────
   /// e.g. "Create a Profile", "My Journey" — hero headings
-  static TextStyle get displayLarge => GoogleFonts.nunito(
+  static TextStyle get displayLarge => GoogleFonts.quicksand(
     fontSize: 32,
     fontWeight: FontWeight.w800,
     color: AppColors.textPrimary,
@@ -29,7 +33,7 @@ abstract final class AppTextStyles {
   );
 
   /// e.g. "David & The Giant", "Good morning, Samuel!" — card/section hero
-  static TextStyle get displayMedium => GoogleFonts.nunito(
+  static TextStyle get displayMedium => GoogleFonts.quicksand(
     fontSize: 24,
     fontWeight: FontWeight.w800,
     color: AppColors.textPrimary,
@@ -38,20 +42,20 @@ abstract final class AppTextStyles {
 
   // ── Section Headings ──────────────────────────────────────────────────────
   /// e.g. "Tales for You", "Badge Shelf", "Recent Activity"
-  static TextStyle get headingLarge => GoogleFonts.nunito(
+  static TextStyle get headingLarge => GoogleFonts.quicksand(
     fontSize: 20,
     fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
   );
 
   /// e.g. card headings, list item titles
-  static TextStyle get headingMedium => GoogleFonts.nunito(
+  static TextStyle get headingMedium => GoogleFonts.quicksand(
     fontSize: 16,
     fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
   );
 
-  static TextStyle get headingSmall => GoogleFonts.nunito(
+  static TextStyle get headingSmall => GoogleFonts.quicksand(
     fontSize: 14,
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
@@ -68,7 +72,7 @@ abstract final class AppTextStyles {
   );
 
   /// Verse reference — "Psalm 119:105"
-  static TextStyle get verseReference => GoogleFonts.dmSans(
+  static TextStyle get verseReference => GoogleFonts.plusJakartaSans(
     fontSize: 13,
     fontWeight: FontWeight.w600,
     color: AppColors.textSecondary,
@@ -76,21 +80,21 @@ abstract final class AppTextStyles {
   );
 
   // ── Body Text ─────────────────────────────────────────────────────────────
-  static TextStyle get bodyLarge => GoogleFonts.dmSans(
+  static TextStyle get bodyLarge => GoogleFonts.plusJakartaSans(
     fontSize: 16,
     fontWeight: FontWeight.w400,
     color: AppColors.textPrimary,
     height: 1.5,
   );
 
-  static TextStyle get bodyMedium => GoogleFonts.dmSans(
+  static TextStyle get bodyMedium => GoogleFonts.plusJakartaSans(
     fontSize: 14,
     fontWeight: FontWeight.w400,
     color: AppColors.textSecondary,
     height: 1.5,
   );
 
-  static TextStyle get bodySmall => GoogleFonts.dmSans(
+  static TextStyle get bodySmall => GoogleFonts.plusJakartaSans(
     fontSize: 12,
     fontWeight: FontWeight.w400,
     color: AppColors.textMuted,
@@ -99,7 +103,7 @@ abstract final class AppTextStyles {
 
   // ── Labels ────────────────────────────────────────────────────────────────
   /// e.g. "STORY OF THE DAY", "DAILY SEED" — uppercase amber labels
-  static TextStyle get chipLabel => GoogleFonts.dmSans(
+  static TextStyle get chipLabel => GoogleFonts.quicksand(
     fontSize: 11,
     fontWeight: FontWeight.w700,
     color: AppColors.amber,
@@ -107,7 +111,7 @@ abstract final class AppTextStyles {
   );
 
   /// Form field labels — "DISPLAY NAME", "BIRTH YEAR"
-  static TextStyle get fieldLabel => GoogleFonts.dmSans(
+  static TextStyle get fieldLabel => GoogleFonts.plusJakartaSans(
     fontSize: 12,
     fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
@@ -115,27 +119,27 @@ abstract final class AppTextStyles {
   );
 
   // ── Buttons ───────────────────────────────────────────────────────────────
-  static TextStyle get buttonLarge => GoogleFonts.dmSans(
+  static TextStyle get buttonLarge => GoogleFonts.plusJakartaSans(
     fontSize: 16,
     fontWeight: FontWeight.w600,
     color: AppColors.textOnDark,
     letterSpacing: 0.2,
   );
 
-  static TextStyle get buttonMedium => GoogleFonts.dmSans(
+  static TextStyle get buttonMedium => GoogleFonts.plusJakartaSans(
     fontSize: 14,
     fontWeight: FontWeight.w600,
     color: AppColors.textOnDark,
   );
 
   // ── Navigation ────────────────────────────────────────────────────────────
-  static TextStyle get navLabel => GoogleFonts.dmSans(
+  static TextStyle get navLabel => GoogleFonts.plusJakartaSans(
     fontSize: 11,
     fontWeight: FontWeight.w500,
     color: AppColors.navInactive,
   );
 
-  static TextStyle get navLabelActive => GoogleFonts.dmSans(
+  static TextStyle get navLabelActive => GoogleFonts.plusJakartaSans(
     fontSize: 11,
     fontWeight: FontWeight.w700,
     color: AppColors.navActive,
@@ -143,13 +147,13 @@ abstract final class AppTextStyles {
 
   // ── Streak / Stats ────────────────────────────────────────────────────────
   /// e.g. "7 Days" in streak banner
-  static TextStyle get streakNumber => GoogleFonts.nunito(
+  static TextStyle get streakNumber => GoogleFonts.quicksand(
     fontSize: 36,
     fontWeight: FontWeight.w800,
     color: AppColors.textOnDark,
   );
 
-  static TextStyle get streakLabel => GoogleFonts.dmSans(
+  static TextStyle get streakLabel => GoogleFonts.plusJakartaSans(
     fontSize: 13,
     fontWeight: FontWeight.w500,
     color: AppColors.textOnDark,
@@ -157,7 +161,7 @@ abstract final class AppTextStyles {
   );
 
   // ── Stats / Numbers ───────────────────────────────────────────────────────
-  static TextStyle get statNumber => GoogleFonts.nunito(
+  static TextStyle get statNumber => GoogleFonts.quicksand(
     fontSize: 28,
     fontWeight: FontWeight.w800,
     color: AppColors.textPrimary,
