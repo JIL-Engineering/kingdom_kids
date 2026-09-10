@@ -4,8 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 import 'package:serverpod_auth_idp_flutter/serverpod_auth_idp_flutter.dart';
 
-import 'core/routing/app_router.dart';
+//import 'core/routing/app_router.dart';
 import 'core/theme/app_theme.dart';
+import 'package:kingdom_kids_flutter/features/child_profile/screens/add_child_screen.dart';
 
 /// Global client used to talk to the server from anywhere in the app.
 late final Client client;
@@ -26,7 +27,7 @@ void main() async {
 
   runApp(const ProviderScope(child: MyApp()));
 }
-
+/*
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
@@ -36,6 +37,21 @@ class MyApp extends ConsumerWidget {
       title: 'Kingdom Kids',
       theme: AppTheme.light,
       routerConfig: ref.watch(goRouterProvider),
+    );
+  }
+}*/
+
+
+class MyApp extends ConsumerWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Kingdom Kids',
+      theme: AppTheme.light,
+      home: const AddChildScreen(),
     );
   }
 }
