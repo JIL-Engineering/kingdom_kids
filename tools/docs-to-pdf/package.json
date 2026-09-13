@@ -1,0 +1,14 @@
+{
+  "name": "docs-to-pdf",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Merges an entire Docusaurus docs section (e.g. docs.serverpod.dev/next) into one PDF.",
+  "main": "docs-to-full-pdf.js",
+  "scripts": {
+    "start": "node docs-to-full-pdf.js"
+  },
+  "dependencies": {
+    "pdf-lib": "^1.17.1",
+    "playwright": "^1.47.0"
+  }
+}

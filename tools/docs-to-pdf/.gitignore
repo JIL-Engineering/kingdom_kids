@@ -1,0 +1,4 @@
+node_modules/
+pdf-pages/
+*.pdf
+docs-to-full-pdf-report.json
