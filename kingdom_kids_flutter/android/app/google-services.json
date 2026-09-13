@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "198255281758",
+    "project_id": "kingdom-kids-f570b",
+    "storage_bucket": "kingdom-kids-f570b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:198255281758:android:c1b483e1c6a25f85d5d6cf",
+        "android_client_info": {
+          "package_name": "com.example.kingdom_kids_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlp2rGGZdKzkpFdgmaTgnVICWnaX4cCfE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
