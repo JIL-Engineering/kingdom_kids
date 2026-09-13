@@ -1,0 +1,157 @@
+[
+  {
+    "slug": "arche-noe",
+    "category": "Old Testament",
+    "age_bracket_min": 3,
+    "age_bracket_max": 6,
+    "translations": [
+      {
+        "lang": "en",
+        "title": "Noah's Ark"
+      },
+      {
+        "lang": "fr",
+        "title": "L'Arche de Noé"
+      }
+    ],
+    "pages": [
+      {
+        "page_number": 1,
+        "illustration_asset": "/books/arche-noe/images/noahs-ark_p01_cover.png",
+        "contents": [
+          {
+            "lang": "en",
+            "text": "Long ago, there was a kind man named Noah. God loved Noah very much.",
+            "audio_asset": "/books/arche-noe/audio/noahs-ark_p01_en.mp3"
+          },
+          {
+            "lang": "fr",
+            "text": "Il y a longtemps, il y avait un homme bon nommé Noé. Dieu aimait beaucoup Noé.",
+            "audio_asset": "/books/arche-noe/audio/noahs-ark_p01_fr.mp3"
+          }
+        ],
+        "prompt": "A kind old man with a white beard smiling, warm light, children's book style"
+      },
+      {
+        "page_number": 2,
+        "illustration_asset": "/books/arche-noe/images/noahs-ark_p02_ark.png",
+        "contents": [
+          {
+            "lang": "en",
+            "text": "God told Noah to build a huge boat, an Ark. It had to be very big!",
+            "audio_asset": "/books/arche-noe/audio/noahs-ark_p02_en.mp3"
+          },
+          {
+            "lang": "fr",
+            "text": "Dieu dit à Noé de construire un grand bateau, une Arche. Elle devait être très grande!",
+            "audio_asset": "/books/arche-noe/audio/noahs-ark_p02_fr.mp3"
+          }
+        ],
+        "prompt": "A huge wooden ark being built in a field, sunny day, cute style"
+      },
+      {
+        "page_number": 3,
+        "illustration_asset": "/books/arche-noe/images/noahs-ark_p03_animals.png",
+        "contents": [
+          {
+            "lang": "en",
+            "text": "Then the animals came, two by two. Elephants, lions, and little birds.",
+            "audio_asset": "/books/arche-noe/audio/noahs-ark_p03_en.mp3"
+          },
+          {
+            "lang": "fr",
+            "text": "Puis les animaux vinrent, deux par deux. Éléphants, lions et petits oiseaux.",
+            "audio_asset": "/books/arche-noe/audio/noahs-ark_p03_fr.mp3"
+          }
+        ],
+        "prompt": "Cute pairs of animals walking towards the ark: elephants, lions, birds"
+      },
+      {
+        "page_number": 4,
+        "illustration_asset": "/books/arche-noe/images/noahs-ark_p04_rain.png",
+        "contents": [
+          {
+            "lang": "en",
+            "text": "It rained for 40 days and 40 nights. But Noah and the animals were safe inside.",
+            "audio_asset": "/books/arche-noe/audio/noahs-ark_p04_en.mp3"
+          },
+          {
+            "lang": "fr",
+            "text": "Il plut pendant 40 jours et 40 nuits. Mais Noé et les animaux étaient en sécurité à l'intérieur.",
+            "audio_asset": "/books/arche-noe/audio/noahs-ark_p04_fr.mp3"
+          }
+        ],
+        "prompt": "Heavy rain outside, but inside the ark animals are cozy and safe"
+      },
+      {
+        "page_number": 5,
+        "illustration_asset": "/books/arche-noe/images/noahs-ark_p05_rainbow.png",
+        "contents": [
+          {
+            "lang": "en",
+            "text": "Finally, a beautiful rainbow appeared. God's promise!",
+            "audio_asset": "/books/arche-noe/audio/noahs-ark_p05_en.mp3"
+          },
+          {
+            "lang": "fr",
+            "text": "Enfin, un bel arc-en-ciel apparut. La promesse de Dieu!",
+            "audio_asset": "/books/arche-noe/audio/noahs-ark_p05_fr.mp3"
+          }
+        ],
+        "prompt": "A bright rainbow over the ark, animals happy, hopeful atmosphere"
+      }
+    ]
+  },
+  {
+    "slug": "bon-samaritain",
+    "category": "bible",
+    "age_bracket_min": 3,
+    "age_bracket_max": 7,
+    "translations": [
+      {
+        "lang": "en",
+        "title": "bon-samaritain"
+      },
+      {
+        "lang": "fr",
+        "title": "bon-samaritain"
+      }
+    ],
+    "pages": [
+      {
+        "page_number": 1,
+        "illustration_asset": "/books/bon-samaritain/images/bon-samaritain_1.png",
+        "contents": [
+          {
+            "lang": "en",
+            "text": "",
+            "audio_asset": "/books/bon-samaritain/audio/bon-samaritain_1_en.mp3"
+          },
+          {
+            "lang": "fr",
+            "text": "",
+            "audio_asset": "/books/bon-samaritain/audio/bon-samaritain_1_fr.mp3"
+          }
+        ],
+        "prompt": ""
+      },
+      {
+        "page_number": 1,
+        "illustration_asset": "/books/bon-samaritain/images/bon-samaritain_1.png",
+        "contents": [
+          {
+            "lang": "en",
+            "text": "",
+            "audio_asset": "/books/bon-samaritain/audio/bon-samaritain_1_en.mp3"
+          },
+          {
+            "lang": "fr",
+            "text": "",
+            "audio_asset": "/books/bon-samaritain/audio/bon-samaritain_1_fr.mp3"
+          }
+        ],
+        "prompt": ""
+      }
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "chap1",
+    "bookId": "david-et-goliath",
+    "order": 1,
+    "title": "Le jeune berger",
+    "image": "books/david-et-goliath/images/p01.png",
+    "audio": "books/david-et-goliath/audios/chap1.mp3",
+    "text": "David gardait les moutons de son père."
+  }
+]

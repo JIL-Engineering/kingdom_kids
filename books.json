@@ -1,0 +1,71 @@
+import json
+import os
+import psycopg2
+
+DB_URL = os.getenv("DATABASE_URL")
+
+def clean_path(p: str) -> str:
+    return p.lstrip('/') if p else None
+
+with open('books.json', encoding='utf-8') as f:
+    books = json.load(f)
+
+conn = psycopg2.connect(DB_URL)
+cur = conn.cursor()
+
+for book in books:
+    slug = book['slug']
+    print(f"\n📚 {slug}")
+
+    # Détection doublons pages
+    page_nums = [p['page_number'] for p in book['pages']]
+    if len(page_nums)!= len(set(page_nums)):
+        print(f" ❌ ERREUR: doublon page_number {page_nums} -> à corriger dans le Sheet!")
+        continue
+
+    # Validation contenu vide
+    empty = [p for p in book['pages'] if not p['contents'][0]['text'].strip()]
+    if empty:
+        print(f" ⚠️ {len(empty)} pages avec texte vide -> skip livre")
+        continue
+
+    # 1. Book
+    cur.execute("""
+        INSERT INTO book (slug, category, "ageBracketMin", "ageBracketMax", status, "createdAt")
+        VALUES (%s, %s, %s, %s, 'published', NOW())
+        ON CONFLICT (slug) DO UPDATE SET
+            category=EXCLUDED.category, "ageBracketMin"=EXCLUDED."ageBracketMin",
+            "ageBracketMax"=EXCLUDED."ageBracketMax"
+        RETURNING id
+    """, (slug, book['category'], book['age_bracket_min'], book['age_bracket_max']))
+    book_id = cur.fetchone()[0]
+
+    # 2. Translations
+    for tr in book['translations']:
+        cur.execute("""
+            INSERT INTO book_translation ("bookId", language, title)
+            VALUES (%s, %s, %s)
+            ON CONFLICT ("bookId", language) DO UPDATE SET title=EXCLUDED.title
+        """, (book_id, tr['lang'], tr['title']))
+
+    # 3. Pages
+    cur.execute('DELETE FROM page WHERE "bookId"=%s', (book_id,))
+    for p in book['pages']:
+        cur.execute("""
+            INSERT INTO page ("bookId", "pageNumber", "illustrationAsset", prompt)
+            VALUES (%s, %s, %s, %s) RETURNING id
+        """, (book_id, p['page_number'], clean_path(p['illustration_asset']), p.get('prompt')))
+        page_id = cur.fetchone()[0]
+
+        for c in p['contents']:
+            cur.execute("""
+                INSERT INTO page_content ("pageId", language, text, "audioAsset")
+                VALUES (%s, %s, %s, %s)
+            """, (page_id, c['lang'], c['text'], clean_path(c['audio_asset'])))
+
+    conn.commit()
+    print(f" ✅ {len(book['pages'])} pages importées")
+
+cur.close()
+conn.close()
+print("\n🎉 Import terminé")

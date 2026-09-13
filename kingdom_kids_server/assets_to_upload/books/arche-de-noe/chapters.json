@@ -1,0 +1,20 @@
+[
+  {
+    "id": "chap1",
+    "bookId": "arche-de-noe",
+    "order": 1,
+    "title": "La mission de Noé",
+    "image": "books/arche-de-noe/images/p01.png",
+    "audio": "books/arche-de-noe/audios/chap1.mp3",
+    "text": "Il était une fois  il y avait Noé, un homme qui aimait Dieu."
+  },
+  {
+    "id": "chap2",
+    "bookId": "arche-de-noe",
+    "order": 2,
+    "title": "Les animaux arrivent",
+    "image": "books/arche-de-noe/images/p02.png",
+    "audio": "books/arche-de-noe/audios/chap2.mp3",
+    "text": "Deux par deux, les animaux sont entrés dans l'arche."
+  }
+]
