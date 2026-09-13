@@ -1,0 +1,108 @@
+/* AUTOMATICALLY GENERATED CODE DO NOT MODIFY */
+/*   To generate run: "serverpod generate"    */
+
+// ignore_for_file: implementation_imports
+// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: public_member_api_docs
+// ignore_for_file: type_literal_in_constant_pattern
+// ignore_for_file: use_super_parameters
+// ignore_for_file: invalid_use_of_internal_member
+
+// ignore_for_file: no_leading_underscores_for_library_prefixes
+
+import 'package:serverpod/serverpod.dart' as _i1;
+import 'download_asset.dart' as _i2;
+import 'package:kingdom_kids_server/src/generated/protocol.dart' as _i3;
+
+abstract class DownloadBundle
+    implements _i1.SerializableModel, _i1.ProtocolSerialization {
+  DownloadBundle._({
+    required this.bookId,
+    required this.contentVersion,
+    required this.assets,
+  });
+
+  factory DownloadBundle({
+    required int bookId,
+    required int contentVersion,
+    required List<_i2.DownloadAsset> assets,
+  }) = _DownloadBundleImpl;
+
+  factory DownloadBundle.fromJson(Map<String, dynamic> jsonSerialization) {
+    return DownloadBundle(
+      bookId: jsonSerialization['bookId'] as int,
+      contentVersion: jsonSerialization['contentVersion'] as int,
+      assets: _i3.Protocol().deserialize<List<_i2.DownloadAsset>>(
+        jsonSerialization['assets'],
+      ),
+    );
+  }
+
+  int bookId;
+
+  int contentVersion;
+
+  List<_i2.DownloadAsset> assets;
+
+  /// Returns a shallow copy of this [DownloadBundle]
+  /// with some or all fields replaced by the given arguments.
+  @_i1.useResult
+  DownloadBundle copyWith({
+    int? bookId,
+    int? contentVersion,
+    List<_i2.DownloadAsset>? assets,
+  });
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      '__className__': 'DownloadBundle',
+      'bookId': bookId,
+      'contentVersion': contentVersion,
+      'assets': assets.toJson(valueToJson: (v) => v.toJson()),
+    };
+  }
+
+  @override
+  Map<String, dynamic> toJsonForProtocol() {
+    return {
+      '__className__': 'DownloadBundle',
+      'bookId': bookId,
+      'contentVersion': contentVersion,
+      'assets': assets.toJson(valueToJson: (v) => v.toJsonForProtocol()),
+    };
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
+  }
+}
+
+class _DownloadBundleImpl extends DownloadBundle {
+  _DownloadBundleImpl({
+    required int bookId,
+    required int contentVersion,
+    required List<_i2.DownloadAsset> assets,
+  }) : super._(
+         bookId: bookId,
+         contentVersion: contentVersion,
+         assets: assets,
+       );
+
+  /// Returns a shallow copy of this [DownloadBundle]
+  /// with some or all fields replaced by the given arguments.
+  @_i1.useResult
+  @override
+  DownloadBundle copyWith({
+    int? bookId,
+    int? contentVersion,
+    List<_i2.DownloadAsset>? assets,
+  }) {
+    return DownloadBundle(
+      bookId: bookId ?? this.bookId,
+      contentVersion: contentVersion ?? this.contentVersion,
+      assets: assets ?? this.assets.map((e0) => e0.copyWith()).toList(),
+    );
+  }
+}

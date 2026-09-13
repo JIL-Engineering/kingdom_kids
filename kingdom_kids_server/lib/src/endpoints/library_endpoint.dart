@@ -1,97 +1,90 @@
-import 'package:serverpod/serverpod.dart'; // Classes de base Serverpod (Endpoint, Session, etc.)
-import '../generated/protocol.dart'; // Import des classes générées : Book, Page, PageContent, BookSummary, BookDetail, BookPage
+import 'package:serverpod/serverpod.dart';
+import '../generated/protocol.dart';
 import '../services/asset_url_service.dart';
 
 class LibraryEndpoint extends Endpoint {
-  // browseBooks : renvoie une liste résumée de livres filtrés par tranche d'âge / langue / catégorie
+  // browseBooks — VERSION OPTIMISÉE
+  // Le filtre langue reste nécessairement en 2 requêtes (PageContent -> Book),
+  // car il n'y a pas de lien direct langue sur la table Book elle-même.
+  // En revanche, le filtre ageBracket passe maintenant en SQL plutôt qu'en mémoire,
+  // et category était déjà en SQL (inchangé).
   Future<List<BookSummary>> browseBooks(
-    Session
-    session, { // Session : contexte Serverpod (accès DB, auth, etc.), toujours 1er paramètre
+    Session session, {
     AgeBracket? ageBracket,
     AppLanguage? language,
     BookCategory? category,
   }) async {
-    Set<int>?
-    allowedBookIds; // Sera rempli seulement si `language` est fourni ; null = "pas de filtre langue"
+    Set<int>? allowedBookIds;
 
     if (language != null) {
-      // On n'entre ici que si l'appelant a demandé une langue précise
       final contents = await PageContent.db.find(
-        // Requête SQL : SELECT * FROM page_contents WHERE language = ...
-        session, // La session porte la connexion DB
-        where: (t) => t.language.equals(
-          language,
-        ), // `t` = la table page_contents ; on filtre sur la colonne language
+        session,
+        where: (t) => t.language.equals(language),
       );
-      final pageIds = contents
-          .map((c) => c.pageId)
-          .toSet(); // On extrait les pageId des contenus trouvés (dédupliqués via Set)
+      final pageIds = contents.map((c) => c.pageId).toSet();
 
       final pages = await Page.db.find(
-        // Deuxième requête : quelles pages (et donc quels livres) ont cette langue
         session,
-        where: (t) => t.id.inSet(
-          pageIds,
-        ), // On cherche les pages dont l'id est dans pageIds
+        where: (t) => t.id.inSet(pageIds),
       );
-      allowedBookIds = pages
-          .map((p) => p.bookId)
-          .toSet(); // On remonte au bookId de chaque page -> livres qui ont cette langue
+      allowedBookIds = pages.map((p) => p.bookId).toSet();
+
+      // Si le filtre langue ne retient aucun livre, inutile d'interroger Book du tout
+      if (allowedBookIds.isEmpty) return [];
     }
 
     final books = await Book.db.find(
-      // Requête principale : tous les livres publiés (et catégorie si fournie)
       session,
       where: (t) {
-        // Construction dynamique de la clause WHERE
-        var condition = t.isPublished.equals(
-          true,
-        ); // Condition de base : isPublished = true (jamais montrer un brouillon)
+        var condition = t.isPublished.equals(true);
         if (category != null) {
-          // Si une catégorie est demandée...
+          condition = condition & t.category.equals(category);
+        }
+        if (allowedBookIds != null) {
+          condition = condition & t.id.inSet(allowedBookIds);
+        }
+        // Filtre ageBracket désormais en SQL : le livre doit couvrir la tranche demandée
+        // (ageBracketMin <= ageBracket <= ageBracketMax)
+        if (ageBracket != null) {
           condition =
               condition &
-              t.category.equals(
-                category,
-              ); // ...on l'ajoute avec un ET logique (&)
+              t.ageBracketMin.inSet(
+                AgeBracket.values
+                    .where((a) => a.index <= ageBracket.index)
+                    .toSet(),
+              ) &
+              t.ageBracketMax.inSet(
+                AgeBracket.values
+                    .where((a) => a.index >= ageBracket.index)
+                    .toSet(),
+              );
         }
-        return condition; // On renvoie la condition finale au générateur de requête
+        return condition;
       },
     );
+
+    final bookIds = books.map((b) => b.id!).toSet();
     final translations = await BookTranslation.db.find(
       session,
-      where: language == null ? null : (t) => t.language.equals(language),
+      where: (t) =>
+          t.bookId.inSet(bookIds) &
+          (language == null
+              ? Constant.bool(true)
+              : t.language.equals(language)),
     );
     final titleByBookId = {
       for (final translation in translations)
         translation.bookId: translation.title,
     };
 
-    final filtered = books.where((book) {
-      // Filtrage en mémoire (Dart) sur les résultats déjà récupérés de la DB
-      if (allowedBookIds != null && !allowedBookIds.contains(book.id)) {
-        return false; // Si un filtre langue existe et que ce livre n'en fait pas partie -> exclu
-      }
-      if (ageBracket != null &&
-          (ageBracket.index < book.ageBracketMin.index ||
-              ageBracket.index > book.ageBracketMax.index)) {
-        return false;
-      }
-      return true; // Le livre passe tous les filtres -> inclus
-    });
-
     return await Future.wait(
-      filtered.map(
+      books.map(
         (book) async => BookSummary(
-          // Transformation Book (modèle DB complet) -> BookSummary (modèle allégé exposé au client)
-          id: book
-              .id!, // `!` : on affirme que id n'est pas null (un livre lu en DB en a toujours un)
+          id: book.id!,
           slug: book.slug,
           title:
               titleByBookId[book.id!] ??
-              (throw StateError(
-                'Book translation not found: ${book.id}',
-              )),
+              (throw StateError('Book translation not found: ${book.id}')),
           ageBracketMin: book.ageBracketMin,
           ageBracketMax: book.ageBracketMax,
           category: book.category,
@@ -104,21 +97,15 @@ class LibraryEndpoint extends Endpoint {
     );
   }
 
-  // getBook : renvoie le détail complet d'un livre pour une langue donnée (toutes ses pages + textes traduits)
+  // getBook — INCHANGÉ (déjà propre)
   Future<BookDetail> getBook(
     Session session,
-    int bookId, // Id du livre demandé (paramètre obligatoire)
+    int bookId,
     AppLanguage language,
   ) async {
-    final book = await Book.db.findById(
-      session,
-      bookId,
-    ); // Recherche directe par clé primaire (plus rapide qu'un find + where)
+    final book = await Book.db.findById(session, bookId);
     if (book == null) {
-      // findById renvoie null si l'id n'existe pas
-      throw Exception(
-        'Book not found: $bookId',
-      ); // On stoppe l'exécution avec une erreur explicite
+      throw Exception('Book not found: $bookId');
     }
     final translation = await BookTranslation.db.findFirstRow(
       session,
@@ -131,32 +118,21 @@ class LibraryEndpoint extends Endpoint {
     }
 
     final pages = await Page.db.find(
-      // Récupère toutes les pages du livre
       session,
       where: (t) => t.bookId.equals(bookId),
-      orderBy: (t) =>
-          t.pageNumber, // Tri par numéro de page pour garder l'ordre de lecture
+      orderBy: (t) => t.pageNumber,
     );
 
     final pageIds = pages.map((p) => p.id!).toSet();
     final contents = await PageContent.db.find(
-      // Récupère les traductions correspondant à ces pages ET cette langue
       session,
       where: (t) => t.pageId.inSet(pageIds) & t.language.equals(language),
     );
-    final contentByPageId = {
-      for (var c in contents) c.pageId: c,
-    }; // Transforme la liste en Map pageId -> contenu pour un accès O(1)
+    final contentByPageId = {for (var c in contents) c.pageId: c};
 
-    final bookPages =
-        <
-          BookPage
-        >[]; // Liste finale qui combinera Page (structure) + PageContent (texte/audio)
+    final bookPages = <BookPage>[];
     for (final page in pages) {
-      // On boucle sur les pages dans l'ordre déjà trié
-      final content =
-          contentByPageId[page
-              .id]; // On cherche si une traduction existe pour cette page
+      final content = contentByPageId[page.id];
       if (content == null) {
         throw StateError(
           'Page translation not found for language ${language.name}: ${page.id}',
@@ -164,7 +140,6 @@ class LibraryEndpoint extends Endpoint {
       }
       bookPages.add(
         BookPage(
-          // Sinon on construit l'objet combiné page+contenu
           pageNumber: page.pageNumber,
           illustrationAsset: await AssetUrlService.publicUrl(
             session,
@@ -181,7 +156,6 @@ class LibraryEndpoint extends Endpoint {
     }
 
     return BookDetail(
-      // Construction de l'objet final renvoyé au client
       id: book.id!,
       slug: book.slug,
       title: translation.title,
@@ -193,6 +167,228 @@ class LibraryEndpoint extends Endpoint {
         book.coverImageAsset,
       ),
       pages: bookPages,
+    );
+  }
+
+  // getDownloadBundle
+  // NOTE: utilise pour l'instant AssetUrlService.publicUrl (URLs publiques, non expirantes),
+  // car AssetUrlService.signedUrl n'existe pas encore — voir le TODO dans asset_url_service.dart
+  // (SigV4 R2 à implémenter séparément, probablement lié à la tâche R2 de Sterelle).
+  // À remplacer par de vraies URLs signées temporaires une fois cette infra prête.
+  //
+  // CORRECTION REVIEW : même traitement que getBook (PR #39) pour une page sans
+  // traduction dans la langue demandée — erreur explicite plutôt que de sauter
+  // silencieusement l'audio, sinon une famille télécharge un livre avec des pages muettes.
+  Future<DownloadBundle> getDownloadBundle(
+    Session session,
+    int bookId,
+    AppLanguage language,
+  ) async {
+    final book = await Book.db.findById(session, bookId);
+    if (book == null) {
+      throw Exception('Book not found: $bookId');
+    }
+
+    final pages = await Page.db.find(
+      session,
+      where: (t) => t.bookId.equals(bookId),
+      orderBy: (t) => t.pageNumber,
+    );
+    final pageIds = pages.map((p) => p.id!).toSet();
+    final contents = await PageContent.db.find(
+      session,
+      where: (t) => t.pageId.inSet(pageIds) & t.language.equals(language),
+    );
+    final contentByPageId = {for (var c in contents) c.pageId: c};
+
+    final assets = <DownloadAsset>[];
+
+    if (book.coverImageAsset != null) {
+      assets.add(
+        DownloadAsset(
+          assetKey: book.coverImageAsset!,
+          url: await AssetUrlService.publicUrl(session, book.coverImageAsset!),
+        ),
+      );
+    }
+
+    for (final page in pages) {
+      final content = contentByPageId[page.id];
+      if (content == null) {
+        throw StateError(
+          'Page translation not found for language ${language.name}: ${page.id}',
+        );
+      }
+      assets.add(
+        DownloadAsset(
+          assetKey: page.illustrationAsset,
+          url: await AssetUrlService.publicUrl(session, page.illustrationAsset),
+        ),
+      );
+      assets.add(
+        DownloadAsset(
+          assetKey: content.audioAsset,
+          url: await AssetUrlService.publicUrl(session, content.audioAsset),
+        ),
+      );
+    }
+
+    return DownloadBundle(
+      bookId: bookId,
+      contentVersion: book.contentVersion,
+      assets: assets,
+    );
+  }
+
+  // getRecommended
+  // Implémente la règle de 03_technical_spec.md §4 : même catégorie que le dernier
+  // livre terminé par l'enfant, tranche d'âge correspondante, pas encore lu.
+  //
+  // FALLBACK NON SPÉCIFIÉ : si l'enfant n'a encore terminé aucun livre, la spec ne
+  // précise pas de comportement — ici on retombe sur "pas encore commencé + tranche
+  // d'âge" sans filtre de catégorie, plutôt que de retourner une liste vide. À valider
+  // avec le tech lead si c'est le bon choix pour un nouvel utilisateur.
+  //
+  // NOTE: ChildProfile.preferredLanguage est un String (pas un AppLanguage comme
+  // PageContent.language / BookTranslation.language) — incohérence de schéma à signaler
+  // au tech lead pour uniformisation future. Conversion faite ici en attendant.
+  Future<List<BookSummary>> getRecommended(
+    Session session,
+    int childId, {
+    int limit = 10,
+  }) async {
+    final child = await ChildProfile.db.findById(session, childId);
+    if (child == null) {
+      throw Exception('Child not found: $childId');
+    }
+
+    final childLanguage = AppLanguage.values.firstWhere(
+      (l) => l.name == child.preferredLanguage,
+      orElse: () => AppLanguage.en,
+    );
+
+    final allProgress = await ReadingProgress.db.find(
+      session,
+      where: (t) => t.childId.equals(childId),
+    );
+    final startedBookIds = allProgress.map((p) => p.bookId).toSet();
+
+    // Dernier livre terminé par l'enfant, par date d'achèvement décroissante
+    final completedProgress =
+        allProgress.where((p) => p.completed && p.completedAt != null).toList()
+          ..sort((a, b) => b.completedAt!.compareTo(a.completedAt!));
+
+    BookCategory? targetCategory;
+    if (completedProgress.isNotEmpty) {
+      final lastCompletedBook = await Book.db.findById(
+        session,
+        completedProgress.first.bookId,
+      );
+      targetCategory = lastCompletedBook?.category;
+    }
+
+    final books = await Book.db.find(
+      session,
+      where: (t) {
+        var condition =
+            t.isPublished.equals(true) &
+            t.ageBracketMin.inSet(
+              AgeBracket.values
+                  .where((a) => a.index <= child.ageBracket.index)
+                  .toSet(),
+            ) &
+            t.ageBracketMax.inSet(
+              AgeBracket.values
+                  .where((a) => a.index >= child.ageBracket.index)
+                  .toSet(),
+            );
+        if (startedBookIds.isNotEmpty) {
+          condition = condition & t.id.notInSet(startedBookIds);
+        }
+        if (targetCategory != null) {
+          condition = condition & t.category.equals(targetCategory);
+        }
+        return condition;
+      },
+      orderBy: (t) => t.createdAt,
+      orderDescending: true,
+      limit: limit,
+    );
+
+    final bookIds = books.map((b) => b.id!).toSet();
+    final translations = await BookTranslation.db.find(
+      session,
+      where: (t) => t.bookId.inSet(bookIds) & t.language.equals(childLanguage),
+    );
+    final titleByBookId = {
+      for (final translation in translations)
+        translation.bookId: translation.title,
+    };
+
+    return await Future.wait(
+      books.map(
+        (book) async => BookSummary(
+          id: book.id!,
+          slug: book.slug,
+          title:
+              titleByBookId[book.id!] ??
+              (throw StateError('Book translation not found: ${book.id}')),
+          ageBracketMin: book.ageBracketMin,
+          ageBracketMax: book.ageBracketMax,
+          category: book.category,
+          coverImageAsset: await AssetUrlService.nullablePublicUrl(
+            session,
+            book.coverImageAsset,
+          ),
+        ),
+      ),
+    );
+  }
+
+  // checkForUpdates
+  // Retourne les livres créés OU modifiés depuis lastSyncedAt, pour que le client
+  // sache quoi re-télécharger sans devoir tout recomparer lui-même.
+  //
+  // CORRECTION: ColumnDateTime n'a pas de méthode .greaterThan() dans cette version
+  // de Serverpod — utilisation de l'opérateur > à la place.
+  Future<List<BookSummary>> checkForUpdates(
+    Session session,
+    DateTime lastSyncedAt,
+    AppLanguage language,
+  ) async {
+    final books = await Book.db.find(
+      session,
+      where: (t) => t.isPublished.equals(true) & (t.updatedAt > lastSyncedAt),
+      orderBy: (t) => t.updatedAt,
+    );
+
+    final bookIds = books.map((b) => b.id!).toSet();
+    final translations = await BookTranslation.db.find(
+      session,
+      where: (t) => t.bookId.inSet(bookIds) & t.language.equals(language),
+    );
+    final titleByBookId = {
+      for (final translation in translations)
+        translation.bookId: translation.title,
+    };
+
+    return await Future.wait(
+      books.map(
+        (book) async => BookSummary(
+          id: book.id!,
+          slug: book.slug,
+          title:
+              titleByBookId[book.id!] ??
+              (throw StateError('Book translation not found: ${book.id}')),
+          ageBracketMin: book.ageBracketMin,
+          ageBracketMax: book.ageBracketMax,
+          category: book.category,
+          coverImageAsset: await AssetUrlService.nullablePublicUrl(
+            session,
+            book.coverImageAsset,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -24,10 +24,11 @@ import 'package:kingdom_kids_client/src/protocol/age_bracket.dart' as _i8;
 import 'package:kingdom_kids_client/src/protocol/app_language.dart' as _i9;
 import 'package:kingdom_kids_client/src/protocol/book_category.dart' as _i10;
 import 'package:kingdom_kids_client/src/protocol/book_detail.dart' as _i11;
+import 'package:kingdom_kids_client/src/protocol/download_bundle.dart' as _i12;
 import 'package:kingdom_kids_client/src/protocol/greetings/greeting.dart'
-    as _i12;
-import 'package:http/http.dart' as _i13;
-import 'protocol.dart' as _i14;
+    as _i13;
+import 'package:http/http.dart' as _i14;
+import 'protocol.dart' as _i15;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
 /// are made available on the server and enable the corresponding sign-in widget
@@ -391,6 +392,42 @@ class EndpointLibrary extends _i2.EndpointRef {
       'language': language,
     },
   );
+
+  _i3.Future<_i12.DownloadBundle> getDownloadBundle(
+    int bookId,
+    _i9.AppLanguage language,
+  ) => caller.callServerEndpoint<_i12.DownloadBundle>(
+    'library',
+    'getDownloadBundle',
+    {
+      'bookId': bookId,
+      'language': language,
+    },
+  );
+
+  _i3.Future<List<_i7.BookSummary>> getRecommended(
+    int childId, {
+    required int limit,
+  }) => caller.callServerEndpoint<List<_i7.BookSummary>>(
+    'library',
+    'getRecommended',
+    {
+      'childId': childId,
+      'limit': limit,
+    },
+  );
+
+  _i3.Future<List<_i7.BookSummary>> checkForUpdates(
+    DateTime lastSyncedAt,
+    _i9.AppLanguage language,
+  ) => caller.callServerEndpoint<List<_i7.BookSummary>>(
+    'library',
+    'checkForUpdates',
+    {
+      'lastSyncedAt': lastSyncedAt,
+      'language': language,
+    },
+  );
 }
 
 /// {@category Endpoint}
@@ -417,8 +454,8 @@ class EndpointGreeting extends _i2.EndpointRef {
   String get name => 'greeting';
 
   /// Returns a personalized greeting message: "Hello {name}".
-  _i3.Future<_i12.Greeting> hello(String name) =>
-      caller.callServerEndpoint<_i12.Greeting>(
+  _i3.Future<_i13.Greeting> hello(String name) =>
+      caller.callServerEndpoint<_i13.Greeting>(
         'greeting',
         'hello',
         {'name': name},
@@ -454,10 +491,10 @@ class Client extends _i2.ServerpodClientShared {
     onFailedCall,
     Function(_i2.MethodCallContext)? onSucceededCall,
     bool? disconnectStreamsOnLostInternetConnection,
-    _i13.Client? httpClientOverride,
+    _i14.Client? httpClientOverride,
   }) : super(
          host,
-         _i14.Protocol(),
+         _i15.Protocol(),
          securityContext: securityContext,
          streamingConnectionTimeout: streamingConnectionTimeout,
          connectionTimeout: connectionTimeout,
