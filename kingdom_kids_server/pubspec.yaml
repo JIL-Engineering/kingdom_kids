@@ -59,4 +59,5 @@ serverpod:
       path: ../kingdom_kids_flutter
       displayName: "Kingdom kids app"
       auto_launch: true
+      device: chrome
       target: lib/driver.dart
