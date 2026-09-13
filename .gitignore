@@ -23,6 +23,12 @@ pubspec_overrides.yaml
 # Embedded PostgreSQL runtime artifacts (data dir, sockets, pidfiles)
 .serverpod/
 
+# IDE workspace config (machine-local paths, personal run configs)
+.idea/
+
+# Flutter DevTools per-project preferences
+devtools_options.yaml
+
 # AI coding assistant config — local only, not for the shared repo
 AGENTS.md
 CLAUDE.md
