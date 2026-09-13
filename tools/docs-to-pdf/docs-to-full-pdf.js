@@ -12,10 +12,12 @@
  *      anything collapsed by default (OS/language tabs, <details> accordions)
  *      so their content isn't silently dropped, and printing it to its own PDF
  *   5. Building a real, clickable, hierarchically-numbered table of contents
- *      with accurate page numbers, and a title page
- *   6. Merging everything into one PDF with continuous page numbers — lowercase
- *      roman numerals for the front matter (TOC), Arabic numerals for the body,
- *      exactly like a printed book
+ *      — including each page's own subtitles/topics (its h2/h3 headings),
+ *      not just its page-level title — with accurate page numbers, plus a
+ *      title page and a PDF bookmark/outline panel for in-reader navigation
+ *   6. Merging everything into one PDF with consistent book typography and
+ *      continuous page numbers — lowercase roman numerals for the front
+ *      matter (TOC), Arabic numerals for the body, exactly like a printed book
  *   7. Reporting exactly what was and wasn't included, and failing loudly
  *      (non-zero exit code) if anything is missing
  *
@@ -34,7 +36,7 @@
  */
 
 const { chromium } = require('playwright');
-const { PDFDocument, StandardFonts, rgb, PDFName, PDFArray } = require('pdf-lib');
+const { PDFDocument, StandardFonts, rgb, PDFName, PDFArray, PDFDict, PDFNumber, PDFHexString } = require('pdf-lib');
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
@@ -167,6 +169,27 @@ function computeNumbering(items) {
   });
 }
 
+// Turns a flat list of in-page h2/h3 headings into a nested tree (h3s under
+// the nearest preceding h2), so a page's own internal structure — its
+// "subtitles and topics" — can be surfaced in the table of contents and the
+// PDF bookmark panel, not just its own page-level title.
+function buildHeadingTree(headings) {
+  const roots = [];
+  let currentH2 = null;
+  for (const h of headings) {
+    if (h.level <= 2) {
+      const node = { text: h.text, level: 2, children: [] };
+      roots.push(node);
+      currentH2 = node;
+    } else if (currentH2) {
+      currentH2.children.push({ text: h.text, level: 3, children: [] });
+    } else {
+      roots.push({ text: h.text, level: 3, children: [] });
+    }
+  }
+  return roots;
+}
+
 // The sidebar's DOM order (and nesting) is the real table of contents.
 // Docusaurus keeps collapsed categories mounted but visually hidden in most
 // theme versions — we also proactively click every collapsed category to be
@@ -290,6 +313,21 @@ async function renderPageToPdf(page, item, outPath) {
   const title = await page.title();
   const bannerLabel = item.label || title;
 
+  // Capture the page's own heading structure (its "subtitles and topics")
+  // before we start mutating the DOM, so it can be surfaced in the table of
+  // contents and the PDF bookmark panel — not just the page's own title.
+  const headings = await page
+    .$$eval('article h2, article h3', (els) =>
+      els
+        .map((el) => {
+          const clone = el.cloneNode(true);
+          clone.querySelectorAll('.hash-link, a.hash-link').forEach((a) => a.remove());
+          return { level: Number(el.tagName[1]), text: (clone.textContent || '').trim() };
+        })
+        .filter((h) => h.text.length > 0)
+    )
+    .catch(() => []);
+
   // A running chapter/section banner, like the header of a printed book
   // chapter, so a reader can tell where they are without the sidebar.
   await page.evaluate(
@@ -298,26 +336,95 @@ async function renderPageToPdf(page, item, outPath) {
       if (!article) return;
       const banner = document.createElement('div');
       banner.className = 'docs-pdf-chapter-banner';
-      banner.textContent = number ? `${number}   ${label}` : label;
-      banner.style.cssText =
-        'font-size:11px;color:#666;text-transform:uppercase;letter-spacing:0.05em;' +
-        'border-bottom:1px solid #ddd;padding-bottom:6px;margin-bottom:16px;';
-      article.insertBefore(banner, article.firstChild);
+      banner.textContent = number ? `${number}` : '';
+      const titleEl = document.createElement('div');
+      titleEl.className = 'docs-pdf-chapter-title';
+      titleEl.textContent = label;
+      const wrap = document.createElement('div');
+      wrap.className = 'docs-pdf-chapter-header';
+      if (number) wrap.appendChild(banner);
+      wrap.appendChild(titleEl);
+      article.insertBefore(wrap, article.firstChild);
     },
     { number: item.number, label: bannerLabel }
   );
 
-  // Hide site chrome that shouldn't appear in a PDF.
+  // Hide site chrome that shouldn't appear in a PDF, fix print-only bugs
+  // that could otherwise silently clip content (overflowing code lines and
+  // wide tables are just scrollable in a browser, but get cut off dead at
+  // the page edge when printed), and apply consistent book typography.
   await page.addStyleTag({
     content: `
       nav.navbar, .theme-doc-sidebar-container, footer,
       .theme-edit-this-page, .pagination-nav, .breadcrumbs,
       .table-of-contents, .theme-back-to-top-button,
       [class*="announcementBar"], .navbar-sidebar,
-      .clean-btn, .skipToContent_fXgn, iframe.giscus-frame {
+      .clean-btn, .skipToContent_fXgn, iframe.giscus-frame,
+      .hash-link, a.hash-link {
         display: none !important;
       }
       article { max-width: 100% !important; }
+
+      /* Book typography */
+      article {
+        font-family: Georgia, 'Times New Roman', serif !important;
+        font-size: 11pt !important;
+        line-height: 1.55 !important;
+        color: #1c1c1c !important;
+      }
+      article h1 { font-size: 21pt !important; margin: 0 0 14pt !important; }
+      article h2 { font-size: 15pt !important; margin: 26pt 0 8pt !important; }
+      article h3 { font-size: 12.5pt !important; margin: 18pt 0 6pt !important; }
+      article h2, article h3, article h4 { font-family: Georgia, 'Times New Roman', serif !important; }
+      article a { color: #1a4a8a !important; text-decoration: none !important; }
+      article blockquote {
+        border-left: 3pt solid #ccc !important;
+        padding-left: 10pt !important;
+        color: #444 !important;
+        font-style: italic !important;
+      }
+
+      /* Chapter header banner */
+      .docs-pdf-chapter-header {
+        border-bottom: 1pt solid #ccc;
+        padding-bottom: 8pt;
+        margin-bottom: 20pt;
+        font-family: Helvetica, Arial, sans-serif;
+      }
+      .docs-pdf-chapter-banner {
+        font-size: 8.5pt;
+        color: #888;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .docs-pdf-chapter-title {
+        font-size: 10pt;
+        color: #555;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        margin-top: 2pt;
+      }
+
+      /* Prevent print from silently clipping overflowing content that a
+         browser would otherwise let you scroll to see. */
+      article pre, article code {
+        white-space: pre-wrap !important;
+        word-break: break-word !important;
+        overflow-wrap: anywhere !important;
+      }
+      article pre { font-size: 9pt !important; }
+      article table {
+        width: 100% !important;
+        table-layout: fixed !important;
+      }
+      article table td, article table th {
+        word-wrap: break-word !important;
+        overflow-wrap: anywhere !important;
+      }
+      article img, article video, article svg {
+        max-width: 100% !important;
+        height: auto !important;
+      }
     `,
   });
 
@@ -328,7 +435,7 @@ async function renderPageToPdf(page, item, outPath) {
     printBackground: true,
   });
 
-  return { title };
+  return { title, headings };
 }
 
 async function withRetries(fn, retries, label) {
@@ -350,19 +457,23 @@ async function countPdfPages(filePath) {
   return doc.getPageCount();
 }
 
-async function buildTitlePage(page, outPath) {
+async function buildTitlePage(page, outPath, stats) {
   const html = `
     <html>
-      <body style="font-family: sans-serif; margin: 0; padding: 0;">
-        <div style="height: 260pt;"></div>
+      <body style="font-family: Georgia, 'Times New Roman', serif; margin: 0; padding: 0;">
+        <div style="height: 240pt;"></div>
         <div style="text-align: center;">
-          <h1 style="font-size: 30pt; margin: 0;">${escapeHtml(BOOK_TITLE)}</h1>
-          <p style="color: #666; margin-top: 16pt; font-size: 11pt;">
-            Offline reference generated ${new Date().toISOString().slice(0, 10)}
+          <div style="width: 60pt; height: 3pt; background: #1a1a2e; margin: 0 auto 22pt;"></div>
+          <h1 style="font-size: 30pt; margin: 0; letter-spacing: 0.02em;">${escapeHtml(BOOK_TITLE)}</h1>
+          <p style="color: #666; margin-top: 14pt; font-size: 11pt; font-family: Helvetica, Arial, sans-serif;">
+            A complete offline reference
           </p>
-          <p style="color: #999; margin-top: 60pt; font-size: 9pt;">
-            Source: ${escapeHtml(SITEMAP_URL)}
-          </p>
+          <div style="width: 60pt; height: 3pt; background: #1a1a2e; margin: 22pt auto 0;"></div>
+        </div>
+        <div style="position: absolute; bottom: 90pt; left: 0; right: 0; text-align: center;
+                    font-family: Helvetica, Arial, sans-serif; color: #999; font-size: 9pt; line-height: 1.6;">
+          <p>${stats.pageCount} chapters and sections &middot; generated ${new Date().toISOString().slice(0, 10)}</p>
+          <p>Source: ${escapeHtml(SITEMAP_URL)}</p>
         </div>
       </body>
     </html>`;
@@ -377,22 +488,64 @@ function tocRowRect(hasHeading, rowIndexOnPage) {
   return [MARGIN_LEFT_PT, rectBottom, PAGE_W_PT - MARGIN_RIGHT_PT, rectBottom + TOC_ROW_HEIGHT_PT];
 }
 
+// Expands each page-level entry into printable TOC rows: the page itself,
+// then one row per in-page h2 (its "subtitles/topics") indented underneath,
+// so the printed table of contents reflects the docs' real structure and
+// not just a flat page list. h3s are deliberately left out of the *printed*
+// page here (they still show up in the PDF bookmark panel) — a technical
+// docs site can easily have thousands of h3s, which would make a printed
+// TOC unusably long rather than more complete-feeling. An "Appendix"
+// divider row is inserted before any pages the sidebar itself doesn't link
+// to, so their presence reads as a deliberate section, not a stray page.
+function flattenForPrintedToc(entries) {
+  const rows = [];
+  let announcedAppendix = false;
+  for (const entry of entries) {
+    if (entry.orphan && !announcedAppendix) {
+      rows.push({ isDivider: true, label: 'Appendix' });
+      announcedAppendix = true;
+    }
+    rows.push({
+      url: entry.url,
+      label: entry.label,
+      number: entry.number,
+      depth: entry.depth || 0,
+      orphan: entry.orphan,
+      startPage: entry.startPage,
+      isHeading: false,
+    });
+    for (const h2 of entry.headingTree || []) {
+      rows.push({
+        url: entry.url,
+        label: h2.text,
+        number: '',
+        depth: (entry.depth || 0) + 1,
+        orphan: entry.orphan,
+        startPage: entry.startPage,
+        isHeading: true,
+      });
+    }
+  }
+  return rows;
+}
+
 // Builds the table of contents as one or more explicitly page-broken <div>s
 // (rather than relying on the browser to reflow-and-guess), so that the
 // rect math above exactly matches what gets rendered — required for the
 // clickable link annotations added later to land in the right spot.
 async function buildTocPages(page, outPath, entries) {
+  const rows = flattenForPrintedToc(entries);
   const rowsPerPageFirst = Math.max(1, Math.floor((CONTENT_H_PT - TOC_HEADING_HEIGHT_PT) / TOC_ROW_HEIGHT_PT));
   const rowsPerPageRest = Math.max(1, Math.floor(CONTENT_H_PT / TOC_ROW_HEIGHT_PT));
 
   const tocPages = [];
   let idx = 0;
   let first = true;
-  while (idx < entries.length) {
+  while (idx < rows.length) {
     const capacity = first ? rowsPerPageFirst : rowsPerPageRest;
-    const rows = entries.slice(idx, idx + capacity);
-    tocPages.push({ rows, heading: first });
-    idx += rows.length;
+    const pageRows = rows.slice(idx, idx + capacity);
+    tocPages.push({ rows: pageRows, heading: first });
+    idx += pageRows.length;
     first = false;
   }
 
@@ -400,15 +553,24 @@ async function buildTocPages(page, outPath, entries) {
   const pagesHtml = tocPages
     .map((tp, pageIdx) => {
       const rowsHtml = tp.rows
-        .map((entry, rowIdx) => {
-          rowRects.push({ url: entry.url, tocPageIndex: pageIdx, rect: tocRowRect(tp.heading, rowIdx) });
-          const indentPt = Math.min(entry.depth || 0, 4) * 14;
-          const numberPrefix = entry.number ? `${entry.number}. ` : '';
+        .map((row, rowIdx) => {
+          if (row.isDivider) {
+            return `
+              <div style="height:${TOC_ROW_HEIGHT_PT}pt;line-height:${TOC_ROW_HEIGHT_PT}pt;overflow:hidden;font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#444;margin-top:6pt;">
+                ${escapeHtml(row.label)}
+              </div>`;
+          }
+          rowRects.push({ url: row.url, tocPageIndex: pageIdx, rect: tocRowRect(tp.heading, rowIdx) });
+          const indentPt = Math.min(row.depth || 0, 4) * 14;
+          const numberPrefix = row.number ? `${row.number}. ` : '';
+          const labelStyle = row.isHeading
+            ? 'font-size:9.5pt;color:#666;'
+            : `font-size:10.5pt;${row.orphan ? 'font-style:italic;color:#555;' : ''}`;
           return `
-            <div style="display:flex;align-items:baseline;height:${TOC_ROW_HEIGHT_PT}pt;line-height:${TOC_ROW_HEIGHT_PT}pt;overflow:hidden;font-size:10.5pt;">
-              <span style="padding-left:${indentPt}pt;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340pt;${entry.orphan ? 'font-style:italic;color:#555;' : ''}">${escapeHtml(numberPrefix)}${escapeHtml(entry.label)}</span>
+            <div style="display:flex;align-items:baseline;height:${TOC_ROW_HEIGHT_PT}pt;line-height:${TOC_ROW_HEIGHT_PT}pt;overflow:hidden;">
+              <span style="padding-left:${indentPt}pt;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:320pt;${labelStyle}">${escapeHtml(numberPrefix)}${escapeHtml(row.label)}</span>
               <span style="flex:1;border-bottom:1px dotted #999;margin:0 6pt;transform:translateY(-3pt);"></span>
-              <span style="white-space:nowrap;">${entry.startPage}</span>
+              <span style="white-space:nowrap;font-size:10.5pt;">${row.startPage}</span>
             </div>`;
         })
         .join('\n');
@@ -421,7 +583,7 @@ async function buildTocPages(page, outPath, entries) {
     })
     .join('\n');
 
-  const html = `<html><body style="font-family: sans-serif; margin: 0;">${pagesHtml}</body></html>`;
+  const html = `<html><body style="font-family: Georgia, 'Times New Roman', serif; margin: 0;">${pagesHtml}</body></html>`;
   await page.setContent(html, { waitUntil: 'domcontentloaded' });
   await page.pdf({ path: outPath, format: PAGE_FORMAT, margin: PDF_MARGIN, printBackground: true });
 
@@ -460,6 +622,75 @@ function addLinkAnnotation(pdfDoc, fromPage, rect, toPage) {
   } else {
     fromPage.node.set(annotsKey, pdfDoc.context.obj([linkRef]));
   }
+}
+
+// Builds the PDF's own bookmark/outline panel (the navigation tree every
+// PDF reader shows in its sidebar) — a level deeper than the printed table
+// of contents, since it also includes h3s and doesn't need to worry about
+// running to an unwieldy number of printed pages. Children default to
+// collapsed (negative /Count) so a doc with hundreds of pages doesn't open
+// with an overwhelming wall of bookmarks.
+function buildOutlineTree(pdfDoc, nodes) {
+  const context = pdfDoc.context;
+
+  function buildLevel(nodeList, parentRef) {
+    if (nodeList.length === 0) return null;
+    const itemRefs = nodeList.map((node) =>
+      context.register(
+        context.obj({
+          Title: PDFHexString.fromText(node.title || '(untitled)'),
+          Parent: parentRef,
+          Dest: [node.pageRef, PDFName.of('Fit')],
+        })
+      )
+    );
+
+    let totalVisible = nodeList.length;
+    nodeList.forEach((node, i) => {
+      const dict = context.lookup(itemRefs[i], PDFDict);
+      if (i > 0) dict.set(PDFName.of('Prev'), itemRefs[i - 1]);
+      if (i < nodeList.length - 1) dict.set(PDFName.of('Next'), itemRefs[i + 1]);
+
+      if (node.children && node.children.length > 0) {
+        const child = buildLevel(node.children, itemRefs[i]);
+        dict.set(PDFName.of('First'), child.firstRef);
+        dict.set(PDFName.of('Last'), child.lastRef);
+        dict.set(PDFName.of('Count'), PDFNumber.of(-child.count));
+      }
+    });
+
+    return { firstRef: itemRefs[0], lastRef: itemRefs[itemRefs.length - 1], count: totalVisible };
+  }
+
+  const outlinesRef = context.register(context.obj({ Type: 'Outlines' }));
+  const top = buildLevel(nodes, outlinesRef);
+  if (!top) return;
+  const outlinesDict = context.lookup(outlinesRef, PDFDict);
+  outlinesDict.set(PDFName.of('First'), top.firstRef);
+  outlinesDict.set(PDFName.of('Last'), top.lastRef);
+  outlinesDict.set(PDFName.of('Count'), PDFNumber.of(top.count));
+  pdfDoc.catalog.set(PDFName.of('Outlines'), outlinesRef);
+}
+
+function outlineNodesFromEntries(finalDoc, tocFirstPage, entries, flatContentPages) {
+  function headingNode(h, targetPage) {
+    return {
+      title: h.text,
+      pageRef: targetPage.ref,
+      children: (h.children || []).map((c) => headingNode(c, targetPage)),
+    };
+  }
+
+  const pageEntries = entries.map((entry) => {
+    const targetPage = finalDoc.getPage(flatContentPages[entry.startPage - 1]);
+    return {
+      title: entry.number ? `${entry.number}  ${entry.label}` : entry.label,
+      pageRef: targetPage.ref,
+      children: (entry.headingTree || []).map((h) => headingNode(h, targetPage)),
+    };
+  });
+
+  return [{ title: 'Table of Contents', pageRef: tocFirstPage.ref, children: [] }, ...pageEntries];
 }
 
 async function assembleFinalPdf({ titlePath, tocPath, tocRowRects, contentPdfPaths, entries, outputFile }) {
@@ -507,6 +738,9 @@ async function assembleFinalPdf({ titlePath, tocPath, tocRowRects, contentPdfPat
       finalDoc.getPage(targetGlobalIndex)
     );
   }
+
+  const outlineNodes = outlineNodesFromEntries(finalDoc, finalDoc.getPage(tocIndices[0]), entries, flatContentPages);
+  buildOutlineTree(finalDoc, outlineNodes);
 
   fs.writeFileSync(outputFile, await finalDoc.save());
 }
@@ -571,7 +805,7 @@ async function main() {
     console.log(`[${i + 1}/${finalItems.length}] ${item.url}`);
 
     try {
-      const { title } = await withRetries(() => renderPageToPdf(page, item, outPath), PAGE_RETRIES, item.url);
+      const { title, headings } = await withRetries(() => renderPageToPdf(page, item, outPath), PAGE_RETRIES, item.url);
       const pageCount = await countPdfPages(outPath);
       entries.push({
         url: item.url,
@@ -581,6 +815,7 @@ async function main() {
         orphan: !!item.orphan,
         startPage: runningContentPages + 1,
         pageCount,
+        headingTree: buildHeadingTree(headings || []),
       });
       runningContentPages += pageCount;
       contentPdfPaths.push(outPath);
@@ -596,7 +831,7 @@ async function main() {
   const layoutPage = await layoutBrowser.newPage();
 
   const titlePath = path.join(OUTPUT_DIR, '000_title.pdf');
-  await buildTitlePage(layoutPage, titlePath);
+  await buildTitlePage(layoutPage, titlePath, { pageCount: entries.length });
 
   const tocPath = path.join(OUTPUT_DIR, '000_toc.pdf');
   const { tocPageCount, rowRects } = await buildTocPages(layoutPage, tocPath, entries);
