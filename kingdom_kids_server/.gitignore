@@ -19,3 +19,6 @@ config/firebase_service_account_key.json
 
 # Embedded PostgreSQL runtime artifacts (data dir, sockets, pidfiles)
 .serverpod/
+
+# Disposable repair-migration output (apply locally, don't track)
+repair-migration/

@@ -20,6 +20,9 @@ pubspec_overrides.yaml
 .env
 **/.env
 
+# Embedded PostgreSQL runtime artifacts (data dir, sockets, pidfiles)
+.serverpod/
+
 # AI coding assistant config — local only, not for the shared repo
 AGENTS.md
 CLAUDE.md
