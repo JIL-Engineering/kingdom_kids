@@ -228,18 +228,25 @@ async function discoverNavOrder(page, origin, pathFilter) {
     )
     .catch(() => []);
 
+  // Keep the sidebar's own href as the URL we'll actually navigate to later
+  // (it's exactly what a real visitor's click would follow, trailing slash
+  // and all) and use the normalized form only as a de-dup/matching key —
+  // stripping a trailing slash before navigating can 404 on hosts that
+  // treat "/next" and "/next/" as different resources.
   const seen = new Set();
   const out = [];
   for (const raw of rawItems) {
     let url;
+    let key;
     try {
-      url = normalizeUrl(new URL(raw.href, origin).toString());
+      url = new URL(raw.href, origin).toString();
+      key = normalizeUrl(url);
     } catch {
       continue;
     }
-    if (!matchesPathFilter(url, pathFilter) || seen.has(url)) continue;
-    seen.add(url);
-    out.push({ url, label: raw.label, depth: raw.depth });
+    if (!matchesPathFilter(key, pathFilter) || seen.has(key)) continue;
+    seen.add(key);
+    out.push({ url, key, label: raw.label, depth: raw.depth });
   }
   return out;
 }
@@ -360,7 +367,9 @@ async function renderPageToPdf(page, item, outPath) {
       .table-of-contents, .theme-back-to-top-button,
       [class*="announcementBar"], .navbar-sidebar,
       .clean-btn, .skipToContent_fXgn, iframe.giscus-frame,
-      .hash-link, a.hash-link {
+      .hash-link, a.hash-link,
+      .theme-doc-version-badge, .theme-doc-footer-edit-meta-row,
+      .theme-doc-toc-mobile, [class*="tocCollapsible"] {
         display: none !important;
       }
       article { max-width: 100% !important; }
@@ -750,7 +759,18 @@ async function main() {
   const xml = await fetchText(SITEMAP_URL);
   const allUrls = extractUrlsFromSitemap(xml);
 
-  const sitemapUrls = [...new Set(allUrls.filter((u) => matchesPathFilter(u, PATH_FILTER)).map(normalizeUrl))];
+  // Keep the sitemap's own URLs (trailing slash and all) for actual
+  // navigation later; normalizeUrl is only used as a de-dup/matching key —
+  // stripping a trailing slash before navigating can 404 on hosts that
+  // treat "/next" and "/next/" as different resources.
+  const sitemapUrls = [];
+  const seenSitemapKeys = new Set();
+  for (const u of allUrls.filter((url) => matchesPathFilter(url, PATH_FILTER))) {
+    const key = normalizeUrl(u);
+    if (seenSitemapKeys.has(key)) continue;
+    seenSitemapKeys.add(key);
+    sitemapUrls.push(u);
+  }
 
   if (sitemapUrls.length === 0) {
     console.error('No URLs matched. Check SITEMAP_URL and PATH_FILTER.');
@@ -771,18 +791,25 @@ async function main() {
   }
   await navPage.close();
 
-  const sitemapSet = new Set(sitemapUrls);
-  const navUrlSet = new Set(navItems.map((i) => i.url));
+  const sitemapKeySet = new Set(sitemapUrls.map(normalizeUrl));
+  const sitemapByKey = new Map(sitemapUrls.map((u) => [normalizeUrl(u), u]));
+  const navKeySet = new Set(navItems.map((i) => i.key));
 
-  const orderedItems = navItems.filter((i) => sitemapSet.has(i.url));
-  const orphanUrls = sitemapUrls.filter((u) => !navUrlSet.has(u)).sort((a, b) => a.localeCompare(b));
-  const orphanItems = orphanUrls.map((u) => ({ url: u, label: null, depth: 0, orphan: true }));
+  let orderedItems = navItems.filter((i) => sitemapKeySet.has(i.key));
+  let orphanKeys = sitemapUrls.map(normalizeUrl).filter((key) => !navKeySet.has(key)).sort((a, b) => a.localeCompare(b));
 
-  if (orderedItems.length === 0 && orphanItems.length > 0) {
-    // Nav crawl found nothing usable — fall back to plain alphabetical order.
-    orphanItems.sort((a, b) => a.url.localeCompare(b.url));
+  // The docs landing page (e.g. "/next/") is the natural front page of the
+  // book even when Docusaurus doesn't give it its own sidebar link — common
+  // for an index/redirect page. Without this, it would land in the
+  // appendix with genuinely unlinked pages, which reads as if the book is
+  // missing its own introduction.
+  const landingKey = normalizeUrl(NAV_ENTRY_URL);
+  if (orphanKeys.includes(landingKey)) {
+    orphanKeys = orphanKeys.filter((key) => key !== landingKey);
+    orderedItems = [{ url: sitemapByKey.get(landingKey) || NAV_ENTRY_URL, label: null, depth: 0 }, ...orderedItems];
   }
 
+  const orphanItems = orphanKeys.map((key) => ({ url: sitemapByKey.get(key), label: null, depth: 0, orphan: true }));
   const finalItems = computeNumbering([...orderedItems, ...orphanItems]);
 
   if (orphanItems.length > 0) {
