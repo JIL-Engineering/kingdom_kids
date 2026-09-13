@@ -6,11 +6,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../features/auth/screens/auth_screen.dart';
 import '../../features/auth/screens/consent_screen.dart';
 import '../../features/auth/screens/onboarding_screen.dart';
-import '../../features/auth/screens/splash_screen.dart';
 import '../../features/child_profile/screens/child_form_screen.dart';
 import '../../features/child_profile/screens/profile_picker_screen.dart';
 import '../../features/settings/screens/pin_gate_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
+import '../../features/splash/screens/splash_screen.dart';
 import '../auth/session_state.dart';
 
 part 'app_router.g.dart';
